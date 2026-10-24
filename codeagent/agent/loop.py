@@ -4,6 +4,8 @@ answer that passed verification, or on a step/time/cost cap, a doom loop
 or an interrupt; every stop writes a report."""
 import asyncio
 import json
+import os
+import shutil
 import time
 
 from . import context, verify
@@ -73,7 +75,8 @@ class Agent:
 
     def _system(self, reminders=()):
         return Message("system", context.compose(self.tools.ws, self.tools.mode, self.lessons, self.skills,
-                                                 self.todo, role=self.role, reminders=reminders))
+                                                 self.todo, extra_tools=getattr(self, "mcp_catalog", ()),
+                                                 role=self.role, reminders=reminders))
 
     # --- main ---
     async def run(self, task=None, history=None):
@@ -100,7 +103,7 @@ class Agent:
                 self.history.append(Message("user", f"[hook] {c}"))
         try:
             return await self._loop()
-        except KeyboardInterrupt:
+        except (KeyboardInterrupt, asyncio.CancelledError):
             return self._end("interrupted", f"interrupted; resume with `edith resume {s.id}`")
 
     async def _loop(self):
@@ -208,6 +211,13 @@ class Agent:
         # in a thread, so parallel agents keep working while one runs a long command
         result, ok = await asyncio.to_thread(_call, self.tools, allowed, call.name, args)
         result = self.redact(result)
+        if call.name == "screenshot" and ok:  # keep a copy with the session's evidence
+            try:
+                src = self.tools._path(args.get("path") or "screenshot.png")
+                shutil.copy2(src, os.path.join(self.session.dir, "artifacts", f"step{self.session.step}-" +
+                                               os.path.basename(src)))
+            except (OSError, ToolError):
+                pass
         if self.hooks:
             h = self.hooks.fire("after_tool", {"tool": call.name, "arguments": args, "result": result[:8000], "ok": ok},
                                 call.name)
@@ -239,6 +249,8 @@ class Agent:
         report += ["", f"tokens: {usage[0]} in, {usage[1]} out; cost ${getattr(self.brain, 'session_cost_usd', 0):.4f}"
                    + (f"; providers: {', '.join(used)}" if used else "")]
         s.artifact("report.md", "\n".join(report) + "\n")
+        if self.tools.mode == "plan" and status == "done":
+            s.artifact("plan.md", text + "\n")
         if diff:
             s.artifact("diff.patch", diff)
         if self.evidence["checks"]:

@@ -56,7 +56,7 @@ Budget caps are in rupees (`budget.daily_inr`); providers that report USD cost a
 
 ## D15. Phase 2: adapters and registry
 - Native adapters only where the wire format differs: **Gemini** (generateContent, `thoughtSignature` kept and replayed), **Cohere** v2 (`/chat`, different response shape), **AI Horde** (async job + polling, no tools). AI21 and Cloudflare Workers AI expose OpenAI-compatible endpoints, so they use the generic adapter with a custom model-list URL. Fewer adapters = less to break.
-- `providers.yaml` stays the commented, shipped base. `edith providers add|enable|disable|remove|restore|trust|untrust` writes `providers.local.yaml` (git-ignored), merged on top on every read, so changes apply to the next step with no restart and the base comments survive.
+- `providers.yaml` stays the commented, shipped base. `edith providers add|enable|disable|remove|restore|trust|untrust` writes `~/.edith/providers.local.yaml` (outside the code, so it survives updates; moved there in Phase 8), merged on top on every read, so changes apply to the next step with no restart and the base comments survive.
 - `remove` hides a provider; its models and stats stay in SQLite (`~/.edith/state.db`, override with `EDITH_HOME`) so `restore` brings them back.
 - Discovery: list endpoints are fetched in parallel (default 8 at a time, 30 s timeout each), cached for 6 h. A model missing from a fresh list becomes `gone`; if it returns it goes back to `probation`. One provider failing is recorded in the `discovery` table and never stops the others.
 - Probes (4 checks: reply, tool call, JSON, code fix). The code-fix answer is checked by pattern and never executed. Score >= 0.75 -> `active`; < 0.5 -> `failing`; 3 failing runs -> `disabled`. A 429 stops probing that provider for this run and does not count against the model.
@@ -76,7 +76,7 @@ Every model call is routed on its own; a session can use a different provider at
 8. **Diversity**: `avoid_family` lets the Reviewer (Phase 6) exclude the coder's model family.
 9. **Quota**: per key lane, requests/minute from local counters, requests/day from the calls table (resets at UTC midnight), and `x-ratelimit-remaining/limit` headers when a provider sends them. Optional `limits: {rpm, rpd}` per provider in providers.yaml. Several keys per provider: `key_env: KEY_A,KEY_B`; the lane with the most headroom is used.
 10. **Transparency**: each call logs the chosen model, score parts, top alternatives and rejection counts, and stores them in `calls.why`. `edith route explain --task-type T --context N`, `edith dashboard`.
-11. **Controls**: `edith route pin debug=provider/model | unpin | ban x | unban x | force provider|off | paid on|off | budget <rupees/day>`; saved in providers.local.yaml.
+11. **Controls**: `edith route pin debug=provider/model | unpin | ban x | unban x | force provider|off | paid on|off | budget <rupees/day>`; saved in ~/.edith/providers.local.yaml.
 12. **Portable history**: the conversation stays in the internal format, so any adapter can continue it. A tool call made by another provider is replayed to Gemini with Gemini's documented placeholder signature (`skip_thought_signature_validator`). This is unverified without a key.
 - With `--provider/--model` or `EDITH_PROVIDER/EDITH_MODEL`, the session is fixed to one model (`router.Fixed`), as in Phase 1.
 - Known limits: the price is known only where a list endpoint publishes it (OpenRouter), so the cost cap only counts those; latency is the rolling average of successful calls, not p50/p95; tokens/sec is not scored yet.
@@ -110,3 +110,13 @@ Every model call is routed on its own; a session can use a different provider at
 - Merge: each worktree's diff is applied to the workspace with `git apply` in plan order. A patch that no longer applies (two agents changed the same lines) is a conflict: that task is re-run on the merged tree, with its first attempt as a reference.
 - Sub-agents in worktrees do not auto-verify (another part may be unfinished); the Supervisor verifies the merged result, sends one debugger task if checks fail, then gets a review from another model family. Team report and diff go to `~/.edith/teams/<run>/`.
 - Parallel agents share one quota tracker. Without git, or with `--sequential`, tasks run one by one in the workspace.
+
+## D21. Phase 8: interfaces
+- `agent/app.py` builds an agent or a team from options; the CLI, the API and the MCP server all use it, so they behave the same.
+- **HTTP + WebSocket API** (`edith serve`, standard library only, 127.0.0.1:8765 by default). Every request needs a bearer token (EDITH_API_TOKEN or one generated into ~/.edith/api_token, mode 600). Tasks run in the background; events (logs, approval requests, end) are kept per task and can be polled or streamed over a WebSocket. Approvals can be answered over the WebSocket or HTTP; an unanswered approval is a "no" after `approval_timeout` (default 300 s). Tasks can be cancelled; artifacts can be listed and read (names are reduced to a basename, so no path tricks). This is the interface the JARVIS phone app can use later.
+- **MCP server** (`edith mcp`, stdio JSON-RPC): tools `edith_run_task` (mode plan/accept_edits/trusted only; anything that needs approval is refused since nobody can answer), `edith_models`, `edith_session_report`.
+- **MCP client**: servers listed under `mcp_servers` in ~/.edith/settings.yaml start with the session. Only their tool names and one-line descriptions go into the prompt; `tool_schema` loads a schema when needed and `mcp_call` runs a tool (approval kind `command`). This keeps the context small with many MCP tools.
+- **Headless** (`--headless`): no welcome, no prompts (every approval refused), logs on stderr, a JSON result on stdout, exit code 0 only when done. For CI.
+- **Artifacts** per session: report.md, diff.patch, test_report.txt, review.json, plan.md (plan mode) and screenshots.
+- The approval prompt in the terminal colours diffs (green additions, red removals).
+- `providers.local.yaml` moved to ~/.edith/ (outside the code, so `git pull` or reinstall never loses your provider changes, and other processes find it through EDITH_HOME).

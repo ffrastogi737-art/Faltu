@@ -104,33 +104,6 @@ def _approve(kind, detail):
     return _ask("Allow? [y/N] ").strip().lower() in ("y", "yes")
 
 
-def _brain(args, providers, con, log):
-    """Router (a model per step) unless a provider or model was fixed by flag or .env."""
-    from . import config
-    from .providers import make_adapter
-    from .router import Fixed, Router
-    name = getattr(args, "provider", None) or os.environ.get("EDITH_PROVIDER")
-    model = getattr(args, "model", None) or os.environ.get("EDITH_MODEL")
-    if not name and not model:
-        return Router(con, mode=args.mode, log=log), "auto-routing across all trusted providers"
-    ready = config.usable(providers)
-    name = name or next(iter(ready), None)
-    if not name or name not in providers:
-        sys.exit(f"Unknown or missing provider `{name}`. See `edith providers`.")
-    if name not in ready:
-        sys.exit(f"`{name}` is disabled or {providers[name].get('key_env')} is empty.")
-    if not providers[name].get("allow_private_code"):
-        sys.exit(f"`{name}` has allow_private_code: false, so it may not see your code.\n"
-                 f"If you trust it: `edith providers trust {name}`.")
-    if not model:  # best probed model of this provider; no names in code
-        row = con.execute("SELECT model FROM models WHERE provider=? AND status='active' AND tools=1 "
-                          "ORDER BY quality DESC, context DESC LIMIT 1", (name,)).fetchone()
-        if not row:
-            sys.exit(f"No probed model for {name}. Run `edith refresh` and `edith probe --provider {name}`, or pass --model.")
-        model = row["model"]
-    return Fixed(make_adapter(name, providers[name]), model), f"fixed: {name}/{model}"
-
-
 def _route_cmd(args, con):
     from . import config
     from .router import Router
@@ -143,8 +116,7 @@ def _route_cmd(args, con):
             print(f"  {c['score']:.3f}  {c['provider'] + '/' + c['model']:50} key#{c['key_idx']} {c['parts']}")
         print(f"{len(ranked)} candidates; rejected: {rejected or '-'}")
         return 0
-    settings = config.load_router_settings()
-    router, budget = settings["router"], settings["budget"]
+    router = config.load_router_settings()["router"]
     if act == "pin":  # value: task_type=provider/model
         tt, target = val.split("=", 1)
         config.save_router_setting("router", "pin", {**(router.get("pin") or {}), tt: target})
@@ -291,6 +263,10 @@ def main(argv=None):
     tm.add_argument("task")
     tm.add_argument("--sequential", action="store_true", help="no parallel worktrees")
     sub.add_parser("agents", help="list built-in and custom agent roles")
+    sv = sub.add_parser("serve", help="local HTTP + WebSocket API")
+    sv.add_argument("--host", default="127.0.0.1")
+    sv.add_argument("--port", type=int, default=8765)
+    sub.add_parser("mcp", help="run as an MCP server on stdin/stdout (for other agents)")
     bd = sub.add_parser("board", help="task board of a team run (latest if no id)")
     bd.add_argument("run_id", nargs="?")
     for p in (ap, *sub.choices.values()):  # options go after the subcommand
@@ -300,6 +276,8 @@ def main(argv=None):
         p.add_argument("--mode", default="default", choices=["plan", "default", "accept_edits", "trusted", "bypass"])
         p.add_argument("--no-verify", action="store_true", help="skip automatic tests/lint after changes")
         p.add_argument("--no-review", action="store_true", help="skip the reviewer agent")
+        p.add_argument("--headless", action="store_true", help="CI mode: no prompts (approvals refused), JSON result "
+                                                                 "on stdout, logs on stderr, exit code 0 only if done")
         p.add_argument("--workspace", default=".")
         p.add_argument("--max-steps", type=int, default=30)
         p.add_argument("--max-cost-usd", type=float, default=None, help="stop when this session has cost more")
@@ -316,13 +294,10 @@ def main(argv=None):
 def _dispatch(args, providers, con):
     import asyncio
 
-    from . import config, discovery
+    from . import discovery
     from . import session as session_mod
-    from .hooks import Hooks
-    from .loop import Agent
     from .memory import Memory
     from .messages import Message
-    from .tools import Tools
 
     if args.cmd == "providers":
         return _providers_cmd(args, providers, con)
@@ -391,6 +366,14 @@ def _dispatch(args, providers, con):
                 print(f"{m['id']:4} [{m['tags'] or '-'}] {m['text']}")
         return 0
 
+    if args.cmd == "serve":
+        from .server import serve
+        asyncio.run(serve(con, args.host, args.port))
+        return 0
+    if args.cmd == "mcp":
+        return _mcp_server(con)
+
+    from . import app
     session, history = None, None
     if args.cmd == "resume":
         session = session_mod.Session(args.session, resume=True)
@@ -398,48 +381,71 @@ def _dispatch(args, providers, con):
         args.workspace = session.meta["workspace"]
         history.append(Message("user", args.note or "Continue the task from where you stopped."))
         session.message(history[-1])
-    ws = os.path.realpath(args.workspace)
-    settings = config.load_settings(ws)
-    if args.mode == "bypass" and not settings["allow_bypass"]:
-        sys.exit("bypass mode is off. Set `allow_bypass: true` in ~/.edith/settings.yaml to enable it.")
-    if not args.cmd:
+    headless = getattr(args, "headless", False)
+    if not args.cmd and not headless:
         print(welcome())
         _ask(_paint("")("Press Enter to continue…", "link"))
-    secret_values = config.secrets(providers)
-    log = lambda s: print(config.redact(s, secret_values))  # noqa: E731
-    brain, how = _brain(args, providers, con, log)
     task = getattr(args, "task", None)
+    out = sys.stderr if headless else sys.stdout
+    try:
+        run, _ = app.build(con, args.workspace, _deny if headless else _approve, lambda s: print(s, file=out),
+                           mode=args.mode, provider=args.provider, model=args.model, max_steps=args.max_steps,
+                           max_cost_usd=args.max_cost_usd, verify=not args.no_verify, review=not args.no_review,
+                           team=args.cmd == "team", parallel=not getattr(args, "sequential", False), session=session)
+    except app.SetupError as e:
+        sys.exit(str(e))
     if not task and not history:
         task = _ask("\nWhat should I do? > ").strip()
         if not task:
             return 0
-    log(f"brain: {how}")
-    scrub = [k for p in providers.values() for k in config.key_envs(p)]
-    tools = Tools(ws, _approve, args.mode, scrub_env=scrub, settings=settings, log=log)
-    hooks = Hooks(settings["hooks"], cwd=ws, env=tools._env(), log=log) if settings["hooks"] else None
-    if args.cmd == "team":
-        from .agents import Team
-        from .router import Quota, Router
-        quota = Quota(con)
-        fixed = not isinstance(brain, Router)
-        team = Team(con, (lambda: brain) if fixed else (lambda: Router(con, mode=args.mode, log=log, quota=quota)),
-                    lambda path, allow: Tools(path, _approve, args.mode, scrub_env=scrub, settings=settings, hooks=hooks,
-                                              log=log),
-                    ws, log=log, hooks=hooks, memory=Memory(con), settings=settings, parallel=not args.sequential,
-                    agent_kwargs={"redact": lambda s: config.redact(s, secret_values),
-                                  "context_budget": settings["context_budget"]})
-        out = asyncio.run(team.run(task))
-        return 0 if out["done"] else 1
-    agent = Agent(brain, tools, log=log, session=session, memory=Memory(con), hooks=hooks, settings=settings,
-                  max_steps=args.max_steps, max_cost_usd=args.max_cost_usd, verify_changes=not args.no_verify,
-                  review_changes=not args.no_review, context_budget=settings["context_budget"],
-                  redact=lambda s: config.redact(s, secret_values))
-    result = asyncio.run(agent.run(task, history=history))
-    if getattr(brain, "switches", None):
-        used = sorted({p for p, _ in brain.switches})
-        log(f"providers used: {len(used)} ({', '.join(used)}); model calls: {len(brain.switches)}")
-    return 0 if result["done"] else 1
+    result = asyncio.run(run(task, history=history))
+    if headless:
+        print(json.dumps({k: result.get(k) for k in ("done", "status", "answer", "session", "run_id", "evidence",
+                                                      "input_tokens", "output_tokens", "checks_passed", "review")},
+                         default=str, indent=1))
+    return 0 if result.get("done") else 1
 
+
+def _deny(kind, detail):
+    """Headless: nobody can answer, so anything that needs approval is refused."""
+    print(f"[headless] refused ({kind}): {detail.splitlines()[0][:200] if detail else ''}", file=sys.stderr)
+    return False
+
+
+def _mcp_server(con):
+    """`edith mcp`: E.D.I.T.H. as an MCP tool server on stdin/stdout."""
+    import asyncio
+
+    from . import app
+    from . import session as session_mod
+    from .mcp import serve_stdio
+
+    def handle(name, a):
+        if name == "edith_models":
+            rows = con.execute("SELECT provider, model, status, quality FROM models WHERE status IN "
+                               "('active','probation') ORDER BY quality DESC NULLS LAST LIMIT 100")
+            return "\n".join(f"{r['provider']}/{r['model']} {r['status']} q={r['quality']}" for r in rows) or "no models"
+        if name == "edith_session_report":
+            path = os.path.join(session_mod.Session(a["session"], resume=True).dir, "artifacts", "report.md")
+            with open(path) as f:
+                return f.read()
+        if name == "edith_run_task":
+            mode = a.get("mode", "plan")
+            if mode not in ("plan", "accept_edits", "trusted"):
+                raise ValueError("mode must be plan, accept_edits or trusted")
+            logs = []
+            run, _ = app.build(con, a["workspace"], _deny, logs.append, mode=mode,
+                               max_steps=int(a.get("max_steps", 30)), team=bool(a.get("team")))
+            r = asyncio.run(run(a["task"]))
+            sid = r.get("session")
+            report = ""
+            if sid:
+                with open(os.path.join(session_mod.Session(sid, resume=True).dir, "artifacts", "report.md")) as f:
+                    report = f.read()
+            return report or json.dumps({k: r.get(k) for k in ("done", "answer", "run_id", "checks_passed")}, default=str)
+        raise ValueError(f"unknown tool {name}")
+    serve_stdio(handle)
+    return 0
 
 if __name__ == "__main__":
     sys.exit(main())

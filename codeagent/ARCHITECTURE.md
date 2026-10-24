@@ -33,7 +33,9 @@ codeagent/
     session.py          JSONL log, snapshots, git checkpoint, rewind    (P5)
     verify.py           check detection/runner, Reviewer                (P6)
     agents.py           supervisor, specialists, task board, worktrees  (P7)
-    server/             HTTP + WebSocket API, MCP server/client         (P8)
+    app.py              builds an agent/team for CLI, API and MCP       (P8)
+    server.py           HTTP + WebSocket API                            (P8)
+    mcp.py              MCP stdio client (lazy schemas) and server      (P8)
   evals/                20-30 benchmark tasks + reports                 (P9)
   tests/
 ```

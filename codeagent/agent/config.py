@@ -1,7 +1,7 @@
 """Provider registry and secrets.
 
 providers.yaml is the shipped, commented base. Every change made with
-`edith providers ...` goes to providers.local.yaml (git-ignored), which is
+`edith providers ...` goes to ~/.edith/providers.local.yaml, which is
 merged on top, so the base file keeps its comments and your changes survive
 updates. A removed provider is hidden here; its stats stay in SQLite."""
 import os
@@ -11,7 +11,7 @@ import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE = os.path.join(ROOT, "providers.yaml")
-LOCAL = os.path.join(ROOT, "providers.local.yaml")
+LOCAL = None  # default: ~/.edith/providers.local.yaml (tests point it elsewhere)
 EXTRA = os.path.join(ROOT, "models_extra.yaml")
 
 
@@ -37,15 +37,19 @@ def _read(path):
 def load_providers():
     """Merged registry, read fresh on every call so edits apply immediately."""
     merged = {n: dict(p) for n, p in (_read(BASE).get("providers") or {}).items()}
-    for n, changes in (_read(LOCAL).get("providers") or {}).items():
+    for n, changes in (_read(local_path()).get("providers") or {}).items():
         merged[n] = {**merged.get(n, {}), **changes}
     return {n: p for n, p in merged.items() if not p.get("removed")}
 
 
+def local_path():
+    return LOCAL or os.path.join(edith_home(), "providers.local.yaml")
+
+
 def save_override(name, changes):
-    data = _read(LOCAL)
+    data = _read(local_path())
     data.setdefault("providers", {}).setdefault(name, {}).update(changes)
-    with open(LOCAL, "w") as f:
+    with open(local_path(), "w") as f:
         yaml.safe_dump(data, f, sort_keys=False)
 
 
@@ -82,7 +86,7 @@ def secrets(providers):
 
 def load_router_settings():
     """`router:` and `budget:` sections of providers.yaml, overlaid by providers.local.yaml."""
-    base, local = _read(BASE), _read(LOCAL)
+    base, local = _read(BASE), _read(local_path())
     out = {}
     for section in ("router", "budget"):
         out[section] = {**(base.get(section) or {}), **(local.get(section) or {})}
@@ -90,9 +94,9 @@ def load_router_settings():
 
 
 def save_router_setting(section, key, value):
-    data = _read(LOCAL)
+    data = _read(local_path())
     data.setdefault(section, {})[key] = value
-    with open(LOCAL, "w") as f:
+    with open(local_path(), "w") as f:
         yaml.safe_dump(data, f, sort_keys=False)
 
 

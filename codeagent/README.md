@@ -1,6 +1,6 @@
 # E.D.I.T.H.
 
-**Efficient Developer Interface for Tech & Hacks**: a terminal coding agent whose brain is a router over many LLM providers (mostly free tiers). Status: **Phase 6**. Smart router across all providers, sandboxed tools with permissions and hooks, sessions with resume/rewind, memory, automatic verification and a reviewer from another model family. Evidence: [reports/](reports/).
+**Efficient Developer Interface for Tech & Hacks**: a terminal coding agent whose brain is a router over many LLM providers (mostly free tiers). Status: **Phase 8**. Smart router across all providers, sandboxed tools with permissions and hooks, sessions with resume/rewind, memory, verification with a cross-family reviewer, multi-agent teams, HTTP/WebSocket API, MCP server and client, headless mode. Evidence: [reports/](reports/).
 
 Read next: [DECISIONS.md](DECISIONS.md), [ARCHITECTURE.md](ARCHITECTURE.md), [RISKS.md](RISKS.md), [providers.yaml](providers.yaml).
 
@@ -35,7 +35,7 @@ edith route pin debug=groq/<model>       # also: unpin, ban, unban, force <provi
 edith dashboard                          # calls, errors, latency, cost and cooldowns per provider today
 ```
 
-Several keys for one provider: `key_env: GROQ_API_KEY,GROQ_API_KEY_2` in providers.local.yaml. Optional limits: `limits: {rpm: 30, rpd: 1000}`.
+Several keys for one provider: `key_env: GROQ_API_KEY,GROQ_API_KEY_2` in ~/.edith/providers.local.yaml. Optional limits: `limits: {rpm: 30, rpd: 1000}`.
 
 Modes: `default` asks before every edit and command, `accept_edits` asks only before commands, `trusted` asks only for consequential actions (push, publish, system packages, writes outside the workspace, network), `plan` only reads.
 
@@ -46,6 +46,28 @@ edith resume <id> ["extra instruction"]  # continue after a stop or Ctrl-C
 edith rewind <id> --to 1 [--git]         # undo a session's file changes
 edith memory | memory add "..." | dream  # long-term lessons
 ```
+
+Teams, API, MCP, CI:
+
+```bash
+edith team "add login rate limiting with tests"   # supervisor + specialists, parallel in git worktrees
+edith agents                                      # roles; add your own in ~/.edith/agents/<name>.md
+edith board                                       # task board of the latest team run
+edith serve --port 8765                           # HTTP + WebSocket API (token: ~/.edith/api_token)
+edith mcp                                         # MCP server on stdio, for other agents
+edith run "fix lint" --headless --mode trusted    # CI: JSON on stdout, exit code 0 only if done
+```
+
+API example:
+
+```bash
+TOKEN=$(cat ~/.edith/api_token)
+curl -s -H "Authorization: Bearer $TOKEN" -d '{"task":"fix the failing test","workspace":"'$PWD'"}' localhost:8765/tasks
+curl -s -H "Authorization: Bearer $TOKEN" "localhost:8765/tasks/<id>/events?after=0"
+curl -s -H "Authorization: Bearer $TOKEN" -d '{"allow":true}' localhost:8765/tasks/<id>/approvals/<approval id>
+```
+
+Use E.D.I.T.H. from another agent (MCP config): `{"command": "edith", "args": ["mcp"]}`.
 
 Settings live in `~/.edith/settings.yaml`:
 
@@ -60,6 +82,8 @@ hooks:
   - {event: after_tool, match: edit_file, command: "ruff format --quiet ."}
 context_budget: 32000
 trusted_workspaces: [~/projects/myapp]        # only these may add allow rules/hooks in .edith/settings.yaml
+mcp_servers:
+  github: {command: npx, args: ["-y", "@modelcontextprotocol/server-github"]}
 ```
 Options go after the subcommand (`edith run "..." --model X`).
 

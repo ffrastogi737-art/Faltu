@@ -23,7 +23,7 @@ from .config import edith_home
 from .context import _frontmatter
 from .messages import Message
 from .providers.repair import parse_args
-from .tools import READ_ONLY, Tools
+from .tools import READ_ONLY
 
 ALL = None  # every tool
 ROLES = {
