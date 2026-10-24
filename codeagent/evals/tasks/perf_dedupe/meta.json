@@ -1,0 +1,11 @@
+{
+ "kind": "performance",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "dedupe.py",
+   "old": "    out = []\n    for x in items:\n        if x not in out:\n            out.append(x)\n    return out",
+   "new": "    return list(dict.fromkeys(items))"
+  }
+ ]
+}

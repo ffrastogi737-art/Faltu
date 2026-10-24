@@ -1,0 +1,11 @@
+{
+ "kind": "feature",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "greet.py",
+   "old": "    p.add_argument('name')\n    a = p.parse_args(argv)\n    print(f'Hello, {a.name}!')",
+   "new": "    p.add_argument('name')\n    p.add_argument('--upper', action='store_true')\n    a = p.parse_args(argv)\n    msg = f'Hello, {a.name}!'\n    print(msg.upper() if a.upper else msg)"
+  }
+ ]
+}

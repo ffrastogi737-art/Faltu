@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "node",
+ "solution": [
+  {
+   "path": "sum.js",
+   "old": "(a, b) => a + b",
+   "new": "(a, b) => a + Number(b)"
+  }
+ ]
+}

@@ -1,0 +1,21 @@
+{
+ "kind": "refactor",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "billing.py",
+   "old": "def calc(",
+   "new": "def calculate_total("
+  },
+  {
+   "path": "report.py",
+   "old": "from billing import calc",
+   "new": "from billing import calculate_total"
+  },
+  {
+   "path": "report.py",
+   "old": "{calc(prices, 0.1)}",
+   "new": "{calculate_total(prices, 0.1)}"
+  }
+ ]
+}

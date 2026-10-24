@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "conv.py",
+   "old": "    return int(text)",
+   "new": "    try:\n        return int(text)\n    except (TypeError, ValueError):\n        return default"
+  }
+ ]
+}

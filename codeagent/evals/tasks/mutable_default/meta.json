@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "tags.py",
+   "old": "def add_tag(tag, tags=[]):\n    tags.append(tag)",
+   "new": "def add_tag(tag, tags=None):\n    tags = [] if tags is None else tags\n    tags.append(tag)"
+  }
+ ]
+}

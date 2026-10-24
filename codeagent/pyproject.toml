@@ -1,0 +1,12 @@
+[project]
+name = "codeagent"
+version = "0.0.0"
+requires-python = ">=3.11"
+# One dependency, pure Python, so `pip install` works on Termux without a compiler.
+dependencies = ["pyyaml>=6"]
+
+[project.scripts]
+edith = "agent.cli:entry"
+
+[tool.setuptools]
+packages = ["agent", "agent.providers"]

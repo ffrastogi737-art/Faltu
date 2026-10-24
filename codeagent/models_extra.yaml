@@ -1,0 +1,9 @@
+# Models for providers that have no model-list endpoint.
+# Format:
+#   <provider name>:
+#     - id: <model id exactly as the provider expects it>
+#       context: <input tokens, optional>
+#       tools: true | false   (optional, the probe finds out otherwise)
+# Leave a provider out to skip it. Names change often: copy ids from the
+# provider's docs, not from memory.
+{}

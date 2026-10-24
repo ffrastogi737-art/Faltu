@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "rows.py",
+   "old": "    return line.rstrip('\\n').split(',')",
+   "new": "    return [f.strip() for f in line.rstrip('\\n').split(',')]"
+  }
+ ]
+}

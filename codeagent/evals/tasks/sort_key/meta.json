@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "rank.py",
+   "old": "key=lambda u: u['score']",
+   "new": "key=lambda u: (-u['score'], u['name'])"
+  }
+ ]
+}

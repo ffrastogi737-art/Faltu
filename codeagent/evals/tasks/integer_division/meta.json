@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "stats.py",
+   "old": "    return sum(values) // len(values)",
+   "new": "    return sum(values) / len(values) if values else 0.0"
+  }
+ ]
+}
