@@ -22,7 +22,7 @@ let n = 0;
 const shot = (name) => page.screenshot({ path: `${OUT}${String(++n).padStart(2, '0')}-${name}.png`, fullPage: true });
 const step = (msg) => console.log(`✓ ${msg}`);
 const state = () => page.evaluate(() => window.__lifeRpg.store.state);
-const go = async (route) => { await page.click(`.nav a[href="#/${route}"]`); await page.waitForSelector(`.nav a[href="#/${route}"][aria-current=page]`); };
+const go = async (route) => { await page.locator(`a[data-nav="${route}"]`).last().click(); await page.waitForSelector(`a[data-nav="${route}"][aria-current=page]`); };
 const closeModal = async () => { if (await page.locator('dialog[open]').count()) { await page.locator('dialog[open] [data-action=close-modal]').first().click(); } };
 const completeByTitle = async (title) => {
   await go('quests');
@@ -37,7 +37,8 @@ try {
   await page.waitForSelector('form[data-form=onboarding]');
   await shot('onboarding');
   await page.fill('input[name=name]', 'Ada');
-  await page.check('input[name=focus][value=programming]');
+  await page.click('label.pick:has(input[value=programming])');
+  assert.ok(await page.isChecked('input[name=focus][value=programming]'));
   await page.click('form[data-form=onboarding] button[type=submit]');
   await page.waitForSelector('.hero h1');
   assert.equal(await page.textContent('.hero h1'), 'Ada');
@@ -196,7 +197,7 @@ try {
   await context.setOffline(true);
   await page2.reload();
   await page2.waitForSelector('.hero h1');
-  await page2.click('.nav a[href="#/quests"]');
+  await page2.click('a[data-nav="quests"][href]');
   await page2.click('[data-action=accept-suggestion][data-i="0"]');
   await page2.waitForFunction((n0) => window.__lifeRpg.store.state.quests.length > n0, after.quests.length);
   const offlineQuest = (await page2.evaluate(() => window.__lifeRpg.store.state)).quests.at(-1);
@@ -207,11 +208,11 @@ try {
   step('app loads and completes quests while offline');
 
   // 14. export and delete
-  await page2.click('.nav a[href="#/profile"]');
+  await page2.click('a.iconbtn[data-nav="profile"]');
   await page2.selectOption('form[data-form=ai] select[name=provider]', 'anthropic');
   await page2.fill('form[data-form=ai] input[name=apiKey]', 'sk-ant-e2e-not-a-real-key');
   await page2.click('form[data-form=ai] button[type=submit]');
-  await page2.waitForSelector('form[data-form=ai] .chip.good');
+  await page2.waitForSelector('form[data-form=ai] .tag.good');
   await page2.screenshot({ path: `${OUT}${String(++n).padStart(2, '0')}-profile.png`, fullPage: true });
   const [download] = await Promise.all([page2.waitForEvent('download'), page2.click('[data-action=export]')]);
   const exported = await readFile(await download.path(), 'utf8');
@@ -237,7 +238,7 @@ try {
   await page2.fill('input[name=name]', 'Temp');
   await page2.click('form[data-form=onboarding] button[type=submit]');
   await page2.waitForSelector('.hero h1');
-  await page2.click('.nav a[href="#/profile"]');
+  await page2.click('a.iconbtn[data-nav="profile"]');
   await page2.setInputFiles('input[data-action=import]', { name: 'save.json', mimeType: 'application/json', buffer: Buffer.from(exported) });
   await page2.waitForFunction(() => window.__lifeRpg.store.state.profile.name === 'Ada');
   step('import restored the exported save');

@@ -6,6 +6,7 @@ import { templatesFor } from '../core/templates.js';
 import { dayKey } from '../core/time.js';
 import { planGoal } from '../ai/provider.js';
 import { html } from './html.js';
+import { icon } from './icons.js';
 import * as V from './views.js';
 
 const KEY_SECRET = 'anthropicKey';
@@ -15,7 +16,7 @@ const toasts = document.getElementById('toasts');
 
 const store = createStore(indexedDbAdapter());
 const ui = { questTab: 'active', suggestions: null, plan: null, planning: false, modalView: null, pendingPlan: null, hasKey: false };
-const ROUTES = new Set(V.NAV.map(([id]) => id));
+const ROUTES = new Set(V.ROUTES);
 const route = () => { const r = location.hash.replace(/^#\/?/, ''); return ROUTES.has(r) ? r : 'home'; };
 
 // ---------- rendering ----------
@@ -43,11 +44,13 @@ function openModal(view, { live = false } = {}) {
 function closeModal() { ui.modalView = null; if (dialog.open) dialog.close(); }
 dialog.addEventListener('close', () => { ui.modalView = null; });
 
-function toast(message, cls = '') {
+const TOAST_ICON = { xp: 'bolt', ach: 'achievements', err: 'info', '': 'check' };
+function toast(message, cls = '', ic = TOAST_ICON[cls]) {
   const el = document.createElement('div');
   el.className = `toast ${cls}`;
   el.setAttribute('role', 'status');
-  el.textContent = message;
+  el.innerHTML = `<span class="t-ic">${icon(ic, 18)}</span>`;
+  el.append(Object.assign(document.createElement('span'), { textContent: message }));
   toasts.append(el);
   while (toasts.children.length > 3) toasts.firstChild.remove();
   setTimeout(() => el.remove(), cls === 'err' ? 5000 : 3200);
@@ -55,11 +58,11 @@ function toast(message, cls = '') {
 
 function showEvents(events) {
   for (const e of events) {
-    if (e.type === 'questCompleted') toast(`✓ ${e.title}  +${e.xp} XP${e.tapered ? ' (daily taper: rest counts too)' : ''}`, 'xp');
-    else if (e.type === 'stageCleared') toast(`⚔ Stage cleared: ${e.title}`, 'xp');
-    else if (e.type === 'skillLevelUp') toast(`⬆ ${e.name} reached level ${e.to}`, 'xp');
-    else if (e.type === 'milestone') toast(`✦ ${e.name} milestone: level ${e.level}`, 'ach');
-    else if (e.type === 'achievement') toast(`🏆 Achievement unlocked: ${e.name}`, 'ach');
+    if (e.type === 'questCompleted') toast(`${e.title} · +${e.xp} XP${e.tapered ? ' (daily taper: rest counts too)' : ''}`, 'xp', 'check');
+    else if (e.type === 'stageCleared') toast(`Stage cleared: ${e.title}`, 'xp', 'sword');
+    else if (e.type === 'skillLevelUp') toast(`${e.name} reached level ${e.to}`, 'xp', 'arrowUp');
+    else if (e.type === 'milestone') toast(`${e.name} milestone: level ${e.level}`, 'ach', 'star');
+    else if (e.type === 'achievement') toast(`Badge unlocked: ${e.name}`, 'ach');
     else if (e.type === 'info') toast(e.message);
   }
   if (events.some((e) => e.type === 'levelUp' || e.type === 'bossDefeated')) openModal(() => V.celebrate(events));

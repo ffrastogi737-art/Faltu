@@ -1,9 +1,10 @@
 // Offline app shell. Bump VERSION whenever any listed file changes.
-const VERSION = 'life-rpg-v1';
+const VERSION = 'life-rpg-v2';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',
-  'src/ui/styles.css', 'src/ui/app.js', 'src/ui/views.js', 'src/ui/html.js',
+  'fonts/ChakraPetch-500.woff2', 'fonts/ChakraPetch-600.woff2', 'fonts/ChakraPetch-700.woff2', 'fonts/Inter-400-700.woff2',
+  'src/ui/styles.css', 'src/ui/app.js', 'src/ui/views.js', 'src/ui/html.js', 'src/ui/icons.js',
   'src/data/store.js', 'src/ai/provider.js',
   'src/core/config.js', 'src/core/engine.js', 'src/core/progression.js', 'src/core/achievements.js',
   'src/core/migrations.js', 'src/core/recommender.js', 'src/core/templates.js', 'src/core/analytics.js',

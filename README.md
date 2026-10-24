@@ -29,7 +29,8 @@ src/core/      pure business logic (no DOM, no storage)
   migrations.js    schema migrations + ledger reconciliation
 src/data/store.js   IndexedDB adapter, serialized dispatch, export/import/wipe
 src/ai/provider.js  optional Anthropic provider; falls back to the local planner on any failure
-src/ui/             views (escaped templating), controller, styles
+src/ui/             views (escaped templating), SVG icon set, controller, styles
+fonts/              Chakra Petch + Inter (SIL Open Font License), bundled so the UI works offline
 sw.js               offline app shell
 ```
 

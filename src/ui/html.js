@@ -12,6 +12,9 @@ function render(v) {
   return esc(v);
 }
 
+/** Only for compile-time constants (icon paths). Never pass user data. */
+export const trusted = (s) => new Raw(s);
+
 export function html(strings, ...values) {
   let out = strings[0];
   for (let i = 0; i < values.length; i++) out += render(values[i]) + strings[i + 1];
