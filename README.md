@@ -16,7 +16,14 @@ npm run e2e          # full browser journey in Chromium (needs Playwright; prein
 
 **Install on Android:** serve over HTTPS (any static host such as GitHub Pages or Netlify, or `localhost`), open it in Chrome, then choose *menu → Install app*. Service workers need HTTPS, so offline mode does not work over plain-http LAN addresses.
 
-**Wrapping as a native APK (optional, not done here):** since the app is static files, you can wrap it with Capacitor (`npx cap init`, `npx cap add android`, set `webDir` to this folder) or as a Trusted Web Activity (Bubblewrap), then build with Android Studio.
+**Android APK:** `android/` is a native WebView shell (Java, one dependency: `androidx.webkit`). At build time it copies the web app into the APK and serves it from `https://appassets.androidplatform.net`, so everything runs offline on the device. Export opens Android's save dialog, and Import opens the file picker.
+
+```bash
+export ANDROID_HOME=/path/to/android-sdk   # needs platforms;android-35 and build-tools;35.0.0
+cd android && ./gradlew assembleRelease    # -> app/build/outputs/apk/release/app-release.apk
+```
+
+The APK is signed with `android/app/liferpg-sideload.jks`. The key is committed so that newer builds install over older ones without uninstalling, because uninstalling would wipe your progress. Use your own private key before publishing to a store. Gradle uses Google's mirror of Maven Central (configured in `settings.gradle`). Requires Android 7.0+ with an up-to-date Android System WebView. Browser notifications aren't available inside the APK.
 
 ## Architecture
 
@@ -60,4 +67,5 @@ No account, tracking, ads, purchases or gambling mechanics. Notifications are of
 
 * `npm test`: 48 tests pass. They cover the XP formula and levels, duplicate-reward prevention, quest completion, editing, invalid input and transitions, prerequisite cycles, the daily taper, rollover and recurrence, skills, boss stage order, achievements, adaptive difficulty, planner and AI fallback and validation, analytics, persistence after restart, failed-write rollback, concurrent taps, export/import, v1→v2 migration, ledger repair, and running with no network.
 * `npm run e2e`: passes in Chromium with a Pixel 7 viewport. The run creates a character, a skill (rename and disable) and a goal; accepts a suggestion and creates, edits and completes a multi-step quest (XP awarded once, level-up shown); plans a goal into a 5-stage boss with linked quests and defeats it; checks achievements and stats; reloads with progress intact; goes offline and completes a quest; exports (key excluded), deletes and re-imports. Screenshots go to `e2e-output/`.
-* Not verified: a native APK build (no Android SDK here), a live Anthropic call (no key), and notifications on a real device.
+* APK: builds and verifies (signature and contents checked). Not run on a device or emulator, because this machine has no hardware virtualisation.
+* Not verified: a live Anthropic call (no key) and notifications on a real device.

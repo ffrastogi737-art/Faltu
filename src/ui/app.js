@@ -110,6 +110,7 @@ function questPayload(fd, form) {
 }
 
 function download(name, text) {
+  if (window.AndroidBridge) return window.AndroidBridge.saveFile(name, text); // native save dialog in the APK
   const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
   const a = Object.assign(document.createElement('a'), { href: url, download: name });
   document.body.append(a);
@@ -366,7 +367,8 @@ async function boot() {
   }
 }
 
-if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+// The APK serves files from inside the app, so it needs no offline cache.
+if ('serviceWorker' in navigator && location.protocol !== 'file:' && !window.AndroidBridge) {
   navigator.serviceWorker.register('sw.js').catch((e) => console.warn('Offline cache unavailable', e));
 }
 window.__lifeRpg = { store }; // handy for debugging and the end-to-end test

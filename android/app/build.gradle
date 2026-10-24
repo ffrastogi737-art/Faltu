@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'app.liferpg'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.liferpg'
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // shortcut: sideload key is committed so every build can update the installed app without
+    // uninstalling (which would wipe progress). Generate a private key before publishing to a store.
+    signingConfigs {
+        sideload {
+            storeFile file('liferpg-sideload.jks')
+            storePassword 'liferpg-sideload'
+            keyAlias 'liferpg'
+            keyPassword 'liferpg-sideload'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.sideload
+        }
+        debug {
+            signingConfig signingConfigs.sideload
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        checkReleaseBuilds false
+    }
+
+    sourceSets {
+        main {
+            assets.srcDirs += ["$buildDir/webassets"]
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}
+
+// The web app in the repository root is the single source of truth; copy it into the APK at build time.
+def webRoot = rootProject.projectDir.parentFile
+tasks.register('copyWeb', Sync) {
+    from(webRoot) {
+        include 'index.html', 'manifest.webmanifest', 'src/**', 'icons/**', 'fonts/**'
+    }
+    into "$buildDir/webassets"
+}
+preBuild.dependsOn 'copyWeb'
