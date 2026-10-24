@@ -264,6 +264,74 @@ class RouterTest(unittest.TestCase):
         with self.assertRaises(AllFailed):
             asyncio.run(self.router().chat([Message("user", "go")], [], task_type="plan"))
 
+    # --- found in the first live run (Groq + Gemini) -------------------------
+    def test_listed_prices_are_free_when_all_models_free(self):
+        """Groq lists paid-tier prices, yet its free key covers every model; a marketplace's priced model stays paid."""
+        self.provider("groqlike", scripted_openai())
+        self.provider("market", scripted_openai())
+        self.con.execute("UPDATE models SET free=NULL, price_in=0.15")
+        self.providers["groqlike"]["all_models_free"] = True
+        ranked, rejected = self.router().candidates("plan", 100)
+        self.assertEqual([c["provider"] for c in ranked], ["groqlike"])
+        self.assertEqual(rejected, {"paid, no budget": 1})
+
+    def test_overloaded_model_does_not_cool_its_provider(self):
+        def busy(body):
+            return (503, {"error": {"message": "high demand"}}) if body["model"] == "m" else None
+        self.provider("g", scripted_openai(on_call=busy), quality=1.0)
+        self.con.execute("INSERT INTO models (provider, model, tools, context, free, status, quality) "
+                         "VALUES ('g', 'm2', 1, 128000, 1, 'active', 0.5)")
+        r = self.router()
+        r.choose = self._no_explore(r)
+        resp = asyncio.run(r.chat([Message("user", "go")], [{"name": "x", "parameters": {}}], task_type="plan"))
+        self.assertEqual((resp.provider, resp.model), ("g", "m2"))
+        self.assertIsNotNone(r.quota.cooling("g/m"))
+        self.assertIsNone(r.quota.cooling("g"))
+
+    def test_model_without_tool_support_is_remembered(self):
+        def no_tools(body):
+            return 400, {"error": {"message": "`tool calling` is not supported with this model"}}
+        self.provider("t", scripted_openai(on_call=no_tools), tools=None, quality=1.0)
+        self.con.execute("UPDATE models SET status='probation'")
+        self.provider("ok", scripted_openai(), quality=0.3)
+        r = self.router()
+        r.choose = self._no_explore(r)
+        resp = asyncio.run(r.chat([Message("user", "go")], [{"name": "x", "parameters": {}}], task_type="plan"))
+        self.assertEqual(resp.provider, "ok")
+        self.assertEqual(self.con.execute("SELECT tools FROM models WHERE provider='t'").fetchone()[0], 0)
+        _, rejected = r.candidates("plan", 100)
+        self.assertEqual(rejected, {"no tool calling": 1})
+
+    def test_per_provider_budget_cap(self):
+        self.provider("pricey", scripted_openai(), free=0)
+        config.save_router_setting("budget", "paid_enabled", True)
+        config.save_router_setting("budget", "daily_inr", 100)
+        config.save_router_setting("budget", "per_provider_inr", {"pricey": 10})
+        r = self.router()
+        self.assertEqual(len(r.candidates("plan", 100)[0]), 1)
+        self.con.execute("INSERT INTO calls (provider, model, task_type, ok, cost_usd) VALUES ('pricey','m','plan',1,0.2)")
+        self.assertEqual(r.candidates("plan", 100)[1], {"paid, no budget": 1})  # 0.2 USD = ~17 INR > 10
+
+    def test_fixed_model_waits_out_a_rate_limit(self):
+        from unittest import mock
+
+        from agent.providers.openai_compat import OpenAICompat
+        from agent.router import Fixed
+        hits = []
+
+        def first_limited(body):
+            hits.append(1)
+            return (429, {"error": "slow down"}) if len(hits) == 1 else None
+        s = self.provider("solo", scripted_openai(on_call=first_limited))
+        waits = []
+
+        async def no_sleep(t):
+            waits.append(t)
+        with mock.patch("agent.router.asyncio.sleep", no_sleep):
+            resp = asyncio.run(Fixed(OpenAICompat("solo", s.url, "k"), "m").chat([Message("user", "go")], []))
+        self.assertEqual(resp.message.content, '{"verdict": "approve", "issues": []}')
+        self.assertEqual(waits, [7.0])  # the provider's Retry-After
+
     def test_classify(self):
         from agent.messages import ToolCall
         h = [Message("system", ""), Message("user", "fix")]

@@ -10,7 +10,7 @@ import time
 
 from . import context, verify
 from .messages import Message, ProviderError
-from .router import AllFailed
+from .router import AllFailed, estimate_tokens
 from .session import Session, to_dict
 from .tools import SCHEMAS, ToolError, schemas
 
@@ -189,7 +189,10 @@ class Agent:
             try:
                 return await self.brain.chat(self.history, specs, escalate=escalate)
             except (ProviderError, AllFailed) as e:
-                if attempt == 0 and (_is_context_error(e) or (isinstance(e, AllFailed) and "context" in str(e).lower())):
+                # "no model fits" helps only when the history is long; a short one would just lose the work
+                too_big = (isinstance(e, AllFailed) and "context too small" in str(e)
+                           and estimate_tokens(self.history) >= self.compactor.budget * 0.5)
+                if attempt == 0 and (_is_context_error(e) or too_big):
                     self.log("  context too long: forcing compaction and retrying")
                     self.history, _, _ = await self.compactor.maybe(self.history, self.brain, force=True)
                     self.session.event("compaction", history=[to_dict(m) for m in self.history], forced=True)

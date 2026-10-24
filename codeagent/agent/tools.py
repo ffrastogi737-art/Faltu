@@ -21,7 +21,8 @@ SKIP_DIRS = {".git", "node_modules", "__pycache__", ".venv", "venv", "dist", "bu
 
 GIT_READ = {"status", "diff", "log", "show", "branch", "blame", "ls-files", "rev-parse", "shortlog", "describe"}
 GIT_WRITE = {"add", "commit", "checkout", "switch", "stash", "restore", "reset", "merge", "tag", "worktree",
-             "cherry-pick", "revert", "init", "mv", "rm", "apply"}
+             "cherry-pick", "revert", "init", "mv", "rm", "apply", "branch"}
+BRANCH_LIST = {"-a", "-r", "-v", "-vv", "--list", "--show-current", "--all", "--remotes"}
 
 
 class ToolError(Exception):
@@ -148,9 +149,9 @@ class Tools:
         return _cap("\n".join(out) or "no source files")
 
     # --- changing ---
-    def _write(self, full, text, rel):
-        if self.on_edit:
-            self.on_edit(rel, full)
+    def _write(self, full, text):
+        if self.on_edit:  # one name per file, however the model spelled the path (abs, ./, ..)
+            self.on_edit(os.path.relpath(full, self.ws), full)
         with open(full, "w") as f:
             f.write(text)
 
@@ -165,7 +166,7 @@ class Tools:
         diff = "".join(difflib.unified_diff(text.splitlines(True), updated.splitlines(True), path, path))
         if not self._allowed("edit", diff):
             return "user rejected this edit"
-        self._write(full, updated, path)
+        self._write(full, updated)
         return "edited:\n" + _cap(diff)
 
     def write_file(self, path, content):
@@ -175,7 +176,7 @@ class Tools:
         if not self._allowed("edit", f"create {path} ({len(content)} chars)\n{content[:2000]}"):
             return "user rejected this file"
         os.makedirs(os.path.dirname(full), exist_ok=True)
-        self._write(full, content, path)
+        self._write(full, content)
         return f"created {path}"
 
     # --- running ---
@@ -200,15 +201,20 @@ class Tools:
         if not argv:
             raise ToolError("give git arguments, e.g. `status` or `diff`")
         sub = argv[0]
-        if sub in GIT_READ:
+        # --output writes a file anywhere; branch with flags deletes/moves branches
+        reads = not any(a.startswith("--output") for a in argv) and (sub != "branch" or set(argv[1:]) <= BRANCH_LIST)
+        if sub in GIT_READ and reads:
             pass
         elif self.mode == "plan" or self.git_read_only:
             raise ToolError("only read-only git commands are allowed here")
         elif sub in GIT_WRITE:
-            risky = sub == "reset" and "--hard" in argv
+            risky = ((sub == "reset" and "--hard" in argv) or sub == "restore"  # these discard uncommitted work
+                     or (sub == "checkout" and ("--" in argv or "." in argv))
+                     or (sub == "stash" and argv[1:2] in (["drop"], ["clear"]))
+                     or (sub == "branch" and any(a in ("-d", "-D", "--delete", "-f", "--force") for a in argv)))
             if not self._allowed("consequential" if risky else "edit", f"git {args}"):
                 return "user rejected this git command"
-        elif sub in ("push", "pull", "fetch", "clone", "remote"):
+        elif sub in ("push", "pull", "fetch", "clone", "remote") and reads:
             if not self._allowed("consequential" if sub == "push" else "network", f"git {args}"):
                 return "user rejected this git command"
         else:
@@ -281,8 +287,13 @@ class Tools:
     def screenshot(self, url, path="screenshot.png"):
         """Headless browser screenshot (needs Node.js Playwright; not available on Termux)."""
         out = self._path(path)
-        local = url.startswith(("http://localhost", "http://127.0.0.1", "file://"))
-        if not local and not self._host_allowed(url) and not self._allowed("network", f"open {url} in a browser"):
+        u = urllib.parse.urlparse(url)
+        if u.scheme == "file":
+            self._path(urllib.parse.unquote(u.path))  # only workspace files, never .env
+        elif u.scheme not in ("http", "https"):
+            raise ToolError("only http(s) or file URLs")
+        elif (u.hostname not in ("localhost", "127.0.0.1", "::1") and not self._host_allowed(url)
+              and not self._allowed("network", f"open {url} in a browser")):
             return "user rejected this request"
         script = ("const {chromium}=require('playwright');(async()=>{const b=await chromium.launch();"
                   "const p=await b.newPage();await p.goto(process.argv[1]);await p.screenshot({path:process.argv[2],"
@@ -294,7 +305,7 @@ class Tools:
         if p.returncode:
             raise ToolError(f"screenshot failed: {p.stderr.strip()[-300:]}")
         if self.on_edit:
-            self.on_edit(path, out)
+            self.on_edit(os.path.relpath(out, self.ws), out)
         return f"saved {path} (page title: {p.stdout.strip()[:100]})"
 
 

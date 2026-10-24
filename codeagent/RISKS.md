@@ -10,6 +10,6 @@
 | R6 | Android may kill Termux in the background mid-task. | Append-only session log + resume; `termux-wake-lock` advised in README. |
 | R7 | 4 GB RAM with thousands of models. | Models stay in SQLite, SQL prefilter before scoring; nothing large loaded in memory. |
 | R8 | Secrets leaking into prompts/logs. | Keys only from env; env scrubbed for subprocesses; redaction filter on every outbound request, log and trace. |
-| R9 | Nothing was tested against a real model with tool calling (no keys during the build). Real models may misuse tools in ways the fakes did not. | Probes reject weak models; repair layer; failover; `edith eval` gives real numbers once a key is added. |
+| R9 | Only Groq and Gemini were tested live (2026-10, one task). Other providers' models may misuse tools in ways the fakes did not, and free tiers are tight (Groq: 8000 tokens/min, about one agent step a minute). | Probes reject weak models; repair layer; failover; `edith eval` gives real numbers once a key is added. |
 | R10 | Windows code path not run on Windows. | Small, isolated branch in sandbox.run; report problems and they are cheap to fix. |
 | R11 | Pattern-based command rules can be bypassed by a disguised command. | Kernel sandbox (bwrap) where available; approvals; see SECURITY.md. |

@@ -32,6 +32,7 @@ providers:
     key_env: NEWCO_API_KEY,NEWCO_API_KEY_2   # several keys: the router uses the one with most quota left
     limits: {rpm: 30, rpd: 1000}             # if the provider does not send rate-limit headers
     free_tier: true                          # true, false (paid: needs a budget) or unknown
+    all_models_free: true                    # optional: free key covers every model, listed prices are paid-tier
     allow_private_code: false                # what `providers trust/untrust` changes
 ```
 

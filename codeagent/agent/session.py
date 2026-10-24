@@ -82,7 +82,22 @@ class Session:
         return {"meta": meta}
 
     def history_for_resume(self):
-        return list(self.history)
+        """History with a stub result for every tool call that never got one (the process died
+        mid-tool): providers reject an assistant tool call that is not followed by its result."""
+        out, pending = [], []
+        for m in self.history + [None]:
+            if pending and (m is None or m.role != "tool"):
+                out += [Message("tool", "error: interrupted before this tool finished; check its effect before "
+                                        "retrying", tool_call_id=i) for i in pending]
+                pending = []
+            if m is None:
+                break
+            if m.role == "tool" and m.tool_call_id in pending:
+                pending.remove(m.tool_call_id)
+            elif m.role == "assistant":
+                pending = [t.id for t in m.tool_calls]
+            out.append(m)
+        return out
 
     # --- snapshots / rewind ---
     def snapshot(self, rel, full):

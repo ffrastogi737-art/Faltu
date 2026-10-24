@@ -4,7 +4,7 @@
 
 Its brain is not one model: a **smart router** picks the best model for every single step across many LLM providers (mostly free tiers), fails over when one is rate-limited or down, and spreads load so no free quota runs dry. Python, one dependency (PyYAML), runs on Android (Termux), a 4 GB Windows laptop, and free cloud hosts.
 
-Status: all phases (0-9) built and tested with local fake providers (80 tests). **Not yet tested with a real provider's model** (no keys were available during the build). See [reports/](reports/) and the honest limits in [SECURITY.md](SECURITY.md) and [RISKS.md](RISKS.md).
+Status: all phases (0-9) built and tested with local fake providers (92 tests). First live run (2026-10, Groq + Gemini keys): with automatic routing it fixed the 3 bugs of `examples/kirana_shop`, tests passed, and a model of another family reviewed it; the routing bugs that run exposed are fixed and covered by tests. See [reports/](reports/) and the honest limits in [SECURITY.md](SECURITY.md) and [RISKS.md](RISKS.md).
 
 ## Install
 
@@ -115,6 +115,6 @@ Live events and approvals: WebSocket `ws://localhost:8765/tasks/<id>/ws?token=..
 ## Develop
 
 ```bash
-python -m unittest discover tests     # 80 tests, about a minute; no network or keys needed
+python -m unittest discover tests     # 92 tests, about a minute; no network or keys needed
 edith eval --oracle && edith eval --noop   # must print 24/24 and 0/24
 ```

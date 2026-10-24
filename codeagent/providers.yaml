@@ -14,6 +14,9 @@
 #   allow_private_code: may this provider see workspace code?
 #               false unless its data policy is confirmed safe.
 #   free_tier:  true | false | unknown
+#   all_models_free: true = the free key covers every listed model and the
+#               prices in the model list are the paid tier's (Groq). Leave it
+#               out for marketplaces where only some models are free.
 #
 # Add any OpenAI-compatible provider with:
 #   agent providers add <name> --base-url <url> --key-env <VAR>
@@ -26,7 +29,7 @@ providers:
     key_env: GEMINI_API_KEY
     models: /models
     enabled: true
-    status: unverified
+    status: live
     free_tier: true
     allow_private_code: false   # free-tier prompts may be used for training
   openrouter:
@@ -44,8 +47,9 @@ providers:
     key_env: GROQ_API_KEY
     models: /models
     enabled: true
-    status: unverified
+    status: live
     free_tier: true
+    all_models_free: true  # 2026-10 live run: /models lists paid-tier prices
     allow_private_code: false
   zai:
     api: openai

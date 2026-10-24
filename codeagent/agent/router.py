@@ -4,6 +4,7 @@ model call, and fails over to the next one when a call goes wrong.
 Per call: classify the step -> SQL prefilter -> hard filters -> score ->
 explore a little -> call -> on failure cool down and try the next
 candidate, preferring a different provider."""
+import asyncio
 import json
 import random
 import re
@@ -197,6 +198,7 @@ class Router:
             (*allowed, PREFILTER_LIMIT)).fetchall()
         stats = self._stats(rows, task_type)
         spent_today = self._spent_today_inr(budget)
+        spent_by = {}
         out = []
         for r in rows:
             name, model, p = r["provider"], r["model"], allowed[r["provider"]]
@@ -222,10 +224,15 @@ class Router:
             if avoid_family and family(name, model) == avoid_family:
                 reject("same family as coder")
                 continue
-            paid = r["free"] == 0 or (r["price_in"] or 0) > 0 or p.get("free_tier") is False
+            # all_models_free: the free key covers every model; listed prices are the paid tier's (Groq)
+            paid = (r["free"] == 0 or p.get("free_tier") is False
+                    or ((r["price_in"] or 0) > 0 and not p.get("all_models_free")))
             if paid:
                 cap = (budget.get("per_provider_inr") or {}).get(name, budget.get("daily_inr", 0))
-                if not budget.get("paid_enabled") or spent_today >= (budget.get("daily_inr") or 0) or not cap:
+                if name not in spent_by:
+                    spent_by[name] = self._spent_today_inr(budget, name)
+                if (not budget.get("paid_enabled") or spent_today >= (budget.get("daily_inr") or 0) or not cap
+                        or spent_by[name] >= cap):
                     reject("paid, no budget")
                     continue
             # best key lane of this provider = most headroom
@@ -248,8 +255,9 @@ class Router:
              "ORDER BY ts DESC LIMIT 5000) GROUP BY provider, model")
         return {(s["provider"], s["model"]): dict(s) for s in self.con.execute(q, (task_type, task_type))}
 
-    def _spent_today_inr(self, budget):
-        usd = self.con.execute("SELECT COALESCE(SUM(cost_usd),0) FROM calls WHERE ts >= date('now')").fetchone()[0]
+    def _spent_today_inr(self, budget, provider=None):
+        usd = self.con.execute("SELECT COALESCE(SUM(cost_usd),0) FROM calls WHERE ts >= date('now') "
+                               "AND (? IS NULL OR provider = ?)", (provider, provider)).fetchone()[0]
         return usd * float(budget.get("usd_to_inr", 88))
 
     def _score(self, r, p, task_type, st, headroom, key_idx, paid, router):
@@ -347,6 +355,10 @@ class Router:
                                                             int((time.monotonic() - t0) * 1000), err, key_idx))
                 self.con.commit()
                 raise  # the loop compacts the history and retries; failing over would not help
+            if e.status == 400 and tools and re.search(r"tool.{0,40}not (supported|support)|"
+                                                       r"(not|n't) support.{0,40}tool", str(e), re.IGNORECASE):
+                # the listing said nothing about tools; now we know, so it is never picked for tool steps again
+                self.con.execute("UPDATE models SET tools=0 WHERE provider=? AND model=?", (name, model))
             if e.status == 429:
                 retry = None
                 try:
@@ -366,8 +378,10 @@ class Router:
                 err += f" -> cooldown {waited:.0f}s"
             elif e.status in (401, 403):
                 self.quota.cool(name, 3600, f"auth {e.status}")
-            elif e.status == 0 or e.status >= 500:
+            elif e.status == 0:  # unreachable: the whole provider is down
                 self.quota.cool(name, None, f"HTTP {e.status}")
+            elif e.status >= 500:  # often one overloaded model ("high demand"); its siblings still work
+                self.quota.cool(f"{name}/{model}", None, f"HTTP {e.status}")
         latency = int((time.monotonic() - t0) * 1000)
         self.quota.note_call(f"{name}#{key_idx}", getattr(adapter, "last_headers", {}) or {})
         mkey = f"{name}/{model}"
@@ -404,4 +418,15 @@ class Fixed:
         self.session_cost_usd = 0.0
 
     async def chat(self, history, tools, task_type=None, escalate=False, avoid_family=None):
-        return await self.adapter.chat(self.model, history, tools)
+        """No other model to fail over to, so a rate limit or overload is waited out (twice at most)."""
+        for attempt in range(3):
+            try:
+                return await self.adapter.chat(self.model, history, tools)
+            except ProviderError as e:
+                if attempt == 2 or e.status not in (429, 500, 502, 503, 504):
+                    raise
+                try:
+                    wait = float(e.retry_after)
+                except (TypeError, ValueError):
+                    wait = 10 * (attempt + 1)
+                await asyncio.sleep(min(wait, 60))

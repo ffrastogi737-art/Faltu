@@ -14,7 +14,7 @@ import subprocess
 from fnmatch import fnmatch
 
 DENY = [
-    (r"\brm\s+(-\w*\s+)*-\w*[rf]\w*\s+(/|~|\$HOME)(\s|$|/\*)", "deletes the whole filesystem or home"),
+    (r"\brm\s+(-\w*\s+)*-\w*[rf]\w*\s+(/|~|\$HOME|\$\{HOME\})/?\*?(\s|$)", "deletes the whole filesystem or home"),
     (r"\bmkfs(\.\w+)?\b", "formats a disk"),
     (r"\bdd\b.*\bof=/dev/", "writes a raw device"),
     (r":\(\)\s*\{\s*:\|:&\s*\};:", "fork bomb"),
@@ -22,7 +22,7 @@ DENY = [
     (r">\s*/dev/(sd|nvme|mmcblk)", "overwrites a disk"),
     (r"\b(curl|wget)\b[^|;&]*\|\s*(ba|z|da)?sh\b", "pipes a download into a shell"),
     (r"\b(sudo|su|doas)\b", "privilege escalation"),
-    (r"(^|[\s;&|])(cat|less|more|head|tail|cp|base64|xxd|grep|sed|awk)\b[^;&|]*(^|[\s/])\.env(\s|$)",
+    (r"(^|[\s;&|])(cat|less|more|head|tail|cp|base64|xxd|grep|sed|awk)\b[^;&|]*(^|[\s/])\.env(?!\.example\b)(\.[\w.-]+)?(\s|$)",
      "reads secrets (.env)"),
 ]
 CONSEQUENTIAL = [
@@ -45,7 +45,7 @@ def _outside_paths(cmd, ws):
     except ValueError:
         tokens = cmd.split()
     for t in tokens:
-        t = t.lstrip(">")
+        t = os.path.expandvars(t.lstrip(">"))  # $HOME/x is outside too
         if not (t.startswith("/") or t.startswith("~") or ".." in t):
             continue
         full = os.path.realpath(os.path.join(ws, os.path.expanduser(t)))

@@ -123,8 +123,19 @@ Every model call is routed on its own; a session can use a different provider at
 
 ## D22. Phase 9: evals and hardening
 - 24 benchmark tasks in `evals/tasks/` (bug fixes incl. multi-file and an infinite loop, features, a refactor, a performance fix, 3 JavaScript). Each has a hidden grader the agent never sees and a reference solution. `edith eval --oracle` (reference solutions) must give 24/24 and `--noop` (no changes) 0/24; a test enforces both, so every grader is solvable and really tests the fix.
-- `edith eval` runs the real agent (router or a fixed model) in trusted mode on temp copies, saves `reports/eval-<date>-<label>.{json,md}` and compares with the previous run of the same label: better / worse / same, with fixed and regressed tasks (self-improvement rule: keep a change only if it is not worse). Real-model numbers need a key; none were available while building.
+- `edith eval` runs the real agent (router or a fixed model) in trusted mode on temp copies, saves `reports/eval-<date>-<label>.{json,md}` and compares with the previous run of the same label: better / worse / same, with fixed and regressed tasks (self-improvement rule: keep a change only if it is not worse). Real-model numbers need a key (see D23 for the first live run).
 - `edith cost`: calls, failures, tokens and cost per provider and day, in $ and Rs.
 - Security review in SECURITY.md (threats, protections, tests, known limits). Bandit-style lint reviewed; provider URLs now limited to http(s).
 - Found and fixed during hardening: `unittest` with no tests exits 5 on Python 3.12+, so verification now only runs Python tests when test files exist; `edith cost` lost an import in a ruff auto-fix (caught by a py311 lint pass); the whole suite runs on Python 3.11, 3.12 and 3.13.
 - Windows: commands run through cmd.exe in their own process group and the tree is killed with taskkill on timeout. Written, not yet run on Windows.
+
+## D23. Fixes from the first live run and a code audit (2026-10)
+- Groq's `/models` lists paid-tier prices, so its free models were rejected as "paid". New provider flag `all_models_free: true` (set for Groq) ignores listed prices; marketplaces such as OpenRouter keep pricing priced models as paid.
+- A 5xx now cools only that model ("high demand" is usually one model); an unreachable provider (status 0) still cools the whole provider.
+- A 400 saying a model does not support tool calling sets `tools=0`, so it is never picked for tool steps again.
+- `budget.per_provider_inr` is now compared with that provider's spend today (before, only "is it zero" was checked).
+- A fixed model (`--provider/--model`) has nobody to fail over to: it waits out a 429/5xx (Retry-After, at most 60 s) up to twice.
+- "No usable model" forces compaction only when the history is at least half the context budget; before, any such error with "context" in it wiped a short history.
+- Snapshots use the workspace-relative path of the real file, so absolute or `./` paths no longer break edits or rewind.
+- `resume` adds an "interrupted" result for every tool call that never got one, because providers reject an unanswered tool call.
+- Safety: the deny list covers `rm -rf ~/`, `/*`, `$HOME`; `.env.*` is refused by shell commands too; read-only git refuses `--output` and branch changes; git commands that discard work always ask; screenshots open only workspace `file://` paths and only the real localhost skips the network question.
