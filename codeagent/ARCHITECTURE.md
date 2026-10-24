@@ -12,7 +12,9 @@ codeagent/
                         tool results, usage, finish reason, errors      (P1)
     loop.py             plan -> tool -> observe -> verify; step/time/cost caps,
                         doom-loop detection, plan mode                  (P1)
-    cli.py              `agent` command                                 (P1)
+    cli.py              `edith` command and welcome screen              (P1)
+    config.py           providers.yaml + .env loading, secret redaction (P1)
+    tools.py            read/list/grep/edit/write/run_command           (P1)
     providers/
       openai_compat.py  generic adapter (most providers)                (P1)
       gemini.py cohere.py ai21.py cloudflare.py horde.py               (P2)

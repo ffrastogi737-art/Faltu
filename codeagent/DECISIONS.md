@@ -8,8 +8,9 @@ Target order: Android Termux CLI first; Windows/Linux PC only after Termux works
 ## D2. Python 3.11+ with asyncio
 Termux ships current Python (`pkg install python`). Python has the widest LLM/HTTP ecosystem and matches the master prompt's default stack.
 
-## D3. Two runtime dependencies: `httpx` and `pyyaml`
-Both install on Termux with plain `pip` (pure Python; PyYAML falls back to its pure-Python loader). Everything else is stdlib: `sqlite3`, `asyncio`, `subprocess`, `json`, `difflib`.
+## D3. One runtime dependency: `pyyaml`
+It installs on Termux with plain `pip` (PyYAML falls back to its pure-Python loader). Everything else is stdlib: `urllib` for HTTP (run in `asyncio.to_thread`), `sqlite3`, `subprocess`, `json`, `difflib`.
+Phase 1 dropped the planned `httpx`: stdlib `urllib` was enough, so there is one less package to install on the phone.
 Rejected for now: pydantic (needs Rust-built `pydantic-core`), tree-sitter (native build), provider SDKs (heavy, one per provider). Revisit only if a pure option fails.
 
 ## D4. No provider SDKs: one generic OpenAI-compatible adapter + small native adapters
@@ -44,3 +45,11 @@ The repo already holds other apps (LIFE RPG, WHAT IF?). The agent is an independ
 
 ## D13. Currency for budgets: INR
 Budget caps are in rupees (`budget.daily_inr`); providers that report USD cost are converted with a user-set rate in config.
+
+## D14. Phase 1 scope choices
+- The user picks the model (`EDITH_MODEL` in `.env` or `--model`). Choosing models automatically is the router's job (Phase 3). Model names are never in code.
+- `run_command` ships in Phase 1, before the Phase 4 sandbox, because the agent must run tests to verify its own fix. It runs in the workspace with a timeout and an output cap, with all provider keys removed from its environment, and needs approval unless `--mode trusted`.
+- Permission modes: `plan` (read-only tools only), `default` (ask before every edit and command), `accept_edits` (ask only before commands), `trusted` (ask nothing). `bypass` is not built.
+- Broken tool-call JSON is sent back to the model as an error so it can retry. The real repair layer comes in Phase 2.
+- Doom loop = the same tool call with the same arguments fails 3 times in a row.
+- Not in Phase 1: the session log, resume, a cost cap (no price data yet), streaming, and non-OpenAI adapters.
