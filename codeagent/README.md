@@ -1,6 +1,6 @@
 # E.D.I.T.H.
 
-**Efficient Developer Interface for Tech & Hacks**: a terminal coding agent whose brain is a router over many LLM providers (mostly free tiers). Status: **Phase 3**. Smart router: every step of a task picks the best trusted model across all providers, fails over on errors and spreads load over free quotas. Evidence: [reports/](reports/).
+**Efficient Developer Interface for Tech & Hacks**: a terminal coding agent whose brain is a router over many LLM providers (mostly free tiers). Status: **Phase 6**. Smart router across all providers, sandboxed tools with permissions and hooks, sessions with resume/rewind, memory, automatic verification and a reviewer from another model family. Evidence: [reports/](reports/).
 
 Read next: [DECISIONS.md](DECISIONS.md), [ARCHITECTURE.md](ARCHITECTURE.md), [RISKS.md](RISKS.md), [providers.yaml](providers.yaml).
 
@@ -37,7 +37,30 @@ edith dashboard                          # calls, errors, latency, cost and cool
 
 Several keys for one provider: `key_env: GROQ_API_KEY,GROQ_API_KEY_2` in providers.local.yaml. Optional limits: `limits: {rpm: 30, rpd: 1000}`.
 
-Modes: `default` asks before every edit and command, `accept_edits` asks only before commands, `trusted` asks nothing, `plan` only reads.
+Modes: `default` asks before every edit and command, `accept_edits` asks only before commands, `trusted` asks only for consequential actions (push, publish, system packages, writes outside the workspace, network), `plan` only reads.
+
+```bash
+edith sessions                           # recent sessions and how they ended
+edith report <id>                        # evidence: checks, reviewer verdict, files, tokens
+edith resume <id> ["extra instruction"]  # continue after a stop or Ctrl-C
+edith rewind <id> --to 1 [--git]         # undo a session's file changes
+edith memory | memory add "..." | dream  # long-term lessons
+```
+
+Settings live in `~/.edith/settings.yaml`:
+
+```yaml
+permissions:
+  allow: ["python -m unittest*", "ruff *"]   # commands that never ask
+  deny: ["make deploy*"]
+  network: ask                                # ask | allow | deny
+  network_allow: [pypi.org, docs.python.org]  # hosts web_fetch may use without asking
+hooks:
+  - {event: before_tool, match: write_file, block: "no new files"}
+  - {event: after_tool, match: edit_file, command: "ruff format --quiet ."}
+context_budget: 32000
+trusted_workspaces: [~/projects/myapp]        # only these may add allow rules/hooks in .edith/settings.yaml
+```
 Options go after the subcommand (`edith run "..." --model X`).
 
 PC (Windows/Linux) setup comes after Termux works.

@@ -295,6 +295,10 @@ class Router:
         failed_providers = []
         for attempt in range(MAX_ATTEMPTS):
             ranked, rejected = self.choose(task_type, need, bool(tools), avoid_family, exclude, escalate)
+            if not ranked and avoid_family:  # diversity is a preference, not a reason to fail
+                self.log(f"  route: no model outside family {avoid_family!r}; using any")
+                avoid_family = None
+                ranked, rejected = self.choose(task_type, need, bool(tools), None, exclude, escalate)
             if failed_providers:  # after a failure prefer a provider that has not failed this step
                 ranked.sort(key=lambda c: c["provider"] in failed_providers)
             if not ranked:
@@ -327,10 +331,19 @@ class Router:
                 err = "empty output"
             elif any("_error" in t.arguments for t in resp.message.tool_calls):
                 err = "malformed tool-call JSON"
+            elif resp.message.tool_calls and not tools:
+                err = "called a tool when none were offered"
             elif not resp.message.tool_calls and tools and REFUSAL.match(resp.message.content):
                 err = "refusal"
         except ProviderError as e:
             err = f"HTTP {e.status}: {str(e)[-160:]}"
+            if e.status in (400, 413) and any(k in str(e).lower() for k in ("context", "too long", "token limit",
+                                                                              "too many tokens", "maximum")):
+                self.con.execute("INSERT INTO calls (provider, model, task_type, ok, latency_ms, error, key_idx) "
+                                 "VALUES (?,?,?,0,?,?,?)", (name, model, task_type,
+                                                            int((time.monotonic() - t0) * 1000), err, key_idx))
+                self.con.commit()
+                raise  # the loop compacts the history and retries; failing over would not help
             if e.status == 429:
                 retry = None
                 try:

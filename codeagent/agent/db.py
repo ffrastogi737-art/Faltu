@@ -56,9 +56,8 @@ MIGRATIONS = [
 
 
 def default_path():
-    home = os.environ.get("EDITH_HOME") or os.path.join(os.path.expanduser("~"), ".edith")
-    os.makedirs(home, exist_ok=True)
-    return os.path.join(home, "state.db")
+    from .config import edith_home
+    return os.path.join(edith_home(), "state.db")
 
 
 def connect(path=None):

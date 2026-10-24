@@ -23,14 +23,15 @@ codeagent/
     db.py               SQLite: models, discovery, calls                (P2)
     discovery.py        model lists + capability probes                 (P2)
     router.py           classify step, filter, score, failover, quotas  (P3)
-    tools/              read, write, patch, grep/glob, repo map, shell,
-                        git, web, browser, lint                         (P1 basic, P4 rest)
-    sandbox.py          restricted subprocess + permission modes        (P4)
+    tools.py            read/list/grep/repo_map/edit/write/run_command/
+                        git/check/web_fetch/web_search/screenshot       (P1, P4)
+    sandbox.py          command policy + bwrap/subprocess execution     (P4)
     hooks.py            lifecycle hooks                                 (P4)
-    context/            prompt composer, compaction, project memory    (P5)
-    memory/             SQLite FTS long-term memory, dreaming job       (P5)
-    session.py          JSONL log, resume, rewind/checkpoints           (P5)
-    verify/             test/lint runner, Reviewer agent                (P6)
+    context.py          prompt composer, project memory, skills,
+                        graduated compaction                            (P5)
+    memory.py           SQLite FTS5 lessons, dreaming job               (P5)
+    session.py          JSONL log, snapshots, git checkpoint, rewind    (P5)
+    verify.py           check detection/runner, Reviewer                (P6)
     agents/             supervisor, specialists, task board, worktrees  (P7)
     server/             HTTP + WebSocket API, MCP server/client         (P8)
   evals/                20-30 benchmark tasks + reports                 (P9)

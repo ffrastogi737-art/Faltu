@@ -96,13 +96,13 @@ class Loop(unittest.TestCase):
         auth, last = fake.requests[-1]
         self.assertEqual(auth, "Bearer sk-test-secret")
         tool_msgs = [m for m in last["messages"] if m["role"] == "tool"]
-        self.assertEqual(len(tool_msgs), 5)
+        self.assertGreaterEqual(len(tool_msgs), 5)
         self.assertEqual(tool_msgs[1]["tool_call_id"], "c_read_file")
         self.assertIn("exit code 1", tool_msgs[2]["content"])
         self.assertIn("exit code 0", tool_msgs[4]["content"])
-        self.assertEqual({t["function"]["name"] for t in last["tools"]},
-                         {"read_file", "list_files", "grep", "edit_file", "write_file", "run_command"})
-        self.assertEqual(result["input_tokens"], 60)
+        self.assertLessEqual({"read_file", "list_files", "grep", "edit_file", "write_file", "run_command", "git", "check"},
+                             {t["function"]["name"] for t in fake.requests[0][1]["tools"]})
+        self.assertEqual(result["evidence"]["checks"][0]["passed"], True)  # verified after the model said done
 
     def test_plan_mode_cannot_edit(self):
         result, fake = self.go([
@@ -111,7 +111,8 @@ class Loop(unittest.TestCase):
         ], mode="plan")
         self.assertTrue(result["done"])
         self.assertIn("disallowed tool", fake.requests[-1][1]["messages"][-1]["content"])
-        self.assertEqual({t["function"]["name"] for t in fake.requests[0][1]["tools"]}, {"read_file", "list_files", "grep"})
+        names = {t["function"]["name"] for t in fake.requests[0][1]["tools"]}
+        self.assertFalse(names & {"edit_file", "write_file", "run_command", "check"}, names)
 
     def test_rejected_edit_changes_nothing(self):
         before = open(os.path.join(self.ws, "cart.py")).read()

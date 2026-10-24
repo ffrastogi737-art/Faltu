@@ -100,3 +100,32 @@ def redact(text, secret_values):
     for s in secret_values:
         text = text.replace(s, "[REDACTED]")
     return text
+
+
+def edith_home():
+    home = os.environ.get("EDITH_HOME") or os.path.join(os.path.expanduser("~"), ".edith")
+    os.makedirs(home, exist_ok=True)
+    return home
+
+
+def load_settings(workspace):
+    """User settings (~/.edith/settings.yaml) plus the workspace's .edith/settings.yaml.
+    A repo is untrusted: unless the user lists it in trusted_workspaces, its file can
+    only add deny/ask rules, never allow rules, hooks or MCP servers."""
+    user = _read(os.path.join(edith_home(), "settings.yaml"))
+    ws = os.path.realpath(workspace)
+    local = _read(os.path.join(ws, ".edith", "settings.yaml"))
+    trusted = ws in [os.path.realpath(os.path.expanduser(p)) for p in user.get("trusted_workspaces") or []]
+    perms = dict(user.get("permissions") or {})
+    lp = local.get("permissions") or {}
+    for k in ("deny", "ask"):
+        perms[k] = list(perms.get(k) or []) + list(lp.get(k) or [])
+    out = {"permissions": perms, "hooks": list(user.get("hooks") or []),
+           "mcp_servers": dict(user.get("mcp_servers") or {}), "trusted_workspace": trusted,
+           "sandbox": user.get("sandbox", "auto"), "allow_bypass": bool(user.get("allow_bypass")),
+           "context_budget": int(user.get("context_budget", 32000))}
+    if trusted:
+        perms["allow"] = list(perms.get("allow") or []) + list(lp.get("allow") or [])
+        out["hooks"] += list(local.get("hooks") or [])
+        out["mcp_servers"].update(local.get("mcp_servers") or {})
+    return out

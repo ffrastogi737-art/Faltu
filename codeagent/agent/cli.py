@@ -31,7 +31,8 @@ NOTES = [
 def _paint(color):
     if os.environ.get("NO_COLOR") or not sys.stdout.isatty():
         return lambda s, *_: s
-    codes = {"main": color, "shadow": "38;2;110;40;35", "bold": "1", "dim": "2", "link": "38;2;120;140;255"}
+    codes = {"main": color, "shadow": "38;2;110;40;35", "bold": "1", "dim": "2", "link": "38;2;120;140;255",
+             "add": "32", "del": "31"}
     return lambda s, kind="main": f"\033[{codes[kind]}m{s}\033[0m"
 
 
@@ -91,7 +92,15 @@ def _ask(prompt):
 
 
 def _approve(kind, detail):
-    print(f"\n--- E.D.I.T.H. wants to run this {kind} ---\n{detail}")
+    paint = _paint("")
+    lines = []
+    for line in detail.splitlines():  # a small diff viewer: green adds, red removals
+        if line.startswith("+") and not line.startswith("+++"):
+            line = paint(line, "add")
+        elif line.startswith("-") and not line.startswith("---"):
+            line = paint(line, "del")
+        lines.append(line)
+    print(f"\n--- E.D.I.T.H. wants to do this ({kind}) ---\n" + "\n".join(lines))
     return _ask("Allow? [y/N] ").strip().lower() in ("y", "yes")
 
 
@@ -264,11 +273,27 @@ def main(argv=None):
     rt.add_argument("--task-type", default="code_generation")
     rt.add_argument("--context", type=int, default=8000, help="tokens the step needs")
     sub.add_parser("dashboard", help="per-provider calls, errors, latency, cost, cooldowns today")
+    sub.add_parser("sessions", help="recent sessions")
+    rs = sub.add_parser("resume", help="continue a stopped or interrupted session")
+    rs.add_argument("session")
+    rs.add_argument("note", nargs="?", help="extra instruction for the agent")
+    rw = sub.add_parser("rewind", help="restore files changed by a session to before a step")
+    rw.add_argument("session")
+    rw.add_argument("--to", type=int, default=1, help="step number (1 = before the session changed anything)")
+    rw.add_argument("--git", action="store_true", help="also restore tracked files from the git checkpoint")
+    rp = sub.add_parser("report", help="show a session's report")
+    rp.add_argument("session")
+    mm = sub.add_parser("memory", help="long-term lessons: list, add TEXT, forget ID")
+    mm.add_argument("action", nargs="?", default="list", choices=["list", "add", "forget"])
+    mm.add_argument("text", nargs="?")
+    sub.add_parser("dream", help="review past sessions and curate memory now")
     for p in (ap, *sub.choices.values()):  # options go after the subcommand
         p.add_argument("--provider", help="provider name from providers.yaml (or EDITH_PROVIDER)")
         p.add_argument("--model", help="model id, see `edith models` (or EDITH_MODEL)")
-    for p in (ap, run):
-        p.add_argument("--mode", default="default", choices=["plan", "default", "accept_edits", "trusted"])
+    for p in (ap, run, rs):
+        p.add_argument("--mode", default="default", choices=["plan", "default", "accept_edits", "trusted", "bypass"])
+        p.add_argument("--no-verify", action="store_true", help="skip automatic tests/lint after changes")
+        p.add_argument("--no-review", action="store_true", help="skip the reviewer agent")
         p.add_argument("--workspace", default=".")
         p.add_argument("--max-steps", type=int, default=30)
         p.add_argument("--max-cost-usd", type=float, default=None, help="stop when this session has cost more")
@@ -285,7 +310,12 @@ def main(argv=None):
 def _dispatch(args, providers, con):
     import asyncio
 
-    from . import config, discovery, loop
+    from . import config, discovery
+    from . import session as session_mod
+    from .hooks import Hooks
+    from .loop import Agent
+    from .memory import Memory
+    from .messages import Message
     from .tools import Tools
 
     if args.cmd == "providers":
@@ -313,6 +343,46 @@ def _dispatch(args, providers, con):
     if args.cmd == "dashboard":
         return _dashboard(con, providers)
 
+    if args.cmd == "sessions":
+        for s in session_mod.list_sessions():
+            print(f"{s['id']}  {s['status']:11} {os.path.basename(s['workspace'] or '')[:20]:20} {s['task'][:60]}")
+        return 0
+    if args.cmd == "rewind":
+        s = session_mod.Session(args.session, resume=True)
+        restored = s.rewind(args.to)
+        print(f"restored {len(restored)} files to before step {args.to}: {', '.join(restored) or '-'}")
+        if args.git:
+            print(s.restore_git_checkpoint())
+        return 0
+    if args.cmd == "report":
+        path = os.path.join(session_mod.Session(args.session, resume=True).dir, "artifacts", "report.md")
+        print(open(path).read() if os.path.exists(path) else "no report yet")
+        return 0
+    if args.cmd in ("memory", "dream"):
+        mem = Memory(con)
+        if args.cmd == "dream":
+            print(json.dumps(mem.dream(), indent=1))
+        elif args.action == "add":
+            print(mem.remember(args.text or "", source="user"))
+        elif args.action == "forget":
+            mem.forget(int(args.text))
+            print("forgotten")
+        else:
+            for m in mem.all():
+                print(f"{m['id']:4} [{m['tags'] or '-'}] {m['text']}")
+        return 0
+
+    session, history = None, None
+    if args.cmd == "resume":
+        session = session_mod.Session(args.session, resume=True)
+        history = session.history_for_resume()
+        args.workspace = session.meta["workspace"]
+        history.append(Message("user", args.note or "Continue the task from where you stopped."))
+        session.message(history[-1])
+    ws = os.path.realpath(args.workspace)
+    settings = config.load_settings(ws)
+    if args.mode == "bypass" and not settings["allow_bypass"]:
+        sys.exit("bypass mode is off. Set `allow_bypass: true` in ~/.edith/settings.yaml to enable it.")
     if not args.cmd:
         print(welcome())
         _ask(_paint("")("Press Enter to continue…", "link"))
@@ -320,14 +390,19 @@ def _dispatch(args, providers, con):
     log = lambda s: print(config.redact(s, secret_values))  # noqa: E731
     brain, how = _brain(args, providers, con, log)
     task = getattr(args, "task", None)
-    if not task:
+    if not task and not history:
         task = _ask("\nWhat should I do? > ").strip()
         if not task:
             return 0
     log(f"brain: {how}")
-    tools = Tools(args.workspace, _approve, args.mode, scrub_env=[k for p in providers.values() for k in config.key_envs(p)])
-    result = asyncio.run(loop.run(task, brain, tools, max_steps=args.max_steps, max_cost_usd=args.max_cost_usd,
-                                  redact=lambda s: config.redact(s, secret_values), log=log))
+    scrub = [k for p in providers.values() for k in config.key_envs(p)]
+    tools = Tools(ws, _approve, args.mode, scrub_env=scrub, settings=settings, log=log)
+    hooks = Hooks(settings["hooks"], cwd=ws, env=tools._env(), log=log) if settings["hooks"] else None
+    agent = Agent(brain, tools, log=log, session=session, memory=Memory(con), hooks=hooks, settings=settings,
+                  max_steps=args.max_steps, max_cost_usd=args.max_cost_usd, verify_changes=not args.no_verify,
+                  review_changes=not args.no_review, context_budget=settings["context_budget"],
+                  redact=lambda s: config.redact(s, secret_values))
+    result = asyncio.run(agent.run(task, history=history))
     if getattr(brain, "switches", None):
         used = sorted({p for p, _ in brain.switches})
         log(f"providers used: {len(used)} ({', '.join(used)}); model calls: {len(brain.switches)}")

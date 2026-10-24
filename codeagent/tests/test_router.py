@@ -40,8 +40,8 @@ def scripted_openai(on_call=None):
             if r:
                 return r
         n = step_of(body)
-        if n >= len(SCRIPT):
-            msg = {"role": "assistant", "content": FINAL}
+        if n >= len(SCRIPT) or not body.get("tools"):  # a real model cannot call tools it was not given
+            msg = {"role": "assistant", "content": FINAL if body.get("tools") else '{"verdict": "approve", "issues": []}'}
         else:
             name, args = SCRIPT[n]
             msg = {"role": "assistant", "content": None, "tool_calls": [
@@ -55,8 +55,8 @@ def scripted_gemini(seen):
     def handler(method, path, body):
         seen.append(body)
         n = step_of(body)
-        if n >= len(SCRIPT):
-            parts = [{"text": FINAL}]
+        if n >= len(SCRIPT) or not body.get("tools"):
+            parts = [{"text": FINAL if body.get("tools") else '{"verdict": "approve", "issues": []}'}]
         else:
             name, args = SCRIPT[n]
             parts = [{"functionCall": {"name": name, "args": args}, "thoughtSignature": f"sig{n}"}]
@@ -127,9 +127,8 @@ class RouterTest(unittest.TestCase):
         self.assertEqual(len(rows), len(r.switches))
         self.assertIn("parts", json.loads(rows[0]["why"]))
         # Gemini got tool results produced by other providers, as functionResponse parts
-        replay = gemini_seen[-1]["contents"]
-        responses = [p["functionResponse"]["name"] for c in replay for p in c["parts"] if "functionResponse" in p]
-        self.assertTrue(responses)
+        replays = [p for body in gemini_seen for c in body["contents"] for p in c["parts"] if "functionResponse" in p]
+        self.assertTrue(replays)
 
     def test_429_fails_over_in_the_same_step_and_cools_down(self):
         hits = {"limited": 0}
