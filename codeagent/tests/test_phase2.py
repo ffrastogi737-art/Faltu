@@ -98,6 +98,23 @@ class Adapters(Isolated):
         self.assertEqual(r.message.tool_calls[0].meta, {"thoughtSignature": "sig2"})
         self.assertEqual((r.usage.input_tokens, r.usage.output_tokens), (11, 4))
 
+    def test_gemini_gets_only_fields_it_accepts(self):
+        """The real API answered 400 to an unknown `read_only` key and rejects empty `required`."""
+        from agent.loop import TODO_TOOL
+        from agent.tools import schemas
+
+        def strict(method, path, body):
+            for f in body["tools"][0]["functionDeclarations"]:
+                if set(f) - {"name", "description", "parameters"} or f["parameters"].get("required") == []:
+                    return 400, {"error": {"message": f"Invalid JSON payload: bad field in {f['name']}"}}
+            return 200, {"candidates": [{"content": {"parts": [{"text": "ok"}]}}]}
+        s = self.server(FakeServer(strict))
+        os.environ["GEM_STRICT"] = "gkey-123456"
+        self.addCleanup(os.environ.pop, "GEM_STRICT")
+        a = make_adapter("g", {"api": "gemini", "base_url": s.url, "key_env": "GEM_STRICT"})
+        r = asyncio.run(a.chat("m", [Message("user", "hi")], schemas("default", extra=[TODO_TOOL])))
+        self.assertEqual(r.message.content, "ok")
+
     def test_cohere_response(self):
         s = self.server(FakeServer(lambda m, p, b: (200, {
             "message": {"role": "assistant", "content": [{"type": "text", "text": "hi"}],
@@ -235,6 +252,22 @@ class Discovery(Isolated):
         asyncio.run(discovery.refresh(self.con, self.mine()))
         self.assertEqual(len(good.requests), n)
 
+    def test_probe_skips_a_model_without_quota(self):
+        def h(method, path, body):
+            if method == "GET":
+                return 200, {"data": [{"id": "a-big", "context_length": 1000000}, {"id": "b-small", "context_length": 8000}]}
+            if body["model"] == "a-big":
+                return 429, {"error": {"message": "limit: 0"}}
+            from tests.fakes import last_user, smart_reply
+            return 200, {"choices": [{"message": smart_reply(last_user(body))}]}
+        s = self.server(FakeServer(h))
+        self.add("t_q", s.url)
+        asyncio.run(discovery.refresh(self.con, self.mine()))
+        res = asyncio.run(discovery.probe(self.con, self.mine(), limit=5))
+        self.assertEqual([r["model"] for r in res["t_q"]], ["a-big", "b-small"])  # biggest context first
+        self.assertTrue(res["t_q"][0]["rate_limited"])
+        self.assertEqual(res["t_q"][1]["status"], "active")
+
     def test_models_extra(self):
         with open(config.EXTRA, "w") as f:
             f.write("t_x:\n  - id: listed-by-hand\n    context: 4096\n    tools: true\n")
@@ -255,6 +288,7 @@ class Discovery(Isolated):
         self.con.execute("INSERT INTO models (provider, model) VALUES ('t_limited', 'l')")
         res = asyncio.run(discovery.probe(self.con, self.mine()))
         self.assertEqual(res["t_smart"][0]["status"], "active")
+        self.assertIn("simulated", res["t_dumb"][0].get("error") or "simulated")
         self.assertEqual(res["t_smart"][0]["score"], 1.0)
         self.assertEqual(res["t_dumb"][0]["status"], "failing")
         self.assertTrue(res["t_limited"][0]["rate_limited"])

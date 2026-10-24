@@ -339,4 +339,14 @@ def schemas(mode, allow=None, extra=()):
         names = [n for n in names if n in allow]
     if "screenshot" in names and not shutil.which("node"):
         names.remove("screenshot")
-    return [{"name": n, **SCHEMAS[n]} for n in names] + [e for e in extra if mode != "plan" or e.get("read_only")]
+    specs = [{"name": n, **SCHEMAS[n]} for n in names] + [e for e in extra if mode != "plan" or e.get("read_only")]
+    return [_clean(s) for s in specs]
+
+
+def _clean(spec):
+    """Only the fields every provider accepts: Gemini rejects unknown keys (e.g. our read_only marker)
+    and an empty `required` list."""
+    params = dict(spec.get("parameters") or {"type": "object", "properties": {}})
+    if not params.get("required"):
+        params.pop("required", None)
+    return {"name": spec["name"], "description": spec.get("description", ""), "parameters": params}

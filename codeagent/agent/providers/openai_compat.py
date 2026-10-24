@@ -94,7 +94,14 @@ class OpenAICompat:
                 return json.load(r)
         except urllib.error.HTTPError as e:
             self.last_headers = {k.lower(): v for k, v in e.headers.items()}
-            err = ProviderError(self.name, e.code, e.read()[:500].decode(errors="replace"))
+            raw = e.read()[:4000].decode(errors="replace")
+            try:  # most APIs put the useful part in error.message
+                body = json.loads(raw)
+                err_obj = body.get("error", body) if isinstance(body, dict) else {}
+                msg = err_obj.get("message") if isinstance(err_obj, dict) else None
+            except ValueError:
+                msg = None
+            err = ProviderError(self.name, e.code, (msg or raw)[:500])
             e.close()
             err.retry_after = e.headers.get("Retry-After")
             raise err from None

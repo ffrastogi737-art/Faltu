@@ -148,6 +148,7 @@ class Router:
         self._providers = providers  # tests pass a fixed dict; normally re-read every call
         self.adapters = {}
         self.fails = {}               # provider/model -> consecutive failures (circuit breaker)
+        self.limited = {}             # provider -> [(time, model)] recent 429s
         self.last_provider = None
         self.session_cost_usd = 0.0
         self.switches = []            # (provider, model) per successful call, for reports
@@ -192,7 +193,7 @@ class Router:
         marks = ",".join("?" * len(allowed))
         rows = self.con.execute(
             f"SELECT * FROM models WHERE provider IN ({marks}) AND status IN ('active','probation') "
-            f"ORDER BY (status='active') DESC, quality DESC NULLS LAST LIMIT ?",
+            f"ORDER BY (status='active') DESC, quality DESC NULLS LAST, context DESC NULLS LAST LIMIT ?",
             (*allowed, PREFILTER_LIMIT)).fetchall()
         stats = self._stats(rows, task_type)
         spent_today = self._spent_today_inr(budget)
@@ -352,9 +353,16 @@ class Router:
                     retry = float(e.retry_after) if e.retry_after else None
                 except ValueError:
                     pass
-                waited = self.quota.cool(f"{name}#{key_idx}", retry, "429")
-                if len(config.keys(self.providers()[name])) == 1:
-                    self.quota.cool(name, retry or waited, "429")
+                # quotas are often per model: cool this model; the key/provider only when a
+                # second model of it is limited within a minute
+                waited = self.quota.cool(f"{name}/{model}", retry, "429")
+                now = time.time()
+                hits = [(t, m) for t, m in self.limited.get(name, []) if now - t < 60] + [(now, model)]
+                self.limited[name] = hits
+                if len({m for _, m in hits}) >= 2:
+                    self.quota.cool(f"{name}#{key_idx}", retry, "429")
+                    if len(config.keys(self.providers()[name])) == 1:
+                        self.quota.cool(name, retry or waited, "429")
                 err += f" -> cooldown {waited:.0f}s"
             elif e.status in (401, 403):
                 self.quota.cool(name, 3600, f"auth {e.status}")

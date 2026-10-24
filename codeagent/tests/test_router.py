@@ -143,11 +143,24 @@ class RouterTest(unittest.TestCase):
         resp = asyncio.run(r.chat([Message("user", "go")], [{"name": "x", "parameters": {}}], task_type="plan"))
         self.assertEqual(resp.provider, "backup")
         self.assertEqual(hits["limited"], 1)
-        row = self.con.execute("SELECT until FROM cooldowns WHERE lane='limited'").fetchone()
+        row = self.con.execute("SELECT until FROM cooldowns WHERE lane='limited/m'").fetchone()
         self.assertAlmostEqual(row["until"] - time.time(), 7, delta=2)  # Retry-After: 7 was respected
         asyncio.run(r.chat([Message("user", "again")], [{"name": "x", "parameters": {}}], task_type="plan"))
         self.assertEqual(hits["limited"], 1)  # cooling provider is not called again
         self.assertTrue(any("failover" in l and "429" in l for l in self.logs))
+
+    def test_429_on_two_models_cools_the_provider(self):
+        self.provider("g", scripted_openai(on_call=lambda b: (429, {"error": {"message": "quota"}})))
+        self.con.execute("INSERT INTO models (provider, model, tools, context, free, status, quality) "
+                         "VALUES ('g', 'm2', 1, 128000, 1, 'active', 0.8)")
+        r = self.router()
+        r.choose = self._no_explore(r)
+        with self.assertRaises(AllFailed):
+            asyncio.run(r.chat([Message("user", "go")], [{"name": "x", "parameters": {}}], task_type="plan"))
+        self.assertIsNotNone(r.quota.cooling("g/m"))
+        self.assertIsNotNone(r.quota.cooling("g/m2"))
+        self.assertIsNotNone(r.quota.cooling("g"))
+        self.assertTrue(any("quota" in l for l in self.logs))  # the provider's own message, not raw JSON
 
     def test_quota_spreading(self):
         """Equal providers with 20 rpm each (60 total): 30 quick calls must be spread, not drain one."""

@@ -164,14 +164,18 @@ async def probe(con, providers, provider=None, model=None, limit=5, concurrency=
         else:
             models = [r["model"] for r in con.execute(
                 "SELECT model FROM models WHERE provider=? AND status IN ('probation','failing') "
-                "ORDER BY probe_runs, free DESC, model LIMIT ?", (name, limit))]
-        out = []
+                # general chat models usually have the biggest context; tts/image/special models small
+                "ORDER BY probe_runs, context DESC NULLS LAST, free DESC, model LIMIT ?", (name, limit))]
+        out, limited = [], 0
         async with sem:
             for m in models:
                 res = await probe_model(con, name, p, m)
                 out.append(res)
-                if res.get("rate_limited"):
-                    break  # try again later instead of burning the quota
+                # quotas are often per model (some have none on a free key): skip it, but stop
+                # after 3 in a row so a provider-wide limit is not burned further
+                limited = limited + 1 if res.get("rate_limited") else 0
+                if limited >= 3:
+                    break
         return name, out
 
     return dict(await asyncio.gather(*(per_provider(n, p) for n, p in ready.items())))
