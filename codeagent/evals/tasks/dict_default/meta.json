@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "words.py",
+   "old": "    for w in text.split():\n        counts[w] += 1",
+   "new": "    for w in text.lower().split():\n        counts[w] = counts.get(w, 0) + 1"
+  }
+ ]
+}

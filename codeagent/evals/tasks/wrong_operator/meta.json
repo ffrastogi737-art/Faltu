@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "people.py",
+   "old": "age > 18",
+   "new": "age >= 18"
+  }
+ ]
+}

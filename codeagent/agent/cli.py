@@ -263,6 +263,16 @@ def main(argv=None):
     tm.add_argument("task")
     tm.add_argument("--sequential", action="store_true", help="no parallel worktrees")
     sub.add_parser("agents", help="list built-in and custom agent roles")
+    ev = sub.add_parser("eval", help="run the benchmark tasks and compare with an earlier run")
+    ev.add_argument("--tasks", help="comma-separated task names (default: all)")
+    ev.add_argument("--oracle", action="store_true", help="replay reference solutions: checks harness and graders only")
+    ev.add_argument("--noop", action="store_true", help="an agent that changes nothing: every grader must fail")
+    ev.add_argument("--compare", help="earlier report .json, or 'latest' (default: latest with the same label)")
+    ev.add_argument("--label", default=None, help="name for this run (default: oracle or model)")
+    ev.add_argument("--review", action="store_true", help="also run the reviewer (costs more calls)")
+    ev.add_argument("--max-steps", type=int, default=25)
+    cs = sub.add_parser("cost", help="calls, tokens and cost per provider and day")
+    cs.add_argument("--days", type=int, default=7)
     sv = sub.add_parser("serve", help="local HTTP + WebSocket API")
     sv.add_argument("--host", default="127.0.0.1")
     sv.add_argument("--port", type=int, default=8765)
@@ -294,7 +304,7 @@ def main(argv=None):
 def _dispatch(args, providers, con):
     import asyncio
 
-    from . import discovery
+    from . import config, discovery
     from . import session as session_mod
     from .memory import Memory
     from .messages import Message
@@ -366,6 +376,18 @@ def _dispatch(args, providers, con):
                 print(f"{m['id']:4} [{m['tags'] or '-'}] {m['text']}")
         return 0
 
+    if args.cmd == "eval":
+        return _eval_cmd(args, con)
+    if args.cmd == "cost":
+        budget = config.load_router_settings()["budget"]
+        rate = float(budget.get("usd_to_inr", 88))
+        print(f"{'day':10} {'provider':18} {'calls':>6} {'failed':>6} {'tokens in':>10} {'tokens out':>10} {'cost $':>8} {'cost Rs':>8}")
+        for r in con.execute("SELECT date(ts) d, provider, COUNT(*) n, SUM(1-ok) f, SUM(input_tokens) i, "
+                             "SUM(output_tokens) o, SUM(cost_usd) c FROM calls WHERE ts >= date('now', ?) "
+                             "GROUP BY d, provider ORDER BY d DESC, n DESC", (f"-{args.days} days",)):
+            print(f"{r['d']:10} {r['provider']:18} {r['n']:6} {r['f'] or 0:6} {r['i'] or 0:10} {r['o'] or 0:10} "
+                  f"{r['c'] or 0:8.4f} {(r['c'] or 0) * rate:8.2f}")
+        return 0
     if args.cmd == "serve":
         from .server import serve
         asyncio.run(serve(con, args.host, args.port))
@@ -404,6 +426,41 @@ def _dispatch(args, providers, con):
                                                       "input_tokens", "output_tokens", "checks_passed", "review")},
                          default=str, indent=1))
     return 0 if result.get("done") else 1
+
+
+def _eval_cmd(args, con):
+    import asyncio
+
+    from . import app, evals
+    from .loop import Agent
+    from .tools import Tools
+    tasks = evals.load_tasks(set(args.tasks.split(",")) if args.tasks else None)
+    label = args.label or ("oracle" if args.oracle else "noop" if args.noop else "model")
+    quiet = lambda s: None  # noqa: E731
+
+    def make_run(t, ws):
+        if args.oracle or args.noop:
+            brain = evals.Oracle(t) if args.oracle else evals.Noop()
+            agent = Agent(brain, Tools(ws, lambda *_: True, "trusted"), log=quiet, review_changes=False)
+            return agent.run
+        run, info = app.build(con, ws, _deny, quiet, mode="trusted", provider=args.provider, model=args.model,
+                              max_steps=args.max_steps, review=args.review)
+        return run
+    print(f"running {len(tasks)} tasks ({label})")
+    rows = asyncio.run(evals.run_all(tasks, make_run))
+    path, data = evals.save(rows, label, {"brain": "oracle (reference solutions)" if args.oracle else
+                                          "noop (changes nothing)" if args.noop else
+                                          f"{args.provider or 'router'}/{args.model or 'auto'}"})
+    s = data["summary"]
+    print(f"\n{s['passed']}/{s['tasks']} passed ({s['pass_rate']:.0%}); report: {path[:-5]}.md")
+    old = args.compare if args.compare and args.compare != "latest" else evals.latest(
+        None if args.compare == "latest" else label, exclude=path)
+    if old and os.path.exists(old):
+        with open(old) as f:
+            c = evals.compare(json.load(f), data)
+        print(f"compared with {os.path.basename(old)}: {c['verdict']}; fixed {c['fixed'] or '-'}; "
+              f"regressed {c['regressed'] or '-'}; pass rate {c['old']['pass_rate']:.0%} -> {c['new']['pass_rate']:.0%}")
+    return 0 if s["passed"] == s["tasks"] else 1
 
 
 def _deny(kind, detail):

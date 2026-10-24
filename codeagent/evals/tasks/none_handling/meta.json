@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "names.py",
+   "old": "    return first.strip() + ' ' + last.strip()",
+   "new": "    if not last or not last.strip():\n        return first.strip()\n    return first.strip() + ' ' + last.strip()"
+  }
+ ]
+}

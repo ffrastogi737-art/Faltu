@@ -267,7 +267,7 @@ class Agent:
                 self.log(f"  dream skipped: {e}")
         self.log(("\nDONE: " if status == "done" else f"\n{status.upper()}: ") + self.redact(text))
         self.log(f"tokens: {usage[0]} in, {usage[1]} out | report: {s.dir}/artifacts/report.md")
-        return {"done": status == "done", "status": status, "answer": text, "input_tokens": usage[0],
+        return {"done": status == "done", "status": status, "answer": text, "steps": s.step, "input_tokens": usage[0],
                 "output_tokens": usage[1], "session": s.id, "evidence": self.evidence, "diff": diff}
 
 

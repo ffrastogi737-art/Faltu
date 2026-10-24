@@ -1,0 +1,11 @@
+{
+ "kind": "feature",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "cart.py",
+   "old": "        self.items[name] = self.items.get(name, 0) + qty\n",
+   "new": "        self.items[name] = self.items.get(name, 0) + qty\n\n    def remove(self, name):\n        if name not in self.items:\n            raise KeyError(name)\n        self.items[name] -= 1\n        if self.items[name] <= 0:\n            del self.items[name]\n"
+  }
+ ]
+}

@@ -120,3 +120,11 @@ Every model call is routed on its own; a session can use a different provider at
 - **Artifacts** per session: report.md, diff.patch, test_report.txt, review.json, plan.md (plan mode) and screenshots.
 - The approval prompt in the terminal colours diffs (green additions, red removals).
 - `providers.local.yaml` moved to ~/.edith/ (outside the code, so `git pull` or reinstall never loses your provider changes, and other processes find it through EDITH_HOME).
+
+## D22. Phase 9: evals and hardening
+- 24 benchmark tasks in `evals/tasks/` (bug fixes incl. multi-file and an infinite loop, features, a refactor, a performance fix, 3 JavaScript). Each has a hidden grader the agent never sees and a reference solution. `edith eval --oracle` (reference solutions) must give 24/24 and `--noop` (no changes) 0/24; a test enforces both, so every grader is solvable and really tests the fix.
+- `edith eval` runs the real agent (router or a fixed model) in trusted mode on temp copies, saves `reports/eval-<date>-<label>.{json,md}` and compares with the previous run of the same label: better / worse / same, with fixed and regressed tasks (self-improvement rule: keep a change only if it is not worse). Real-model numbers need a key; none were available while building.
+- `edith cost`: calls, failures, tokens and cost per provider and day, in $ and Rs.
+- Security review in SECURITY.md (threats, protections, tests, known limits). Bandit-style lint reviewed; provider URLs now limited to http(s).
+- Found and fixed during hardening: `unittest` with no tests exits 5 on Python 3.12+, so verification now only runs Python tests when test files exist; `edith cost` lost an import in a ruff auto-fix (caught by a py311 lint pass); the whole suite runs on Python 3.11, 3.12 and 3.13.
+- Windows: commands run through cmd.exe in their own process group and the tree is killed with taskkill on timeout. Written, not yet run on Windows.

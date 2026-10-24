@@ -1,0 +1,11 @@
+{
+ "kind": "feature",
+ "grader": "node",
+ "solution": [
+  {
+   "path": "strings.js",
+   "old": "  // TODO",
+   "new": "  return s.split(/\\s+/).filter(Boolean).map(w => w[0].toUpperCase() + w.slice(1).toLowerCase()).join(' ');"
+  }
+ ]
+}

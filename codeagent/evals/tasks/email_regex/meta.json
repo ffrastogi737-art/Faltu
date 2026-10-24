@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "emails.py",
+   "old": "    return re.match(r'.+@.+', s) is not None",
+   "new": "    return re.fullmatch(r'[^@\\s]+@[^@\\s]+\\.[^@\\s]+', s) is not None"
+  }
+ ]
+}

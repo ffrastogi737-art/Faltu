@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "dates.py",
+   "old": "    m, d, y = s.split('/')",
+   "new": "    d, m, y = s.split('/')"
+  }
+ ]
+}

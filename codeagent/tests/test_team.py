@@ -54,7 +54,7 @@ def team_model(plan, scripts, seen):
             title = next((t for t in scripts if line.startswith(t)), None)
             seen.setdefault(title, []).append({"system": system, "user": user,
                                                "tools": [t["function"]["name"] for t in body.get("tools", [])]})
-            steps = scripts[title]
+            steps = scripts.get(title, [])  # unscripted subtasks just finish
             n = sum(1 for m in msgs if m["role"] == "tool")
             msg = steps[n] if n < len(steps) else say(f"{title}: finished")
         return 200, {"choices": [{"message": msg}], "usage": {"prompt_tokens": 20, "completion_tokens": 5}}

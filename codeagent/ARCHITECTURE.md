@@ -36,7 +36,9 @@ codeagent/
     app.py              builds an agent/team for CLI, API and MCP       (P8)
     server.py           HTTP + WebSocket API                            (P8)
     mcp.py              MCP stdio client (lazy schemas) and server      (P8)
-  evals/                20-30 benchmark tasks + reports                 (P9)
+    evals.py            benchmark runner, oracle/noop, comparison       (P9)
+  evals/tasks/          24 benchmark tasks with hidden graders          (P9)
+  reports/              live checks, demo logs, eval reports
   tests/
 ```
 

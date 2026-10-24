@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "conf.py",
+   "old": "    for line in text.splitlines():\n        k, v = line.split('=')\n        out[k] = v",
+   "new": "    for line in text.splitlines():\n        line = line.strip()\n        if not line or line.startswith('#'):\n            continue\n        k, v = line.split('=', 1)\n        out[k.strip()] = v.strip()"
+  }
+ ]
+}

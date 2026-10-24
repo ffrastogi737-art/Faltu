@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "invoice.py",
+   "old": "    return sum(qty * price for qty, price in lines)",
+   "new": "    return round(sum(qty * price for qty, price in lines), 2)"
+  }
+ ]
+}

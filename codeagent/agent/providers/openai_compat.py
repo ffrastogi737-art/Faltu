@@ -83,6 +83,8 @@ class OpenAICompat:
 
     def _request(self, path, body=None):
         url = path if path.startswith("http") else self.base_url + path
+        if not url.startswith(("https://", "http://")):  # never file:// or other schemes from a config typo
+            raise ProviderError(self.name, 0, f"refusing non-http URL {url[:80]}")
         req = urllib.request.Request(url, method="POST" if body is not None else "GET",
                                      data=json.dumps(body).encode() if body is not None else None,
                                      headers=self.headers())

@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "node",
+ "solution": [
+  {
+   "path": "fizzbuzz.js",
+   "old": "  if (n % 3 === 0) return 'Fizz';\n  if (n % 5 === 0) return 'Buzz';\n  if (n % 15 === 0) return 'FizzBuzz';",
+   "new": "  if (n % 15 === 0) return 'FizzBuzz';\n  if (n % 3 === 0) return 'Fizz';\n  if (n % 5 === 0) return 'Buzz';"
+  }
+ ]
+}

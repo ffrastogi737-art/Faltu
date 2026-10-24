@@ -1,0 +1,16 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "service.py",
+   "old": "        return round(total * (1 - MEMBER_DISCOUNT), 2)",
+   "new": "        return round(total, 2)"
+  },
+  {
+   "path": "service.py",
+   "old": "from models import MEMBER_DISCOUNT\n\n\n",
+   "new": ""
+  }
+ ]
+}

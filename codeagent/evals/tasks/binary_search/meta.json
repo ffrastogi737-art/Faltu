@@ -1,0 +1,17 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "search.py",
+   "old": "    while lo < hi:",
+   "new": "    while lo <= hi:"
+  },
+  {
+   "path": "search.py",
+   "old": "            lo = mid\n",
+   "new": "            lo = mid + 1\n"
+  }
+ ],
+ "timeout": 5
+}

@@ -86,6 +86,16 @@ def has_bwrap():
 
 def run(cmd, ws, env, timeout, network=False, sandbox="auto", max_out=12_000):
     """Runs the command; returns (exit_code, output_tail, how)."""
+    if os.name == "nt":  # Windows: cmd.exe, own process group, whole tree killed on timeout
+        p = subprocess.Popen(cmd, shell=True, cwd=ws, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                             text=True, errors="replace", creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+        try:
+            out, _ = p.communicate(timeout=timeout)
+            return p.returncode, (out or "")[-max_out:], "subprocess (windows)"
+        except subprocess.TimeoutExpired:
+            subprocess.run(["taskkill", "/F", "/T", "/PID", str(p.pid)], capture_output=True)
+            out, _ = p.communicate()
+            return None, (out or "")[-max_out:], "subprocess (windows)"
     argv = ["/bin/sh", "-c", cmd]
     how = "subprocess"
     if sandbox != "off" and has_bwrap():

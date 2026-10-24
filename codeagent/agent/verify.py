@@ -25,8 +25,7 @@ def detect(ws):
     has = lambda *p: os.path.exists(os.path.join(ws, *p))  # noqa: E731
     out = []
     py = sys.executable
-    pyfiles = [f for f in os.listdir(ws) if f.endswith(".py")] if os.path.isdir(ws) else []
-    if has("pyproject.toml") or has("setup.py") or has("pytest.ini") or pyfiles or has("tests"):
+    if _has_python_tests(ws):  # `unittest` with no tests exits 5 on Python 3.12+, so only when tests exist
         if shutil.which("pytest") and (has("pytest.ini") or has("conftest.py") or _mentions(ws, "pyproject.toml", "pytest")):
             out.append(("tests", "pytest -q"))
         else:
@@ -50,6 +49,14 @@ def detect(ws):
     if has("Cargo.toml"):
         out += [("tests", "cargo test -q")]
     return out
+
+
+def _has_python_tests(ws, limit=2000):
+    for i, (root, dirs, files) in enumerate(os.walk(ws)):
+        dirs[:] = [d for d in dirs if not d.startswith(".") and d not in ("node_modules", "venv", "__pycache__")]
+        if any(f.endswith(".py") and (f.startswith("test_") or f.endswith("_test.py")) for f in files) or i > limit:
+            return True
+    return False
 
 
 def _mentions(ws, name, word):

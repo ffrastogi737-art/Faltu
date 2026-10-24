@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "mathx.py",
+   "old": "    if n <= 1:\n        return n",
+   "new": "    if n < 0:\n        raise ValueError('negative')\n    if n <= 1:\n        return 1"
+  }
+ ]
+}

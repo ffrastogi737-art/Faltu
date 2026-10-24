@@ -1,0 +1,11 @@
+{
+ "kind": "bugfix",
+ "grader": "python",
+ "solution": [
+  {
+   "path": "lists.py",
+   "old": "    return items[-n - 1:]",
+   "new": "    return items[-n:] if n > 0 else []"
+  }
+ ]
+}
