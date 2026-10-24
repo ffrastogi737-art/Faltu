@@ -14,6 +14,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from agent import loop
 from agent.config import redact
 from agent.providers.openai_compat import OpenAICompat
+from agent.router import Fixed
 from agent.tools import ToolError, Tools
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,8 +75,8 @@ class Loop(unittest.TestCase):
         fake = FakeProvider(script)
         self.addCleanup(fake.close)
         tools = Tools(self.ws, approve, mode)
-        result = asyncio.run(loop.run("Fix the failing test in this repo.", OpenAICompat("fake", fake.url, "sk-test-secret"),
-                                      "any-model", tools, log=self.logs.append))
+        result = asyncio.run(loop.run("Fix the failing test in this repo.", Fixed(OpenAICompat("fake", fake.url, "sk-test-secret"),
+                                      "any-model"), tools, log=self.logs.append))
         return result, fake
 
     def test_fixes_bug_and_tests_pass(self):

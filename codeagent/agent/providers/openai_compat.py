@@ -53,7 +53,13 @@ def model_record(it):
     if hosts:
         tools = tools or (1 if any(h.get("supports_tools") for h in hosts) else None)
         free = free or (1 if any(h.get("is_free") for h in hosts) else None)
+    def per_million(v):
+        try:
+            return float(v) * 1e6 if v not in (None, "", "-1") else None
+        except (TypeError, ValueError):
+            return None
     return {"model": mid,
+            "price_in": per_million(pricing.get("prompt")), "price_out": per_million(pricing.get("completion")),
             "context": it.get("context_length") or it.get("context_window") or limits.get("max_input_tokens")
             or max((h.get("context_length") or 0 for h in hosts), default=0) or None,
             "max_output": it.get("max_completion_tokens") or limits.get("max_output_tokens"),
@@ -69,6 +75,7 @@ class OpenAICompat:
     def __init__(self, name, base_url, key, timeout=120, models_path="/models"):
         self.name, self.base_url, self.key, self.timeout = name, base_url, key, timeout
         self.models_path = models_path
+        self.last_headers = {}
 
     def headers(self):
         return {"Authorization": f"Bearer {self.key}", "Content-Type": "application/json",
@@ -81,9 +88,12 @@ class OpenAICompat:
                                      headers=self.headers())
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as r:
+                self.last_headers = {k.lower(): v for k, v in r.headers.items()}  # rate-limit info for the router
                 return json.load(r)
         except urllib.error.HTTPError as e:
+            self.last_headers = {k.lower(): v for k, v in e.headers.items()}
             err = ProviderError(self.name, e.code, e.read()[:500].decode(errors="replace"))
+            e.close()
             err.retry_after = e.headers.get("Retry-After")
             raise err from None
         except (urllib.error.URLError, TimeoutError, ConnectionError) as e:

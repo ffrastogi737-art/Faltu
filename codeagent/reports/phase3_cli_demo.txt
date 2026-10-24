@@ -1,0 +1,92 @@
+# Phase 3 evidence: real edith CLI, four local fake providers (no real API keys available).
+# nimbus answers every coding call with HTTP 429 (Retry-After: 7); limits rpm=4 per provider.
+
+$ edith refresh
+nimbus             1 models
+orion              1 models
+vega               1 models
+lyra               1 models
+4 providers refreshed
+
+$ edith probe
+nimbus           nimbus-coder-v1                          score=1.00 active  reply tool json code
+orion            orion-coder-v1                           score=1.00 active  reply tool json code
+vega             vega-coder-v1                            score=1.00 active  reply tool json code
+lyra             lyra-coder-v1                            score=1.00 active  reply tool json code
+
+$ edith route explain --task-type debug
+task type: debug, needs 8000 tokens of context
+  0.905  nimbus/nimbus-coder-v1                             key#0 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8}
+  0.905  orion/orion-coder-v1                               key#0 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8}
+  0.905  vega/vega-coder-v1                                 key#0 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8}
+  0.905  lyra/lyra-coder-v1                                 key#0 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8}
+4 candidates; rejected: -
+
+$ edith run Fix the failing test --mode trusted --workspace <workspace>
+brain: auto-routing across all trusted providers
+  route[plan] -> nimbus/nimbus-coder-v1 score=0.905 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8} | alts: orion/orion-coder-v1 0.905, vega/vega-coder-v1 0.905, lyra/lyra-coder-v1 0.905 | rejected: -
+  failover: nimbus/nimbus-coder-v1 HTTP 429: nimbus: HTTP 429: {"error": "rate limit"} -> cooldown 7s
+  route[plan] -> orion/orion-coder-v1 score=0.905 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8} | alts: vega/vega-coder-v1 0.905, lyra/lyra-coder-v1 0.905 | rejected: {'provider cooldown': 1}
+  ok 2ms 100/20 tok
+[1] tool list_files {"pattern": "*.py"}
+      cart.py
+  route[tool_heavy] -> orion/orion-coder-v1 score=0.9274 {'q': 1.0, 's': 1.0, 'h': 0.75, 'c': 0.9, 'r': 0.87} | alts: vega/vega-coder-v1 0.825, lyra/lyra-coder-v1 0.825 | rejected: {'provider cooldown': 1}
+  ok 3ms 100/20 tok
+[2] tool read_file {"path": "cart.py"}
+      cart.py lines 1-4 of 4
+  route[patch_edit] -> vega/vega-coder-v1 score=0.825 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8} explore | alts: orion/orion-coder-v1 0.8949, lyra/lyra-coder-v1 0.825 | rejected: {'provider cooldown': 1}
+  switch: orion -> vega
+  ok 2ms 100/20 tok
+[3] tool read_file {"path": "test_cart.py"}
+      test_cart.py lines 1-15 of 15
+  route[patch_edit] -> vega/vega-coder-v1 score=0.9274 {'q': 1.0, 's': 1.0, 'h': 0.75, 'c': 0.9, 'r': 0.87} | alts: orion/orion-coder-v1 0.8649, lyra/lyra-coder-v1 0.825 | rejected: {'provider cooldown': 1}
+  ok 3ms 100/20 tok
+[4] tool run_command {"command": "/usr/bin/python3 -m unittest -q"}
+      exit code 1
+  route[debug] -> vega/vega-coder-v1 score=0.8949 {'q': 1.0, 's': 1.0, 'h': 0.5, 'c': 0.9, 'r': 0.9} | alts: lyra/lyra-coder-v1 0.875, orion/orion-coder-v1 0.8649 | rejected: {'provider cooldown': 1}
+  ok 2ms 100/20 tok
+[5] tool grep {"pattern": "discount"}
+      cart.py:1: def total(prices, discount_percent=0):
+  route[tool_heavy] -> orion/orion-coder-v1 score=0.8649 {'q': 1.0, 's': 1.0, 'h': 0.5, 'c': 0.9, 'r': 0.9} | alts: vega/vega-coder-v1 0.8604, lyra/lyra-coder-v1 0.825 | rejected: {'provider cooldown': 1}
+  switch: vega -> orion
+  ok 3ms 100/20 tok
+[6] tool edit_file {"path": "cart.py", "old": "subtotal * discount_percent,", "new": "subtotal * discount_percent / 100,"}
+      edited:
+  route[tool_heavy] -> orion/orion-coder-v1 score=0.8604 {'q': 1.0, 's': 1.0, 'h': 0.25, 'c': 0.9, 'r': 0.92} | alts: vega/vega-coder-v1 0.8304, lyra/lyra-coder-v1 0.825 | rejected: {'provider cooldown': 1}
+  ok 2ms 100/20 tok
+[7] tool run_command {"command": "/usr/bin/python3 -m unittest -q"}
+      exit code 0
+  route[review] -> lyra/lyra-coder-v1 score=0.875 {'q': 1.0, 's': 0.5, 'h': 1.0, 'c': 0.9, 'r': 0.8} | alts: vega/vega-coder-v1 0.8304 | rejected: {'provider cooldown': 1, 'quota exhausted': 1}
+  switch: orion -> lyra
+  ok 2ms 100/20 tok
+[8] tool read_file {"path": "cart.py"}
+      cart.py lines 1-4 of 4
+  route[patch_edit] -> lyra/lyra-coder-v1 score=0.9274 {'q': 1.0, 's': 1.0, 'h': 0.75, 'c': 0.9, 'r': 0.87} | alts: vega/vega-coder-v1 0.8304 | rejected: {'provider cooldown': 1, 'quota exhausted': 1}
+  ok 2ms 100/20 tok
+[9] lyra/lyra-coder-v1: Fixed: the discount is a percentage, so it is divided by 100. Tests pass.
+
+DONE: Fixed: the discount is a percentage, so it is divided by 100. Tests pass.
+tokens: 900 in, 180 out
+providers used: 3 (lyra, orion, vega); model calls: 9
+
+$ edith dashboard
+provider           keys models calls today errors  avg ms   cost $  state
+nimbus                1      1           1      1       5   0.0000  COOLDOWN 429
+orion                 1      1           4      0       2   0.0000  ok
+vega                  1      1           3      0       2   0.0000  ok
+lyra                  1      1           2      0       2   0.0000  ok
+  2026-10-24 14:22:13 patch_edit     lyra/lyra-coder-v1 ok 2ms
+  2026-10-24 14:22:13 review         lyra/lyra-coder-v1 ok 2ms
+  2026-10-24 14:22:12 tool_heavy     orion/orion-coder-v1 ok 2ms
+  2026-10-24 14:22:12 tool_heavy     orion/orion-coder-v1 ok 3ms
+  2026-10-24 14:22:12 debug          vega/vega-coder-v1 ok 2ms
+  2026-10-24 14:22:12 patch_edit     vega/vega-coder-v1 ok 3ms
+  2026-10-24 14:22:12 patch_edit     vega/vega-coder-v1 ok 2ms
+  2026-10-24 14:22:12 tool_heavy     orion/orion-coder-v1 ok 3ms
+  2026-10-24 14:22:12 plan           orion/orion-coder-v1 ok 2ms
+  2026-10-24 14:22:12 plan           nimbus/nimbus-coder-v1 FAIL HTTP 429: nimbus: HTTP 429: {"error": "rate limit"} -> coold 5ms
+
+$ python -m unittest -q   # in the workspace after the run
+Ran 2 tests in 0.000s
+
+OK

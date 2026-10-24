@@ -37,7 +37,22 @@ CREATE TABLE IF NOT EXISTS calls (
   error TEXT
 );
 CREATE INDEX IF NOT EXISTS calls_pm ON calls(provider, model, ts);
+CREATE TABLE IF NOT EXISTS cooldowns (
+  lane TEXT PRIMARY KEY,       -- "provider", "provider#key" or "provider/model"
+  until REAL NOT NULL,         -- unix time
+  reason TEXT,
+  strikes INTEGER NOT NULL DEFAULT 1
+);
 """
+
+# Columns added after the first release. Each runs once; existing rows get NULL/defaults.
+MIGRATIONS = [
+    "ALTER TABLE models ADD COLUMN price_in REAL",    # USD per 1M input tokens, NULL = unknown
+    "ALTER TABLE models ADD COLUMN price_out REAL",
+    "ALTER TABLE calls ADD COLUMN key_idx INTEGER NOT NULL DEFAULT 0",
+    "ALTER TABLE calls ADD COLUMN cost_usd REAL NOT NULL DEFAULT 0",
+    "ALTER TABLE calls ADD COLUMN why TEXT",
+]
 
 
 def default_path():
@@ -51,4 +66,10 @@ def connect(path=None):
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA journal_mode=WAL")
     con.executescript(SCHEMA)
+    have = {(t, r[1]) for t in ("models", "calls") for r in con.execute(f"PRAGMA table_info({t})")}
+    for sql in MIGRATIONS:
+        table, col = sql.split()[2], sql.split()[5]
+        if (table, col) not in have:
+            con.execute(sql)
+    con.commit()
     return con

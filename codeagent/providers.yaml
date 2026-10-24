@@ -345,3 +345,12 @@ budget:
   paid_enabled: false
   daily_inr: 0
   per_provider_inr: {}
+  usd_to_inr: 88              # for providers that report prices in USD; update as needed
+
+# Router controls (change with `edith route ...` or in providers.local.yaml).
+router:
+  pin: {}                     # task_type: provider/model   e.g. plan: groq/<model id>
+  ban: []                     # "provider" or "provider/model"
+  force_provider: null        # route every step to this provider only
+  explore: 0.1                # share of steps that try a non-top candidate (keeps learning)
+  switch_penalty: 0.03        # small cost for changing provider between steps

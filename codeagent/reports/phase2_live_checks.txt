@@ -1,0 +1,13 @@
+# Phase 2 evidence: live model-list calls to real provider APIs, no keys (2026-10-24)
+openrouter     OK   469 models  with-context=469 tools-flag=400 free=20  e.g. moonshotai/kimi-k3.1-pro
+github_models  ERR github_models: HTTP 200: invalid JSON from provider: Expecting value: line 1 column 1 (char 0)
+ai_horde       OK    36 models  with-context=0 tools-flag=0 free=0  e.g. koboldcpp/Llama-3-Lumimaid-8B-v0.1-OAS-Q4_K_M-imat
+huggingface    OK   132 models  with-context=108 tools-flag=109 free=0  e.g. deepseek-ai/DeepSeek-V4.1-Flash-1017
+vercel_ai_gateway ERR vercel_ai_gateway: HTTP 401: {"error":{"message":"Authentication failed. Create an API key and set in AI_GATEWAY_API_KEY environment variable: https:/
+groq           ERR groq: HTTP 401: {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"invalid_api_key"}}
+
+cerebras       ERR cerebras: HTTP 401: {"message":"Wrong API Key","type":"invalid_request_error","param":"api_key","code":"wrong_api_key"}
+ollama_cloud   OK    23 models  with-context=0 tools-flag=0 free=0  e.g. mistral-large-4
+
+# real AI Horde generation with the public anonymous key
+model=koboldcpp/Underdog-27B-1.1-Q4_1 seconds=4 reply='pong'

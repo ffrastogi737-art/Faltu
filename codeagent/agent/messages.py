@@ -38,3 +38,4 @@ class ProviderError(Exception):
     def __init__(self, provider, status, detail):
         super().__init__(f"{provider}: HTTP {status}: {detail}")
         self.provider, self.status = provider, status
+        self.retry_after = None

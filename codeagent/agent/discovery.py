@@ -12,14 +12,16 @@ from .providers import make_adapter
 from .providers.repair import parse_args
 
 UPSERT = """
-INSERT INTO models (provider, model, context, max_output, tools, vision, free, last_seen)
-VALUES (:provider, :model, :context, :max_output, :tools, :vision, :free, :ts)
+INSERT INTO models (provider, model, context, max_output, tools, vision, free, price_in, price_out, last_seen)
+VALUES (:provider, :model, :context, :max_output, :tools, :vision, :free, :price_in, :price_out, :ts)
 ON CONFLICT(provider, model) DO UPDATE SET
   context = COALESCE(excluded.context, context),
   max_output = COALESCE(excluded.max_output, max_output),
   tools = COALESCE(tools, excluded.tools),
   vision = COALESCE(excluded.vision, vision),
   free = COALESCE(excluded.free, free),
+  price_in = COALESCE(excluded.price_in, price_in),
+  price_out = COALESCE(excluded.price_out, price_out),
   last_seen = excluded.last_seen,
   status = CASE WHEN status = 'gone' THEN 'probation' ELSE status END
 """
@@ -33,7 +35,8 @@ def _now():
 async def _list(name, p, extra):
     if p.get("models") == "extra":
         return [{"model": m["id"], "context": m.get("context"), "max_output": m.get("max_output"),
-                 "tools": None if m.get("tools") is None else int(bool(m["tools"])), "vision": None, "free": None}
+                 "tools": None if m.get("tools") is None else int(bool(m["tools"])), "vision": None, "free": None,
+                 "price_in": m.get("price_in"), "price_out": m.get("price_out")}
                 for m in extra.get(name) or []]
     return await make_adapter(name, p).list_models()
 

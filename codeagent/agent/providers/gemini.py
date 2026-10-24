@@ -24,7 +24,9 @@ class Gemini(OpenAICompat):
                 role = "model"
                 parts = ([{"text": m.content}] if m.content else []) + [
                     {"functionCall": {"name": t.name, "args": t.arguments},
-                     **({"thoughtSignature": t.meta["thoughtSignature"]} if "thoughtSignature" in t.meta else {})}
+                     # a call made by another provider has no signature; Gemini documents this
+                     # placeholder for replayed history (unverified here: no key to test with)
+                     "thoughtSignature": t.meta.get("thoughtSignature", "skip_thought_signature_validator")}
                     for t in m.tool_calls]
                 names.update({t.id: t.name for t in m.tool_calls})
             else:
@@ -72,7 +74,8 @@ class Gemini(OpenAICompat):
                 if "generateContent" not in (m.get("supportedGenerationMethods") or []):
                     continue
                 out.append({"model": m["name"].removeprefix("models/"), "context": m.get("inputTokenLimit"),
-                            "max_output": m.get("outputTokenLimit"), "tools": None, "vision": None, "free": None})
+                            "max_output": m.get("outputTokenLimit"), "tools": None, "vision": None, "free": None,
+                            "price_in": None, "price_out": None})
             token = data.get("nextPageToken")
             if not token:
                 return out

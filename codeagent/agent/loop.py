@@ -1,10 +1,10 @@
 """Agent loop: ask the model, run the tools it calls, feed results back,
 stop on a final answer or a cap."""
-import asyncio
 import json
 import time
 
 from .messages import Message, ProviderError
+from .router import AllFailed
 from .tools import SCHEMAS, ToolError, schemas
 
 SYSTEM = """You are E.D.I.T.H., a careful coding agent working inside one workspace.
@@ -16,22 +16,26 @@ say what you changed and show the verification result. If you are blocked, say s
 PLAN_NOTE = "\nPLAN MODE: you may only read. Propose a step-by-step plan; change nothing."
 
 
-async def run(task, provider, model, tools, log=print, max_steps=30, max_seconds=900, redact=lambda s: s):
+async def run(task, brain, tools, log=print, max_steps=30, max_seconds=900, max_cost_usd=None, redact=lambda s: s):
+    """brain: router.Router (picks a model per step) or router.Fixed (one model)."""
     mode_note = PLAN_NOTE if tools.mode == "plan" else ""
     history = [Message("system", SYSTEM + mode_note), Message("user", task)]
     tool_specs = schemas(tools.mode)
     allowed = {t["name"] for t in tool_specs}
     last_fail, streak = None, 0  # same failing call back to back = doom loop
+    edited, failed_checks = False, 0  # two failed verifications after an edit -> escalate
     started = time.monotonic()
     usage = [0, 0]
 
     for step in range(1, max_steps + 1):
         if time.monotonic() - started > max_seconds:
             return _end(f"stopped: time cap {max_seconds}s reached", usage, log)
+        if max_cost_usd is not None and brain.session_cost_usd >= max_cost_usd:
+            return _end(f"stopped: cost cap ${max_cost_usd} reached", usage, log)
         try:
-            resp = await provider.chat(model, history, tool_specs)
-        except ProviderError as e:
-            return _end(f"stopped: provider error: {redact(str(e))}", usage, log)
+            resp = await brain.chat(history, tool_specs, escalate=failed_checks >= 2)
+        except (ProviderError, AllFailed) as e:
+            return _end(f"stopped: {redact(str(e))}", usage, log)
         usage[0] += resp.usage.input_tokens
         usage[1] += resp.usage.output_tokens
         history.append(resp.message)
@@ -46,6 +50,10 @@ async def run(task, provider, model, tools, log=print, max_steps=30, max_seconds
             result = redact(result)
             log("      " + result.splitlines()[0][:160] if result else "")
             history.append(Message("tool", result, tool_call_id=call.id))
+            if call.name in ("edit_file", "write_file") and ok:
+                edited = True
+            if call.name == "run_command" and edited:
+                failed_checks = 0 if ok else failed_checks + 1
             key = (call.name, json.dumps(call.arguments, sort_keys=True))
             last_fail, streak = (None, 0) if ok else (key, streak + 1 if key == last_fail else 1)
             if streak >= 3:
@@ -76,6 +84,3 @@ def _end(text, usage, log, done=False):
     log(f"tokens: {usage[0]} in, {usage[1]} out")
     return {"done": done, "answer": text, "input_tokens": usage[0], "output_tokens": usage[1]}
 
-
-def run_sync(*a, **kw):
-    return asyncio.run(run(*a, **kw))

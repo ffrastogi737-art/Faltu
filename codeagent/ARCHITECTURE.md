@@ -22,7 +22,7 @@ codeagent/
     config.py           also: providers.local.yaml overlay (registry)   (P2)
     db.py               SQLite: models, discovery, calls                (P2)
     discovery.py        model lists + capability probes                 (P2)
-    router/             classify step, filter, score, failover, quotas  (P3)
+    router.py           classify step, filter, score, failover, quotas  (P3)
     tools/              read, write, patch, grep/glob, repo map, shell,
                         git, web, browser, lint                         (P1 basic, P4 rest)
     sandbox.py          restricted subprocess + permission modes        (P4)

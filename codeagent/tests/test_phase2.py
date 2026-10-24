@@ -13,6 +13,7 @@ from agent import cli, config, db, discovery, loop
 from agent.messages import Message, ToolCall
 from agent.providers import make_adapter
 from agent.providers.repair import parse_args
+from agent.router import Fixed
 from agent.tools import Tools
 from tests.fakes import FakeServer, openai_provider
 
@@ -194,7 +195,7 @@ class Registry(Isolated):
         s2 = self.server(openai_provider(["m1"], reply=reply))
         self.add("t_a", s2.url)
         adapter = make_adapter("t_a", self.mine()["t_a"])
-        result = asyncio.run(loop.run("list files", adapter, "m1", Tools(ws, lambda *_: True, "trusted"), log=lambda s: None))
+        result = asyncio.run(loop.run("list files", Fixed(adapter, "m1"), Tools(ws, lambda *_: True, "trusted"), log=lambda s: None))
         self.assertTrue(result["done"])
         self.assertEqual(set(config.usable(config.load_providers())) & {"t_a", "t_b", "t_c"}, {"t_a"})
 
