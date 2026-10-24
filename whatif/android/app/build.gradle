@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'app.whatif'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'app.whatif'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0'
+    }
+
+    // shortcut: sideload key is committed so newer builds install over older ones without
+    // uninstalling (which would wipe saved scenarios). Use a private key before publishing to a store.
+    signingConfigs {
+        sideload {
+            storeFile file('whatif-sideload.jks')
+            storePassword 'whatif-sideload'
+            keyAlias 'whatif'
+            keyPassword 'whatif-sideload'
+        }
+    }
+
+    buildTypes {
+        release { minifyEnabled false; signingConfig signingConfigs.sideload }
+        debug { signingConfig signingConfigs.sideload }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint { checkReleaseBuilds false }
+
+    // The 8.7 MB llama.cpp WebAssembly runtime must stay uncompressed-friendly but is fine either way.
+    sourceSets { main { assets.srcDirs += ["$buildDir/webassets"] } }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}
+
+// The web app in whatif/ is the single source of truth; copy it into the APK at build time.
+def webRoot = rootProject.projectDir.parentFile
+tasks.register('copyWeb', Sync) {
+    from(webRoot) {
+        include 'index.html', 'manifest.webmanifest', 'src/**', 'icons/**', 'fonts/**', 'vendor/**'
+    }
+    into "$buildDir/webassets"
+}
+preBuild.dependsOn 'copyWeb'

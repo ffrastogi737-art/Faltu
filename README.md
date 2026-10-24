@@ -1,3 +1,5 @@
+> This repository contains two apps: **LIFE RPG** (below) and **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md).
+
 # LIFE RPG
 
 Turn real-life goals into an RPG: quests, skill trees, XP and levels, milestone boss battles, achievements and honest statistics. Offline-first, private, no account.
