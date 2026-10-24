@@ -10,7 +10,7 @@ export const setFormat = (settings) => { fmtCtx = { currency: settings.currency,
 export function money(x, { compact = false } = {}) {
   if (x === null || x === undefined || !Number.isFinite(x)) return '—';
   try {
-    return new Intl.NumberFormat(fmtCtx.locale, { style: 'currency', currency: fmtCtx.currency, maximumFractionDigits: compact ? 1 : Math.abs(x) < 100 ? 2 : 0, notation: compact && Math.abs(x) >= 1e5 ? 'compact' : 'standard' }).format(x);
+    return new Intl.NumberFormat(fmtCtx.locale, { style: 'currency', currency: fmtCtx.currency, maximumFractionDigits: compact ? 1 : Math.abs(x) < 100 && !Number.isInteger(x) ? 2 : 0, notation: compact && Math.abs(x) >= 1e5 ? 'compact' : 'standard' }).format(x);
   } catch { return x.toFixed(0); }
 }
 export const num = (x, d = 1) => (x === null || x === undefined || !Number.isFinite(x) ? '—' : new Intl.NumberFormat(fmtCtx.locale, { maximumFractionDigits: d }).format(x));
