@@ -1,0 +1,347 @@
+# Provider registry. Provider-level facts only: no model names, no keys.
+# Models are discovered at runtime from each provider's list endpoint
+# (or from models_extra.yaml when a provider has none).
+#
+# Fields:
+#   api:        openai | gemini | cohere | ai21 | cloudflare | horde  (adapter to use)
+#   base_url:   API root; {VAR} placeholders are filled from env vars
+#   key_env:    env var holding the key (provider is skipped if it is empty)
+#   models:     list endpoint path, or "extra" to read models_extra.yaml
+#   enabled:    false = never routed to (history is kept)
+#   status:     live | paid-only | dead | unclear | unverified
+#               unverified = written from knowledge, not yet confirmed by a
+#               live probe; the first `agent providers probe` replaces it.
+#   allow_private_code: may this provider see workspace code?
+#               false unless its data policy is confirmed safe.
+#   free_tier:  true | false | unknown
+#
+# Add any OpenAI-compatible provider with:
+#   agent providers add <name> --base-url <url> --key-env <VAR>
+# There is no limit on how many entries this file holds.
+
+providers:
+  gemini:
+    api: gemini
+    base_url: https://generativelanguage.googleapis.com/v1beta
+    key_env: GEMINI_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false   # free-tier prompts may be used for training
+  openrouter:
+    api: openai
+    base_url: https://openrouter.ai/api/v1
+    key_env: OPENROUTER_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false   # free models are served by third parties that may log
+  groq:
+    api: openai
+    base_url: https://api.groq.com/openai/v1
+    key_env: GROQ_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  zai:
+    api: openai
+    base_url: https://api.z.ai/api/paas/v4
+    key_env: ZAI_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  nvidia_nim:
+    api: openai
+    base_url: https://integrate.api.nvidia.com/v1
+    key_env: NVIDIA_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  cloudflare:
+    api: cloudflare
+    base_url: https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai
+    key_env: CLOUDFLARE_API_TOKEN
+    models: /models/search
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  mistral:
+    api: openai
+    base_url: https://api.mistral.ai/v1
+    key_env: MISTRAL_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false   # free "experiment" tier may train on prompts
+  kilo:
+    api: openai
+    base_url: https://api.kilo.ai/api/gateway
+    key_env: KILO_API_KEY
+    models: /models
+    enabled: true
+    status: unclear             # base URL not confirmed
+    free_tier: unknown
+    allow_private_code: false
+  github_models:
+    api: openai
+    base_url: https://models.github.ai/inference
+    key_env: GITHUB_TOKEN
+    models: https://models.github.ai/catalog/models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  huggingface:
+    api: openai
+    base_url: https://router.huggingface.co/v1
+    key_env: HF_TOKEN
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  cerebras:
+    api: openai
+    base_url: https://api.cerebras.ai/v1
+    key_env: CEREBRAS_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  deepinfra:
+    api: openai
+    base_url: https://api.deepinfra.com/v1/openai
+    key_env: DEEPINFRA_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  fireworks:
+    api: openai
+    base_url: https://api.fireworks.ai/inference/v1
+    key_env: FIREWORKS_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  sambanova:
+    api: openai
+    base_url: https://api.sambanova.ai/v1
+    key_env: SAMBANOVA_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  together:
+    api: openai
+    base_url: https://api.together.xyz/v1
+    key_env: TOGETHER_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  hyperbolic:
+    api: openai
+    base_url: https://api.hyperbolic.xyz/v1
+    key_env: HYPERBOLIC_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  nebius:
+    api: openai
+    base_url: https://api.studio.nebius.com/v1
+    key_env: NEBIUS_API_KEY
+    models: /models
+    enabled: true
+    status: unverified          # product may have been renamed; URL to confirm
+    free_tier: unknown
+    allow_private_code: false
+  scaleway:
+    api: openai
+    base_url: https://api.scaleway.ai/v1
+    key_env: SCW_SECRET_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  ovhcloud:
+    api: openai
+    base_url: https://oai.endpoints.kepler.ai.cloud.ovh.net/v1
+    key_env: OVH_AI_ENDPOINTS_ACCESS_TOKEN
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  cohere:
+    api: cohere
+    base_url: https://api.cohere.com/v2
+    key_env: CO_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true             # trial keys, non-commercial
+    allow_private_code: false
+  ai21:
+    api: ai21
+    base_url: https://api.ai21.com/studio/v1
+    key_env: AI21_API_KEY
+    models: extra
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  novita:
+    api: openai
+    base_url: https://api.novita.ai/v3/openai
+    key_env: NOVITA_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  zenmux:
+    api: openai
+    base_url: https://zenmux.ai/api/v1
+    key_env: ZENMUX_API_KEY
+    models: /models
+    enabled: true
+    status: unclear
+    free_tier: unknown
+    allow_private_code: false
+  aionlabs:
+    api: openai
+    base_url: https://api.aionlabs.ai/v1
+    key_env: AIONLABS_API_KEY
+    models: /models
+    enabled: true
+    status: unclear
+    free_tier: unknown
+    allow_private_code: false
+  chutes:
+    api: openai
+    base_url: https://llm.chutes.ai/v1
+    key_env: CHUTES_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: unknown
+    allow_private_code: false
+  ai_horde:
+    api: horde
+    base_url: https://aihorde.net/api/v2
+    key_env: AI_HORDE_API_KEY
+    models: /status/models?type=text
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false   # prompts go to volunteer workers: never private code
+  lepton:
+    api: openai
+    base_url: ""
+    key_env: LEPTON_API_KEY
+    models: /models
+    enabled: false
+    status: dead
+    reason: acquired by NVIDIA (2025); public serverless endpoints not confirmed to exist
+    free_tier: unknown
+    allow_private_code: false
+  modelscope:
+    api: openai
+    base_url: https://api-inference.modelscope.cn/v1
+    key_env: MODELSCOPE_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  ollama_cloud:
+    api: openai
+    base_url: https://ollama.com/v1
+    key_env: OLLAMA_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true
+    allow_private_code: false
+  replit:
+    api: openai
+    base_url: ""
+    key_env: REPLIT_API_KEY
+    models: extra
+    enabled: false
+    status: dead
+    reason: no public general-purpose LLM API known
+    free_tier: unknown
+    allow_private_code: false
+  monsterapi:
+    api: openai
+    base_url: https://llm.monsterapi.ai/v1
+    key_env: MONSTER_API_KEY
+    models: /models
+    enabled: false
+    status: unclear
+    reason: service status unknown; enable after a successful probe
+    free_tier: unknown
+    allow_private_code: false
+  anyscale:
+    api: openai
+    base_url: ""
+    key_env: ANYSCALE_API_KEY
+    models: /models
+    enabled: false
+    status: dead
+    reason: public Endpoints service was discontinued (2024)
+    free_tier: false
+    allow_private_code: false
+  deepseek:
+    api: openai
+    base_url: https://api.deepseek.com/v1
+    key_env: DEEPSEEK_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: false            # paid, needs per-provider budget cap
+    allow_private_code: false
+  perplexity:
+    api: openai
+    base_url: https://api.perplexity.ai
+    key_env: PERPLEXITY_API_KEY
+    models: extra               # no list endpoint known
+    enabled: true
+    status: unverified
+    free_tier: false
+    allow_private_code: false
+  vercel_ai_gateway:
+    api: openai
+    base_url: https://ai-gateway.vercel.sh/v1
+    key_env: AI_GATEWAY_API_KEY
+    models: /models
+    enabled: true
+    status: unverified
+    free_tier: true             # monthly free credit
+    allow_private_code: false
+
+# Paid usage is off until you set a cap here, per provider.
+budget:
+  paid_enabled: false
+  daily_inr: 0
+  per_provider_inr: {}
