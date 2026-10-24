@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; connect-src 'self' https://api.anthropic.com https://cdn.jsdelivr.net; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#07090f">
+  <meta name="description" content="Turn real-life goals into an RPG: quests, skills, boss battles and achievements. Offline and private.">
+  <title>LIFE RPG</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="src/ui/styles.css">
+  <script type="module" src="src/ui/app.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <dialog id="modal" aria-modal="true"></dialog>
+  <div id="toasts" aria-live="polite"></div>
+  <noscript><p style="padding:20px">LIFE RPG needs JavaScript to run.</p></noscript>
+</body>
+</html>

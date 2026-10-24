@@ -117,7 +117,7 @@ export function localPlan(goalText, state, { skillId } = {}) {
     || state.skills.find((s) => s.id === arch.skill && s.enabled) || null;
   const stages = arch.stages(goal).map(([title, objective]) => ({ title, objective }));
   const quests = stages.map((st, i) => ({
-    title: st.title.replace(/^Final boss: /, ''),
+    title: st.title.replace(/^Final boss: (.)/, (_, c) => c.toUpperCase()),
     description: st.objective,
     criteria: st.objective,
     difficulty: RAMP[i].d,
