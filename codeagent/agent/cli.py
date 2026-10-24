@@ -287,10 +287,16 @@ def main(argv=None):
     mm.add_argument("action", nargs="?", default="list", choices=["list", "add", "forget"])
     mm.add_argument("text", nargs="?")
     sub.add_parser("dream", help="review past sessions and curate memory now")
+    tm = sub.add_parser("team", help="supervisor splits the task across specialist agents (parallel in git worktrees)")
+    tm.add_argument("task")
+    tm.add_argument("--sequential", action="store_true", help="no parallel worktrees")
+    sub.add_parser("agents", help="list built-in and custom agent roles")
+    bd = sub.add_parser("board", help="task board of a team run (latest if no id)")
+    bd.add_argument("run_id", nargs="?")
     for p in (ap, *sub.choices.values()):  # options go after the subcommand
         p.add_argument("--provider", help="provider name from providers.yaml (or EDITH_PROVIDER)")
         p.add_argument("--model", help="model id, see `edith models` (or EDITH_MODEL)")
-    for p in (ap, run, rs):
+    for p in (ap, run, rs, tm):
         p.add_argument("--mode", default="default", choices=["plan", "default", "accept_edits", "trusted", "bypass"])
         p.add_argument("--no-verify", action="store_true", help="skip automatic tests/lint after changes")
         p.add_argument("--no-review", action="store_true", help="skip the reviewer agent")
@@ -358,6 +364,19 @@ def _dispatch(args, providers, con):
         path = os.path.join(session_mod.Session(args.session, resume=True).dir, "artifacts", "report.md")
         print(open(path).read() if os.path.exists(path) else "no report yet")
         return 0
+    if args.cmd == "agents":
+        from .agents import load_roles
+        for name, r in load_roles(os.path.realpath(args.workspace) if hasattr(args, "workspace") else None).items():
+            tools = "all tools" if r["tools"] is None else ", ".join(r["tools"])
+            print(f"{name:12} max_steps={r['max_steps']:<3} {r['description'][:60]}  [{tools}]")
+        return 0
+    if args.cmd == "board":
+        from .agents import BOARD
+        con.executescript(BOARD)
+        rid = args.run_id or (con.execute("SELECT run_id FROM board ORDER BY rowid DESC LIMIT 1").fetchone() or [None])[0]
+        for b in con.execute("SELECT * FROM board WHERE run_id=? ORDER BY rowid", (rid,)):
+            print(f"{b['id']:6} {b['role']:10} {b['status']:9} {b['title'][:60]}")
+        return 0
     if args.cmd in ("memory", "dream"):
         mem = Memory(con)
         if args.cmd == "dream":
@@ -398,6 +417,19 @@ def _dispatch(args, providers, con):
     scrub = [k for p in providers.values() for k in config.key_envs(p)]
     tools = Tools(ws, _approve, args.mode, scrub_env=scrub, settings=settings, log=log)
     hooks = Hooks(settings["hooks"], cwd=ws, env=tools._env(), log=log) if settings["hooks"] else None
+    if args.cmd == "team":
+        from .agents import Team
+        from .router import Quota, Router
+        quota = Quota(con)
+        fixed = not isinstance(brain, Router)
+        team = Team(con, (lambda: brain) if fixed else (lambda: Router(con, mode=args.mode, log=log, quota=quota)),
+                    lambda path, allow: Tools(path, _approve, args.mode, scrub_env=scrub, settings=settings, hooks=hooks,
+                                              log=log),
+                    ws, log=log, hooks=hooks, memory=Memory(con), settings=settings, parallel=not args.sequential,
+                    agent_kwargs={"redact": lambda s: config.redact(s, secret_values),
+                                  "context_budget": settings["context_budget"]})
+        out = asyncio.run(team.run(task))
+        return 0 if out["done"] else 1
     agent = Agent(brain, tools, log=log, session=session, memory=Memory(con), hooks=hooks, settings=settings,
                   max_steps=args.max_steps, max_cost_usd=args.max_cost_usd, verify_changes=not args.no_verify,
                   review_changes=not args.no_review, context_budget=settings["context_budget"],

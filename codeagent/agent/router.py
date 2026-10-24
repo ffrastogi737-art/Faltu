@@ -141,9 +141,9 @@ class Quota:
 
 
 class Router:
-    def __init__(self, con, mode="default", needs_private=True, log=print, rng=None, providers=None):
+    def __init__(self, con, mode="default", needs_private=True, log=print, rng=None, providers=None, quota=None):
         self.con, self.mode, self.needs_private, self.log = con, mode, needs_private, log
-        self.quota = Quota(con)
+        self.quota = quota or Quota(con)  # parallel agents share one, so their calls count together
         self.rng = rng or random.Random()
         self._providers = providers  # tests pass a fixed dict; normally re-read every call
         self.adapters = {}

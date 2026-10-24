@@ -31,7 +31,8 @@ def detect(ws):
             out.append(("tests", "pytest -q"))
         else:
             out.append(("tests", f"{py} -m unittest -q" + (" discover -s tests" if has("tests") else "")))
-        if shutil.which("ruff"):
+        # lint only with a linter the project chose; otherwise the agent would "fix" style nobody asked for
+        if shutil.which("ruff") and (has("ruff.toml") or has(".ruff.toml") or _mentions(ws, "pyproject.toml", "[tool.ruff")):
             out.append(("lint", "ruff check --output-format concise ."))
     if has("package.json"):
         try:

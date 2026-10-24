@@ -32,7 +32,7 @@ codeagent/
     memory.py           SQLite FTS5 lessons, dreaming job               (P5)
     session.py          JSONL log, snapshots, git checkpoint, rewind    (P5)
     verify.py           check detection/runner, Reviewer                (P6)
-    agents/             supervisor, specialists, task board, worktrees  (P7)
+    agents.py           supervisor, specialists, task board, worktrees  (P7)
     server/             HTTP + WebSocket API, MCP server/client         (P8)
   evals/                20-30 benchmark tasks + reports                 (P9)
   tests/

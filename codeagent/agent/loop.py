@@ -2,6 +2,7 @@
 permissions) -> observe -> verify -> review -> report. Stops on a final
 answer that passed verification, or on a step/time/cost cap, a doom loop
 or an interrupt; every stop writes a report."""
+import asyncio
 import json
 import time
 
@@ -138,9 +139,12 @@ class Agent:
                                                 "tool_calls": [t.name for t in resp.message.tool_calls]})
 
             if not resp.message.tool_calls:
+                if verify_rounds >= 3 and self.evidence["checks"] and not all(c["passed"] for c in self.evidence["checks"]):
+                    return self._end("stopped", "verification still failing after 3 rounds; see the report. "
+                                                f"Last answer: {resp.message.content[:500]}")
                 if edited and self.verify_changes and self.tools.mode != "plan" and verify_rounds < 3:
                     verify_rounds += 1
-                    ok, report, results = verify.run_checks(self.tools, self.tools.ws)
+                    ok, report, results = await asyncio.to_thread(verify.run_checks, self.tools, self.tools.ws)
                     self.evidence["checks"] = results
                     self.log(f"  verify: {'all checks passed' if ok else 'checks FAILED'} "
                              f"({', '.join(r['check'] + ('=ok' if r['passed'] else '=FAIL') for r in results) or 'none found'})")
@@ -201,7 +205,8 @@ class Agent:
                 return f"error: blocked by a hook rule: {h['block']}", False
             if h["arguments"] is not None:
                 args = h["arguments"]
-        result, ok = _call(self.tools, allowed, call.name, args)
+        # in a thread, so parallel agents keep working while one runs a long command
+        result, ok = await asyncio.to_thread(_call, self.tools, allowed, call.name, args)
         result = self.redact(result)
         if self.hooks:
             h = self.hooks.fire("after_tool", {"tool": call.name, "arguments": args, "result": result[:8000], "ok": ok},

@@ -61,7 +61,8 @@ def default_path():
 
 
 def connect(path=None):
-    con = sqlite3.connect(path or default_path())
+    # tools run in worker threads (see loop._run_tool); SQLite serializes access itself
+    con = sqlite3.connect(path or default_path(), check_same_thread=False, timeout=30)
     con.row_factory = sqlite3.Row
     con.execute("PRAGMA journal_mode=WAL")
     con.executescript(SCHEMA)

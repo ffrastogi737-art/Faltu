@@ -50,6 +50,7 @@ class Tools:
         self.log = log
         self.on_edit = None  # set by the session to snapshot files before they change
         self.extra = {}      # name -> callable(**args) for tools added by other modules (memory, MCP, skills)
+        self.git_read_only = False  # set for agent roles that may not change files
 
     def _path(self, path):
         full = os.path.realpath(os.path.join(self.ws, path))
@@ -201,8 +202,8 @@ class Tools:
         sub = argv[0]
         if sub in GIT_READ:
             pass
-        elif self.mode == "plan":
-            raise ToolError("plan mode: only read-only git commands")
+        elif self.mode == "plan" or self.git_read_only:
+            raise ToolError("only read-only git commands are allowed here")
         elif sub in GIT_WRITE:
             risky = sub == "reset" and "--hard" in argv
             if not self._allowed("consequential" if risky else "edit", f"git {args}"):
