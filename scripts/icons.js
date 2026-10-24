@@ -10,7 +10,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage();
 for (const [name, size, pad] of [['icon-192', 192, 0], ['icon-512', 512, 0], ['icon-maskable-512', 512, 0.12]]) {
   await page.setViewportSize({ width: size, height: size });
-  await page.setContent(`<body style="margin:0;background:#07090f;display:grid;place-items:center;height:100vh">
+  await page.setContent(`<body style="margin:0;background:#fcee0a;display:grid;place-items:center;height:100vh">
     <div style="width:${size * (1 - 2 * pad)}px;height:${size * (1 - 2 * pad)}px">${svg.replace('<svg', '<svg width="100%" height="100%"')}</div></body>`);
   await page.screenshot({ path: new URL(`../icons/${name}.png`, import.meta.url).pathname });
 }

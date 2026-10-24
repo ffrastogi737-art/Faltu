@@ -1,5 +1,5 @@
 // Offline app shell. Bump VERSION whenever any listed file changes.
-const VERSION = 'life-rpg-v2';
+const VERSION = 'life-rpg-v3';
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest',
   'icons/icon.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',

@@ -88,14 +88,14 @@ function modeSeg(current) {
 
 // ---------- home ----------
 
-const SHORT = { programming: 'Code', fitness: 'Fitness', learning: 'Learning', creativity: 'Creative', communication: 'Social', finance: 'Finance', problem: 'Logic', discipline: 'Discipline' };
+const SHORT = { programming: 'Code', fitness: 'Fitness', learning: 'Study', creativity: 'Creative', communication: 'Social', finance: 'Finance', problem: 'Logic', discipline: 'Discipline' };
 
 function radar(state) {
   const skills = state.skills.filter((s) => s.enabled).slice(0, 10);
   if (skills.length < 3) return html`<p class="small muted center">Enable at least 3 skills to see your attribute chart.</p>`;
   const lv = skills.map((s) => levelInfo(s.xp, state.settings.skillCurve).level);
   const max = Math.max(4, ...lv);
-  const C = 50; const R = 27;
+  const C = 50; const R = 24;
   const pt = (i, f) => {
     const a = -Math.PI / 2 + (i / skills.length) * Math.PI * 2;
     return [C + Math.cos(a) * R * f, C + Math.sin(a) * R * f];
