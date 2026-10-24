@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval' blob:; worker-src 'self' blob:; connect-src 'self' blob: data: https://huggingface.co https://*.huggingface.co https://*.hf.co; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta name="theme-color" content="#060914">
+  <meta name="description" content="Offline decision simulator: explore business, career and custom what-if scenarios with transparent calculations.">
+  <title>WHAT IF?</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="src/ui/styles.css">
+  <script type="module" src="src/ui/app.js"></script>
+</head>
+<body>
+  <div id="app"><p style="padding:24px;color:#9aa6c7">Loading…</p></div>
+  <dialog id="modal" aria-modal="true"></dialog>
+  <div id="toasts" aria-live="polite"></div>
+  <noscript><p style="padding:20px">WHAT IF? needs JavaScript.</p></noscript>
+</body>
+</html>

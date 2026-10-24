@@ -109,17 +109,17 @@ export function simulateBusiness(rawValues, otherCostsRaw = []) {
   if (firstNegative) warnings.push(`Cash falls below zero in month ${firstNegative.month}. You would need extra funding before then.`);
 
   const steps = [
-    { label: 'Cash after initial investment', formula: 'starting cash − initial investment', values: `${v.startingCash} − ${v.initialInvestment}`, result: round2(v.startingCash - v.initialInvestment) },
-    { label: 'Units in month m', formula: 'units₁ × (1 + growth)^(m − launch month), 0 before launch', values: `${v.unitsPerMonth} × (1 + ${v.growthPct}%)^(m − ${v.launchMonth})`, result: null },
-    { label: 'Revenue', formula: 'units × price', values: `units × ${v.price}`, result: round2(summary.totalRevenue) },
-    { label: 'Contribution margin per sale', formula: 'price − variable cost', values: `${v.price} − ${v.variableCost}`, result: round2(margin) },
-    { label: 'Fixed costs per month', formula: 'fixed + marketing + other monthly costs', values: `${v.fixedMonthly} + ${v.marketingMonthly} + ${monthlyOther}`, result: round2(fixedTotal) },
-    { label: 'Operating profit', formula: 'revenue − variable costs − fixed costs', values: 'per month, summed', result: round2(summary.totalOperatingProfit) },
-    { label: 'Tax', formula: 'tax rate × (profit − losses carried forward), never negative', values: `${v.taxPct}%`, result: round2(summary.totalTax) },
-    { label: 'Cash in', formula: `revenue received ${v.paymentDelayMonths} month(s) after the sale`, values: '', result: null },
-    { label: 'Cash balance', formula: 'previous balance + cash in − (variable + fixed costs + tax)', values: '', result: round2(cash) },
-    { label: 'Break-even sales per month', formula: 'monthly fixed costs ÷ contribution margin', values: margin > 0 ? `${round2(fixedTotal)} ÷ ${round2(margin)}` : 'margin ≤ 0: no break-even', result: breakEvenUnits === null ? null : round2(breakEvenUnits) },
-    { label: 'Break-even revenue per month', formula: 'break-even units × price', values: '', result: summary.breakEvenRevenue === null ? null : round2(summary.breakEvenRevenue) },
+    { label: 'Cash after initial investment', unit: 'money', formula: 'starting cash − initial investment', values: `${v.startingCash} − ${v.initialInvestment}`, result: round2(v.startingCash - v.initialInvestment) },
+    { label: 'Units in month m', unit: 'count', formula: 'units₁ × (1 + growth)^(m − launch month), 0 before launch', values: `${v.unitsPerMonth} × (1 + ${v.growthPct}%)^(m − ${v.launchMonth})`, result: null },
+    { label: 'Revenue', unit: 'money', formula: 'units × price', values: `units × ${v.price}`, result: round2(summary.totalRevenue) },
+    { label: 'Contribution margin per sale', unit: 'money', formula: 'price − variable cost', values: `${v.price} − ${v.variableCost}`, result: round2(margin) },
+    { label: 'Fixed costs per month', unit: 'money', formula: 'fixed + marketing + other monthly costs', values: `${v.fixedMonthly} + ${v.marketingMonthly} + ${monthlyOther}`, result: round2(fixedTotal) },
+    { label: 'Operating profit', unit: 'money', formula: 'revenue − variable costs − fixed costs', values: 'per month, summed', result: round2(summary.totalOperatingProfit) },
+    { label: 'Tax', unit: 'money', formula: 'tax rate × (profit − losses carried forward), never negative', values: `${v.taxPct}%`, result: round2(summary.totalTax) },
+    { label: 'Cash in', unit: 'money', formula: `revenue received ${v.paymentDelayMonths} month(s) after the sale`, values: '', result: null },
+    { label: 'Cash balance', unit: 'money', formula: 'previous balance + cash in − (variable + fixed costs + tax)', values: '', result: round2(cash) },
+    { label: 'Break-even sales per month', unit: 'count', formula: 'monthly fixed costs ÷ contribution margin', values: margin > 0 ? `${round2(fixedTotal)} ÷ ${round2(margin)}` : 'margin ≤ 0: no break-even', result: breakEvenUnits === null ? null : round2(breakEvenUnits) },
+    { label: 'Break-even revenue per month', unit: 'money', formula: 'break-even units × price', values: '', result: summary.breakEvenRevenue === null ? null : round2(summary.breakEvenRevenue) },
   ];
 
   return {

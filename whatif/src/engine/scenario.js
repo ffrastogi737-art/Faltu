@@ -48,6 +48,17 @@ export const TYPES = {
   },
 };
 
+const METRIC_UNITS = {
+  finalCash: 'money', totalNetProfit: 'money', totalRevenue: 'money', minCash: 'money', breakEvenUnits: 'count',
+  weeksToTarget: 'weeks', totalCost: 'money', effectiveWeeklyHours: 'hours', costPerHour: 'money',
+};
+
+/** Display unit for a metric or input key of this scenario. */
+export function unitFor(s, key) {
+  if (s.type === 'custom') return (s.model.outputs.find((o) => o.key === key) || s.model.variables.find((v) => v.key === key))?.unit || 'number';
+  return METRIC_UNITS[key] || TYPES[s.type].fields.find((f) => f.key === key)?.unit || 'number';
+}
+
 export function metricsFor(s) {
   if (s.type !== 'custom') return TYPES[s.type].metrics;
   return Object.fromEntries(s.model.outputs.map((o) => [o.key, o.label || o.key]));

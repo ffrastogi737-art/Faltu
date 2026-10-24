@@ -6,6 +6,7 @@
 
 import { interpretRules } from './rules.js';
 import { validateDraft, DRAFT_JSON_SCHEMA } from './schema.js';
+import { parseGGUFHeader } from './gguf.js';
 
 export class CancelledError extends Error { constructor() { super('Cancelled'); this.name = 'CancelledError'; } }
 
@@ -48,6 +49,8 @@ export class LlamaProvider {
 
   async load(blob, { name, nCtx = 2048, nThreads, useGpu = false } = {}) {
     await this.unload();
+    // The runtime does not reliably reject junk, so check the file format ourselves first.
+    try { parseGGUFHeader(await blob.slice(0, Math.min(blob.size, 8 * 1024 * 1024)).arrayBuffer()); } catch (e) { throw new Error(`Model failed to load: ${e.message}`); }
     let mod;
     try { mod = await import(this.moduleUrl); } catch (e) { throw new Error(`Local AI runtime could not start: ${e.message}`); }
     const quiet = { debug() {}, log() {}, info() {}, warn: (...a) => console.warn(...a), error: (...a) => console.error(...a) };
@@ -58,6 +61,7 @@ export class LlamaProvider {
       await this.unload();
       throw new Error(`Model failed to load: ${e?.message || e}`);
     }
+    if (!this.w.isModelLoaded()) { await this.unload(); throw new Error('Model failed to load: the runtime did not report a loaded model'); }
     this.modelName = name || 'GGUF model';
     return { threads: this.w.getNumThreads?.(), multithread: this.w.isMultithread?.(), ctx: this.w.getLoadedContextInfo?.().n_ctx };
   }

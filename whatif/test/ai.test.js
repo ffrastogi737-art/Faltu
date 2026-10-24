@@ -102,7 +102,7 @@ test('llama provider reports unavailability and load failures clearly', async ()
   const p = new LlamaProvider({ wasmUrl: 'x.wasm', moduleUrl: 'file:///definitely/missing/wllama.js' });
   assert.equal(p.status().ready, false);
   await assert.rejects(p.interpret('hi'), /No local model is loaded/);
-  await assert.rejects(p.load(new Blob([new Uint8Array(4)])), /runtime could not start/);
+  await assert.rejects(p.load(new Blob([new Uint8Array(64)])), /Not a GGUF file/);
   assert.equal(p.status().ready, false);
   const ac = new AbortController();
   ac.abort();

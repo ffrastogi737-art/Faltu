@@ -65,10 +65,10 @@ export function simulateCareer(rawValues, milestonesRaw = [], startDate) {
       progressPct: Math.min(100, (v.completedHours / v.hoursToTarget) * 100),
     },
     steps: [
-      { label: 'Effective hours per week', formula: 'planned hours × consistency', values: `${v.hoursPerWeek} × ${v.consistencyPct}%`, result: round2(effectiveWeekly) },
-      { label: 'Remaining hours', formula: 'estimated total − completed', values: `${v.hoursToTarget} − ${v.completedHours}`, result: round2(remaining) },
-      { label: 'Weeks to target', formula: 'remaining ÷ effective weekly hours', values: `${round2(remaining)} ÷ ${round2(effectiveWeekly)}`, result: round2(weeks) },
-      { label: 'Total cost', formula: 'one-time cost + monthly cost × months (rounded up)', values: `${v.trainingCost} + ${v.monthlyCost} × ${billedMonths}`, result: round2(totalCost) },
+      { label: 'Effective hours per week', unit: 'hours', formula: 'planned hours × consistency', values: `${v.hoursPerWeek} × ${v.consistencyPct}%`, result: round2(effectiveWeekly) },
+      { label: 'Remaining hours', unit: 'hours', formula: 'estimated total − completed', values: `${v.hoursToTarget} − ${v.completedHours}`, result: round2(remaining) },
+      { label: 'Weeks to target', unit: 'weeks', formula: 'remaining ÷ effective weekly hours', values: `${round2(remaining)} ÷ ${round2(effectiveWeekly)}`, result: round2(weeks) },
+      { label: 'Total cost', unit: 'money', formula: 'one-time cost + monthly cost × months (rounded up)', values: `${v.trainingCost} + ${v.monthlyCost} × ${billedMonths}`, result: round2(totalCost) },
     ],
     warnings: v.hoursPerWeek > 40 ? ['More than 40 hours a week of study on top of other commitments is hard to sustain. Consider rest.'] : [],
     limitations: [

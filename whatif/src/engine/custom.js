@@ -58,7 +58,7 @@ export function simulateCustom(model) {
     if (!Number.isFinite(value)) throw new SimError(`Output “${o.label || o.key}” is not a finite number`);
     scope[o.key] = value;
     outputs[o.key] = value;
-    steps.push({ label: o.label || o.key, formula: o.formula, values: shown, result: round2(value) });
+    steps.push({ label: o.label || o.key, unit: o.unit || 'number', formula: o.formula, values: shown, result: round2(value) });
   }
   return {
     inputs: Object.fromEntries(vars.map((v) => [v.key, Number(v.value)])),

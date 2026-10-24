@@ -1,7 +1,7 @@
 // Deterministic, template-based explanation of a calculated result. Works with no AI model,
 // and doubles as the fact sheet a local model is allowed to talk about.
 
-import { metricsFor, readiness, fieldsFor, SOURCES } from '../engine/scenario.js';
+import { metricsFor, readiness, fieldsFor, unitFor, SOURCES } from '../engine/scenario.js';
 
 export function factSheet(scenario, result, sens, fmt) {
   const metrics = metricsFor(scenario);
@@ -12,7 +12,7 @@ export function factSheet(scenario, result, sens, fmt) {
   lines.push('Calculated results (from the deterministic engine):');
   for (const [k, l] of Object.entries(metrics)) {
     const v = result.summary[k];
-    lines.push(`- ${l}: ${v === null || v === undefined ? 'not applicable' : fmt(k, v)}`);
+    lines.push(`- ${l}: ${v === null || v === undefined ? 'not applicable' : fmt(unitFor(scenario, k), v)}`);
   }
   if (sens?.rows?.length) {
     lines.push(`Biggest drivers when each input moves ±${sens.pct}%:`);
