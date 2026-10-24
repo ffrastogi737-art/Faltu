@@ -504,5 +504,14 @@ def _mcp_server(con):
     serve_stdio(handle)
     return 0
 
+def entry():
+    """Console entry point: `edith ... | head` must not print a traceback."""
+    try:
+        sys.exit(main())
+    except BrokenPipeError:
+        os.dup2(os.open(os.devnull, os.O_WRONLY), sys.stdout.fileno())
+        sys.exit(0)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    entry()

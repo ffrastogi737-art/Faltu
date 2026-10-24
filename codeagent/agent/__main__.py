@@ -1,3 +1,3 @@
-from agent.cli import main
-import sys
-sys.exit(main())
+from agent.cli import entry
+
+entry()

@@ -6,7 +6,7 @@ requires-python = ">=3.11"
 dependencies = ["pyyaml>=6"]
 
 [project.scripts]
-edith = "agent.cli:main"
+edith = "agent.cli:entry"
 
 [tool.setuptools]
 packages = ["agent", "agent.providers"]
