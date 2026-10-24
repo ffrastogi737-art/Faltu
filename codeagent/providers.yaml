@@ -3,10 +3,10 @@
 # (or from models_extra.yaml when a provider has none).
 #
 # Fields:
-#   api:        openai | gemini | cohere | ai21 | cloudflare | horde  (adapter to use)
+#   api:        openai | gemini | cohere | horde  (adapter to use)
 #   base_url:   API root; {VAR} placeholders are filled from env vars
 #   key_env:    env var holding the key (provider is skipped if it is empty)
-#   models:     list endpoint path, or "extra" to read models_extra.yaml
+#   models:     list endpoint path or full URL, or "extra" to read models_extra.yaml
 #   enabled:    false = never routed to (history is kept)
 #   status:     live | paid-only | dead | unclear | unverified
 #               unverified = written from knowledge, not yet confirmed by a
@@ -66,10 +66,10 @@ providers:
     free_tier: true
     allow_private_code: false
   cloudflare:
-    api: cloudflare
-    base_url: https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai
+    api: openai                 # Workers AI has an OpenAI-compatible endpoint
+    base_url: https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1
     key_env: CLOUDFLARE_API_TOKEN
-    models: /models/search
+    models: https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/models/search?task=Text%20Generation
     enabled: true
     status: unverified
     free_tier: true
@@ -98,7 +98,7 @@ providers:
     key_env: GITHUB_TOKEN
     models: https://models.github.ai/catalog/models
     enabled: true
-    status: unverified
+    status: unclear             # catalog answered plain "OK" without a token (2026-10); check with a key
     free_tier: true
     allow_private_code: false
   huggingface:
@@ -195,13 +195,13 @@ providers:
     api: cohere
     base_url: https://api.cohere.com/v2
     key_env: CO_API_KEY
-    models: /models
+    models: https://api.cohere.com/v1/models?endpoint=chat
     enabled: true
     status: unverified
     free_tier: true             # trial keys, non-commercial
     allow_private_code: false
   ai21:
-    api: ai21
+    api: openai                 # chat/completions is OpenAI-shaped
     base_url: https://api.ai21.com/studio/v1
     key_env: AI21_API_KEY
     models: extra

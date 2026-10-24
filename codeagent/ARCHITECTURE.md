@@ -17,10 +17,11 @@ codeagent/
     tools.py            read/list/grep/edit/write/run_command           (P1)
     providers/
       openai_compat.py  generic adapter (most providers)                (P1)
-      gemini.py cohere.py ai21.py cloudflare.py horde.py               (P2)
+      gemini.py cohere.py horde.py   native adapters                   (P2)
       repair.py         broken tool-call JSON repair                    (P2)
-      registry.py       load providers.yaml, add/remove/enable/disable  (P2)
-      discovery.py      model list + capability probes, cached in SQLite (P2)
+    config.py           also: providers.local.yaml overlay (registry)   (P2)
+    db.py               SQLite: models, discovery, calls                (P2)
+    discovery.py        model lists + capability probes                 (P2)
     router/             classify step, filter, score, failover, quotas  (P3)
     tools/              read, write, patch, grep/glob, repo map, shell,
                         git, web, browser, lint                         (P1 basic, P4 rest)

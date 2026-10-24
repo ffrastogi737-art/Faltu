@@ -124,8 +124,12 @@ class Loop(unittest.TestCase):
         self.assertFalse(result["done"])
         self.assertIn("doom loop", result["answer"])
 
-    def test_broken_tool_json_is_reported_to_model(self):
-        result, fake = self.go([call("read_file", '{"path": "cart.py"', raw=True), answer("retrying later")])
+    def test_cut_off_tool_json_is_repaired(self):
+        result, fake = self.go([call("read_file", '{"path": "cart.py"', raw=True), answer("ok")])
+        self.assertIn("def total", fake.requests[-1][1]["messages"][-1]["content"])
+
+    def test_unrepairable_tool_json_is_reported_to_model(self):
+        result, fake = self.go([call("read_file", "path is cart.py", raw=True), answer("retrying later")])
         self.assertTrue(result["done"])
         self.assertIn("not valid JSON", fake.requests[-1][1]["messages"][-1]["content"])
 

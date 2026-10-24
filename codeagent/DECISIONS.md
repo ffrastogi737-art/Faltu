@@ -53,3 +53,13 @@ Budget caps are in rupees (`budget.daily_inr`); providers that report USD cost a
 - Broken tool-call JSON is sent back to the model as an error so it can retry. The real repair layer comes in Phase 2.
 - Doom loop = the same tool call with the same arguments fails 3 times in a row.
 - Not in Phase 1: the session log, resume, a cost cap (no price data yet), streaming, and non-OpenAI adapters.
+
+## D15. Phase 2: adapters and registry
+- Native adapters only where the wire format differs: **Gemini** (generateContent, `thoughtSignature` kept and replayed), **Cohere** v2 (`/chat`, different response shape), **AI Horde** (async job + polling, no tools). AI21 and Cloudflare Workers AI expose OpenAI-compatible endpoints, so they use the generic adapter with a custom model-list URL. Fewer adapters = less to break.
+- `providers.yaml` stays the commented, shipped base. `edith providers add|enable|disable|remove|restore|trust|untrust` writes `providers.local.yaml` (git-ignored), merged on top on every read, so changes apply to the next step with no restart and the base comments survive.
+- `remove` hides a provider; its models and stats stay in SQLite (`~/.edith/state.db`, override with `EDITH_HOME`) so `restore` brings them back.
+- Discovery: list endpoints are fetched in parallel (default 8 at a time, 30 s timeout each), cached for 6 h. A model missing from a fresh list becomes `gone`; if it returns it goes back to `probation`. One provider failing is recorded in the `discovery` table and never stops the others.
+- Probes (4 checks: reply, tool call, JSON, code fix). The code-fix answer is checked by pattern and never executed. Score >= 0.75 -> `active`; < 0.5 -> `failing`; 3 failing runs -> `disabled`. A 429 stops probing that provider for this run and does not count against the model.
+- Tool-call repair: code fences, surrounding prose, trailing commas, double-encoded JSON, cut-off JSON (closes quotes/brackets), Python-style dicts. Anything else goes back to the model as an error.
+- Model choice in `edith run` without `--model`: the best `active` probed model of the provider, from SQLite. Still no model names in code.
+- Live check (2026-10, no keys): OpenRouter, Hugging Face router, Ollama Cloud and AI Horde model lists parse from the real APIs. Groq, Cerebras and Vercel answer 401 without a key, which confirms their URLs. GitHub Models' catalog answered plain "OK" without a token, so it is marked `unclear`.

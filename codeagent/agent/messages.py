@@ -8,6 +8,7 @@ class ToolCall:
     id: str
     name: str
     arguments: dict  # already parsed; a parse failure is reported as {"_error": raw}
+    meta: dict = field(default_factory=dict)  # provider-specific data to send back, e.g. Gemini thoughtSignature
 
 
 @dataclass

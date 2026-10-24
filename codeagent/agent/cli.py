@@ -94,74 +94,164 @@ def _approve(kind, detail):
     return _ask("Allow? [y/N] ").strip().lower() in ("y", "yes")
 
 
-def _pick(args, providers):
-    """Returns (adapter, model) or raises SystemExit with a hint."""
-    from .config import base_url, usable
-    from .providers.openai_compat import OpenAICompat
+def _pick(args, providers, con):
+    """Returns (name, adapter, model) or exits with a hint."""
+    from .config import usable
+    from .providers import make_adapter
     ready = usable(providers)
     name = args.provider or os.environ.get("EDITH_PROVIDER") or next(iter(ready), None)
     if not name:
         sys.exit("No provider has a key. Put one in codeagent/.env (see .env.example).")
     if name not in providers:
         sys.exit(f"Unknown provider `{name}`. See `edith providers`.")
-    p = providers[name]
     if name not in ready:
-        sys.exit(f"`{name}` is disabled or {p['key_env']} is empty.")
-    if p["api"] != "openai":
-        sys.exit(f"`{name}` needs the `{p['api']}` adapter, which arrives in Phase 2. Pick an OpenAI-compatible provider.")
-    return name, OpenAICompat(name, base_url(p), os.environ[p["key_env"]])
+        sys.exit(f"`{name}` is disabled or {providers[name]['key_env']} is empty.")
+    model = getattr(args, "model", None) or os.environ.get("EDITH_MODEL")
+    if not model:  # best probed model of this provider; no names in code
+        row = con.execute("SELECT model FROM models WHERE provider=? AND status='active' AND tools=1 "
+                          "ORDER BY quality DESC, context DESC LIMIT 1", (name,)).fetchone()
+        model = row["model"] if row else None
+    return name, make_adapter(name, providers[name]), model
+
+
+def _providers_cmd(args, providers, con):
+    from . import config
+    act = args.action
+    if act == "list":
+        stats = {r["provider"]: r for r in con.execute("SELECT * FROM discovery")}
+        counts = {r[0]: r[1] for r in con.execute(
+            "SELECT provider, COUNT(*) FROM models WHERE status != 'gone' GROUP BY provider")}
+        for n, p in providers.items():
+            key = "key" if os.environ.get(p.get("key_env", "")) else "no-key"
+            d = stats.get(n)
+            health = "-" if not d else ("ok" if d["ok"] else "ERR " + (d["error"] or "")[:40])
+            print(f"{'on ' if p.get('enabled') else 'off'} {n:18} {p.get('api', 'openai'):7} {p.get('status', '?'):10} "
+                  f"{key:6} models={counts.get(n, 0):<5} private={str(p.get('allow_private_code', False)).lower():5} {health}")
+        return 0
+    name = args.name
+    if act == "add":
+        if not args.base_url or not args.key_env:
+            sys.exit("add needs --base-url and --key-env")
+        config.save_override(name, {"api": args.api, "base_url": args.base_url, "key_env": args.key_env,
+                                    "models": args.models_path, "enabled": True, "status": "unverified",
+                                    "free_tier": "unknown", "allow_private_code": False, "removed": False})
+        print(f"added {name}. Run `edith refresh --provider {name}` then `edith probe --provider {name}`.")
+        return 0
+    if act == "restore":
+        config.save_override(name, {"removed": False})
+    elif name not in providers:
+        sys.exit(f"Unknown provider `{name}`.")
+    elif act in ("enable", "disable"):
+        config.save_override(name, {"enabled": act == "enable"})
+    elif act == "remove":
+        config.save_override(name, {"removed": True})  # stats stay in SQLite for `restore`
+    elif act == "trust":
+        config.save_override(name, {"allow_private_code": True})
+    elif act == "untrust":
+        config.save_override(name, {"allow_private_code": False})
+    print(f"{name}: {act} done")
+    return 0
+
+
+def _models_cmd(args, con):
+    q = "SELECT * FROM models WHERE status != 'gone'" + ("" if args.all else " AND status != 'disabled'")
+    params = []
+    if args.provider:
+        q += " AND provider=?"
+        params.append(args.provider)
+    rows = con.execute(q + " ORDER BY provider, quality DESC NULLS LAST, model", params).fetchall()
+    if not rows:
+        print("No models yet. Run `edith refresh` (needs at least one key in .env).")
+    for r in rows:
+        tools = {1: "tools", 0: "no-tools"}.get(r["tools"], "tools?")
+        q_ = "-" if r["quality"] is None else f"{r['quality']:.2f}"
+        print(f"{r['provider']:16} {r['status']:9} q={q_:4} ctx={r['context'] or '?':<8} {tools:8} "
+              f"{'free' if r['free'] else '':4} {r['model']}")
+    print(f"{len(rows)} models")
+    return 0
 
 
 def main(argv=None):
     import argparse
-    import asyncio
 
-    from . import config, loop
-    from .tools import Tools
+    from . import config, db
 
     ap = argparse.ArgumentParser(prog="edith", description=f"{NAME} {FULL_NAME}")
     sub = ap.add_subparsers(dest="cmd")
     run = sub.add_parser("run", help="do a coding task")
     run.add_argument("task")
-    sub.add_parser("providers", help="list providers and whether a key is set")
-    sub.add_parser("models", help="list models of the chosen provider")
+    pr = sub.add_parser("providers", help="list, add, enable, disable, remove, restore, trust, untrust")
+    pr.add_argument("action", nargs="?", default="list",
+                    choices=["list", "add", "enable", "disable", "remove", "restore", "trust", "untrust"])
+    pr.add_argument("name", nargs="?")
+    pr.add_argument("--base-url")
+    pr.add_argument("--key-env")
+    pr.add_argument("--api", default="openai")
+    pr.add_argument("--models-path", default="/models")
+    md = sub.add_parser("models", help="discovered models with health (from the local database)")
+    md.add_argument("--all", action="store_true", help="include disabled models")
+    rf = sub.add_parser("refresh", help="fetch model lists from providers")
+    rf.add_argument("--force", action="store_true")
+    pb = sub.add_parser("probe", help="test unproven models: reply, tool call, JSON, code fix")
+    pb.add_argument("--limit", type=int, default=3, help="models per provider")
     for p in (ap, *sub.choices.values()):  # options go after the subcommand
         p.add_argument("--provider", help="provider name from providers.yaml (or EDITH_PROVIDER)")
         p.add_argument("--model", help="model id, see `edith models` (or EDITH_MODEL)")
+    for p in (ap, run):
         p.add_argument("--mode", default="default", choices=["plan", "default", "accept_edits", "trusted"])
         p.add_argument("--workspace", default=".")
         p.add_argument("--max-steps", type=int, default=30)
     args = ap.parse_args(argv)
 
     config.load_env()
-    providers = config.load_providers()
+    con = db.connect()
+    try:
+        return _dispatch(args, config.load_providers(), con)
+    finally:
+        con.close()
+
+
+def _dispatch(args, providers, con):
+    import asyncio
+
+    from . import config, discovery, loop
+    from .tools import Tools
 
     if args.cmd == "providers":
-        for n, p in providers.items():
-            key = "key set" if os.environ.get(p["key_env"]) else "no key"
-            state = "on " if p["enabled"] else "off"
-            print(f"{state} {n:18} {p['status']:10} {key:7} private_code={p['allow_private_code']}")
+        return _providers_cmd(args, providers, con)
+    if args.cmd == "models":
+        return _models_cmd(args, con)
+    if args.cmd == "refresh":
+        chosen = {args.provider: providers[args.provider]} if args.provider in providers else providers
+        report = asyncio.run(discovery.refresh(con, chosen, force=args.force or bool(args.provider)))
+        for n, r in report.items():
+            print(f"{n:18} {r if isinstance(r, str) else f'{r} models'}")
+        print(f"{len(report)} providers refreshed" if report else "nothing to refresh (no keys, or all fresh)")
+        return 0
+    if args.cmd == "probe":
+        res = asyncio.run(discovery.probe(con, providers, args.provider, args.model, args.limit))
+        for n, rows in res.items():
+            for r in rows:
+                print(f"{n:16} {r['model']:40} " + ("rate limited, try later" if r.get("rate_limited") else
+                      f"score={r['score']:.2f} {r['status']}  " +
+                      " ".join(k for k in discovery.PROBES if r.get(k))))
         return 0
 
     if not args.cmd:
         print(welcome())
         _ask(_paint("")("Press Enter to continue…", "link"))
-    name, adapter = _pick(args, providers)
-    if args.cmd == "models":
-        print("\n".join(asyncio.run(adapter.list_models())))
-        return 0
-
+    name, adapter, model = _pick(args, providers, con)
     task = getattr(args, "task", None)
     if not task:
         task = _ask("\nWhat should I do? > ").strip()
         if not task:
             return 0
-    model = args.model or os.environ.get("EDITH_MODEL")
     if not model:
-        sys.exit(f"No model chosen. Run `edith models --provider {name}` and set EDITH_MODEL in .env or pass --model.")
-    if not providers[name]["allow_private_code"]:
+        sys.exit(f"No model chosen. Run `edith refresh` and `edith probe --provider {name}`,\n"
+                 f"or set EDITH_MODEL in .env, or pass --model (see `edith models --provider {name}`).")
+    if not providers[name].get("allow_private_code"):
         sys.exit(f"`{name}` has allow_private_code: false, so it may not see your code.\n"
-                 f"If you trust it, set allow_private_code: true for {name} in providers.yaml.")
+                 f"If you trust it: `edith providers trust {name}`.")
 
     secret_values = config.secrets(providers)
     tools = Tools(args.workspace, _approve, args.mode, scrub_env=[p["key_env"] for p in providers.values()])

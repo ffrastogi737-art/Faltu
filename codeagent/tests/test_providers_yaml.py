@@ -5,7 +5,7 @@ import unittest
 import yaml
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-APIS = {"openai", "gemini", "cohere", "ai21", "cloudflare", "horde"}
+APIS = {"openai", "gemini", "cohere", "horde"}
 STATUSES = {"live", "paid-only", "dead", "unclear", "unverified"}
 
 
