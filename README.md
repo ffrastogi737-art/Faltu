@@ -1,4 +1,4 @@
-> This repository contains two apps: **LIFE RPG** (below) and **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md).
+> This repository contains three apps: **LIFE RPG** (below), **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md), and **E.D.I.T.H.**, a terminal coding agent with a multi-provider router in [`codeagent/`](codeagent/README.md).
 
 # LIFE RPG
 
