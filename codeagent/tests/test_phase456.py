@@ -10,6 +10,7 @@ import sys
 import tempfile
 import time
 import unittest
+from pathlib import Path
 
 from agent import config, context, db, sandbox
 from agent.hooks import Hooks
@@ -243,10 +244,10 @@ class Sessions(Base):
         self.assertTrue(r2["done"])
         self.assertEqual(n_tools(s2.requests[0][3]), 2)  # the provider got the earlier tool results
         self.assertTrue(os.path.exists(os.path.join(self.ws, "notes.txt")))
-        self.assertIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
         restored = Session(sid, resume=True).rewind(1)
         self.assertEqual(sorted(restored), ["cart.py", "notes.txt"])
-        self.assertNotIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertNotIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
         self.assertFalse(os.path.exists(os.path.join(self.ws, "notes.txt")))
 
     def test_git_checkpoint_covers_shell_changes(self):
@@ -256,11 +257,11 @@ class Sessions(Base):
         steps = [tool_msg("run_command", {"command": "echo broken > cart.py"}), text_msg("done")]
         brain, _ = self.fixed(lambda b: steps[min(n_tools(b), 1)])
         r = asyncio.run(self.agent(brain, verify_changes=False).run("break it"))
-        self.assertEqual(open(os.path.join(self.ws, "cart.py")).read().strip(), "broken")
+        self.assertEqual(Path(os.path.join(self.ws, "cart.py")).read_text().strip(), "broken")
         s = Session(r["session"], resume=True)
         self.assertTrue(s.meta["git_checkpoint"])
         s.restore_git_checkpoint()
-        self.assertIn("def total", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertIn("def total", Path(os.path.join(self.ws, "cart.py")).read_text())
         self.assertIn(f"refs/edith/{r['session']}", g("for-each-ref", "refs/edith").stdout)
 
 
@@ -402,10 +403,10 @@ class Verification(Base):
         self.assertEqual(r["evidence"]["review"]["verdict"], "approve")
         art = os.path.join(Session(r["session"], resume=True).dir, "artifacts")
         self.assertEqual(sorted(os.listdir(art)), ["diff.patch", "report.md", "review.json", "test_report.txt"])
-        report = open(os.path.join(art, "report.md")).read()
+        report = Path(os.path.join(art, "report.md")).read_text()
         self.assertIn("[PASS] tests", report)
         self.assertIn("review by fake/m: approve", report)
-        self.assertIn("/ 100", open(os.path.join(art, "diff.patch")).read())
+        self.assertIn("/ 100", Path(os.path.join(art, "diff.patch")).read_text())
 
     def test_reviewer_uses_another_family_and_its_issues_are_fed_back(self):
         state = {"reviews": 0}

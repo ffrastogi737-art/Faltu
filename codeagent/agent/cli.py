@@ -292,6 +292,9 @@ def main(argv=None):
         p.add_argument("--max-steps", type=int, default=30)
         p.add_argument("--max-cost-usd", type=float, default=None, help="stop when this session has cost more")
     args = ap.parse_args(argv)
+    for attr in ("provider", "name"):  # provider names are lower-case in providers.yaml; `Gemini` should work too
+        if isinstance(getattr(args, attr, None), str) and not (attr == "name" and getattr(args, "action", "") == "add"):
+            setattr(args, attr, getattr(args, attr).lower())
 
     config.load_env()
     con = db.connect()
@@ -326,7 +329,8 @@ def _dispatch(args, providers, con):
             for r in rows:
                 print(f"{n:16} {r['model']:40} " + ("rate limited, try later" if r.get("rate_limited") else
                       f"score={r['score']:.2f} {r['status']}  " +
-                      " ".join(k for k in discovery.PROBES if r.get(k))))
+                      " ".join(k for k in discovery.PROBES if r.get(k)) +
+                      (f"\n{'':17}error: {r['error'][:200]}" if r.get("error") else "")))
         return 0
 
     if args.cmd == "route":

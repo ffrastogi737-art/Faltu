@@ -70,7 +70,10 @@ class StdioClient:
     def close(self):
         try:
             self.proc.terminate()
-        except OSError:
+            self.proc.wait(5)
+            self.proc.stdin.close()
+            self.proc.stdout.close()
+        except (OSError, subprocess.TimeoutExpired):
             pass
 
 

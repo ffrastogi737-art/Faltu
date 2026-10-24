@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 from agent import db
 from agent.agents import Team, load_roles
@@ -114,8 +115,8 @@ class TeamTest(unittest.TestCase):
         self.assertLess(board["t2"]["started"], board["t1"]["finished"])
         self.assertLess(board["t1"]["started"], board["t2"]["finished"])
         # both results merged into the real workspace; worktrees cleaned up
-        self.assertIn("/ 100,", open(os.path.join(self.ws, "cart.py")).read())
-        self.assertIn("rate_percent / 100", open(os.path.join(self.ws, "tax.py")).read())
+        self.assertIn("/ 100,", Path(os.path.join(self.ws, "cart.py")).read_text())
+        self.assertIn("rate_percent / 100", Path(os.path.join(self.ws, "tax.py")).read_text())
         self.assertTrue(os.path.exists(os.path.join(self.ws, "test_extra.py")))
         self.assertNotIn("edith", self.g("worktree", "list").stdout.split("\n", 1)[-1])
         self.assertEqual(self.g("rev-list", "--count", "HEAD").stdout.strip(), "1")  # user's branch untouched
@@ -141,7 +142,7 @@ class TeamTest(unittest.TestCase):
                    "Note B": [call("edit_file", {"path": "cart.py", "old": "sum(prices)", "new": "sum(prices)  # B"})]}
         team, seen = self.team(plan, scripts)
         out = asyncio.run(team.run("annotate"))
-        text = open(os.path.join(self.ws, "cart.py")).read()
+        text = Path(os.path.join(self.ws, "cart.py")).read_text()
         self.assertIn("# A", text)
         self.assertIn("# B", text)
         self.assertTrue(any("conflicts with work merged before it" in l for l in self.logs))

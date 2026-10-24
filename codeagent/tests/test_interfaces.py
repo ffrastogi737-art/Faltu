@@ -14,6 +14,7 @@ import time
 import unittest
 import urllib.error
 import urllib.request
+from pathlib import Path
 
 from agent import config, db
 from agent.mcp import StdioClient
@@ -77,11 +78,16 @@ class Api(Base):
             self.port = server.sockets[0].getsockname()[1]
             started.set()
             self.loop.run_forever()
-        threading.Thread(target=run, daemon=True).start()
+            server.close()
+            self.loop.run_until_complete(server.wait_closed())
+        self.thread = threading.Thread(target=run, daemon=True)
+        self.thread.start()
         started.wait(5)
 
     def tearDown(self):
         self.loop.call_soon_threadsafe(self.loop.stop)
+        self.thread.join(5)
+        self.loop.close()
         self.con.close()
         super().tearDown()
 
@@ -155,7 +161,7 @@ class Api(Base):
         self.assertTrue(any(e.get("text", "").startswith("[2] tool edit_file") for e in events))
         approvals = [e for e in events if e["type"] == "approval_result"]
         self.assertTrue(approvals and all(a["allow"] for a in approvals))
-        self.assertIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
         # artifacts over HTTP
         names = self.http("GET", f"/tasks/{jid}/artifacts")[1]
         self.assertIn("report.md", names)
@@ -167,7 +173,7 @@ class Api(Base):
         jid = self.create(mode="default", approval_timeout=0.3, verify=False)
         j = self.wait(jid)
         self.assertEqual(j["status"], "done")
-        self.assertNotIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertNotIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
         ev = self.http("GET", f"/tasks/{jid}/events?after=0")[1]
         self.assertTrue(any(e["type"] == "approval_result" and e["timed_out"] and not e["allow"] for e in ev))
         self.assertEqual(self.http("POST", f"/tasks/{jid}/approvals/nope", {"allow": True})[0], 409)
@@ -192,7 +198,7 @@ class Mcp(Base):
         report = client.call("edith_run_task", {"task": "fix the discount", "workspace": self.ws, "mode": "trusted"})
         self.assertIn("# E.D.I.T.H. report: done", report)
         self.assertIn("[PASS] tests", report)
-        self.assertIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
         self.assertTrue(client.call("edith_run_task", {"task": "x", "workspace": self.ws, "mode": "bypass"})
                         .startswith("error: ValueError"))
 
@@ -246,7 +252,7 @@ class Headless(Base):
         p = subprocess.run([sys.executable, "-m", "agent", "run", "fix the discount", "--headless",
                             "--workspace", self.ws], env=self.env(), capture_output=True, text=True, timeout=120, cwd=ROOT)
         self.assertIn("[headless] refused (edit)", p.stderr)
-        self.assertNotIn("/ 100", open(os.path.join(self.ws, "cart.py")).read())
+        self.assertNotIn("/ 100", Path(os.path.join(self.ws, "cart.py")).read_text())
 
 
 if __name__ == "__main__":

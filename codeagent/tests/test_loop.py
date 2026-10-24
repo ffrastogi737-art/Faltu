@@ -10,6 +10,7 @@ import tempfile
 import threading
 import unittest
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
 from agent import loop
 from agent.config import redact
@@ -115,10 +116,10 @@ class Loop(unittest.TestCase):
         self.assertFalse(names & {"edit_file", "write_file", "run_command", "check"}, names)
 
     def test_rejected_edit_changes_nothing(self):
-        before = open(os.path.join(self.ws, "cart.py")).read()
+        before = Path(os.path.join(self.ws, "cart.py")).read_text()
         self.go([call("edit_file", {"path": "cart.py", "old": "discount_percent,", "new": "1,"}), answer("ok")],
                 mode="default", approve=lambda *_: False)
-        self.assertEqual(open(os.path.join(self.ws, "cart.py")).read(), before)
+        self.assertEqual(Path(os.path.join(self.ws, "cart.py")).read_text(), before)
 
     def test_doom_loop_stops(self):
         bad = call("read_file", {"path": "missing.py"})

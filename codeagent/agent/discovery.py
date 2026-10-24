@@ -122,7 +122,7 @@ async def probe_model(con, name, p, model):
     """Runs the probes; a 429 aborts without counting as a failure."""
     a = make_adapter(name, p)
     con.execute("INSERT OR IGNORE INTO models (provider, model) VALUES (?, ?)", (name, model))
-    passed = {}
+    passed, first_err = {}, None
     for key, fn in PROBES.items():
         if key == "tool" and p.get("api") == "horde":
             passed[key] = False
@@ -135,6 +135,7 @@ async def probe_model(con, name, p, model):
             if e.status == 429:
                 return {"model": model, "rate_limited": True}
             ok, err = False, str(e)[:300]
+            first_err = first_err or err
         con.execute("INSERT INTO calls (provider, model, task_type, ok, latency_ms, error) VALUES (?,?,?,?,?,?)",
                     (name, model, f"probe_{key}", int(ok), int((time.monotonic() - t0) * 1000), err))
         passed[key] = ok
@@ -146,7 +147,7 @@ async def probe_model(con, name, p, model):
                    WHERE provider=? AND model=?""",
                 (score, int(passed["tool"]), int(passed["json"]), status, fails, name, model))
     con.commit()
-    return {"model": model, "score": score, "status": status, **passed}
+    return {"model": model, "score": score, "status": status, "error": first_err, **passed}
 
 
 async def probe(con, providers, provider=None, model=None, limit=5, concurrency=4):

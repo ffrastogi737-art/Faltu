@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from agent.cli import FONT, NAME, banner, welcome
@@ -11,7 +12,8 @@ class Welcome(unittest.TestCase):
         self.assertTrue(all(ch in FONT for ch in NAME))
 
     def test_plain_output_has_no_escape_codes(self):
-        # stdout is not a tty under unittest, so colors must be off
+        os.environ["NO_COLOR"] = "1"  # a real terminal (Termux) would otherwise get colors
+        self.addCleanup(os.environ.pop, "NO_COLOR")
         text = welcome()
         self.assertNotIn("\033[", text)
         self.assertIn("Tech & Hacks", text)  # box may wrap the full name

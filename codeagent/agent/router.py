@@ -302,7 +302,9 @@ class Router:
             if failed_providers:  # after a failure prefer a provider that has not failed this step
                 ranked.sort(key=lambda c: c["provider"] in failed_providers)
             if not ranked:
-                raise AllFailed(f"no usable model for {task_type}: rejected {rejected or 'nothing (no models; run edith refresh/probe)'}")
+                hint = (" Run `edith providers trust <name>` for a provider you trust with your code."
+                        if rejected.get("privacy flag") else "")
+                raise AllFailed(f"no usable model for {task_type}: rejected {rejected or 'nothing (no models; run edith refresh/probe)'}.{hint}")
             c = ranked[0]
             why = {"task": task_type, "score": c["score"], "parts": c["parts"], "explore": c.get("explore", False),
                    "alts": [f"{a['provider']}/{a['model']} {a['score']}" for a in ranked[1:4]], "rejected": rejected}
