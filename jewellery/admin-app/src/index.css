@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #fffdf8;
+  --color-ivory: #f8f4ea;
+  --color-line: #e9e1cf;
+  --color-gold: #b07a1a;
+  --color-gold-soft: #f4e9cf;
+  --color-gold-dark: #8a5f12;
+  --color-ink: #17140f;
+  --color-muted: #6c6457;
+  --color-blue: #3b6fb6;
+  --color-good: #23704e;
+  --color-warn: #a35b00;
+  --color-bad: #a3243a;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body { @apply bg-ivory text-ink font-sans text-[14px] antialiased; }
+  :focus-visible { outline: 2px solid var(--color-gold); outline-offset: 2px; }
+  input:not([type=checkbox]):not([type=radio]):not([type=file]), select, textarea {
+    @apply w-full rounded-md border border-line bg-white px-3 py-2 text-[14px] text-ink placeholder:text-muted/60 focus:border-gold focus:outline-none;
+  }
+  input[type=checkbox], input[type=radio] { accent-color: var(--color-gold); width: 1rem; height: 1rem; }
+  table { @apply w-full text-left; }
+  th { @apply whitespace-nowrap border-b border-line px-3 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-muted; }
+  td { @apply border-b border-line/70 px-3 py-2.5 align-middle; }
+}
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-2 text-[13px] font-medium transition disabled:pointer-events-none disabled:opacity-50; }
+@utility btn-primary { @apply btn bg-ink text-paper hover:bg-gold-dark; }
+@utility btn-gold { @apply btn bg-gold text-white hover:bg-gold-dark; }
+@utility btn-ghost { @apply btn border border-line bg-white text-ink hover:border-gold; }
+@utility btn-danger { @apply btn border border-bad/30 bg-white text-bad hover:bg-bad hover:text-white; }
+@utility card { @apply rounded-xl border border-line bg-paper shadow-[0_1px_2px_rgba(23,20,15,0.04)]; }
+@utility label { @apply mb-1 block text-[12px] font-medium text-muted; }

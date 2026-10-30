@@ -8,8 +8,9 @@ export function computeTotals(lines, settings, paymentMethod) {
     lines.length === 0 || (settings.free_delivery_min_paise > 0 && selling >= settings.free_delivery_min_paise)
       ? 0
       : settings.delivery_charge_paise;
-  const pct = paymentMethod === 'upi' ? Number(settings.upi_discount_percent) : 0;
-  const upiDiscount = Math.round((selling * pct) / 100);
+  const pct = paymentMethod === 'upi' ? upiDiscountPercent(settings, selling) : 0;
+  const cap = settings.upi_discount_max_paise || Infinity;
+  const upiDiscount = Math.min(Math.round((selling * pct) / 100), cap);
   return {
     subtotalPaise: subtotal,
     productDiscountPaise: productDiscount,
@@ -19,6 +20,18 @@ export function computeTotals(lines, settings, paymentMethod) {
     totalPaise: selling - upiDiscount + delivery,
   };
 }
+
+// The prepaid UPI discount % that applies right now to a cart worth `selling` paise (0 when off).
+export function upiDiscountPercent(settings, selling, now = new Date()) {
+  if (settings.upi_discount_enabled === false) return 0;
+  if (selling < (settings.upi_discount_min_order_paise || 0)) return 0;
+  if (settings.upi_discount_starts_at && now < new Date(settings.upi_discount_starts_at)) return 0;
+  if (settings.upi_discount_ends_at && now > new Date(settings.upi_discount_ends_at)) return 0;
+  return Number(settings.upi_discount_percent);
+}
+
+// What customers may see and buy: active, not archived, and demo items only while the owner shows them.
+export const VISIBLE = `(p.active AND p.archived_at IS NULL AND (NOT p.is_demo OR (SELECT show_demo_products FROM store_settings WHERE id = 1)))`;
 
 // Loads current prices + stock for the requested items. `db` is the pool or a tx client;
 // pass lock=true inside the order transaction so stock can't be sold twice.
@@ -32,8 +45,8 @@ export async function priceItems(db, items, { lock = false } = {}) {
   }
   if (qty.size === 0) return { lines: [], problems: [] };
   const { rows } = await db.query(
-    `SELECT id, sku, slug, name, images, stock, active, original_price_paise, selling_price_paise
-       FROM products WHERE id = ANY($1) ORDER BY id ${lock ? 'FOR UPDATE' : ''}`,
+    `SELECT id, sku, slug, name, images, stock, ${VISIBLE} AS active, original_price_paise, selling_price_paise
+       FROM products p WHERE id = ANY($1) ORDER BY id ${lock ? 'FOR UPDATE OF p' : ''}`,
     [[...qty.keys()]],
   );
   const byId = new Map(rows.map((r) => [r.id, r]));

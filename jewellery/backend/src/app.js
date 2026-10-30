@@ -3,36 +3,62 @@ import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { query, tx } from './db.js';
 import { authenticate, hashPassword, issueToken, requireAuth, verifyPassword } from './auth.js';
-import { computeTotals, httpError, priceItems } from './pricing.js';
+import { computeTotals, httpError, priceItems, upiDiscountPercent, VISIBLE } from './pricing.js';
 import { upiLink } from './upi.js';
 import * as v from './validate.js';
 import { realtime } from './realtime.js';
+import { adminRouter } from './admin.js';
+import { iconVariant } from './media.js';
 
 export const UPLOAD_DIR = process.env.UPLOAD_DIR || new URL('../uploads/', import.meta.url).pathname;
 
-const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
+export const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
 export async function getSettings(db = { query }) {
   return (await db.query('SELECT * FROM store_settings WHERE id = 1')).rows[0];
 }
 
-function publicSettings(s) {
+function publicSettings(s, offers) {
   return {
     shopName: s.shop_name,
+    brandName: s.brand_display_name || s.shop_name,
     tagline: s.tagline,
+    description: s.description,
     logoUrl: s.logo_url,
+    appIconUrl: s.app_icon_url,
+    splashLogoUrl: s.splash_logo_url,
+    contact: {
+      phone: s.support_phone, email: s.contact_email, address: s.address, city: s.city, state: s.state, pincode: s.pincode,
+      openingHours: s.opening_hours, social: s.social_links,
+    },
     upiEnabled: s.upi_enabled && Boolean(s.upi_id),
     codEnabled: s.cod_enabled,
-    upiDiscountPercent: Number(s.upi_discount_percent),
+    upiDiscountPercent: upiDiscountPercent(s, Infinity),
+    upiDiscountMinOrderPaise: s.upi_discount_min_order_paise,
+    upiDiscountMaxPaise: s.upi_discount_max_paise,
+    paymentInstructions: s.payment_instructions,
     deliveryChargePaise: s.delivery_charge_paise,
     freeDeliveryMinPaise: s.free_delivery_min_paise,
+    minOrderPaise: s.min_order_paise,
+    deliveryAreasNote: s.delivery_areas_note,
     whatsappNumber: s.whatsapp_number,
     supportPhone: s.support_phone,
     replacementWindowHours: s.replacement_window_hours,
+    replacementPolicy: s.replacement_policy,
     cancellableStatuses: s.cancellable_statuses,
-    banners: s.banners,
+    banners: offers,
     updatedAt: s.updated_at,
   };
+}
+
+// Live promotional banners for the customer home page.
+async function activeOffers() {
+  const { rows } = await query(
+    `SELECT kind, title, subtitle, cta, link, image_url AS image FROM offers
+      WHERE active AND (starts_at IS NULL OR starts_at <= now()) AND (ends_at IS NULL OR ends_at > now())
+      ORDER BY sort_order, id`,
+  );
+  return rows;
 }
 
 const PRODUCT_COLS = `p.id, p.sku, p.slug, p.name, p.images, p.stock, p.tags, p.original_price_paise, p.selling_price_paise,
@@ -57,7 +83,7 @@ function productCard(r) {
 
 // Simple fixed-window limiter for login/register brute force; per process is enough for one shop.
 const attempts = new Map();
-function rateLimit(key, max = 10, windowMs = 15 * 60e3) {
+export function rateLimit(key, max = 10, windowMs = 15 * 60e3) {
   const now = Date.now();
   const a = attempts.get(key);
   if (!a || a.reset < now) return attempts.set(key, { n: 1, reset: now + windowMs }), true;
@@ -69,7 +95,7 @@ async function loadOrder(db, where, params) {
   return rows[0] || null;
 }
 
-async function serializeOrder(o, settings) {
+export async function serializeOrder(o, settings) {
   const [items, history, replacements] = await Promise.all([
     query('SELECT id, product_id, sku, name, image_url, unit_original_paise, unit_price_paise, quantity FROM order_items WHERE order_id = $1 ORDER BY id', [o.id]),
     query('SELECT status, created_at FROM order_status_history WHERE order_id = $1 ORDER BY id', [o.id]),
@@ -120,7 +146,7 @@ async function serializeOrder(o, settings) {
     })),
     canCancel: settings.cancellable_statuses.includes(o.status) && !paid,
     upiLink: payable
-      ? upiLink({ upiId: settings.upi_id, payeeName: settings.upi_payee_name, shopName: settings.shop_name, orderNumber: o.order_number, amountPaise: o.total_paise })
+      ? upiLink({ upiId: settings.upi_id, payeeName: settings.upi_payee_name, shopName: settings.shop_name, orderNumber: o.order_number, amountPaise: o.total_paise, description: settings.payment_description })
       : null,
     deliveredAt: o.delivered_at,
     replacementDeadline: deadline,
@@ -170,6 +196,21 @@ export function createApp() {
   });
 
   app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '30d', immutable: true }));
+
+  // Install manifest built from store settings, so name and icon follow the owner's branding.
+  app.get('/manifest.webmanifest', wrap(async (_req, res) => {
+    const s = await getSettings();
+    const name = s.brand_display_name || s.shop_name;
+    const icons = s.app_icon_url
+      ? [{ src: iconVariant(s.app_icon_url, 192), sizes: '192x192', type: 'image/png' }, { src: s.app_icon_url, sizes: '512x512', type: 'image/png' },
+        { src: s.app_icon_url, sizes: '512x512', type: 'image/png', purpose: 'maskable' }]
+      : [{ src: '/icon-192.png', sizes: '192x192', type: 'image/png' }, { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
+        { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }];
+    res.type('application/manifest+json').set('Cache-Control', 'no-cache').send(JSON.stringify({
+      name, short_name: name.slice(0, 12), description: s.description || s.tagline, start_url: '/', scope: '/', display: 'standalone',
+      background_color: '#FBF7EF', theme_color: '#FBF7EF', orientation: 'portrait', icons,
+    }));
+  }));
   const api = express.Router();
   app.use('/api', api);
   api.use(express.json({ limit: '25mb' }));
@@ -182,19 +223,19 @@ export function createApp() {
   }));
 
   // ---------- catalog ----------
-  api.get('/settings', wrap(async (_req, res) => res.json(publicSettings(await getSettings()))));
+  api.get('/settings', wrap(async (_req, res) => res.json(publicSettings(await getSettings(), await activeOffers()))));
 
   api.get('/categories', wrap(async (_req, res) => {
     const { rows } = await query(
       `SELECT c.slug, c.name, c.image_url, count(p.id)::int AS product_count
-         FROM categories c LEFT JOIN products p ON p.category_id = c.id AND p.active
+         FROM categories c LEFT JOIN products p ON p.category_id = c.id AND ${VISIBLE}
         WHERE c.active GROUP BY c.id ORDER BY c.sort_order, c.name`,
     );
     res.json(rows.map((r) => ({ slug: r.slug, name: r.name, imageUrl: r.image_url, productCount: r.product_count })));
   }));
 
   api.get('/products', wrap(async (req, res) => {
-    const where = ['p.active'];
+    const where = [VISIBLE];
     const params = [];
     const add = (sql, val) => (params.push(val), where.push(sql.replace('?', `$${params.length}`)));
     if (req.query.category) add('c.slug = ?', String(req.query.category));
@@ -227,14 +268,14 @@ export function createApp() {
   api.get('/products/:slug', wrap(async (req, res) => {
     const { rows } = await query(
       `SELECT ${PRODUCT_COLS}, p.description, p.video_url, p.specifications, p.category_id
-         FROM products p LEFT JOIN categories c ON c.id = p.category_id WHERE p.slug = $1 AND p.active`,
+         FROM products p LEFT JOIN categories c ON c.id = p.category_id WHERE p.slug = $1 AND ${VISIBLE}`,
       [req.params.slug],
     );
     const p = rows[0];
     if (!p) throw httpError(404, 'Product not found');
     const related = await query(
       `SELECT ${PRODUCT_COLS} FROM products p LEFT JOIN categories c ON c.id = p.category_id
-        WHERE p.active AND p.id <> $1 AND p.category_id IS NOT DISTINCT FROM $2
+        WHERE ${VISIBLE} AND p.id <> $1 AND p.category_id IS NOT DISTINCT FROM $2
         ORDER BY p.stock > 0 DESC, p.sold_count DESC LIMIT 8`,
       [p.id, p.category_id],
     );
@@ -262,9 +303,9 @@ export function createApp() {
     if (password.length < 8 || password.length > 128) throw httpError(400, 'Password must be at least 8 characters');
     const hash = await hashPassword(password);
     const { rows } = await query(
-      `INSERT INTO customers (name, mobile, email, password_hash) VALUES ($1,$2,$3,$4)
-       ON CONFLICT (mobile) DO NOTHING RETURNING id, name, mobile, email`,
-      [name, m, v.email(b.email), hash],
+      `INSERT INTO customers (name, mobile, email, password_hash, marketing_opt_in) VALUES ($1,$2,$3,$4,$5)
+       ON CONFLICT (mobile) DO NOTHING RETURNING id, name, mobile, email, marketing_opt_in`,
+      [name, m, v.email(b.email), hash, b.marketingOptIn === true],
     );
     if (!rows[0]) throw httpError(409, 'An account with this mobile number already exists. Please log in.');
     res.status(201).json({ token: issueToken(rows[0].id), customer: rows[0] });
@@ -280,14 +321,16 @@ export function createApp() {
   }));
 
   api.get('/me', requireAuth, wrap(async (req, res) => {
-    const { rows } = await query('SELECT id, name, mobile, email, created_at FROM customers WHERE id = $1', [req.customerId]);
+    const { rows } = await query('SELECT id, name, mobile, email, marketing_opt_in, created_at FROM customers WHERE id = $1', [req.customerId]);
     if (!rows[0]) throw httpError(401, 'Please log in');
     res.json(rows[0]);
   }));
 
   api.patch('/me', requireAuth, wrap(async (req, res) => {
-    const { rows } = await query('UPDATE customers SET name = $2, email = $3 WHERE id = $1 RETURNING id, name, mobile, email, created_at', [
+    const { rows } = await query(`UPDATE customers SET name = $2, email = $3, marketing_opt_in = COALESCE($4, marketing_opt_in) WHERE id = $1
+       RETURNING id, name, mobile, email, marketing_opt_in, created_at`, [
       req.customerId, v.str(req.body?.name, 'Name', { min: 2, max: 80 }), v.email(req.body?.email),
+      typeof req.body?.marketingOptIn === 'boolean' ? req.body.marketingOptIn : null,
     ]);
     res.json(rows[0]);
   }));
@@ -330,7 +373,7 @@ export function createApp() {
 
   api.get('/me/wishlist', requireAuth, wrap(async (req, res) => {
     const { rows } = await query(
-      `SELECT ${PRODUCT_COLS} FROM wishlist w JOIN products p ON p.id = w.product_id AND p.active
+      `SELECT ${PRODUCT_COLS} FROM wishlist w JOIN products p ON p.id = w.product_id AND ${VISIBLE}
          LEFT JOIN categories c ON c.id = p.category_id WHERE w.customer_id = $1 ORDER BY w.created_at DESC`,
       [req.customerId],
     );
@@ -357,12 +400,18 @@ export function createApp() {
     const contactMobile = v.mobile(b.contact?.mobile);
     const addr = v.address(b.address);
     const instructions = v.str(b.deliveryInstructions, 'Delivery instructions', { max: 300 });
+    if (settings.delivery_pincodes.length && !settings.delivery_pincodes.includes(addr.pincode)) {
+      throw httpError(400, `Sorry, we do not deliver to PIN code ${addr.pincode} yet.${settings.delivery_areas_note ? ' ' + settings.delivery_areas_note : ''}`);
+    }
 
     const order = await tx(async (db) => {
       const { lines, problems } = await priceItems(db, b.items || [], { lock: true });
       if (!lines.length && !problems.length) throw httpError(400, 'Your cart is empty');
       if (problems.length) throw httpError(409, 'Some items are no longer available in the requested quantity', { problems });
       const t = computeTotals(lines, settings, method);
+      if (t.subtotalPaise - t.productDiscountPaise < settings.min_order_paise) {
+        throw httpError(400, `Minimum order value is ₹${settings.min_order_paise / 100}`);
+      }
       // the customer agreed to a total on screen; never charge a different one silently
       if (b.expectedTotalPaise !== undefined && Number(b.expectedTotalPaise) !== t.totalPaise) {
         throw httpError(409, 'Prices have changed since you opened checkout. Please review the updated total.', { code: 'PRICE_CHANGED', totals: t });
@@ -375,6 +424,7 @@ export function createApp() {
         [req.customerId, guestToken, contactName, contactMobile, addr, instructions, method,
           t.subtotalPaise, t.productDiscountPaise, t.upiDiscountPercent, t.upiDiscountPaise, t.deliveryChargePaise, t.totalPaise],
       );
+      await db.query(`SELECT set_config('app.stock_reason', 'order', true), set_config('app.order_id', $1, true)`, [String(rows[0].id)]);
       for (const l of lines) {
         await db.query(
           `INSERT INTO order_items (order_id, product_id, sku, name, image_url, unit_original_paise, unit_price_paise, quantity)
@@ -467,7 +517,7 @@ export function createApp() {
          FROM notifications n
          JOIN customers c ON c.id = $1
          LEFT JOIN notification_reads r ON r.notification_id = n.id AND r.customer_id = $1
-        WHERE n.customer_id = $1 OR (n.customer_id IS NULL AND n.created_at >= c.created_at - interval '30 days')
+        WHERE n.customer_id = $1 OR (n.customer_id IS NULL AND c.marketing_opt_in AND n.created_at >= c.created_at - interval '30 days')
         ORDER BY n.created_at DESC LIMIT 60`,
       [req.customerId],
     );
@@ -504,6 +554,8 @@ export function createApp() {
   // Server-sent events. EventSource cannot send headers, so the token rides in the query string.
   api.get('/events', (req, res) => realtime.subscribe(req, res));
 
+  api.use('/admin', adminRouter());
+
   api.use((_req, _res, next) => next(httpError(404, 'Not found')));
   api.use((err, _req, res, _next) => {
     if (err.type === 'entity.too.large') return res.status(413).json({ error: 'Upload is too large. Try fewer or smaller photos.' });
@@ -513,6 +565,11 @@ export function createApp() {
     res.status(status).json({ error: status >= 500 ? 'Something went wrong. Please try again.' : message, problems, code, totals });
   });
 
+  // Optional: serve the built admin app at /admin (ADMIN_STATIC_DIR=../admin-app/dist).
+  if (process.env.ADMIN_STATIC_DIR) {
+    app.use('/admin', express.static(process.env.ADMIN_STATIC_DIR, { index: false, maxAge: '1y', immutable: true }));
+    app.get(/^\/admin(\/.*)?$/, (_req, res) => res.set({ 'Cache-Control': 'no-cache', 'X-Robots-Tag': 'noindex' }).sendFile('index.html', { root: process.env.ADMIN_STATIC_DIR }));
+  }
   // Optional: serve the built customer PWA from the same origin (STATIC_DIR=../customer-app/dist).
   if (process.env.STATIC_DIR) {
     app.use(express.static(process.env.STATIC_DIR, { index: false, maxAge: '1y', immutable: true, setHeaders: (res, path) => {

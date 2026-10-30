@@ -3,6 +3,8 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Spinner } from './components/ui';
 import Home from './pages/Home';
+import { assetUrl } from './lib/api';
+import { useStore } from './lib/store';
 
 const Categories = lazy(() => import('./pages/Categories'));
 const ProductList = lazy(() => import('./pages/ProductList'));
@@ -18,6 +20,16 @@ const Auth = lazy(() => import('./pages/Auth'));
 const Notifications = lazy(() => import('./pages/Notifications'));
 const Policy = lazy(() => import('./pages/Policy'));
 
+// Shown while a page chunk loads; uses the owner's splash logo when one is set.
+function Splash() {
+  const { settings } = useStore();
+  return (
+    <div className="grid h-dvh place-items-center bg-ivory text-champagne">
+      {settings?.splashLogoUrl ? <img src={assetUrl(settings.splashLogoUrl)} alt={settings.brandName} className="w-40 animate-pulse" /> : <Spinner />}
+    </div>
+  );
+}
+
 function ScrollTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
@@ -28,7 +40,7 @@ export default function App() {
   return (
     <>
       <ScrollTop />
-      <Suspense fallback={<div className="grid h-dvh place-items-center text-champagne"><Spinner /></div>}>
+      <Suspense fallback={<Splash />}>
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<Home />} />

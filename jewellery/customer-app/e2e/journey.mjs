@@ -105,7 +105,7 @@ try {
   step(`guest UPI order placed (${upiLabel.trim()} vs COD ${codLabel.trim()})`);
 
   const upiHref = await page.getByRole('link', { name: /with UPI app/ }).getAttribute('href');
-  assert.match(upiHref, /^upi:\/\/pay\?pa=aabhajewels%40upi&pn=Aabha%20Jewels&tr=JW\d+&tn=.+&am=\d+\.\d{2}&cu=INR$/);
+  assert.match(upiHref, /^upi:\/\/pay\?pa=aabhajewels%40upi&pn=Demo%20Jewellery%20Store&tr=JW\d+&tn=.+&am=\d+\.\d{2}&cu=INR$/);
   await page.getByText('Payment Pending').first().waitFor();
   await shot('06-order-upi');
   await page.getByLabel(/UPI reference/).fill('412398765432');
@@ -207,8 +207,8 @@ try {
 
   // Orders list + logout
   await page.goto(`${base}/orders`);
-  await page.locator('a[href^="/orders/JW"]').first().waitFor();
-  assert.equal(await page.locator('a[href^="/orders/JW"]').count(), 3); // 2 account orders + the guest order kept on this device
+  // 2 account orders + the guest order kept on this device
+  await page.waitForFunction(() => document.querySelectorAll('a[href^="/orders/JW"]').length === 3);
   await page.goto(`${base}/account`);
   await page.getByRole('button', { name: 'Log out' }).click();
   await page.waitForFunction(() => !localStorage.getItem('token'));

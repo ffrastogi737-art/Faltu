@@ -48,19 +48,24 @@ const STYLES = [
 ];
 
 async function seed() {
+  if (process.env.NODE_ENV === 'production' && !process.argv.includes('--force')) {
+    throw new Error('Refusing to load demo data in production. Pass --force if you really want demo products.');
+  }
   await migrate();
   const { rows: [{ n }] } = await pool.query('SELECT count(*)::int AS n FROM products');
   if (n > 0) return console.log('catalogue already has products, seed skipped');
 
+  // demo identity: the owner replaces all of this from the admin app (Settings)
   await pool.query(
-    `UPDATE store_settings SET shop_name = $1, tagline = $2, upi_id = $3, upi_payee_name = $1, upi_discount_percent = 3,
-       delivery_charge_paise = 4900, free_delivery_min_paise = 99900, whatsapp_number = $4, support_phone = $4, banners = $5`,
+    `UPDATE store_settings SET shop_name = $1, tagline = $2, upi_id = $3, upi_payee_name = 'Demo Jewellery Store', upi_discount_percent = 3,
+       delivery_charge_paise = 4900, free_delivery_min_paise = 99900, whatsapp_number = $4, support_phone = right($4, 10)`,
     [process.env.SHOP_NAME || 'Aabha Jewels', 'Artificial jewellery, crafted to be cherished', process.env.SHOP_UPI_ID || 'aabhajewels@upi',
-      process.env.SHOP_WHATSAPP || '919999999999',
-      JSON.stringify([
-        { title: 'The Festive Edit', subtitle: 'Kundan, polki & temple classics', cta: 'Shop Bridal', link: '/category/bridal-jewellery' },
-        { title: 'New Season Drops', subtitle: 'Fresh earrings for every evening', cta: 'Explore', link: '/category/earrings' },
-      ])],
+      process.env.SHOP_WHATSAPP || '919999999999'],
+  );
+  await pool.query(
+    `INSERT INTO offers (kind, title, subtitle, cta, link, sort_order) VALUES
+       ('festival', 'The Festive Edit', 'Kundan, polki & temple classics', 'Shop Bridal', '/category/bridal-jewellery', 1),
+       ('new_collection', 'New Season Drops', 'Fresh earrings for every evening', 'Explore', '/category/earrings', 2)`,
   );
 
   await mkdir(`${UPLOAD_DIR}/products`, { recursive: true });
@@ -83,8 +88,8 @@ async function seed() {
       const selling = Math.round((original * (0.55 + ((i + k) % 4) * 0.1)) / 1000) * 1000 - 100;
       const tags = [['new_arrival', 'featured'], ['trending', 'offer'], ['best_seller']][k];
       await pool.query(
-        `INSERT INTO products (sku, slug, name, category_id, description, original_price_paise, selling_price_paise, stock, images, specifications, tags, sold_count, created_at)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, now() - make_interval(days => $13))`,
+        `INSERT INTO products (sku, slug, name, category_id, description, original_price_paise, selling_price_paise, stock, images, specifications, tags, sold_count, created_at, is_demo)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12, now() - make_interval(days => $13), true)`,
         [`AJ-${sku++}`, pslug, pname, cat.id, desc, original, selling, k === 2 && i % 5 === 0 ? 0 : 5 + ((i * 3 + k) % 20), images,
           { Material: 'Brass alloy', Plating: 'Micro gold plated', Stones: `${gem[0].toUpperCase()}${gem.slice(1)}-tone AD stones`, Weight: `${12 + i * 3 + k} g`, Care: 'Keep away from water and perfume; store in a zip pouch' },
           tags, (i * 11 + k * 17) % 60, i + k * 12],

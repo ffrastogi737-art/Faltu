@@ -1,6 +1,17 @@
 export type Settings = {
   shopName: string;
+  brandName: string;
   tagline: string;
+  description: string;
+  appIconUrl: string | null;
+  splashLogoUrl: string | null;
+  contact: { phone: string; email: string; address: string; city: string; state: string; pincode: string; openingHours: string; social: Record<string, string> };
+  paymentInstructions: string;
+  minOrderPaise: number;
+  deliveryAreasNote: string;
+  replacementPolicy: string;
+  upiDiscountMinOrderPaise: number;
+  upiDiscountMaxPaise: number;
   logoUrl: string | null;
   upiEnabled: boolean;
   codEnabled: boolean;
@@ -50,7 +61,7 @@ export type QuoteLine = { productId: number; sku: string; slug: string; name: st
 export type StockProblem = { productId: number; issue: 'unavailable' | 'out_of_stock' | 'insufficient_stock'; available: number };
 export type Quote = { lines: QuoteLine[]; problems: StockProblem[]; upi: Totals; cod: Totals };
 
-export type Customer = { id: number; name: string; mobile: string; email: string | null };
+export type Customer = { id: number; name: string; mobile: string; email: string | null; marketing_opt_in?: boolean };
 
 export type Address = {
   id?: number;

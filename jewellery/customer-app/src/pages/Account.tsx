@@ -19,7 +19,7 @@ function Row({ icon, label, to, href, onClick, badge }: { icon: IconName; label:
 
 function Profile({ c }: { c: Customer }) {
   const { setCustomer, notify } = useStore();
-  const [form, setForm] = useState({ name: c.name, email: c.email || '' });
+  const [form, setForm] = useState({ name: c.name, email: c.email || '', marketingOptIn: Boolean(c.marketing_opt_in) });
   const [pw, setPw] = useState({ current: '', next: '' });
   const [busy, setBusy] = useState<string | null>(null);
   async function saveProfile(e: React.FormEvent) {
@@ -40,6 +40,10 @@ function Profile({ c }: { c: Customer }) {
         <Field label="Name"><input required minLength={2} maxLength={80} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></Field>
         <Field label="Mobile number"><input value={c.mobile} disabled className="text-muted" /></Field>
         <Field label="Email (optional)"><input type="email" maxLength={120} value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
+        <label className="flex items-start gap-3 text-sm">
+          <input type="checkbox" className="mt-0.5 h-4 w-4 accent-champagne-dark" checked={form.marketingOptIn} onChange={(e) => setForm({ ...form, marketingOptIn: e.target.checked })} />
+          <span>Send me new arrivals, festival collections and offers. <span className="text-muted">Order updates are always sent.</span></span>
+        </label>
         <button disabled={busy === 'profile'} className="btn-dark w-full">{busy === 'profile' ? <Spinner /> : 'Save profile'}</button>
       </form>
       <form onSubmit={savePassword} className="space-y-5">
@@ -169,8 +173,21 @@ export default function Account() {
         {canInstall && <Row icon="plus" label="Install app on this phone" onClick={async () => { await deferredInstall?.prompt(); deferredInstall = null; setCanInstall(false); }} />}
         {customer && <Row icon="logout" label="Log out" onClick={() => { disablePush().catch(() => {}).finally(signOut); navigate('/'); }} />}
       </div>
-      {settings?.whatsappNumber && (
-        <p className="flex items-center justify-center gap-2 px-4 py-8 text-xs text-muted"><WhatsAppIcon /> Customer support: +{settings.whatsappNumber.replace(/\D/g, '')}</p>
+      {settings && (
+        <section className="space-y-1 px-5 py-8 text-center text-xs text-muted">
+          <p className="font-display text-lg text-ink">{settings.brandName}</p>
+          {settings.description && <p className="mx-auto max-w-sm">{settings.description}</p>}
+          {settings.contact.address && <p>{[settings.contact.address, settings.contact.city, settings.contact.state, settings.contact.pincode].filter(Boolean).join(', ')}</p>}
+          {settings.contact.openingHours && <p>Open: {settings.contact.openingHours}</p>}
+          {settings.contact.phone && <p>Call: <a href={`tel:+91${settings.contact.phone}`} className="underline">+91 {settings.contact.phone}</a></p>}
+          {settings.contact.email && <p><a href={`mailto:${settings.contact.email}`} className="underline">{settings.contact.email}</a></p>}
+          {settings.whatsappNumber && <p className="flex items-center justify-center gap-2"><WhatsAppIcon /> WhatsApp: +{settings.whatsappNumber.replace(/\D/g, '')}</p>}
+          {Object.keys(settings.contact.social || {}).length > 0 && (
+            <p className="flex justify-center gap-4 pt-2 uppercase tracking-widest">
+              {Object.entries(settings.contact.social).map(([k, url]) => <a key={k} href={url} target="_blank" rel="noreferrer" className="underline">{k}</a>)}
+            </p>
+          )}
+        </section>
       )}
     </div>
   );

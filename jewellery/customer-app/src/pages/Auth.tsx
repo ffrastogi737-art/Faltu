@@ -10,7 +10,7 @@ export default function Auth({ mode }: { mode: 'login' | 'register' }) {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const next = params.get('next')?.startsWith('/') ? params.get('next')! : '/account';
-  const [form, setForm] = useState({ name: '', mobile: '', email: '', password: '' });
+  const [form, setForm] = useState({ name: '', mobile: '', email: '', password: '', marketingOptIn: false });
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm({ ...form, [k]: e.target.value });
@@ -33,7 +33,7 @@ export default function Auth({ mode }: { mode: 'login' | 'register' }) {
     <div>
       <PageHeader title="" />
       <form onSubmit={submit} className="fade-up mx-auto max-w-sm px-6 pt-6">
-        <p className="eyebrow text-center">{settings?.shopName}</p>
+        <p className="eyebrow text-center">{settings?.brandName}</p>
         <h1 className="mt-1 text-center text-4xl">{mode === 'login' ? 'Welcome back' : 'Create account'}</h1>
         <p className="mt-2 text-center text-sm text-muted">{mode === 'login' ? 'Log in with your mobile number.' : 'Track orders, save addresses and keep your wishlist.'}</p>
         <div className="mt-8 space-y-5">
@@ -42,6 +42,12 @@ export default function Auth({ mode }: { mode: 'login' | 'register' }) {
           {mode === 'register' && <Field label="Email (optional)"><input type="email" autoComplete="email" maxLength={120} value={form.email} onChange={set('email')} /></Field>}
           <Field label="Password"><input required type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} minLength={mode === 'register' ? 8 : 1} maxLength={128} value={form.password} onChange={set('password')} /></Field>
         </div>
+        {mode === 'register' && (
+          <label className="mt-5 flex items-start gap-3 text-sm">
+            <input type="checkbox" className="mt-0.5 h-4 w-4 accent-champagne-dark" checked={form.marketingOptIn} onChange={(e) => setForm({ ...form, marketingOptIn: e.target.checked })} />
+            <span className="text-muted">Send me new arrivals, festival collections and offers (optional)</span>
+          </label>
+        )}
         {err && <p className="mt-4 text-sm text-ruby" role="alert">{err}</p>}
         <button disabled={busy} className="btn-dark mt-8 w-full">{busy ? <Spinner /> : mode === 'login' ? 'Log in' : 'Create account'}</button>
         <p className="mt-6 text-center text-sm text-muted">

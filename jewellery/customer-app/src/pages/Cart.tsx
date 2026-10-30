@@ -49,6 +49,7 @@ export default function Cart() {
   }
   const problem = (id: number) => quote?.problems.find((p) => p.productId === id);
   const line = (id: number) => quote?.lines.find((l) => l.productId === id);
+  const belowMin = settings?.minOrderPaise && quote ? settings.minOrderPaise - (quote.cod.subtotalPaise - quote.cod.productDiscountPaise) : 0;
   const freeGap = settings && settings.freeDeliveryMinPaise > 0 && quote && quote.cod.deliveryChargePaise > 0
     ? settings.freeDeliveryMinPaise - (quote.cod.subtotalPaise - quote.cod.productDiscountPaise) : 0;
 
@@ -102,7 +103,8 @@ export default function Cart() {
         )}
       </div>
       <div className="px-4 pb-8">
-        <button disabled={!quote || quote.problems.length > 0} onClick={() => navigate('/checkout')} className="btn-dark w-full">
+        {belowMin > 0 && <p className="mb-3 text-center text-sm text-ruby">Minimum order is {rupees(settings!.minOrderPaise)}. Add {rupees(belowMin)} more.</p>}
+        <button disabled={!quote || quote.problems.length > 0 || belowMin > 0} onClick={() => navigate('/checkout')} className="btn-dark w-full">
           {quote?.problems.length ? 'Fix the items above to continue' : 'Proceed to checkout'}
         </button>
       </div>

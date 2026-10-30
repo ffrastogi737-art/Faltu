@@ -18,7 +18,7 @@ function loadVapid() {
   return keys;
 }
 
-const clients = new Set(); // { res, customerId }
+const clients = new Set(); // { res, customerId, staff }
 
 function send(res, event, data) {
   res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
@@ -27,7 +27,7 @@ function send(res, event, data) {
 async function pushTo(notification) {
   const { rows } = notification.customer_id
     ? await query('SELECT id, endpoint, keys FROM push_subscriptions WHERE customer_id = $1', [notification.customer_id])
-    : await query('SELECT id, endpoint, keys FROM push_subscriptions');
+    : await query('SELECT s.id, s.endpoint, s.keys FROM push_subscriptions s JOIN customers c ON c.id = s.customer_id WHERE c.marketing_opt_in');
   const payload = JSON.stringify({ title: notification.title, body: notification.body, url: notification.link || '/', tag: `n${notification.id}` });
   await Promise.all(rows.map(async (s) => {
     try {
@@ -46,7 +46,8 @@ async function handle(channel, payload) {
   }
   const data = JSON.parse(payload);
   for (const c of clients) {
-    if (data.customer_id === null ? channel === 'notification' : c.customerId === data.customer_id) send(c.res, channel, data);
+    // staff see every order change; customers only their own (broadcasts are notifications)
+    if (c.staff ? channel === 'order_update' : data.customer_id === null ? channel === 'notification' : c.customerId === data.customer_id) send(c.res, channel, data);
   }
   if (channel === 'notification' && realtime.vapidPublicKey) {
     const n = (await query('SELECT * FROM notifications WHERE id = $1', [data.id])).rows[0];
@@ -83,11 +84,11 @@ export const realtime = {
     await this.listener?.end();
   },
 
-  subscribe(req, res) {
+  subscribe(req, res, staff = false) {
     res.set({ 'Content-Type': 'text/event-stream', 'Cache-Control': 'no-store', Connection: 'keep-alive', 'X-Accel-Buffering': 'no' });
     res.flushHeaders();
     res.write('retry: 5000\n\n');
-    const c = { res, customerId: readToken(String(req.query.token || '')) };
+    const c = staff ? { res, staff: true } : { res, customerId: readToken(String(req.query.token || '')) };
     clients.add(c);
     req.on('close', () => clients.delete(c));
   },

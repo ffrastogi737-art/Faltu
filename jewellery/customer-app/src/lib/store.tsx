@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { api, getToken } from './api';
+import { api, assetUrl, getToken } from './api';
 import type { Customer, Product, Settings } from './types';
 
 export type CartItem = { productId: number; quantity: number; name: string; slug: string; imageUrl: string | null; pricePaise: number; originalPaise: number };
@@ -71,7 +71,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setSettings(s);
         setSettingsError(null);
         save('settings', s);
-        document.title = s.shopName;
+        document.title = s.brandName || s.shopName;
+        // browser tab + iOS home-screen icon follow the owner's uploaded app icon
+        if (s.appIconUrl) {
+          document.querySelector('link[rel=icon]')?.setAttribute('href', assetUrl(s.appIconUrl));
+          document.querySelector('link[rel=apple-touch-icon]')?.setAttribute('href', assetUrl(s.appIconUrl));
+        }
       })
       .catch((e) => setSettingsError(e.message));
   }, []);

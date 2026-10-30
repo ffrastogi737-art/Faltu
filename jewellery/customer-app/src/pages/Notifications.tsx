@@ -30,7 +30,7 @@ export default function Notifications() {
           const body = (
             <div className={`flex gap-3 px-4 py-4 ${n.read ? '' : 'bg-champagne-light/30'}`}>
               <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full border border-champagne/50 text-champagne-dark">
-                <Icon name={n.type === 'promo' ? 'spark' : n.type === 'replacement' ? 'shield' : n.type === 'payment' ? 'rupee' : 'truck'} />
+                <Icon name={['promo', 'new_arrivals', 'festival'].includes(n.type) ? 'spark' : n.type === 'replacement' ? 'shield' : n.type === 'payment' ? 'rupee' : 'truck'} />
               </span>
               <span className="flex-1"><span className="block text-sm font-medium">{n.title}</span><span className="block text-xs text-muted">{n.body}</span><span className="text-[11px] text-muted">{dateTime(n.created_at)}</span></span>
             </div>

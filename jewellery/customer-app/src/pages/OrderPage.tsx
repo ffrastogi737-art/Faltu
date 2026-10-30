@@ -74,6 +74,7 @@ function UpiPanel({ o, headers, onChange }: { o: Order; headers: Record<string, 
       {o.upiLink && (
         <>
           <p className="mt-3 text-sm">Amount to pay: <b className="font-display text-2xl">{rupees(o.totals.totalPaise)}</b></p>
+          {settings?.paymentInstructions && <p className="mt-2 whitespace-pre-line text-xs text-muted">{settings.paymentInstructions}</p>}
           <a href={o.upiLink} onClick={() => setOpened(true)} className="btn-gold mt-4 w-full">Pay {rupees(o.totals.totalPaise)} with UPI app</a>
           <p className="mt-2 text-center text-xs text-muted">Opens Google Pay, PhonePe, Paytm or any UPI app on this phone. Never share your UPI PIN with anyone.</p>
           {upiId && (

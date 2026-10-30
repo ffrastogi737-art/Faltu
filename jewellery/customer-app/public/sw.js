@@ -1,5 +1,5 @@
 // Offline shell + poor-network caching + push notifications.
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = `shell-${VERSION}`;
 const STATIC = `static-${VERSION}`;
 const API = `api-${VERSION}`;
@@ -48,6 +48,7 @@ self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
+  if (url.origin === location.origin && url.pathname.startsWith('/admin')) return; // staff app is not part of the customer PWA
 
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req).then((res) => {

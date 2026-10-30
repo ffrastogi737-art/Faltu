@@ -46,7 +46,7 @@ function Banners() {
       <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full border border-champagne/30" />
       <div className="absolute -right-6 -top-6 h-36 w-36 rounded-full border border-champagne/20" />
       <div key={i} className="fade-up relative flex min-h-[220px] flex-col justify-end p-6">
-        <p className="eyebrow text-champagne">{settings?.shopName}</p>
+        <p className="eyebrow text-champagne">{settings?.brandName}</p>
         <h2 className="mt-2 max-w-[16ch] text-4xl font-medium leading-[1.05]">{b.title}</h2>
         {b.subtitle && <p className="mt-2 text-sm text-ivory/70">{b.subtitle}</p>}
         {b.link && <Link to={b.link} className="btn-gold mt-5 w-fit">{b.cta || 'Shop now'}</Link>}
@@ -77,9 +77,9 @@ export default function Home() {
           <span className="w-10" />
           <Link to="/" className="text-center">
             {settings?.logoUrl ? (
-              <img src={assetUrl(settings.logoUrl)} alt={settings.shopName} className="h-10" />
+              <img src={assetUrl(settings.logoUrl)} alt={settings.brandName} className="h-10 max-w-[60vw] object-contain" />
             ) : (
-              <span className="block font-display text-[26px] font-semibold uppercase leading-none tracking-[0.22em]">{settings?.shopName || ' '}</span>
+              <span className="block font-display text-[26px] font-semibold uppercase leading-none tracking-[0.22em]">{settings?.brandName || ' '}</span>
             )}
           </Link>
           <Link to="/notifications" className="relative grid h-10 w-10 place-items-center" aria-label={`Notifications${unread ? `, ${unread} unread` : ''}`}>

@@ -24,12 +24,13 @@ export async function verifyPassword(password, stored) {
 
 const sign = (data) => createHmac('sha256', SECRET).update(data).digest('base64url');
 
-export function issueToken(customerId) {
-  const body = Buffer.from(JSON.stringify({ sub: customerId, exp: Date.now() + TOKEN_DAYS * 864e5 })).toString('base64url');
+// typ separates customer and staff tokens so one can never be used as the other.
+export function issueToken(id, typ = 'customer', days = TOKEN_DAYS) {
+  const body = Buffer.from(JSON.stringify({ sub: id, typ, exp: Date.now() + days * 864e5 })).toString('base64url');
   return `${body}.${sign(body)}`;
 }
 
-export function readToken(token) {
+export function readToken(token, typ = 'customer') {
   if (typeof token !== 'string') return null;
   const [body, sig] = token.split('.');
   if (!body || !sig) return null;
@@ -37,8 +38,8 @@ export function readToken(token) {
   const b = Buffer.from(sign(body));
   if (a.length !== b.length || !timingSafeEqual(a, b)) return null;
   try {
-    const { sub, exp } = JSON.parse(Buffer.from(body, 'base64url').toString());
-    return exp > Date.now() ? sub : null;
+    const p = JSON.parse(Buffer.from(body, 'base64url').toString());
+    return p.exp > Date.now() && (p.typ ?? 'customer') === typ ? p.sub : null;
   } catch {
     return null;
   }

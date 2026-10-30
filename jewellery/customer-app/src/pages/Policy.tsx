@@ -11,6 +11,7 @@ export default function Policy({ notFound = false }: { notFound?: boolean }) {
       <PageHeader title="Replacement Policy" />
       <article className="space-y-6 px-5 py-6 text-[15px] leading-relaxed">
         <p className="font-display text-2xl">No return. No refund. Only eligible replacement.</p>
+        {settings?.replacementPolicy && <p className="whitespace-pre-line text-ink/80">{settings.replacementPolicy}</p>}
         <section>
           <h2 className="text-xl">Eligible for replacement</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-ink/80">
