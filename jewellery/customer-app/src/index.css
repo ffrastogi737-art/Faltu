@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ivory: #fbf7ef;
+  --color-cream: #f4ecdd;
+  --color-sand: #e8dcc4;
+  --color-champagne: #c9a45c;
+  --color-champagne-dark: #9c7a36;
+  --color-champagne-light: #f3e6c4;
+  --color-ink: #16130f;
+  --color-muted: #6f665a;
+  --color-ruby: #9b1b30;
+  --color-jade: #2f6b4f;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-sans: "Jost", system-ui, sans-serif;
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html { -webkit-tap-highlight-color: transparent; }
+  body { @apply bg-ivory text-ink font-sans antialiased; }
+  h1, h2, h3 { @apply font-display tracking-wide; }
+  :focus-visible { outline: 2px solid var(--color-champagne); outline-offset: 2px; }
+  input, select, textarea { @apply w-full rounded-none border-0 border-b border-sand bg-transparent px-0 py-2.5 text-[15px] text-ink placeholder:text-muted/60 focus:border-champagne focus:outline-none focus:ring-0; }
+}
+
+@utility btn { @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 text-[13px] font-medium uppercase tracking-[0.18em] transition duration-300 disabled:pointer-events-none disabled:opacity-50; }
+@utility btn-dark { @apply btn bg-ink text-ivory hover:bg-champagne-dark active:scale-[0.98]; }
+@utility btn-gold { @apply btn bg-champagne text-ink hover:bg-champagne-dark hover:text-ivory active:scale-[0.98]; }
+@utility btn-line { @apply btn border border-ink/80 text-ink hover:bg-ink hover:text-ivory; }
+@utility eyebrow { @apply text-[11px] font-medium uppercase tracking-[0.28em] text-champagne-dark; }
+@utility card { @apply border border-sand/70 bg-white/60; }
+@utility label { @apply block text-[11px] font-medium uppercase tracking-[0.2em] text-muted; }
+@utility gold-rule { background: linear-gradient(90deg, transparent, var(--color-champagne), transparent); height: 1px; }
+@utility shimmer { background: linear-gradient(100deg, var(--color-cream) 30%, #fff 50%, var(--color-cream) 70%); background-size: 300% 100%; animation: shimmer 1.4s infinite linear; }
+@utility no-scrollbar { scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
+@utility fade-up { animation: fade-up 0.6s var(--ease-lux) both; }
+@utility pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
+@keyframes shimmer { to { background-position: -150% 0; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -1,3 +1,5 @@
+> This repository also contains a jewellery shop customer PWA with its shared backend in [`jewellery/`](jewellery/README.md).
+>
 > This repository contains three apps: **LIFE RPG** (below), **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md), and **E.D.I.T.H.**, a terminal coding agent with a multi-provider router in [`codeagent/`](codeagent/README.md).
 
 # LIFE RPG
