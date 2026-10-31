@@ -1,11 +1,11 @@
 // Owner / admin / employee API, mounted at /api/admin. Same database and business rules as the
 // customer API: orders, stock, notifications and pricing are never re-implemented here.
 import express from 'express';
-import { unlink } from 'node:fs/promises';
 import { query, tx } from './db.js';
 import { hashPassword, issueToken, readToken, verifyPassword } from './auth.js';
 import { httpError } from './pricing.js';
-import { getSettings, rateLimit, serializeOrder, UPLOAD_DIR, wrap } from './app.js';
+import { getSettings, rateLimit, serializeOrder, wrap } from './app.js';
+import { deleteFiles } from './storage.js';
 import { saveUpload } from './media.js';
 import { parseCsv, toCsv } from './csv.js';
 import { realtime } from './realtime.js';
@@ -273,7 +273,7 @@ export function adminRouter() {
   r.post('/uploads', express.raw({ type: () => true, limit: '60mb' }), wrap(async (req, res) => {
     const kind = String(req.query.kind || '');
     if (['logo', 'icon', 'splash'].includes(kind) ? req.staff.role !== 'owner' : req.staff.role === 'employee') throw httpError(403, 'You do not have permission to upload this');
-    res.status(201).json(await saveUpload(UPLOAD_DIR, kind, req.body));
+    res.status(201).json(await saveUpload(kind, req.body));
   }));
 
   // ---------- categories ----------
@@ -498,7 +498,7 @@ export function adminRouter() {
     });
     // generated art no order still points at can go
     const keep = new Set((await query('SELECT DISTINCT image_url FROM order_items WHERE image_url IS NOT NULL')).rows.map((x) => x.image_url));
-    for (const f of result.files) if (f.endsWith('.svg') && f.startsWith('/uploads/products/') && !keep.has(f)) await unlink(UPLOAD_DIR + f.slice('/uploads'.length)).catch(() => {});
+    await deleteFiles(result.files.filter((f) => f.endsWith('.svg') && f.startsWith('/uploads/products/') && !keep.has(f)));
     res.json({ removedProducts: result.products, clearedCategoryImages: result.categoryImages });
   }));
 

@@ -82,7 +82,11 @@ export default function ProductEdit() {
             </div>
           </Card>
           <Card title="Photos"><ImageManager value={f.images} onChange={(v) => set('images', v)} /></Card>
-          <Card title="Video (optional)"><SingleUpload kind="video" label="Video" video value={f.videoUrl} onChange={(v) => set('videoUrl', v)} /><p className="mt-2 text-[12px] text-muted">MP4, MOV or WebM up to 50 MB.</p></Card>
+          <Card title="Video (optional)">
+            <SingleUpload kind="video" label="Video" video value={f.videoUrl?.startsWith('/uploads/') ? f.videoUrl : null} onChange={(v) => set('videoUrl', v)} />
+            <p className="mt-2 text-[12px] text-muted">MP4, MOV or WebM up to 20 MB, or paste a YouTube link (saves storage):</p>
+            <input className="mt-1" type="url" aria-label="YouTube video link" placeholder="https://youtu.be/…" value={f.videoUrl && !f.videoUrl.startsWith('/uploads/') ? f.videoUrl : ''} onChange={(e) => set('videoUrl', e.target.value.trim() || null)} />
+          </Card>
           <Card title="Specifications" actions={<button type="button" className="btn-ghost" onClick={() => set('specs', [...f.specs, ['', '']])}><Icon name="plus" /> Add row</button>}>
             <div className="space-y-2">
               {f.specs.map(([k, v], i) => (

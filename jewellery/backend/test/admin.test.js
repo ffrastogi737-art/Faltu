@@ -4,8 +4,6 @@ import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
 import sharp from 'sharp';
-import { mkdtempSync, existsSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 
 const url = new URL(process.env.TEST_ADMIN_DATABASE_URL || 'postgres://jewel:jewel@127.0.0.1:5432/jewellery_admin_test');
 const root = new pg.Client({ connectionString: Object.assign(new URL(url), { pathname: '/postgres' }).toString() });
@@ -14,7 +12,6 @@ await root.query(`DROP DATABASE IF EXISTS ${url.pathname.slice(1)} WITH (FORCE)`
 await root.query(`CREATE DATABASE ${url.pathname.slice(1)}`);
 await root.end();
 process.env.DATABASE_URL = url.toString();
-process.env.UPLOAD_DIR = mkdtempSync(`${tmpdir()}/jw-admin-uploads-`);
 
 const { migrate } = await import('../scripts/migrate.js');
 const { pool } = await import('../src/db.js');
@@ -116,7 +113,9 @@ test('owner updates branding + UPI; customer app and new payment links use it; a
   const manifest = (await call('GET', '/manifest.webmanifest')).body;
   assert.equal(manifest.name, 'KANAK');
   assert.equal(manifest.icons[0].src, icon.body.url.replace('-512.png', '-192.png'));
-  assert.ok(existsSync(process.env.UPLOAD_DIR + icon.body.url.replace('/uploads', '').replace('-512', '-192')));
+  const small = await fetch(base + icon.body.url.replace('-512', '-192'));
+  assert.equal(small.headers.get('content-type'), 'image/png');
+  assert.equal((await sharp(Buffer.from(await small.arrayBuffer())).metadata()).width, 192);
 
   const o = await order('upi', [{ productId: 2, quantity: 1 }]);
   assert.match(o.body.upiLink, /^upi:\/\/pay\?pa=kanakjewels%40okhdfcbank&pn=Kanak%20Jewels&tr=JW\d+/);
@@ -132,7 +131,7 @@ test('products: create with images, update price, stock moves logged, oversell b
   const jpg = await sharp({ create: { width: 3000, height: 2000, channels: 3, background: '#eee' } }).jpeg().toBuffer();
   const imgs = [];
   for (let i = 0; i < 2; i++) imgs.push((await call('POST', '/api/admin/uploads?kind=product', jpg, T.admin, true)).body.url);
-  const meta = await sharp(process.env.UPLOAD_DIR + imgs[0].replace('/uploads', '')).metadata();
+  const meta = await sharp(Buffer.from(await (await fetch(base + imgs[0])).arrayBuffer())).metadata();
   assert.equal(meta.format, 'webp');
   assert.equal(meta.width, 1600);
 
@@ -306,4 +305,33 @@ test('promotions: offers drive customer banners; broadcasts only reach opted-in 
   assert.equal(await seen(no), false);
   await call('PATCH', '/api/me', { name: 'No', marketingOptIn: true }, no);
   assert.equal(await seen(no), true);
+});
+
+test('uploads live in the database: served with ranges and a locked-down CSP; videos stream', async () => {
+  const mp4 = Buffer.concat([Buffer.from([0, 0, 0, 24]), Buffer.from('ftypisom'), Buffer.alloc(1000, 7)]);
+  const up = await call('POST', '/api/admin/uploads?kind=video', mp4, T.admin, true);
+  assert.equal(up.status, 201);
+  const full = await fetch(base + up.body.url);
+  assert.equal(full.headers.get('content-type'), 'video/mp4');
+  assert.match(full.headers.get('content-security-policy'), /default-src 'none'/);
+  assert.equal((await full.arrayBuffer()).byteLength, mp4.length);
+  const part = await fetch(base + up.body.url, { headers: { range: 'bytes=4-11' } });
+  assert.equal(part.status, 206);
+  assert.equal(part.headers.get('content-range'), `bytes 4-11/${mp4.length}`);
+  assert.equal(Buffer.from(await part.arrayBuffer()).toString(), 'ftypisom');
+  assert.equal((await fetch(base + up.body.url, { headers: { range: 'bytes=5000-' } })).status, 416);
+  assert.equal((await fetch(base + '/uploads/product/nope.webp')).status, 404);
+});
+
+test('first start: owner + default categories come from the environment, only once', async () => {
+  const { bootstrap, DEFAULT_CATEGORIES } = await import('../src/bootstrap.js');
+  await sql('UPDATE products SET category_id = NULL');
+  await sql('DELETE FROM categories');
+  await sql(`UPDATE staff SET role = 'admin' WHERE role = 'owner'`);
+  await bootstrap({ OWNER_NAME: 'Render Owner', OWNER_MOBILE: '9111111111', OWNER_PASSWORD: 'render-pass-1' });
+  assert.equal((await call('POST', '/api/admin/auth/login', { mobile: '9111111111', password: 'render-pass-1' })).status, 200);
+  assert.equal((await sql('SELECT count(*)::int AS n FROM categories')).rows[0].n, DEFAULT_CATEGORIES.length);
+  await bootstrap({ OWNER_MOBILE: '9222222222', OWNER_PASSWORD: 'another-pass' }); // an owner exists: ignored
+  assert.equal((await call('POST', '/api/admin/auth/login', { mobile: '9222222222', password: 'another-pass' })).status, 401);
+  assert.equal((await sql('SELECT count(*)::int AS n FROM categories')).rows[0].n, DEFAULT_CATEGORIES.length);
 });

@@ -23,7 +23,7 @@ const backend = new URL('../../backend/', import.meta.url).pathname;
 const shots = process.env.SHOTS_DIR || mkdtempSync(`${tmpdir()}/jw-admin-shots-`);
 const files = mkdtempSync(`${tmpdir()}/jw-admin-files-`);
 const env = {
-  ...process.env, DATABASE_URL: dbUrl.toString(), PORT: '4200', UPLOAD_DIR: mkdtempSync(`${tmpdir()}/jw-admin-up-`),
+  ...process.env, DATABASE_URL: dbUrl.toString(), PORT: '4200',
   STATIC_DIR: new URL('../../customer-app/dist', import.meta.url).pathname, ADMIN_STATIC_DIR: new URL('../dist', import.meta.url).pathname,
 };
 const run = (args, extra = {}) => new Promise((ok, fail) => spawn('node', args, { cwd: backend, env: { ...env, ...extra }, stdio: ['ignore', 'ignore', 'inherit'] }).on('exit', (c) => (c ? fail(new Error(args.join(' '))) : ok())));

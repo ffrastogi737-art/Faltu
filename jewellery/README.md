@@ -57,31 +57,32 @@ staff use `https://your-domain/admin/`. Migrations run automatically on start an
 | `AUTH_SECRET` | token signing key, **required** when `NODE_ENV=production` |
 | `STATIC_DIR` | serve the built customer PWA from the API process |
 | `ADMIN_STATIC_DIR` | serve the built admin app at `/admin` |
-| `UPLOAD_DIR` | product images / replacement photos (default `backend/uploads`) |
-| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | Web Push keys; auto-generated into `backend/.vapid.json` if unset |
+| `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT` | Web Push keys; auto-generated once and stored in the database if unset |
+| `OWNER_NAME`, `OWNER_MOBILE`, `OWNER_PASSWORD` | create the first owner on start, only while no owner exists |
 | `CORS_ORIGINS` | comma-separated origins allowed to call the API (e.g. the admin app) |
 | `SHOP_NAME`, `SHOP_UPI_ID`, `SHOP_WHATSAPP` | used only by `npm run seed` |
 | `STAFF_PASSWORD` | password for `npm run create-staff` (otherwise it prompts) |
-| `VAPID_FILE` | where auto-generated push keys are stored; must be persistent and outside `UPLOAD_DIR` |
 
-## Deploy on Render
+## Deploy on Render (free)
 
-`render.yaml` (repository root) is a Render Blueprint: one web service that serves the API, the customer app (`/`) and
-the admin app (`/admin/`), a 1 GB persistent disk for uploaded photos and push keys, and a PostgreSQL database, all in
-the Singapore region. Render dashboard → **New → Blueprint** → choose this repository and branch → **Apply**.
-`AUTH_SECRET` is generated automatically; set `VAPID_SUBJECT` to `mailto:your-email` when asked.
+Uploaded photos, videos and push keys are stored in PostgreSQL (`media`, `server_keys` tables), so the app needs no
+persistent disk and runs on Render's free web service with a free [Neon](https://neon.tech) database.
 
-After the first deploy, open the service's **Shell** once:
+1. **Neon:** create a free project (region: Singapore / AWS ap-southeast-1). Copy the **direct** connection string
+   (host without `-pooler`; live updates use `LISTEN`, which the pooled endpoint does not support). It ends with `?sslmode=require`.
+2. **Render:** New → **Blueprint** → choose this repository and branch. `render.yaml` asks for:
+   `DATABASE_URL` (the Neon string), `OWNER_NAME`, `OWNER_MOBILE`, `OWNER_PASSWORD` (first owner login, created on the
+   first start only while no owner exists) and `VAPID_SUBJECT` (`mailto:you@example.com`). `AUTH_SECRET` is generated.
+3. Open `https://<service>.onrender.com/admin/`, log in, change your password under **My account**, then delete
+   `OWNER_PASSWORD` in Render. The 12 default categories are created automatically on first start.
 
-```bash
-cd jewellery/backend
-STAFF_PASSWORD='a-strong-password' node scripts/create-staff.js --name "Owner Name" --mobile 98XXXXXXXX --role owner
-node scripts/seed.js --force   # optional: 12 default categories + demo products (hide/remove them later in Demo Data)
-```
+Free-plan limits: the service sleeps after ~15 minutes without visits and the next visit takes up to a minute to wake it
+(a free uptime monitor such as cron-job.org calling `/api/health` every 10 minutes keeps it awake); Neon's free database
+holds 0.5 GB, which is roughly 2,000–3,000 product photos after compression; prefer YouTube links over uploaded videos
+(uploads are limited to 20 MB). For more traffic, switch the Render plan to Starter; nothing else changes.
 
-Then sign in at `https://<service>.onrender.com/admin/`, set the real UPI ID, store name and logo, and add products.
-Add your own domain under the service's **Settings → Custom Domains** (Render issues the HTTPS certificate).
-The paid web plan is required: free web services have no disk (uploaded photos would be lost on every deploy).
+On a server with a shell you can also create staff with `npm run create-staff` and load demo data with
+`node scripts/seed.js --force`.
 
 ## Tests
 
@@ -146,7 +147,7 @@ contacts, address, opening hours and social links live in `store_settings`. The 
 and the install manifest is generated from them at `/manifest.webmanifest`, so nothing is hard-coded in the frontend.
 
 **Real products & photos.** JPG/PNG/WebP uploads are re-encoded on the server (EXIF rotation applied, metadata stripped,
-max 1600 px WebP at high quality); videos (MP4/MOV/WebM, ≤ 50 MB) are stored as uploaded. Products that were ever ordered
+max 1600 px WebP at high quality); videos (MP4/MOV/WebM, ≤ 20 MB) are stored as uploaded, or a YouTube link can be used. All files live in the `media` table and are served from `/uploads/…` with range support. Products that were ever ordered
 can only be archived, not deleted; order lines always keep their own name/SKU/price snapshot.
 
 **Demo data.** Seeded products are flagged `is_demo` (migration 002 detects products created by older seeds). The owner

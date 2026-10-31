@@ -1,7 +1,7 @@
 import sharp from 'sharp';
 import { randomBytes } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
 import { httpError } from './pricing.js';
+import { putFile } from './storage.js';
 
 // Staff uploads: real photos are re-encoded (EXIF rotation applied, metadata stripped, resized
 // for the web) so a bad or huge file never reaches customers as-is.
@@ -24,18 +24,18 @@ function sniff(buf) {
   return null;
 }
 
-export async function saveUpload(uploadDir, kind, buf) {
+export async function saveUpload(kind, buf) {
   const spec = KINDS[kind];
   if (!spec) throw httpError(400, 'Unknown upload kind');
   if (!Buffer.isBuffer(buf) || buf.length === 0) throw httpError(400, 'Empty upload');
   const type = sniff(buf);
   const name = `${Date.now()}-${randomBytes(6).toString('hex')}`;
-  await mkdir(`${uploadDir}/${kind}`, { recursive: true });
-  const save = async (file, data) => (await writeFile(`${uploadDir}/${kind}/${file}`, data), `/uploads/${kind}/${file}`);
+  const TYPES = { webp: 'image/webp', png: 'image/png', mp4: 'video/mp4', mov: 'video/quicktime', webm: 'video/webm' };
+  const save = (file, data) => putFile(`${kind}/${file}`, data, TYPES[file.split('.').pop()]);
 
   if (spec.video) {
     if (!['mp4', 'mov', 'webm'].includes(type)) throw httpError(400, 'Video must be MP4, MOV or WebM');
-    if (buf.length > 50 * 1024 * 1024) throw httpError(400, 'Video must be under 50 MB');
+    if (buf.length > 20 * 1024 * 1024) throw httpError(400, 'Video must be under 20 MB (or paste a YouTube link instead)');
     return { url: await save(`${name}.${type}`, buf) };
   }
   if (type !== 'image') throw httpError(400, 'Image must be JPG, JPEG, PNG or WebP');

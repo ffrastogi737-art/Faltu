@@ -1,5 +1,4 @@
 import webpush from 'web-push';
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import pg from 'pg';
 import { query } from './db.js';
 import { readToken } from './auth.js';
@@ -7,16 +6,13 @@ import { readToken } from './auth.js';
 // Postgres LISTEN/NOTIFY -> SSE + Web Push. The DB triggers fire no matter which app
 // (this API or the admin app) changed the order, so customers always hear about it.
 
-function loadVapid() {
+// Push keys must never change, or every customer's push subscription breaks: kept in the database.
+async function loadVapid() {
   if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
     return { publicKey: process.env.VAPID_PUBLIC_KEY, privateKey: process.env.VAPID_PRIVATE_KEY };
   }
-  // VAPID_FILE: keep it on persistent storage (outside UPLOAD_DIR, which is public) so keys survive redeploys
-  const file = process.env.VAPID_FILE || new URL('../.vapid.json', import.meta.url);
-  if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
-  const keys = webpush.generateVAPIDKeys();
-  writeFileSync(file, JSON.stringify(keys));
-  return keys;
+  await query(`INSERT INTO server_keys (name, value) VALUES ('vapid', $1) ON CONFLICT (name) DO NOTHING`, [webpush.generateVAPIDKeys()]);
+  return (await query(`SELECT value FROM server_keys WHERE name = 'vapid'`)).rows[0].value;
 }
 
 const clients = new Set(); // { res, customerId, staff }
@@ -61,7 +57,7 @@ export const realtime = {
   listener: null,
 
   async start() {
-    const vapid = loadVapid();
+    const vapid = await loadVapid();
     webpush.setVapidDetails(process.env.VAPID_SUBJECT || 'mailto:shop@example.com', vapid.publicKey, vapid.privateKey);
     this.vapidPublicKey = vapid.publicKey;
     const retry = () => setTimeout(() => connect().catch((err) => (console.warn('reconnect failed', err.message), retry())), 3000);

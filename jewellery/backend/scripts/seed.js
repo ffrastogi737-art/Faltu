@@ -1,10 +1,9 @@
 // Demo data for a fresh database: store settings, the 12 categories and sample products.
 // Products normally come from the admin app; this only fills an empty catalogue so the
 // customer app has something to show. Images are generated SVG artwork, replace with photos.
-import { mkdir, writeFile } from 'node:fs/promises';
 import { pool } from '../src/db.js';
 import { migrate } from './migrate.js';
-import { UPLOAD_DIR } from '../src/app.js';
+import { putFile } from '../src/storage.js';
 
 const CATEGORIES = [
   ['earrings', 'Earrings', 'drops', 'Drop Earrings'], ['necklace-sets', 'Necklace Sets', 'necklace', 'Necklace Set'], ['rings', 'Rings', 'ring', 'Cocktail Ring'],
@@ -68,12 +67,12 @@ async function seed() {
        ('new_collection', 'New Season Drops', 'Fresh earrings for every evening', 'Explore', '/category/earrings', 2)`,
   );
 
-  await mkdir(`${UPLOAD_DIR}/products`, { recursive: true });
   let sku = 100;
   for (const [i, [slug, name, shape, noun]] of CATEGORIES.entries()) {
     const catImg = `/uploads/products/cat-${slug}.svg`;
-    await writeFile(`${UPLOAD_DIR}/products/cat-${slug}.svg`, art(shape, STYLES[i % STYLES.length][1], 0));
-    const { rows: [cat] } = await pool.query('INSERT INTO categories (slug, name, image_url, sort_order) VALUES ($1,$2,$3,$4) RETURNING id', [slug, name, catImg, i]);
+    await putFile(`products/cat-${slug}.svg`, art(shape, STYLES[i % STYLES.length][1], 0), 'image/svg+xml');
+    const { rows: [cat] } = await pool.query(`INSERT INTO categories (slug, name, image_url, sort_order) VALUES ($1,$2,$3,$4)
+       ON CONFLICT (slug) DO UPDATE SET image_url = EXCLUDED.image_url RETURNING id`, [slug, name, catImg, i]);
     for (let k = 0; k < 3; k++) {
       const [style, gem, desc] = STYLES[(i + k) % STYLES.length];
       const pname = `${style} ${noun}`;
@@ -81,7 +80,7 @@ async function seed() {
       const images = [];
       for (let v = 0; v < 3; v++) {
         const file = `products/${pslug}-${v}.svg`;
-        await writeFile(`${UPLOAD_DIR}/${file}`, art(shape, v === 1 ? 'pearl' : gem, v));
+        await putFile(file, art(shape, v === 1 ? 'pearl' : gem, v), 'image/svg+xml');
         images.push(`/uploads/${file}`);
       }
       const original = (899 + ((i * 7 + k * 13) % 12) * 250) * 100;

@@ -1,6 +1,5 @@
 import express from 'express';
 import { randomBytes } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { query, tx } from './db.js';
 import { authenticate, hashPassword, issueToken, requireAuth, verifyPassword } from './auth.js';
@@ -10,8 +9,8 @@ import * as v from './validate.js';
 import { realtime } from './realtime.js';
 import { adminRouter } from './admin.js';
 import { iconVariant } from './media.js';
+import { putFile, serveUpload } from './storage.js';
 
-export const UPLOAD_DIR = process.env.UPLOAD_DIR || new URL('../uploads/', import.meta.url).pathname;
 
 export const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 
@@ -176,9 +175,7 @@ async function savePhoto(dataUrl) {
   const buf = Buffer.from(m[2], 'base64');
   if (buf.length > 4 * 1024 * 1024) throw httpError(400, 'Each photo must be under 4 MB');
   const name = `replacements/${Date.now()}-${randomBytes(8).toString('hex')}.${ext}`;
-  await mkdir(`${UPLOAD_DIR}/replacements`, { recursive: true });
-  await writeFile(`${UPLOAD_DIR}/${name}`, buf);
-  return `/uploads/${name}`;
+  return putFile(name, buf, `image/${ext === 'jpg' ? 'jpeg' : ext}`);
 }
 
 export function createApp() {
@@ -196,7 +193,7 @@ export function createApp() {
     next();
   });
 
-  app.use('/uploads', express.static(UPLOAD_DIR, { maxAge: '30d', immutable: true }));
+  app.get(/^\/uploads\/(.+)$/, serveUpload);
 
   // Install manifest built from store settings, so name and icon follow the owner's branding.
   app.get('/manifest.webmanifest', wrap(async (_req, res) => {

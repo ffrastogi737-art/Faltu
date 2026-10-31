@@ -20,7 +20,7 @@ await root.end();
 
 const backend = new URL('../../backend/', import.meta.url).pathname;
 const shots = process.env.SHOTS_DIR || mkdtempSync(`${tmpdir()}/jw-shots-`);
-const env = { ...process.env, DATABASE_URL: dbUrl.toString(), PORT: '4100', STATIC_DIR: new URL('../dist', import.meta.url).pathname, UPLOAD_DIR: mkdtempSync(`${tmpdir()}/jw-up-`) };
+const env = { ...process.env, DATABASE_URL: dbUrl.toString(), PORT: '4100', STATIC_DIR: new URL('../dist', import.meta.url).pathname };
 await new Promise((ok, fail) => spawn('node', ['scripts/seed.js'], { cwd: backend, env, stdio: 'inherit' }).on('exit', (c) => (c ? fail(new Error('seed failed')) : ok())));
 const server = spawn('node', ['src/server.js'], { cwd: backend, env, stdio: ['ignore', 'inherit', 'inherit'] });
 const db = new pg.Client({ connectionString: dbUrl.toString() });

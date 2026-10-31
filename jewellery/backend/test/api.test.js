@@ -3,8 +3,6 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import pg from 'pg';
-import { mkdtempSync } from 'node:fs';
-import { tmpdir } from 'node:os';
 
 const url = new URL(process.env.TEST_DATABASE_URL || 'postgres://jewel:jewel@127.0.0.1:5432/jewellery_test');
 const admin = new pg.Client({ connectionString: Object.assign(new URL(url), { pathname: '/postgres' }).toString() });
@@ -13,7 +11,6 @@ await admin.query(`DROP DATABASE IF EXISTS ${url.pathname.slice(1)} WITH (FORCE)
 await admin.query(`CREATE DATABASE ${url.pathname.slice(1)}`);
 await admin.end();
 process.env.DATABASE_URL = url.toString();
-process.env.UPLOAD_DIR = mkdtempSync(`${tmpdir()}/jw-uploads-`);
 
 const { migrate } = await import('../scripts/migrate.js');
 const { pool } = await import('../src/db.js');
