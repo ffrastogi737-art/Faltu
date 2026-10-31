@@ -1,6 +1,7 @@
 import express from 'express';
 import { randomBytes } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 import { query, tx } from './db.js';
 import { authenticate, hashPassword, issueToken, requireAuth, verifyPassword } from './auth.js';
 import { computeTotals, httpError, priceItems, upiDiscountPercent, VISIBLE } from './pricing.js';
@@ -566,16 +567,19 @@ export function createApp() {
   });
 
   // Optional: serve the built admin app at /admin (ADMIN_STATIC_DIR=../admin-app/dist).
-  if (process.env.ADMIN_STATIC_DIR) {
-    app.use('/admin', express.static(process.env.ADMIN_STATIC_DIR, { index: false, maxAge: '1y', immutable: true }));
-    app.get(/^\/admin(\/.*)?$/, (_req, res) => res.set({ 'Cache-Control': 'no-cache', 'X-Robots-Tag': 'noindex' }).sendFile('index.html', { root: process.env.ADMIN_STATIC_DIR }));
+  // relative paths resolve from the working directory (e.g. ../customer-app/dist when started in backend/)
+  const adminDir = process.env.ADMIN_STATIC_DIR && resolve(process.env.ADMIN_STATIC_DIR);
+  const staticDir = process.env.STATIC_DIR && resolve(process.env.STATIC_DIR);
+  if (adminDir) {
+    app.use('/admin', express.static(adminDir, { index: false, maxAge: '1y', immutable: true }));
+    app.get(/^\/admin(\/.*)?$/, (_req, res) => res.set({ 'Cache-Control': 'no-cache', 'X-Robots-Tag': 'noindex' }).sendFile('index.html', { root: adminDir }));
   }
   // Optional: serve the built customer PWA from the same origin (STATIC_DIR=../customer-app/dist).
-  if (process.env.STATIC_DIR) {
-    app.use(express.static(process.env.STATIC_DIR, { index: false, maxAge: '1y', immutable: true, setHeaders: (res, path) => {
+  if (staticDir) {
+    app.use(express.static(staticDir, { index: false, maxAge: '1y', immutable: true, setHeaders: (res, path) => {
       if (/(sw\.js|manifest\.webmanifest)$/.test(path)) res.set('Cache-Control', 'no-cache');
     } }));
-    app.get(/.*/, (_req, res) => res.set('Cache-Control', 'no-cache').sendFile('index.html', { root: process.env.STATIC_DIR }));
+    app.get(/.*/, (_req, res) => res.set('Cache-Control', 'no-cache').sendFile('index.html', { root: staticDir }));
   }
   return app;
 }

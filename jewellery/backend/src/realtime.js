@@ -11,7 +11,8 @@ function loadVapid() {
   if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
     return { publicKey: process.env.VAPID_PUBLIC_KEY, privateKey: process.env.VAPID_PRIVATE_KEY };
   }
-  const file = new URL('../.vapid.json', import.meta.url);
+  // VAPID_FILE: keep it on persistent storage (outside UPLOAD_DIR, which is public) so keys survive redeploys
+  const file = process.env.VAPID_FILE || new URL('../.vapid.json', import.meta.url);
   if (existsSync(file)) return JSON.parse(readFileSync(file, 'utf8'));
   const keys = webpush.generateVAPIDKeys();
   writeFileSync(file, JSON.stringify(keys));

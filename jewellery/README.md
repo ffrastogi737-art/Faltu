@@ -62,6 +62,26 @@ staff use `https://your-domain/admin/`. Migrations run automatically on start an
 | `CORS_ORIGINS` | comma-separated origins allowed to call the API (e.g. the admin app) |
 | `SHOP_NAME`, `SHOP_UPI_ID`, `SHOP_WHATSAPP` | used only by `npm run seed` |
 | `STAFF_PASSWORD` | password for `npm run create-staff` (otherwise it prompts) |
+| `VAPID_FILE` | where auto-generated push keys are stored; must be persistent and outside `UPLOAD_DIR` |
+
+## Deploy on Render
+
+`render.yaml` (repository root) is a Render Blueprint: one web service that serves the API, the customer app (`/`) and
+the admin app (`/admin/`), a 1 GB persistent disk for uploaded photos and push keys, and a PostgreSQL database, all in
+the Singapore region. Render dashboard → **New → Blueprint** → choose this repository and branch → **Apply**.
+`AUTH_SECRET` is generated automatically; set `VAPID_SUBJECT` to `mailto:your-email` when asked.
+
+After the first deploy, open the service's **Shell** once:
+
+```bash
+cd jewellery/backend
+STAFF_PASSWORD='a-strong-password' node scripts/create-staff.js --name "Owner Name" --mobile 98XXXXXXXX --role owner
+node scripts/seed.js --force   # optional: 12 default categories + demo products (hide/remove them later in Demo Data)
+```
+
+Then sign in at `https://<service>.onrender.com/admin/`, set the real UPI ID, store name and logo, and add products.
+Add your own domain under the service's **Settings → Custom Domains** (Render issues the HTTPS certificate).
+The paid web plan is required: free web services have no disk (uploaded photos would be lost on every deploy).
 
 ## Tests
 
