@@ -150,6 +150,44 @@ def test_transcribe_maps_segments_and_words(monkeypatch):
     assert seen == [0.5]
 
 
+def test_whisper_cpp_fallback(monkeypatch, tmp_path):
+    """Runs the real subprocess path against a stand-in whisper-cli that writes the -ojf JSON shape."""
+    import json, stat, sys
+    off = lambda a, b: {"offsets": {"from": a, "to": b}}
+    payload = {"result": {"language": "hi"}, "transcription": [
+        {**off(0, 1500), "text": " नमस्ते दोस्तों.", "tokens": [
+            {"text": "[_BEG_]", **off(0, 0)}, {"text": " नम", **off(0, 300)}, {"text": "स्ते", **off(300, 700)},
+            {"text": " दोस्तों", **off(700, 1400)}, {"text": ".", **off(1400, 1500)}, {"text": "[_TT_75]", **off(1500, 1500)}]},
+        {**off(1500, 2000), "text": "  ", "tokens": []}]}
+    fake = tmp_path / "whisper-cli"
+    fake.write_text(f"""#!{sys.executable}
+import sys, json
+a = sys.argv
+assert a[a.index("-l") + 1] == "hi" and a[a.index("-t") + 1] == "2" and "-ojf" in a
+print("whisper_print_progress_callback: progress =  50%", file=sys.stderr)
+open(a[a.index("-of") + 1] + ".json", "w", encoding="utf-8").write(json.dumps({payload!r}))
+""")
+    fake.chmod(fake.stat().st_mode | stat.S_IEXEC)
+    (tmp_path / "ggml-tiny.bin").write_bytes(b"x")  # present, so nothing is downloaded
+    monkeypatch.setenv("CLIPPER_WHISPER_CPP", str(fake))
+    monkeypatch.setattr(transcription.config, "WHISPER_DIR", str(tmp_path))
+    monkeypatch.setattr(transcription, "status", lambda: {"installed": True, "cuda": False, "engine": "whisper.cpp"})
+    seen = []
+    out = transcription.transcribe(tmp_path / "a.wav", size="tiny", language="hi", threads=2, on_progress=seen.append)
+    assert out["language"] == "hi" and out["model"] == "tiny (whisper.cpp)" and seen == [0.5]
+    assert out["segments"] == [{"start": 0.0, "end": 1.5, "text": "नमस्ते दोस्तों.", "words": [
+        {"text": "नमस्ते", "start": 0.0, "end": 0.7}, {"text": "दोस्तों.", "start": 0.7, "end": 1.5}]}]
+    assert not (tmp_path / "a.json").exists()
+
+    fake.write_text(f"#!{sys.executable}\nimport sys; print('bad model file', file=sys.stderr); sys.exit(3)\n")
+    with pytest.raises(transcription.TranscriptionError, match="exit 3.*bad model file"):
+        transcription.transcribe(tmp_path / "a.wav", size="tiny", language="hi")
+    monkeypatch.setattr(transcription.urllib.request, "urlretrieve", lambda *a: (_ for _ in ()).throw(OSError("offline")))
+    with pytest.raises(transcription.TranscriptionError, match="huggingface.co"):
+        transcription.cpp_model("base")
+    assert not list(tmp_path.glob("*.part"))
+
+
 # ---- candidate generation and scoring -----------------------------------------------------------
 
 def _words(sample):

@@ -40,14 +40,15 @@ Open http://127.0.0.1:8000 in Chrome on the same phone. Keep Termux open while y
 
 What is different on a phone:
 
-* **No automatic transcription.** Whisper (faster-whisper) has no Android build, so the "Start analysis" button is
-  off. Import an `.srt` or `.vtt` transcript on the project page; highlights, captions and rendering work from it.
+* **Transcription uses whisper.cpp.** faster-whisper has no Android build, so `scripts/termux.sh` compiles
+  whisper.cpp on the phone (a few minutes, once). Start with the `tiny` or `base` model; `medium` needs about 2 GB of
+  free memory and is very slow on a phone. If the build fails, import an `.srt` or `.vtt` transcript instead.
+  **This path has not been run on a real phone yet** - it is tested against a stand-in program only.
 * **No face-aware crop.** OpenCV is not installed, so "centred on the speaker's face" falls back to the manual position.
 * **Rendering is slow.** Use the "Fast draft 720p" preset; a 30-second clip can take a few minutes.
 * The frontend is shipped pre-built in `frontend/dist`. After changing frontend code, run `npm run build` on a
   computer and commit `dist` again.
-* `scripts/termux.sh` has **not been run on a real phone yet**. It was checked by running the app on the same
-  reduced dependency list (`backend/requirements-termux.txt`) on Linux.
+* The app itself has been run on a real phone (import and playback); the whisper.cpp build step has not.
 
 Data lives in `storage/` (override with `CLIPPER_STORAGE`, see `.env.example`):
 `source_videos/` copies of imported videos, `exports/` rendered clips, `logs/` FFmpeg logs per job,

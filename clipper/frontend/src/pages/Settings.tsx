@@ -26,7 +26,7 @@ export default function SettingsPage() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="grid content-start gap-4">
           <h2 className="font-semibold">Speech recognition</h2>
-          <Field label="Whisper model" hint="Bigger models are more accurate but slower and need more memory. On a laptop without a graphics card, 'small' is a good balance; use 'medium' or 'large-v3' for Hindi and Hinglish if you can wait. Downloaded once on first use.">
+          <Field label="Whisper model" hint="Bigger models are more accurate but slower and need more memory. On a laptop without a graphics card, 'small' is a good balance; use 'medium' or 'large-v3' for Hindi and Hinglish if you can wait. On a phone, start with 'tiny' or 'base': 'medium' needs about 2 GB of free memory and is very slow. Downloaded once on first use.">
             <Select value={s.whisper_model} onChange={(e) => set({ whisper_model: e.target.value })}>{s._whisper_models.map((m: string) => <option key={m}>{m}</option>)}</Select></Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Run on"><Select value={s.whisper_device} onChange={(e) => set({ whisper_device: e.target.value })}><option value="auto">Automatic (GPU if available)</option><option value="cpu">CPU only</option><option value="cuda">NVIDIA GPU (falls back to CPU)</option></Select></Field>
@@ -53,7 +53,7 @@ export default function SettingsPage() {
           {!health ? <Spinner /> : (
             <dl className="grid gap-2 text-sm">
               {[["FFmpeg", health.ffmpeg?.split(" Copyright")[0] ?? "Not found - install FFmpeg"], ["Database", health.database],
-                ["Whisper", health.whisper.installed ? "Installed" : `Not available: ${health.whisper.error}`], ["GPU (CUDA)", health.whisper.cuda ? "Available" : "Not available - using CPU"],
+                ["Whisper", health.whisper.installed ? `Installed (${health.whisper.engine ?? "faster-whisper"})` : `Not available: ${health.whisper.error}`], ["GPU (CUDA)", health.whisper.cuda ? "Available" : "Not available - using CPU"],
                 ["Storage folder", health.storage], ["Free disk space", `${health.disk_free_gb} GB`]].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4"><dt className="shrink-0 text-muted">{k}</dt><dd className="break-all text-right">{v}</dd></div>))}
               <div className="flex justify-between"><dt className="text-muted">Overall</dt><dd><Badge tone={health.status === "ok" ? "good" : "bad"}>{health.status}</Badge></dd></div>

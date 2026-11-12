@@ -1,6 +1,6 @@
 # Android (Termux): only packages that install without compiling native code, apart from pydantic-core,
 # which scripts/termux.sh takes prebuilt from the Termux User Repository index.
-# Left out on purpose: faster-whisper (no Android build of ctranslate2) and opencv (face detection is optional).
+# Left out on purpose: faster-whisper (no Android build of ctranslate2; scripts/termux.sh builds whisper.cpp instead) and opencv (face detection is optional).
 fastapi>=0.115
 uvicorn>=0.30
 websockets>=12

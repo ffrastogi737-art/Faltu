@@ -1,4 +1,5 @@
 storage/
+whisper.cpp/
 backend/.venv/
 __pycache__/
 *.pyc

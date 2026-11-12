@@ -5,7 +5,7 @@
 # The frontend is shipped pre-built in frontend/dist, so Node is not needed on the phone.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-pkg install -y python ffmpeg
+pkg install -y python ffmpeg git cmake clang make
 ffmpeg -hide_banner -filters 2>/dev/null | grep -q " ass " || echo "WARNING: this ffmpeg has no libass; captions cannot be burned in."
 [ -d backend/.venv ] || python -m venv backend/.venv
 # pydantic-core is compiled Rust. The Termux User Repository index has an Android build of the version pinned in
@@ -17,6 +17,15 @@ backend/.venv/bin/pip install --only-binary=pydantic-core \
   echo "check that https://termux-user-repository.github.io/pypi/ opens in your phone's browser, then run this again."
   exit 1
 }
+# Speech recognition on the phone: faster-whisper has no Android build, so build whisper.cpp (takes a few minutes, once).
+# A failed build does not stop the app; transcripts can still be imported as .srt/.vtt.
+if [ ! -x whisper.cpp/build/bin/whisper-cli ]; then
+  [ -d whisper.cpp ] || git clone --depth 1 --branch v1.9.5 https://github.com/ggml-org/whisper.cpp
+  { cmake -S whisper.cpp -B whisper.cpp/build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF \
+      -DWHISPER_BUILD_TESTS=OFF -DWHISPER_BUILD_SERVER=OFF &&
+    cmake --build whisper.cpp/build -j "$(nproc)" --target whisper-cli; } ||
+    echo "WARNING: whisper.cpp did not build, so automatic transcription is off. Everything else works."
+fi
 command -v termux-wake-lock >/dev/null && termux-wake-lock   # keep renders alive with the screen off
 cd backend
 echo "Open http://127.0.0.1:8000 in your phone's browser. Press Ctrl+C here to stop."

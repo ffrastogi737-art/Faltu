@@ -41,3 +41,15 @@ Next
 * Not verified: `scripts/termux.sh` on a real device (package names, pydantic-core wheel from the TUR index,
   libass and fonts in Termux's ffmpeg).
 * Next for phones: a whisper.cpp backend so transcription works on-device.
+
+## 2026-11-12 - whisper.cpp fallback for phones
+
+* `transcription.py` uses the `whisper-cli` program when faster-whisper is not importable: `-ojf` JSON, word
+  timings rebuilt from token pieces, progress read from `-pp`, model `ggml-<size>.bin` downloaded once into
+  `storage/models`. `scripts/termux.sh` builds whisper.cpp v1.9.5 on the phone.
+* Verified: flags and JSON shape read from whisper.cpp's `examples/cli/cli.cpp`; the subprocess path is tested
+  against a stand-in program (`test_whisper_cpp_fallback`).
+* Not verified: a real whisper.cpp build or transcription (could not be compiled in the build environment),
+  and the build inside Termux.
+* whisper.cpp runs without the voice-activity filter faster-whisper uses, so long silences or music may
+  produce made-up lines.
