@@ -8,8 +8,15 @@ cd "$(dirname "$0")/.."
 pkg install -y python ffmpeg
 ffmpeg -hide_banner -filters 2>/dev/null | grep -q " ass " || echo "WARNING: this ffmpeg has no libass; captions cannot be burned in."
 [ -d backend/.venv ] || python -m venv backend/.venv
-# The Termux User Repository index has Android builds of pydantic-core, which otherwise needs a long Rust compile.
-backend/.venv/bin/pip install --extra-index-url https://termux-user-repository.github.io/pypi/ -r backend/requirements-termux.txt
+# pydantic-core is compiled Rust. The Termux User Repository index has an Android build of the version pinned in
+# requirements-termux.txt; --only-binary stops pip from trying (and failing) to compile it from source.
+backend/.venv/bin/pip install --only-binary=pydantic-core \
+  --extra-index-url https://termux-user-repository.github.io/pypi/ -r backend/requirements-termux.txt || {
+  echo
+  echo "Install failed. If the error mentions pydantic-core, the prebuilt Android build could not be downloaded:"
+  echo "check that https://termux-user-repository.github.io/pypi/ opens in your phone's browser, then run this again."
+  exit 1
+}
 command -v termux-wake-lock >/dev/null && termux-wake-lock   # keep renders alive with the screen off
 cd backend
 echo "Open http://127.0.0.1:8000 in your phone's browser. Press Ctrl+C here to stop."
