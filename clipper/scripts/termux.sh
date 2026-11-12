@@ -19,5 +19,6 @@ backend/.venv/bin/pip install --only-binary=pydantic-core \
 }
 command -v termux-wake-lock >/dev/null && termux-wake-lock   # keep renders alive with the screen off
 cd backend
+[ -x ~/whisper.cpp/build/bin/whisper-cli ] || echo "Tip: run ./scripts/termux-whisper.sh once to turn on automatic transcription."
 echo "Open http://127.0.0.1:8000 in your phone's browser. Press Ctrl+C here to stop."
 exec .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port "${PORT:-8000}"

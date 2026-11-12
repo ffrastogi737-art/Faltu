@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]  # clipper/
 STORAGE = Path(os.environ.get("CLIPPER_STORAGE", ROOT / "storage")).resolve()
-DIRS = {n: STORAGE / n for n in ("source_videos", "exports", "temp", "backups", "assets", "logs")}
+DIRS = {n: STORAGE / n for n in ("source_videos", "exports", "temp", "backups", "assets", "logs", "models")}
 DB_PATH = STORAGE / "clipper.db"
 DB_URL = f"sqlite:///{DB_PATH}"
 WHISPER_DIR = os.environ.get("CLIPPER_WHISPER_DIR") or None

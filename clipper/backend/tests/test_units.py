@@ -144,7 +144,7 @@ def test_transcribe_maps_segments_and_words(monkeypatch):
             return iter([Seg()]), type("Info", (), {"language": "hi"})()
     monkeypatch.setattr(transcription, "load_model", lambda *a, **k: (Model(), "cpu"))
     seen = []
-    out = transcription.transcribe("x.wav", size="tiny", language="hi", duration=2.0, on_progress=seen.append)
+    out = transcription.transcribe("x.wav", size="tiny", language="hi", duration=2.0, on_progress=lambda f, s: seen.append(f))
     assert out["language"] == "hi" and out["segments"][0]["text"] == "Namaste dosto"
     assert out["segments"][0]["words"][1] == {"text": "dosto", "start": 0.5, "end": 1.0}
     assert seen == [0.5]
@@ -334,3 +334,77 @@ def test_face_sampling_is_optional_without_opencv(sample, monkeypatch):
     monkeypatch.setitem(sys.modules, "cv2", None)  # makes `import cv2` raise ImportError, as on a phone
     assert faces.sample_faces(sample["path"], [1.0, 2.0]) == []
     assert faces.face_centre([]) is None
+
+
+# ---- whisper.cpp engine (used on Android). The stand-in program below writes exactly what whisper-cli v1.9.5
+# writes for -oj -ojf -of <base> -pp: progress lines on stderr and <base>.json with per-token offsets in ms.
+FAKE_CLI = r"""#!PYTHON
+import json, sys, time
+a = sys.argv
+assert open(a[a.index("-m") + 1], "rb").read() == b"model", "wrong model file"
+assert a[a.index("-l") + 1] == "hi" and "-ojf" in a and "-pp" in a
+base = a[a.index("-of") + 1]
+for p in (0, 50, 100):
+    print(f"whisper_print_progress_callback: progress = {p:3d}%", file=sys.stderr, flush=True)
+    time.sleep(0.05)
+tok = lambda text, t0, t1: {"text": text, "timestamps": {}, "offsets": {"from": t0, "to": t1}, "id": 1, "p": 0.9}
+json.dump({"systeminfo": "", "model": {}, "params": {}, "result": {"language": "hi"}, "transcription": [
+    {"timestamps": {}, "offsets": {"from": 500, "to": 2400}, "text": " पैसे बचाना ज़रूरी है।",
+     "tokens": [{"text": "[_BEG_]", "timestamps": {}, "offsets": {"from": 0, "to": 0}, "id": 50364, "p": 1.0},
+                tok(" पैसे", 500, 900), tok(" बचा", 900, 1200), tok("ना", 1200, 1500),
+                tok(" ज़रूरी", 1500, 2000), tok(" है।", 2000, 2400), {"text": "[_TT_120]", "id": 50484, "p": 1.0}]},
+    {"timestamps": {}, "offsets": {"from": 2400, "to": 2400}, "text": " ", "tokens": []}]},
+    open(base + ".json", "w", encoding="utf-8"), ensure_ascii=False)
+"""
+
+
+@pytest.fixture
+def cpp_env(tmp_path, monkeypatch):
+    import sys
+    cli = tmp_path / "whisper-cli"
+    cli.write_text(FAKE_CLI.replace("PYTHON", sys.executable))
+    cli.chmod(0o755)
+    (tmp_path / "remote").mkdir()
+    for size in ("tiny", "base"):
+        (tmp_path / "remote" / f"ggml-{size}.bin").write_bytes(b"model")
+    monkeypatch.setenv("CLIPPER_WHISPER_CPP", str(cli))
+    monkeypatch.setattr(transcription, "_faster_whisper", lambda: "No module named 'ctranslate2'")  # as on a phone
+    monkeypatch.setattr(transcription, "CPP_MODEL_URL", (tmp_path / "remote").as_uri() + "/ggml-{size}.bin")
+    monkeypatch.setattr(config, "WHISPER_DIR", str(tmp_path / "models"))
+    config.ensure_dirs()  # the app does this at startup
+    return tmp_path
+
+
+def test_whisper_cpp_transcribes_and_downloads_model_once(cpp_env):
+    assert transcription.status() == {"installed": True, "engine": "whisper.cpp", "cuda": False}
+    seen = []
+    out = transcription.transcribe(cpp_env / "a.wav", size="tiny", language="hi", on_progress=lambda f, s: seen.append((f, s)))
+    assert out["language"] == "hi" and out["model"] == "tiny (whisper.cpp)"
+    assert out["segments"] == [{"start": 0.5, "end": 2.4, "text": "पैसे बचाना ज़रूरी है।", "words": [
+        {"text": "पैसे", "start": 0.5, "end": 0.9}, {"text": "बचाना", "start": 0.9, "end": 1.5},
+        {"text": "ज़रूरी", "start": 1.5, "end": 2.0}, {"text": "है।", "start": 2.0, "end": 2.4}]}]
+    assert any(s and "Downloading" in s for _, s in seen) and seen[-1] == (1.0, None)
+    assert [f for f, _ in seen] == sorted(f for f, _ in seen)  # progress only moves forward
+    assert (cpp_env / "models" / "ggml-tiny.bin").read_bytes() == b"model"
+    seen.clear()
+    transcription.transcribe(cpp_env / "a.wav", size="tiny", language="hi", on_progress=lambda f, s: seen.append((f, s)))
+    assert not any(s for _, s in seen) and seen[0][0] == 0.0  # second run: no download
+    assert not list(config.DIRS["temp"].glob("whisper-*"))
+
+
+def test_whisper_cpp_failures_are_explained(cpp_env, monkeypatch):
+    monkeypatch.setattr(transcription, "CPP_MODEL_URL", (cpp_env / "missing").as_uri() + "/ggml-{size}.bin")
+    with pytest.raises(transcription.TranscriptionError, match="huggingface.co"):
+        transcription.transcribe(cpp_env / "a.wav", size="base", language="hi")
+    assert not list((cpp_env / "models").glob("*"))  # no half-downloaded model left behind
+    (cpp_env / "models" / "ggml-base.bin").write_bytes(b"corrupt")
+    with pytest.raises(transcription.TranscriptionError, match="whisper.cpp failed"):
+        transcription.transcribe(cpp_env / "a.wav", size="base", language="hi")
+    with pytest.raises(InterruptedError):
+        transcription.transcribe(cpp_env / "a.wav", size="base", language="hi", should_cancel=lambda: True)
+    monkeypatch.setenv("CLIPPER_WHISPER_CPP", "/nonexistent")
+    monkeypatch.setenv("PATH", "/nonexistent")
+    monkeypatch.setattr(transcription.Path, "home", lambda: cpp_env)
+    assert transcription.status()["installed"] is False
+    with pytest.raises(transcription.TranscriptionError, match="termux-whisper.sh"):
+        transcription.transcribe(cpp_env / "a.wav", size="base", language="hi")

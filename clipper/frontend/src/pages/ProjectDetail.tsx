@@ -78,7 +78,7 @@ export default function ProjectDetail() {
                 <Button disabled={working} onClick={() => srt.current?.click()}><FileText className="size-4" />Import transcript (.srt / .vtt)</Button>
                 <input ref={srt} type="file" accept=".srt,.vtt" className="hidden" onChange={(e) => { importSrt(e.target.files?.[0]); e.target.value = ""; }} />
               </div>
-              {noWhisper && <p className="mt-3 text-xs text-warn">Whisper is not installed on this device (it has no Android build), so automatic transcription is off. Import an .srt or .vtt transcript instead; highlights, captions and rendering all work from it.</p>}
+              {noWhisper && <p className="mt-3 text-xs text-warn">Automatic transcription is not set up on this device. On Android, run ./scripts/termux-whisper.sh once in Termux and restart the app. Until then, import an .srt or .vtt transcript; highlights, captions and rendering all work from it.</p>}
               {!video.audio_streams && <p className="mt-3 text-xs text-warn">This video has no audio track, so it cannot be transcribed. You can import a transcript or cut clips by hand.</p>}
             </Card>
             {jobs.length > 0 && <Card><h2 className="mb-3 font-semibold">Processing</h2><div className="grid gap-2">{jobs.slice(0, 8).map((j) => <JobRow key={j.id} job={j} />)}</div></Card>}

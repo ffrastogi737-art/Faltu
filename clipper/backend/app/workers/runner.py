@@ -145,7 +145,7 @@ def h_transcription(ctx: Ctx) -> None:
         result = transcription.transcribe(
             config.STORAGE / video.audio_path, size=size, device=s["whisper_device"],
             language=p.get("language") or s["whisper_language"], threads=int(s["threads"]), duration=video.duration,
-            on_progress=lambda f: ctx.progress(0.05 + 0.93 * f, "Transcribing speech"), should_cancel=ctx.cancelled)
+            on_progress=lambda f, stage=None: ctx.progress(0.05 + 0.93 * f, stage or "Transcribing speech"), should_cancel=ctx.cancelled)
     except InterruptedError:
         raise JobCancelled()
     if not result["segments"]:
