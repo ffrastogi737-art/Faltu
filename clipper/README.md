@@ -26,6 +26,29 @@ cd backend && python3.12 -m venv .venv && .venv/bin/pip install -r requirements-
 cd frontend && npm install && npm run dev           # http://127.0.0.1:5173
 ```
 
+### On an Android phone (Termux)
+
+Install Termux from F-Droid, then:
+
+```bash
+pkg install -y git
+git clone -b ccr-c4395a15-te5jiw https://github.com/ffrastogi737-art/Faltu.git
+cd Faltu/clipper && ./scripts/termux.sh
+```
+
+Open http://127.0.0.1:8000 in Chrome on the same phone. Keep Termux open while you use it.
+
+What is different on a phone:
+
+* **No automatic transcription.** Whisper (faster-whisper) has no Android build, so the "Start analysis" button is
+  off. Import an `.srt` or `.vtt` transcript on the project page; highlights, captions and rendering work from it.
+* **No face-aware crop.** OpenCV is not installed, so "centred on the speaker's face" falls back to the manual position.
+* **Rendering is slow.** Use the "Fast draft 720p" preset; a 30-second clip can take a few minutes.
+* The frontend is shipped pre-built in `frontend/dist`. After changing frontend code, run `npm run build` on a
+  computer and commit `dist` again.
+* `scripts/termux.sh` has **not been run on a real phone yet**. It was checked by running the app on the same
+  reduced dependency list (`backend/requirements-termux.txt`) on Linux.
+
 Data lives in `storage/` (override with `CLIPPER_STORAGE`, see `.env.example`):
 `source_videos/` copies of imported videos, `exports/` rendered clips, `logs/` FFmpeg logs per job,
 `backups/` database backups, `assets/` logos and intros, `clipper.db` the SQLite database.
@@ -59,7 +82,7 @@ It is a transparent heuristic for sorting, **not** a prediction of views. There 
 ## Tests
 
 ```bash
-cd backend && .venv/bin/python -m pytest          # 49 tests, about 90 seconds
+cd backend && .venv/bin/python -m pytest          # 50 tests, about 90 seconds
 ```
 
 The suite generates its own test video with synthesised speech (FFmpeg's `flite` voice), so no media is

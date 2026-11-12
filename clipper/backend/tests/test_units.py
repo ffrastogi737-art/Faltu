@@ -326,3 +326,11 @@ def test_push_in_zoom_stays_centred(tmp_path):
 
     (l0, r0), (l1, r1) = bar_edges(0), bar_edges(3.8)
     assert l1 < l0 - 4 and r1 > r0 + 4  # both sides move outward: the zoom is about the centre
+
+
+def test_face_sampling_is_optional_without_opencv(sample, monkeypatch):
+    import sys
+    from app.video import faces
+    monkeypatch.setitem(sys.modules, "cv2", None)  # makes `import cv2` raise ImportError, as on a phone
+    assert faces.sample_faces(sample["path"], [1.0, 2.0]) == []
+    assert faces.face_centre([]) is None

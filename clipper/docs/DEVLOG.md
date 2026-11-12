@@ -30,3 +30,14 @@ Not verified
 Next
 * Run a real transcription and tune the highlight lexicons on real English/Hindi/Hinglish transcripts.
 * Optional local-LLM rescoring of the top candidates; speaker tracking for face-aware crop.
+
+## 2026-11-12 - phone (Termux) support
+
+* Phone layout: bottom navigation under 768px, no sideways overflow on any page (measured at Pixel 7 size).
+* `requirements-termux.txt`: no faster-whisper, no OpenCV, plain uvicorn + websockets. Face sampling returns
+  nothing when OpenCV is missing; the project page explains that transcription is unavailable.
+* `frontend/dist` is now committed so the phone needs no Node.
+* Verified: full browser journey against a server running only the Termux dependency list (on Linux).
+* Not verified: `scripts/termux.sh` on a real device (package names, pydantic-core wheel from the TUR index,
+  libass and fonts in Termux's ffmpeg).
+* Next for phones: a whisper.cpp backend so transcription works on-device.

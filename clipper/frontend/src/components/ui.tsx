@@ -148,7 +148,7 @@ export function JobRow({ job }: { job: Job }) {
   const live = job.status === "queued" || job.status === "running";
   return (
     <div className="rounded-lg border border-line bg-panel2/50 p-3">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
         <div className="min-w-0">
           <div className="truncate text-sm font-medium">{JOB_LABEL[job.type] || job.type} <span className="text-muted">#{job.id}</span></div>
           <div className="truncate text-xs text-muted">{job.status === "failed" ? job.error : job.stage}</div>

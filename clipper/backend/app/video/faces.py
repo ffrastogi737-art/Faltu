@@ -5,7 +5,10 @@ from typing import Optional
 
 def sample_faces(path: Path, times: list[float]) -> list[dict]:
     """For each time: {"t", "cx", "cy"} with the largest face's centre as 0..1 fractions, or None when no face."""
-    import cv2
+    try:
+        import cv2
+    except ImportError:  # OpenCV is optional (not installed on Android): no samples means "no face found"
+        return []
 
     cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     cap = cv2.VideoCapture(str(path))

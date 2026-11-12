@@ -33,7 +33,7 @@ function CandidateCard({ c, rank, onChange, onPreview }: { c: Candidate; rank: n
   const setStatus = (status: string) => patch(`/api/candidates/${c.id}`, { status }).then(onChange).catch(fail);
   return (
     <Card className={c.status === "rejected" ? "opacity-60" : ""}>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row">
         <ScoreRing score={c.score} />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
@@ -43,7 +43,7 @@ function CandidateCard({ c, rank, onChange, onPreview }: { c: Candidate; rank: n
             <span className="ml-auto text-xs tabular-nums text-muted">{Math.round(c.end - c.start)}s · {fmtTime(c.start)} – {fmtTime(c.end)}</span>
           </div>
           <p className="mt-1 text-sm text-muted"><span className="text-ink">Why: </span>{c.reason}</p>
-          <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-1.5 md:grid-cols-3">
+          <div className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2 md:grid-cols-3">
             {PARTS.map(([k, label]) => (
               <div key={k} className="text-xs">
                 <div className="flex justify-between text-muted"><span>{label}</span><span className="text-ink">{level(c.subscores[k])} · {Math.round(c.subscores[k])}</span></div>
@@ -56,7 +56,7 @@ function CandidateCard({ c, rank, onChange, onPreview }: { c: Candidate; rank: n
             <Field label="Start (s)" className="w-24"><NumberInput step={0.1} min={0} value={start} onChange={setStart} /></Field>
             <Field label="End (s)" className="w-24"><NumberInput step={0.1} min={0} value={end} onChange={setEnd} /></Field>
             {dirty && <Button small onClick={saveTimes} disabled={start === null || end === null}>Save times</Button>}
-            <div className="ml-auto flex gap-2">
+            <div className="ml-auto flex flex-wrap gap-2">
               <Button onClick={() => onPreview({ ...c, start: start ?? c.start, end: end ?? c.end })}><Play className="size-4" />Preview</Button>
               {c.status === "rejected" ? <Button onClick={() => setStatus("new")}>Restore</Button>
                 : c.status === "new" && <Button variant="danger" onClick={() => setStatus("rejected")}><X className="size-4" />Reject</Button>}

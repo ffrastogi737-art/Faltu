@@ -17,6 +17,8 @@ export default function ProjectDetail() {
   const [transcript] = useLoad(() => (video ? get(`/api/videos/${video.id}/transcript`) : Promise.resolve(null)), [video?.id, finished]);
   const [clips] = useLoad(() => get<Clip[]>(`/api/clips?project_id=${pid}`), [pid, finished]);
   const [settings] = useLoad(() => get("/api/settings"));
+  const [health] = useLoad(() => get("/api/health"));
+  const noWhisper = health && !health.whisper.installed;
   const [language, setLanguage] = useState("");
   const [model, setModel] = useState("");
   const [busy, setBusy] = useState(false);
@@ -63,7 +65,7 @@ export default function ProjectDetail() {
             </Card>
             <Card>
               <h2 className="mb-1 font-semibold">Analyse with AI</h2>
-              <p className="mb-4 text-sm text-muted">Extracts the audio, transcribes it with Whisper on this computer, then finds and scores candidate clips.</p>
+              <p className="mb-4 text-sm text-muted">Extracts the audio, transcribes it with Whisper on this device, then finds and scores candidate clips.</p>
               <div className="flex flex-wrap items-end gap-3">
                 <Field label="Language" className="w-40"><Select value={language} onChange={(e) => setLanguage(e.target.value)}>
                   <option value="">Default ({settings?.whisper_language ?? "auto"})</option><option value="auto">Auto-detect</option><option value="en">English</option><option value="hi">Hindi / Hinglish</option>
@@ -72,10 +74,11 @@ export default function ProjectDetail() {
                   <option value="">Default ({settings?.whisper_model ?? "small"})</option>
                   {(settings?._whisper_models ?? []).map((m: string) => <option key={m}>{m}</option>)}
                 </Select></Field>
-                <Button variant="primary" disabled={working || !video.audio_streams} busy={busy} onClick={analyze}>{transcript ? "Analyse again" : "Start analysis"}</Button>
+                <Button variant="primary" disabled={working || !video.audio_streams || noWhisper} busy={busy} onClick={analyze}>{transcript ? "Analyse again" : "Start analysis"}</Button>
                 <Button disabled={working} onClick={() => srt.current?.click()}><FileText className="size-4" />Import transcript (.srt / .vtt)</Button>
                 <input ref={srt} type="file" accept=".srt,.vtt" className="hidden" onChange={(e) => { importSrt(e.target.files?.[0]); e.target.value = ""; }} />
               </div>
+              {noWhisper && <p className="mt-3 text-xs text-warn">Whisper is not installed on this device (it has no Android build), so automatic transcription is off. Import an .srt or .vtt transcript instead; highlights, captions and rendering all work from it.</p>}
               {!video.audio_streams && <p className="mt-3 text-xs text-warn">This video has no audio track, so it cannot be transcribed. You can import a transcript or cut clips by hand.</p>}
             </Card>
             {jobs.length > 0 && <Card><h2 className="mb-3 font-semibold">Processing</h2><div className="grid gap-2">{jobs.slice(0, 8).map((j) => <JobRow key={j.id} job={j} />)}</div></Card>}

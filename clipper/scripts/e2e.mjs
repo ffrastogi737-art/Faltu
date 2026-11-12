@@ -59,7 +59,7 @@ assert.ok(t1 > start + 0.5, `preview plays inside the clip (t=${t1}, start=${sta
 step("preview plays");
 
 await page.getByRole("tab", { name: "Captions" }).click();
-await page.getByLabel("Template").selectOption("yellow_highlight");
+await page.locator("main").getByLabel("Template").selectOption("yellow_highlight");
 const firstWord = page.getByLabel("Caption word").first();
 await firstWord.fill("EDITED");
 await page.getByText("all changes saved").waitFor();
@@ -71,7 +71,7 @@ await page.getByText("all changes saved").waitFor();
 await page.reload();
 await page.getByRole("tab", { name: "Captions" }).click();
 assert.equal(await page.getByLabel("Caption word").first().inputValue(), "EDITED"); // survived reload = saved in the database
-assert.equal(await page.getByLabel("Template").inputValue(), "yellow_highlight");
+assert.equal(await page.locator("main").getByLabel("Template").inputValue(), "yellow_highlight");
 await shot("04-editor-captions");
 step("caption edit, template and trim persist across reload");
 

@@ -163,11 +163,11 @@ function Workspace({ id }: { id: number }) {
               )}
             </div>
             {view === "live" && <>
-              <div className="mt-3 flex items-center gap-3">
+              <div className="mt-3 flex flex-wrap items-center gap-3">
                 <Button variant="primary" onClick={toggle} aria-label={playing ? "Pause" : "Play"}>{playing ? <Pause className="size-4" /> : <Play className="size-4" />}</Button>
                 <Button onClick={() => seek(clip.start)} aria-label="Back to start"><SkipBack className="size-4" /></Button>
                 <span className="text-sm tabular-nums">{fmtTime(Math.max(0, rel), true)} <span className="text-muted">/ {fmtTime(len, true)}</span></span>
-                <span className="ml-auto text-xs text-muted">
+                <span className="text-xs text-muted sm:ml-auto">
                   {s.crop_mode === "face" && "Face position is found at export; preview shows the manual position. "}
                   {s.crop_mode === "blur" && "Blurred background is added at export. "}
                   {s.remove_silence && "Silence is cut at export."}
