@@ -1,3 +1,4 @@
+import re
 import shutil
 import sqlite3
 import time
@@ -25,7 +26,7 @@ def health(db: Session = Depends(get_db)):
     db.execute(text("SELECT 1"))
     disk = shutil.disk_usage(config.STORAGE)
     return {"status": "ok" if all(tools.values()) else "degraded", **tools, "database": "ok",
-            "whisper": transcription.status(), "llm": llm.model(), "storage": str(config.STORAGE),
+            "whisper": transcription.status(), "llm": (llm.resolve(get_settings(db)) or {}).get("model"), "storage": str(config.STORAGE),
             "disk_free_gb": round(disk.free / 1e9, 1)}
 
 
@@ -50,12 +51,40 @@ def dashboard(db: Session = Depends(get_db)):
 
 @router.get("/settings")
 def read_settings(db: Session = Depends(get_db)):
-    return {**get_settings(db), "_whisper_models": transcription.MODEL_SIZES}
+    s = get_settings(db)
+    # the saved API key never goes back to the browser; the page only learns whether one exists
+    return {**s, "llm_key": "", "_llm_key_set": bool(llm.resolve(s)), "_whisper_models": transcription.MODEL_SIZES}
+
+
+def _llm_url_ok(url: str) -> bool:
+    return url == "" or (len(url) <= 300 and re.match(r"https://|http://(127\.0\.0\.1|localhost)[:/]", url) is not None)
+
+
+@router.post("/settings/llm-test")
+def llm_test(body: dict[str, Any], db: Session = Depends(get_db)):
+    """Tries the address and key from the form (or the saved key when the field is empty) and lists the models."""
+    typed = {k: str(body.get(k) or "").strip() for k in ("llm_url", "llm_key")}
+    if not _llm_url_ok(typed["llm_url"]):
+        raise HTTPException(400, "The service address must start with https://")
+    cfg = llm.resolve({**get_settings(db), **{k: v for k, v in typed.items() if v}})
+    if not cfg:
+        raise HTTPException(400, "Enter an API key first")
+    try:
+        return {"models": llm.list_models(cfg)}
+    except Exception as e:
+        raise HTTPException(400, f"Could not connect: {e}")
 
 
 @router.put("/settings")
 def write_settings(body: dict[str, Any], db: Session = Depends(get_db)):
-    s = {**get_settings(db), **{k: v for k, v in body.items() if k in config.DEFAULT_SETTINGS}}
+    old = get_settings(db)
+    s = {**old, **{k: v for k, v in body.items() if k in config.DEFAULT_SETTINGS}}
+    for k in ("llm_url", "llm_model", "llm_key"):
+        s[k] = str(s[k] or "").strip()
+    if not s["llm_url"]:
+        s["llm_model"] = s["llm_key"] = ""  # provider "Off" also forgets the key
+    elif not s["llm_key"]:
+        s["llm_key"] = old["llm_key"]  # the form never holds the saved key, so empty means "unchanged"
     try:
         w = {k: float(s["scoring_weights"][k]) for k in highlight.WEIGHT_KEYS}
         durations = [float(d) for d in s["clip_durations"]]
@@ -63,7 +92,8 @@ def write_settings(body: dict[str, Any], db: Session = Depends(get_db)):
               and s["whisper_language"] in ("auto", "en", "hi") and 0 <= int(s["threads"]) <= 64
               and 1 <= int(s["max_upload_mb"]) <= 200000 and durations and all(5 <= d <= 600 for d in durations)
               and 1 <= int(s["max_candidates"]) <= 50 and 10 <= int(s["frame_samples"]) <= 1000
-              and all(v >= 0 for v in w.values()) and sum(w.values()) > 0)
+              and all(v >= 0 for v in w.values()) and sum(w.values()) > 0
+              and _llm_url_ok(s["llm_url"]) and len(s["llm_model"]) <= 200 and len(s["llm_key"]) <= 500)
     except (KeyError, TypeError, ValueError):
         ok = False
     if not ok:

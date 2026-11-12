@@ -334,13 +334,28 @@ def test_campaigns_submissions_and_earnings(client, clip):
     assert d["campaigns"] >= 1 and d["verified_views"] >= 9000 and d["received_earnings"] >= 15.5 and d["exported_clips"] >= 1
 
 
-def test_settings_validation_and_backup(client):
+def test_settings_validation_and_backup(client, monkeypatch):
     s = client.get("/api/settings").json()
     assert s["scoring_weights"]["hook"] == 25 and s["clip_durations"] == [15, 30, 45, 60]
     assert client.put("/api/settings", json={"whisper_model": "enormous"}).status_code == 400
     assert client.put("/api/settings", json={"scoring_weights": {"hook": -1}}).status_code == 400
     ok = client.put("/api/settings", json={"whisper_model": "base", "clip_durations": [20, 40], "bogus": 1}).json()
     assert ok["whisper_model"] == "base" and ok["clip_durations"] == [20, 40] and "bogus" not in ok
+    # AI rating: the key is write-only, an empty field keeps it, and switching the provider off forgets it
+    from app.ai import llm
+    assert not s["_llm_key_set"] and client.get("/api/health").json()["llm"] is None
+    assert client.put("/api/settings", json={"llm_url": "ftp://x", "llm_key": "k"}).status_code == 400
+    assert client.post("/api/settings/llm-test", json={"llm_url": "https://x.test/v1"}).status_code == 400  # no key yet
+    on = client.put("/api/settings", json={"llm_url": "https://x.test/v1", "llm_model": "m1", "llm_key": " secret "}).json()
+    assert on["llm_key"] == "" and on["_llm_key_set"] and client.get("/api/health").json()["llm"] == "m1"
+    seen = {}
+    monkeypatch.setattr(llm, "list_models", lambda cfg: seen.update(cfg) or ["m1", "m2"])
+    assert client.post("/api/settings/llm-test", json={"llm_url": "https://y.test", "llm_key": ""}).json() == {"models": ["m1", "m2"]}
+    assert seen["key"] == "secret" and seen["url"] == "https://y.test"  # saved key, address from the form
+    monkeypatch.setattr(llm, "list_models", lambda cfg: (_ for _ in ()).throw(RuntimeError("The AI service answered 401: bad key")))
+    assert "401" in client.post("/api/settings/llm-test", json={"llm_key": "wrong"}).json()["detail"]
+    assert client.put("/api/settings", json={"llm_model": "m2", "llm_key": ""}).json()["_llm_key_set"]
+    assert not client.put("/api/settings", json={"llm_url": ""}).json()["_llm_key_set"]
     b = client.post("/api/settings/backup").json()
     import sqlite3
     con = sqlite3.connect(b["path"])

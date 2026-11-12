@@ -60,3 +60,5 @@ Next
   replaced, reason appended. Off without `CLIPPER_LLM_KEY`. Failure keeps the heuristic ranking.
 * `start.sh` / `termux.sh` now load `.env`.
 * Not verified: a real Gemini (or other) call - the endpoint was not reachable from the build environment.
+* Later the same day: provider, key and model moved into Settings (`llm_url`, `llm_model`, `llm_key`), with a
+  Connect button that lists the service's models (`GET /models`, costs no quota). The key is write-only over the API.

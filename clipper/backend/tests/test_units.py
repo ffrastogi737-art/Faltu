@@ -191,23 +191,27 @@ open(a[a.index("-of") + 1] + ".json", "w", encoding="utf-8").write(json.dumps({p
 def test_llm_rescore_blends_and_survives_bad_replies(monkeypatch):
     from app.ai import llm
     monkeypatch.delenv("CLIPPER_LLM_KEY", raising=False)
-    assert llm.model() is None  # off by default: nothing leaves the device
-    monkeypatch.setenv("CLIPPER_LLM_KEY", "k")
-    assert llm.model() == llm.DEFAULT_MODEL
+    assert llm.resolve({"llm_key": ""}) is None  # off by default: nothing leaves the device
+    cfg = llm.resolve({"llm_key": "k", "llm_url": "https://api.deepseek.com/chat/completions/", "llm_model": "deepseek-chat"})
+    assert cfg == {"key": "k", "url": "https://api.deepseek.com", "model": "deepseek-chat"}
+    monkeypatch.setenv("CLIPPER_LLM_KEY", "env")
+    assert llm.resolve({}) == {"key": "env", "url": llm.DEFAULT_URL, "model": llm.DEFAULT_MODEL}
+    monkeypatch.setattr(llm, "_call", lambda cfg, path, body=None: {"data": [{"id": "models/gemini-b"}, {"id": "a"}, {}]})
+    assert llm.list_models(cfg) == ["a", "gemini-b"]
     cands = [{"start": 0, "transcript": "a", "title": "A", "reason": "r.", "score": 70.0, "subscores": {"hook": 50}},
              {"start": 9, "transcript": "b", "title": "B", "reason": "r.", "score": 60.0, "subscores": {"hook": 40}}]
     reply = """Sure:\n```json\n[{"i": 1, "score": 250, "title": " Best\\n one ", "reason": "Strong hook"},
         {"i": 7, "score": 50}, {"i": 0, "score": "junk"}, "nonsense"]\n```"""
-    monkeypatch.setattr(llm, "_ask", lambda prompt: reply)
-    out = llm.rescore(cands)
+    monkeypatch.setattr(llm, "_ask", lambda cfg, prompt: reply)
+    out = llm.rescore(cands, cfg)
     assert [c["title"] for c in out] == ["Best one", "A"]  # 60 blended with a clamped 100 beats an unrated 70
     assert out[0]["score"] == 80.0 and out[0]["subscores"] == {"hook": 40, "llm": 100.0}
     assert out[0]["reason"] == "r. AI (100/100): Strong hook" and out[1]["score"] == 70.0
     assert cands[1]["score"] == 60.0  # input untouched, so a failure leaves the heuristic list usable
     for bad in ("no json here", "[]", '[{"i": 99, "score": 5}]'):
-        monkeypatch.setattr(llm, "_ask", lambda prompt, bad=bad: bad)
+        monkeypatch.setattr(llm, "_ask", lambda cfg, prompt, bad=bad: bad)
         with pytest.raises(ValueError):
-            llm.rescore(cands)
+            llm.rescore(cands, cfg)
 
 
 # ---- candidate generation and scoring -----------------------------------------------------------

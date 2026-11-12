@@ -181,10 +181,11 @@ def h_highlight_detection(ctx: Ctx) -> None:
         words, durations=[float(d) for d in (p.get("durations") or s["clip_durations"])],
         weights=p.get("weights") or s["scoring_weights"], max_candidates=int(s["max_candidates"]),
         silences=video.silences, scene_cuts=video.scene_cuts, faces=video.faces)
-    if found and llm.model():
-        ctx.progress(0.9, f"Asking {llm.model()} to rate the top clips")
+    cfg = llm.resolve(s)
+    if found and cfg:
+        ctx.progress(0.9, f"Asking {cfg['model']} to rate the top clips")
         try:
-            found = llm.rescore(found)
+            found = llm.rescore(found, cfg)
         except Exception as e:  # optional step: a bad key, no internet or a bad reply must not lose the analysis
             ctx.log(f"AI rating skipped, kept the built-in scores: {e}")
     # regenerate replaces untouched suggestions; accepted and rejected ones are the user's decisions and stay

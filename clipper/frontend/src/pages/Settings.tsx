@@ -6,6 +6,14 @@ import { useApp } from "../stores/app";
 
 const WEIGHTS: [string, string][] = [["hook", "Hook strength"], ["emotion", "Emotional impact"], ["curiosity", "Curiosity"], ["information", "Information value"], ["completeness", "Story completeness"], ["av_quality", "Audio and visual quality"]];
 
+// "prefer" picks a sensible model after connecting; "only" hides models that cost money.
+const PROVIDERS: { name: string; url: string; prefer: RegExp; only?: RegExp; note: string }[] = [
+  { name: "Google Gemini (free tier)", url: "https://generativelanguage.googleapis.com/v1beta/openai", prefer: /flash-latest$|flash$/, note: "Free key from aistudio.google.com/apikey. Stay on a Flash model to remain inside the free tier." },
+  { name: "Groq (free tier)", url: "https://api.groq.com/openai/v1", prefer: /llama-3\.3-70b|llama/, note: "Free key from console.groq.com/keys." },
+  { name: "OpenRouter (free models only)", url: "https://openrouter.ai/api/v1", prefer: /:free$/, only: /:free$/, note: "Key from openrouter.ai/keys. Only models ending in :free are listed, so nothing is charged." },
+  { name: "DeepSeek (paid, no free tier)", url: "https://api.deepseek.com", prefer: /deepseek-chat/, note: "DeepSeek charges per use from your balance. It has no free tier." },
+];
+
 export default function SettingsPage() {
   const toast = useApp((s) => s.toast);
   const [loaded, , error] = useLoad(() => get("/api/settings"));
@@ -13,10 +21,23 @@ export default function SettingsPage() {
   const [backups, reloadB] = useLoad(() => get<{ name: string; size: number }[]>("/api/settings/backups"));
   const [s, setS] = useState<any>(null);
   const [durations, setDurations] = useState("");
+  const [models, setModels] = useState<string[]>([]);
+  const [custom, setCustom] = useState(false);
+  const [testing, setTesting] = useState(false);
   useEffect(() => { if (loaded) { setS(loaded); setDurations(loaded.clip_durations.join(", ")); } }, [loaded]);
   if (error) return <ErrorBox text={error} />;
   if (!s) return <Spinner />;
   const set = (p: object) => setS({ ...s, ...p });
+  const provider = custom ? undefined : PROVIDERS.find((p) => p.url === s.llm_url);
+  const connect = () => {
+    setTesting(true);
+    post("/api/settings/llm-test", { llm_url: s.llm_url, llm_key: s.llm_key }).then((r) => {
+      const list: string[] = provider?.only ? r.models.filter((m: string) => provider.only!.test(m)) : r.models;
+      setModels(list);
+      if (!list.includes(s.llm_model)) set({ llm_model: list.find((m) => provider?.prefer.test(m)) ?? list[0] ?? "" });
+      toast(`Connected. ${list.length} models found - pick one, then press Save settings.`);
+    }).catch((e) => toast(e.message, "error")).finally(() => setTesting(false));
+  };
   const total = WEIGHTS.reduce((a, [k]) => a + s.scoring_weights[k], 0);
   const save = () => put("/api/settings", { ...s, clip_durations: durations.split(",").map((x) => Number(x.trim())).filter((n) => n > 0) })
     .then((r) => { setS(r); toast("Settings saved"); }).catch((e) => toast(e.message, "error"));
@@ -48,13 +69,35 @@ export default function SettingsPage() {
             format={(v) => (total ? `${Math.round((v / total) * 100)}%` : "0%")} />)}
           <p className="text-xs text-muted">The score is a transparent estimate built from the transcript, pauses and sampled frames. It helps you sort candidates; it is not a prediction of views or virality.</p>
         </Card>
+        <Card className="grid content-start gap-4">
+          <h2 className="font-semibold">AI clip rating (optional)</h2>
+          <p className="text-xs text-muted">Connect any AI service to get a second opinion on the top candidates: it rates them and writes titles. When this is on, the transcript text of the top candidates is sent to that service after each analysis (one request per analysis). Videos and audio never leave this device.</p>
+          <Field label="AI service" hint={provider?.note}>
+            <Select value={s.llm_url === "" && !custom ? "" : provider ? provider.url : "custom"} onChange={(e) => { const v = e.target.value; setCustom(v === "custom"); setModels([]); set({ llm_url: v === "custom" ? "" : v, llm_model: "" }); }}>
+              <option value="">Off</option>
+              {PROVIDERS.map((p) => <option key={p.url} value={p.url}>{p.name}</option>)}
+              <option value="custom">Other (any OpenAI-compatible service)</option>
+            </Select></Field>
+          {(custom || (s.llm_url !== "" && !provider)) && <Field label="Service address" hint="The base address ending before /chat/completions, for example https://api.example.com/v1">
+            <Input value={s.llm_url} onChange={(e) => { setCustom(true); set({ llm_url: e.target.value.trim() }); }} placeholder="https://" inputMode="url" autoCapitalize="none" /></Field>}
+          {(s.llm_url !== "" || custom) && <>
+            <Field label="API key" hint={s._llm_key_set ? "A key is saved. Leave this empty to keep it, or paste a new one to replace it." : "Stored on this device only. It is also inside database backups, so do not share those."}>
+              <Input type="password" autoComplete="off" value={s.llm_key} onChange={(e) => set({ llm_key: e.target.value.trim() })} placeholder={s._llm_key_set ? "Saved" : "Paste your key"} /></Field>
+            <div className="flex flex-wrap items-end gap-3">
+              <Field label="Model" className="min-w-0 flex-1" hint="Press Connect to check the key and load the model list.">
+                {models.length ? <Select value={s.llm_model} onChange={(e) => set({ llm_model: e.target.value })}>{models.map((m) => <option key={m}>{m}</option>)}</Select>
+                  : <Input value={s.llm_model} onChange={(e) => set({ llm_model: e.target.value.trim() })} placeholder="Connect to choose" autoCapitalize="none" />}</Field>
+              <Button busy={testing} disabled={testing || !s.llm_url || !(s.llm_key || s._llm_key_set)} onClick={connect} className="mb-5">Connect</Button>
+            </div>
+          </>}
+        </Card>
         <Card>
           <h2 className="mb-3 font-semibold">System</h2>
           {!health ? <Spinner /> : (
             <dl className="grid gap-2 text-sm">
               {[["FFmpeg", health.ffmpeg?.split(" Copyright")[0] ?? "Not found - install FFmpeg"], ["Database", health.database],
                 ["Whisper", health.whisper.installed ? `Installed (${health.whisper.engine ?? "faster-whisper"})` : `Not available: ${health.whisper.error}`], ["GPU (CUDA)", health.whisper.cuda ? "Available" : "Not available - using CPU"],
-                ["AI clip rating", health.llm ?? "Off (set CLIPPER_LLM_KEY in .env)"], ["Storage folder", health.storage], ["Free disk space", `${health.disk_free_gb} GB`]].map(([k, v]) => (
+                ["AI clip rating", health.llm ?? "Off"], ["Storage folder", health.storage], ["Free disk space", `${health.disk_free_gb} GB`]].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4"><dt className="shrink-0 text-muted">{k}</dt><dd className="break-all text-right">{v}</dd></div>))}
               <div className="flex justify-between"><dt className="text-muted">Overall</dt><dd><Badge tone={health.status === "ok" ? "good" : "bad"}>{health.status}</Badge></dd></div>
             </dl>

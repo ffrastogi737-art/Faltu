@@ -25,6 +25,8 @@ DEFAULT_SETTINGS: dict = {
         "hook": 25, "emotion": 20, "curiosity": 15,
         "information": 15, "completeness": 15, "av_quality": 10,
     },
+    # Optional AI rating of the top candidates: any OpenAI-compatible chat service. Empty key = off.
+    "llm_url": "", "llm_model": "", "llm_key": "",
     "frame_samples": 120,  # upper bound on frames read for visual analysis
 }
 
