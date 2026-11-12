@@ -5,6 +5,7 @@
 # The frontend is shipped pre-built in frontend/dist, so Node is not needed on the phone.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+[ -f .env ] && { set -a; . ./.env; set +a; }   # optional settings, see .env.example
 pkg install -y python ffmpeg git cmake clang make
 ffmpeg -hide_banner -filters 2>/dev/null | grep -q " ass " || echo "WARNING: this ffmpeg has no libass; captions cannot be burned in."
 [ -d backend/.venv ] || python -m venv backend/.venv

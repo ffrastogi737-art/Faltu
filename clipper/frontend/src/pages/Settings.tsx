@@ -54,7 +54,7 @@ export default function SettingsPage() {
             <dl className="grid gap-2 text-sm">
               {[["FFmpeg", health.ffmpeg?.split(" Copyright")[0] ?? "Not found - install FFmpeg"], ["Database", health.database],
                 ["Whisper", health.whisper.installed ? `Installed (${health.whisper.engine ?? "faster-whisper"})` : `Not available: ${health.whisper.error}`], ["GPU (CUDA)", health.whisper.cuda ? "Available" : "Not available - using CPU"],
-                ["Storage folder", health.storage], ["Free disk space", `${health.disk_free_gb} GB`]].map(([k, v]) => (
+                ["AI clip rating", health.llm ?? "Off (set CLIPPER_LLM_KEY in .env)"], ["Storage folder", health.storage], ["Free disk space", `${health.disk_free_gb} GB`]].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-4"><dt className="shrink-0 text-muted">{k}</dt><dd className="break-all text-right">{v}</dd></div>))}
               <div className="flex justify-between"><dt className="text-muted">Overall</dt><dd><Badge tone={health.status === "ok" ? "good" : "bad"}>{health.status}</Badge></dd></div>
             </dl>

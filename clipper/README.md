@@ -125,7 +125,7 @@ Not built, or different from the original brief - worth knowing before you rely 
 | Area | Status |
 |---|---|
 | Whisper on a real model | The integration is written and unit-tested with a stand-in model, but the model download was blocked where this was developed, so **real transcription has not been run end to end yet**. Try it on a short video first. |
-| Local LLM / Gemini | Not integrated. Titles, hooks and scores come from the built-in heuristics only. |
+| LLM rating | Optional and off by default. With `CLIPPER_LLM_KEY` in `.env`, the top candidates' transcript text is sent to an OpenAI-compatible chat service (Gemini by default) which rates them and writes titles; the final score is half built-in, half model. **Not run against a real service yet**; the default model name `gemini-flash-latest` is unchecked. If the call fails the built-in scores are kept and the job log says why. |
 | WhisperX alignment | Not integrated; word timings come from faster-whisper. |
 | Scene detection | Uses FFmpeg's scene filter rather than PySceneDetect (same job, no extra dependency). |
 | Face detection | OpenCV's Haar detector rather than MediaPipe. Face-aware crop centres on the median face position for the clip; it does not follow a moving speaker. Not checked against real footage of a face here. |

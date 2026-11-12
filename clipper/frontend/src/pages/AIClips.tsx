@@ -134,7 +134,7 @@ export default function AIClips() {
   const shown = cands.filter((c) => showRejected || c.status !== "rejected");
   return (
     <>
-      <PageHeader title="AI Clips" subtitle="Candidates ranked by Clip Quality Score. The score is a local estimate of how well a passage stands on its own; it does not predict views."
+      <PageHeader title="AI Clips" subtitle="Candidates ranked by Clip Quality Score. The score is an estimate of how well a passage stands on its own; it does not predict views."
         actions={<>
           <Select className="!w-56" value={pid ?? ""} onChange={(e) => setParams({ project: e.target.value })} aria-label="Project">
             {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}

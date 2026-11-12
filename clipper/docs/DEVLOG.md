@@ -53,3 +53,10 @@ Next
   and the build inside Termux.
 * whisper.cpp runs without the voice-activity filter faster-whisper uses, so long silences or music may
   produce made-up lines.
+
+## 2026-11-12 - optional LLM rating of top candidates
+
+* `ai/llm.py`: one chat request per analysis with the de-duplicated top candidates; score blended 50/50, title
+  replaced, reason appended. Off without `CLIPPER_LLM_KEY`. Failure keeps the heuristic ranking.
+* `start.sh` / `termux.sh` now load `.env`.
+* Not verified: a real Gemini (or other) call - the endpoint was not reachable from the build environment.

@@ -8,7 +8,7 @@ from sqlalchemy import func, select, text
 from sqlalchemy.orm import Session
 
 from .. import models as m
-from ..ai import highlight, transcription
+from ..ai import highlight, llm, transcription
 from ..core import config
 from ..database.db import get_db
 from ..services import get_settings
@@ -25,7 +25,7 @@ def health(db: Session = Depends(get_db)):
     db.execute(text("SELECT 1"))
     disk = shutil.disk_usage(config.STORAGE)
     return {"status": "ok" if all(tools.values()) else "degraded", **tools, "database": "ok",
-            "whisper": transcription.status(), "storage": str(config.STORAGE),
+            "whisper": transcription.status(), "llm": llm.model(), "storage": str(config.STORAGE),
             "disk_free_gb": round(disk.free / 1e9, 1)}
 
 
