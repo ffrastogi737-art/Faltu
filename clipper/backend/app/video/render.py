@@ -96,8 +96,10 @@ def build_command(src: Path, out: Path, *, start: float, end: float, settings: d
         chain.append(f"{v}scale={zw}:{zh}:force_original_aspect_ratio=increase,crop={W}:{H}:{pos}[vbase]")
     post = [f"fps={fps}"]
     if s["dynamic_zoom"]:  # slow 8% push-in over the clip
-        g = f"(1+0.08*t/{max(out_dur, 0.1):.3f})"
-        post.append(f"scale=w='2*trunc({W}*{g}/2)':h='2*trunc({H}*{g}/2)':eval=frame,crop={W}:{H}")
+        r = f"0.08*t/{max(out_dur, 0.1):.3f}"
+        # crop's x/y must be spelled out in t: it does not re-read the growing input size, and would pin to the top-left
+        post.append(f"scale=w='2*trunc({W}*(1+{r})/2)':h='2*trunc({H}*(1+{r})/2)':eval=frame,"
+                    f"crop={W}:{H}:'{W}*{r}/2':'{H}*{r}/2'")
     post.append("setsar=1")
     if ass_name:
         post.append(f"ass={ass_name}")

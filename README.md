@@ -1,4 +1,4 @@
-> This repository contains three apps: **LIFE RPG** (below), **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md), and **E.D.I.T.H.**, a terminal coding agent with a multi-provider router in [`codeagent/`](codeagent/README.md).
+> This repository contains four apps: **LIFE RPG** (below), **WHAT IF?**, an offline decision simulator in [`whatif/`](whatif/README.md), **E.D.I.T.H.**, a terminal coding agent with a multi-provider router in [`codeagent/`](codeagent/README.md), and **Personal AI Clipper**, a local video clipping app in [`clipper/`](clipper/README.md).
 
 # LIFE RPG
 

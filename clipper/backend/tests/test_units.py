@@ -303,3 +303,26 @@ def test_csv_import_parsing():
     assert rows == [{"campaign_id": 7, "amount": 45.5, "received_at": datetime(2026, 2, 1), "note": "first", "submission_id": None}]
     assert len(errors) == 1
     assert calc.parse_csv("payments", "foo,bar\n1,2\n") == ([], ["Missing column(s): amount, campaign_id"])
+
+
+def test_push_in_zoom_stays_centred(tmp_path):
+    """The slow push-in must zoom toward the middle of the frame, not drift to a corner."""
+    src = tmp_path / "bars.mp4"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "lavfi", "-i", "smptebars=s=360x640:r=25:d=4",
+                    "-pix_fmt", "yuv420p", str(src)], check=True)
+    s = render.merged_settings({"dynamic_zoom": True, "normalize_audio": False})
+    args, _ = render.build_command(src, tmp_path / "o.mp4", start=0, end=4, settings=s, has_audio=False, src_fps=25,
+                                   preset={**render.DEFAULT_PRESET, "short_side": 360, "x264_preset": "ultrafast"})
+    ffmpeg.run(args, cwd=tmp_path)
+    import cv2
+
+    def bar_edges(t: float) -> tuple[int, int]:
+        cap = cv2.VideoCapture(str(tmp_path / "o.mp4"))
+        cap.set(cv2.CAP_PROP_POS_MSEC, t * 1000)
+        row = cap.read()[1][100].astype(int)
+        cap.release()
+        edges = [i for i in range(1, 360) if abs(row[i] - row[i - 1]).sum() > 60]
+        return edges[0], edges[-1]
+
+    (l0, r0), (l1, r1) = bar_edges(0), bar_edges(3.8)
+    assert l1 < l0 - 4 and r1 > r0 + 4  # both sides move outward: the zoom is about the centre
