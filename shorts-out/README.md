@@ -34,3 +34,14 @@ Sources: Cleveland Clinic (Brain Freeze), Johns Hopkins Medicine.
 
 #shorts #brainfreeze #science #humanbody #didyouknow #funfacts #icecream #whathappensif
 ```
+
+## 04 · `04-gta6-13-years.mp4` · stick-story · not uploaded · TIME-SENSITIVE: post before Nov 19, 2026
+**Title:** You Waited 13 Years For This (GTA 6)
+**Description:**
+```
+GTA V came out in 2013. After two delays, Grand Theft Auto VI launches Thursday, November 19, 2026 on PS5 and Xbox Series X|S. PC has no date yet.
+
+Sources: Rockstar Games Newswire, ESPN, Guinness World Records.
+
+#shorts #gta6 #gtavi #grandtheftauto #gaming #rockstargames #ps5 #xbox
+```
