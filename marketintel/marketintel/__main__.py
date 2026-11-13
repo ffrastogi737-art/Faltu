@@ -3,6 +3,7 @@
   serve      API + dashboard on :8000
   schedule   run the daily IST schedule forever (NSE trading days only)
   run JOB    run one job now: job_collect | job_premarket | job_scan | job_report | job_close | monitor
+  daily DIR  one-shot day for a stateless runner (CI): restore ledger from DIR, fetch, report, save back
   backtest   walk-forward test on the prices already in the database
   demo       fill the database with clearly-labelled SYNTHETIC data so the dashboard has something to show
 """
@@ -64,6 +65,8 @@ def main(argv=None):
     elif cmd == "run":
         out = getattr(Agent(), argv[1])(*argv[2:])
         print(json.dumps({"job": argv[1], "result": out if isinstance(out, (int, type(None))) else "done"}))
+    elif cmd == "daily":
+        print(json.dumps(Agent().daily(argv[1] if len(argv) > 1 else "out")))
     elif cmd == "backtest":
         a = Agent()
         px = a.load_prices()

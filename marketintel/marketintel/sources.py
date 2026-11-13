@@ -80,7 +80,10 @@ def yahoo_history(http, ysym, rng="5y"):
 
 def nse_index_list(http, index):
     """Index members with sector, from the constituent CSVs NSE publishes."""
-    r = http.get(f"https://nsearchives.nseindia.com/content/indices/{NSE_LISTS[index]}")
+    try:
+        r = http.get(f"https://nsearchives.nseindia.com/content/indices/{NSE_LISTS[index]}")
+    except SourceError:  # NSE's archive host refuses many cloud IPs; its index site serves the same file
+        r = http.get(f"https://www.niftyindices.com/IndexConstituent/{NSE_LISTS[index]}")
     out = [{"symbol": row["Symbol"].strip(), "name": row["Company Name"].strip(), "sector": row["Industry"].strip()}
            for row in csv.DictReader(io.StringIO(r.text)) if row.get("Symbol")]
     if not out:

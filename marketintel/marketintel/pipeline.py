@@ -97,12 +97,17 @@ class Agent:
             self.failures.append("prices: no price source enabled (ENABLE_YAHOO=false and no licensed connector)")
             return 0
         symbols = symbols or [r["symbol"] for r in db.rows(self.eng, select(db.instruments.c.symbol))] + [self.cfg.benchmark]
-        ok = 0
+        ok = misses = 0
         for s in symbols:
             df = self._try(f"prices {s}", sources.yahoo_history, self.http, sources.yahoo_symbol(s, self.cfg.exchange), rng or self.cfg.history_range)
             if df is not None and len(df):
                 self.store_prices(s, df)
-                ok += 1
+                ok, misses = ok + 1, 0
+            else:
+                misses += 1
+                if misses >= 10:  # the source is down or blocking us: stop hammering it
+                    self.failures.append(f"prices: gave up after 10 failures in a row ({ok} of {len(symbols)} fetched)")
+                    break
         return ok
 
     def refresh_macro(self):
@@ -281,6 +286,54 @@ class Agent:
                   "prediction_accuracy": float(((res.direction == "BUY") & (res.label == 1) | (res.direction == "SELL") & (res.label == -1)
                                                 | (res.direction == "WAIT") & (res.label == 0)).mean())})
         return m
+
+    # ----- ledger files (for runners with no persistent database, e.g. a daily CI job) -----
+    LEDGER = (("predictions", db.predictions, "as_of", ["as_of"]), ("outcomes", db.outcomes, "resolved_at", ["exit_date"]))
+
+    def export_ledger(self, folder):
+        """One CSV per table per month, so only the current month's file changes from day to day."""
+        os.makedirs(folder, exist_ok=True)
+        for name, table, col, _ in self.LEDGER:
+            df = pd.DataFrame(db.rows(self.eng, select(table)))
+            for month, g in (df.groupby(df[col].astype(str).str[:7]) if len(df) else []):
+                g.to_csv(os.path.join(folder, f"{name}-{month}.csv"), index=False)
+
+    def import_ledger(self, folder):
+        """Load exported files into an EMPTY ledger. Refuses to touch a ledger that already has rows."""
+        if not os.path.isdir(folder) or db.rows(self.eng, select(db.predictions.c.id).limit(1)):
+            return 0
+        n = 0
+        for name, table, _, dates in self.LEDGER:
+            for f in sorted(x for x in os.listdir(folder) if x.startswith(name + "-") and x.endswith(".csv")):
+                df = pd.read_csv(os.path.join(folder, f), float_precision="round_trip")  # stored numbers must come back identical
+                for c in dates:
+                    df[c] = pd.to_datetime(df[c]).dt.date
+                recs = df.astype(object).where(df.notna(), None).to_dict("records")
+                if recs:
+                    with self.eng.begin() as c:
+                        c.execute(insert(table), recs)
+                    n += len(recs)
+        return n
+
+    def daily(self, out):
+        """Whole day in one go for a stateless runner: restore ledger, fetch, report, score, save everything to `out`."""
+        restored = self.import_ledger(os.path.join(out, "ledger"))
+        self.load_files(); listed = self.refresh_universe(); self.refresh_macro(); self.refresh_flows(); self.refresh_news()
+        fetched = self.refresh_prices()
+        self.cfg.report_dir = out
+        rep = self.scan("final")
+        write_pdf(rep, os.path.join(out, "latest.pdf"))
+        self.export_ledger(os.path.join(out, "ledger"))
+        by = lambda d, k: sorted((s for s in rep["setups"] if s["direction"] == d), key=lambda s: -s[k])[:self.cfg.top_n]
+        slim = {k: rep[k] for k in ("as_of", "kind", "generated_at", "sources", "warnings", "regime", "macro", "flows", "rankings",
+                                    "calibration", "strategies", "disclaimer")}
+        slim.update(setups=by("BUY", "p_bull") + by("SELL", "p_bear"), scanned=len(rep["stocks"]), skipped=len(rep["skipped"]),
+                    skipped_examples=rep["skipped"][:10], failures=len(self.failures), failure_examples=self.failures[:10],
+                    performance={k: v for k, v in rep["performance"].items() if k != "equity"},
+                    run={"ledger_rows_restored": restored, "symbols_listed": listed, "price_series_fetched": fetched})
+        with open(os.path.join(out, "latest.json"), "w") as f:
+            json.dump(slim, f, indent=1, default=str)
+        return slim["run"] | {"as_of": rep["as_of"], "scanned": slim["scanned"], "setups": len(rep["setups"]), "failures": slim["failures"]}
 
     # ----- alerts -----
     def monitor(self):

@@ -45,7 +45,7 @@ Built phone-first: the dashboard is laid out for a phone screen and reports and 
 ```bash
 pip install -e ".[dev]"        # add ,postgres for PostgreSQL
 cp .env.example .env           # then: set -a; . ./.env; set +a
-python -m pytest               # 38 tests, no network needed
+python -m pytest               # 39 tests, no network needed
 python -m marketintel demo     # fills the DB with clearly labelled SYNTHETIC data
 python -m marketintel serve    # dashboard at http://127.0.0.1:8000
 python -m marketintel schedule # the daily loop

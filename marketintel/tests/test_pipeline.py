@@ -177,3 +177,28 @@ def test_api(agent):
     assert c.post("/api/watchlist", json={"symbol": "x; drop table"}, headers=k).status_code == 422
     assert c.post("/api/watchlist", json={"symbol": "syn00", "note": "n"}, headers=k).json()[0]["symbol"] == "SYN00"
     assert c.delete("/api/watchlist/SYN00", headers=k).json() == [] and c.get("/api/notifications").status_code == 200
+
+
+def test_ledger_survives_a_stateless_runner(agent, cfg, tmp_path):
+    """Export on one machine, import into an empty database on the next: same rows, same performance."""
+    agent.scan()
+    prices, bench, _ = synthetic.market(WED + pd.Timedelta(days=8), n=906)
+    for s, d in {**prices, agent.cfg.benchmark: bench}.items():
+        agent.store_prices(s, d)
+    agent.clock.now = datetime(2026, 11, 19, 16, 5, tzinfo=IST)
+    agent.resolve_outcomes()
+    out = str(tmp_path / "out" / "ledger")
+    agent.export_ledger(out)
+    assert sorted(os.listdir(out)) == ["outcomes-2026-11.csv", "predictions-2026-11.csv"]
+    from marketintel.pipeline import Agent
+    cfg.database_url = f"sqlite:///{tmp_path / 'second.db'}"
+    b = Agent(cfg, None, agent.http, agent.clock)
+    n = b.import_ledger(out)
+    assert n == 80 and b.import_ledger(out) == 0  # never imported on top of existing rows
+    for t in (db.predictions, db.outcomes):
+        assert db.rows(b.eng, select(t).order_by(t.c[t.primary_key.columns.keys()[0]])) == \
+               db.rows(agent.eng, select(t).order_by(t.c[t.primary_key.columns.keys()[0]]))
+    for s, d in {**prices, agent.cfg.benchmark: bench}.items():
+        b.store_prices(s, d)
+    pa, pb = agent.performance(), b.performance()
+    assert pa["trades"] > 0 and pa == pb
