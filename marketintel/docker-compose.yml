@@ -1,0 +1,29 @@
+# Cloud deployment: database with a persistent volume, API + dashboard, scheduler, nightly backups.
+# NOT tested in the build environment (no Docker daemon there). Set POSTGRES_PASSWORD in .env first.
+services:
+  db:
+    image: timescale/timescaledb:latest-pg16   # plain postgres:16 works too; no Timescale feature is required
+    environment: { POSTGRES_USER: marketintel, POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}", POSTGRES_DB: marketintel }
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    restart: unless-stopped
+  api: &app
+    build: .
+    env_file: .env
+    environment: { DATABASE_URL: "postgresql+psycopg://marketintel:${POSTGRES_PASSWORD}@db:5432/marketintel" }
+    volumes: ["./data:/app/data", "./reports:/app/reports"]
+    depends_on: [db]
+    ports: ["8000:8000"]
+    restart: unless-stopped
+  scheduler:
+    <<: *app
+    ports: []
+    command: ["python", "-m", "marketintel", "schedule"]
+  backup:
+    image: postgres:16
+    environment: { PGPASSWORD: "${POSTGRES_PASSWORD}" }
+    volumes: ["./backups:/backups"]
+    depends_on: [db]
+    restart: unless-stopped
+    # one dump a day, keep 14
+    entrypoint: ["sh", "-c", "while true; do pg_dump -h db -U marketintel -Fc marketintel > /backups/mi-$$(date +%F).dump && ls -t /backups/*.dump | tail -n +15 | xargs -r rm; sleep 86400; done"]
+volumes: { pgdata: {} }
