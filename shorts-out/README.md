@@ -45,3 +45,14 @@ Sources: Rockstar Games Newswire, ESPN, Guinness World Records.
 
 #shorts #gta6 #gtavi #grandtheftauto #gaming #rockstargames #ps5 #xbox
 ```
+
+## 05 · `05-dancing-plague.mp4` · paper-atlas · not uploaded
+**Title:** The Town That Couldn't Stop Dancing
+**Description:**
+```
+In July 1518 a woman in Strasbourg began dancing in the street and did not stop. Within weeks dozens had joined her, some accounts say up to 400, and historians still debate why.
+
+Sources: The Public Domain Review (The Dancing Plague of 1518), Wikipedia, Popular Science.
+
+#shorts #history #dancingplague #weirdhistory #1518 #mystery #didyouknow #truestory
+```
