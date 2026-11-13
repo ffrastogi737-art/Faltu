@@ -1,0 +1,418 @@
+{
+ "as_of": "2026-11-12",
+ "kind": "final",
+ "generated_at": "2026-11-13T14:23:57+05:30",
+ "sources": [
+  "yahoo-finance (unofficial, delayed)"
+ ],
+ "warnings": [
+  "No NSE holiday list loaded for 2026: every weekday is treated as a trading day.",
+  "No fundamentals loaded: long-term and avoid lists are empty, setups rest on price evidence only."
+ ],
+ "regime": {
+  "label": "sideways",
+  "high_volatility": false,
+  "close": 25299.349609375,
+  "sma50": 23310.5138671875,
+  "sma200": 23992.198232421873,
+  "volatility_percentile_1y": 0.7896825396825397
+ },
+ "macro": [
+  {
+   "name": "NIFTY 50",
+   "symbol": "^NSEI",
+   "last": 25065.400390625,
+   "change": -0.009247242413825019,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "India VIX",
+   "symbol": "^INDIAVIX",
+   "last": 15.954999923706055,
+   "change": -0.04001208675979928,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "S&P 500",
+   "symbol": "^GSPC",
+   "last": 7592.39990234375,
+   "change": -0.003540968016256807,
+   "date": "2026-11-12",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Nasdaq",
+   "symbol": "^IXIC",
+   "last": 25366.08984375,
+   "change": -0.003930686589733057,
+   "date": "2026-11-12",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Dow Jones",
+   "symbol": "^DJI",
+   "last": 52297.08984375,
+   "change": -0.0036085179958145197,
+   "date": "2026-11-12",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Nikkei 225",
+   "symbol": "^N225",
+   "last": 61142.3515625,
+   "change": 0.0053106805270422,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Hang Seng",
+   "symbol": "^HSI",
+   "last": 23637.599609375,
+   "change": -0.015450793979814192,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "USD/INR",
+   "symbol": "INR=X",
+   "last": 94.25,
+   "change": 0.005886947707303358,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Crude WTI",
+   "symbol": "CL=F",
+   "last": 89.06999969482422,
+   "change": 0.003718749594306958,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Brent",
+   "symbol": "BZ=F",
+   "last": 96.37999725341797,
+   "change": 0.0058442659191950685,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  },
+  {
+   "name": "Gold",
+   "symbol": "GC=F",
+   "last": 3900.60009765625,
+   "change": 0.00393793236966089,
+   "date": "2026-11-13",
+   "stale": false,
+   "source": "yahoo-finance (unofficial, delayed)"
+  }
+ ],
+ "flows": [],
+ "rankings": {
+  "bullish": {
+   "rule": "direction BUY: P(up) >= 0.4 and P(up)-P(down) >= 0.08; sorted by P(up)",
+   "items": []
+  },
+  "bearish": {
+   "rule": "direction SELL: P(down) >= 0.4 and P(down)-P(up) >= 0.08; sorted by P(down)",
+   "items": []
+  },
+  "breakout": {
+   "rule": "close within 3% below (or above) the 20-day high, ADX > 20, technical score > 0; sorted by relative volume",
+   "items": [
+    {
+     "symbol": "HDFCLIFE",
+     "name": "HDFC Life Insurance Company Ltd.",
+     "sector": "Financial Services",
+     "price": 597.7999877929688,
+     "direction": "WAIT",
+     "score": 0.318010333806137,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 2.816348657551598,
+     "quant_score": -0.23626185027583954,
+     "fno": false,
+     "p_bull": 0.29867396337613134,
+     "p_bear": 0.26878551883813934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "HINDALCO",
+     "name": "Hindalco Industries Ltd.",
+     "sector": "Metals & Mining",
+     "price": 964.0,
+     "direction": "WAIT",
+     "score": 0.17913789018505527,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 2.468680971907053,
+     "quant_score": -0.14361444012388985,
+     "fno": false,
+     "p_bull": 0.30646179751631236,
+     "p_bear": 0.28309829509576934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "SBIN",
+     "name": "State Bank of India",
+     "sector": "Financial Services",
+     "price": 1086.5,
+     "direction": "WAIT",
+     "score": 0.3364164719839578,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 2.054793140465365,
+     "quant_score": -0.17490805634977039,
+     "fno": false,
+     "p_bull": 0.32386363636363635,
+     "p_bear": 0.25715488215488214,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "MARUTI",
+     "name": "Maruti Suzuki India Ltd.",
+     "sector": "Automobile and Auto Components",
+     "price": 13024.0,
+     "direction": "WAIT",
+     "score": 0.1883652778094522,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.2870031077591089,
+     "quant_score": -0.4832268517462704,
+     "fno": false,
+     "p_bull": 0.29867396337613134,
+     "p_bear": 0.26878551883813934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "SBILIFE",
+     "name": "SBI Life Insurance Company Ltd.",
+     "sector": "Financial Services",
+     "price": 1819.5,
+     "direction": "WAIT",
+     "score": 0.24003792321469075,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.2712852120783251,
+     "quant_score": -0.3109847003954752,
+     "fno": false,
+     "p_bull": 0.29867396337613134,
+     "p_bear": 0.26878551883813934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "BAJFINANCE",
+     "name": "Bajaj Finance Ltd.",
+     "sector": "Financial Services",
+     "price": 1115.0,
+     "direction": "WAIT",
+     "score": 0.3268123090756014,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.2073057023132998,
+     "quant_score": -0.20692193271095838,
+     "fno": false,
+     "p_bull": 0.32386363636363635,
+     "p_bear": 0.25715488215488214,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "CIPLA",
+     "name": "Cipla Ltd.",
+     "sector": "Healthcare",
+     "price": 1408.300048828125,
+     "direction": "WAIT",
+     "score": 0.24168689679530436,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.1970587620529516,
+     "quant_score": -0.3054881217934299,
+     "fno": false,
+     "p_bull": 0.29867396337613134,
+     "p_bear": 0.26878551883813934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "KOTAKBANK",
+     "name": "Kotak Mahindra Bank Ltd.",
+     "sector": "Financial Services",
+     "price": 490.3999938964844,
+     "direction": "WAIT",
+     "score": 0.39134807701522956,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.1831914857679575,
+     "quant_score": 0.19338247893965418,
+     "fno": false,
+     "p_bull": 0.32386363636363635,
+     "p_bear": 0.25715488215488214,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "BAJAJFINSV",
+     "name": "Bajaj Finserv Ltd.",
+     "sector": "Financial Services",
+     "price": 1887.0999755859375,
+     "direction": "WAIT",
+     "score": 0.2036903422362858,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.1532573350296291,
+     "quant_score": -0.4321433036568251,
+     "fno": false,
+     "p_bull": 0.29867396337613134,
+     "p_bear": 0.26878551883813934,
+     "fundamental_score": null
+    },
+    {
+     "symbol": "AXISBANK",
+     "name": "Axis Bank Ltd.",
+     "sector": "Financial Services",
+     "price": 1342.9000244140625,
+     "direction": "WAIT",
+     "score": 0.32948645889481093,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 1.0720515472416952,
+     "quant_score": -0.012822914795074664,
+     "fno": false,
+     "p_bull": 0.32386363636363635,
+     "p_bear": 0.25715488215488214,
+     "fundamental_score": null
+    }
+   ]
+  },
+  "breakdown": {
+   "rule": "close within 3% above (or below) the 20-day low, ADX > 20, technical score < 0; sorted by relative volume",
+   "items": [
+    {
+     "symbol": "ONGC",
+     "name": "Oil & Natural Gas Corporation Ltd.",
+     "sector": "Oil Gas & Consumable Fuels",
+     "price": 224.5,
+     "direction": "WAIT",
+     "score": -0.15366581106673485,
+     "confidence": 0,
+     "risk": "medium",
+     "rvol": 2.0553044783515553,
+     "quant_score": -0.14184899985207913,
+     "fno": false,
+     "p_bull": 0.30961902757314247,
+     "p_bear": 0.2637339507472111,
+     "fundamental_score": null
+    }
+   ]
+  },
+  "momentum": {
+   "rule": "quant score > 0.3, ADX > 25, technical score > 0; sorted by quant score",
+   "items": []
+  },
+  "long_term": {
+   "rule": "fundamental label 'strong' (score >= 0.4 on at least 6 metrics); sorted by fundamental score. Needs fundamentals data.",
+   "items": []
+  },
+  "avoid": {
+   "rule": "fundamental label 'weak', or SELL signal with negative news; sorted by fundamental score then P(down)",
+   "items": []
+  }
+ },
+ "calibration": {
+  "samples": 47484,
+  "base_rates": {
+   "bull": 0.30751411001600537,
+   "bear": 0.2788728834975992,
+   "neutral": 0.41361300648639543
+  },
+  "buckets": [
+   {
+    "n": 4749,
+    "p_bull": 0.3314393939393939,
+    "p_bear": 0.27230639730639733
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.306672279520101,
+    "p_bear": 0.291728057251105
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.30961902757314247,
+    "p_bear": 0.2637339507472111
+   },
+   {
+    "n": 4749,
+    "p_bull": 0.3036616161616162,
+    "p_bear": 0.2798821548821549
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.30646179751631236,
+    "p_bear": 0.28309829509576934
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.29867396337613134,
+    "p_bear": 0.26878551883813934
+   },
+   {
+    "n": 4749,
+    "p_bull": 0.32386363636363635,
+    "p_bear": 0.25715488215488214
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.30141022942538415,
+    "p_bear": 0.2835192591033467
+   },
+   {
+    "n": 4748,
+    "p_bull": 0.2843611871185014,
+    "p_bear": 0.2974110713533993
+   },
+   {
+    "n": 4749,
+    "p_bull": 0.30913299663299665,
+    "p_bear": 0.29145622895622897
+   }
+  ]
+ },
+ "strategies": {
+  "positional": "calibrated setups below",
+  "delivery": "long-term fundamental list; no calibrated probability, so no BUY/SELL call",
+  "intraday": "not produced: no licensed intraday feed is connected"
+ },
+ "disclaimer": "Research output generated by an automated model, not investment advice. Probabilities are historical frequencies, not guarantees. No orders are placed by this system.",
+ "setups": [],
+ "scanned": 49,
+ "skipped": 1,
+ "skipped_examples": [
+  {
+   "symbol": "TMPV",
+   "reason": "1 daily moves over 40% (unadjusted split/bonus or bad tick?)"
+  }
+ ],
+ "failures": 0,
+ "failure_examples": [],
+ "performance": {
+  "trades": 0,
+  "predictions": 49,
+  "resolved": 0,
+  "pending": 49
+ },
+ "run": {
+  "ledger_rows_restored": 0,
+  "symbols_listed": 50,
+  "price_series_fetched": 51
+ }
+}
