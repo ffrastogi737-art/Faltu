@@ -23,3 +23,14 @@ Sources: Wikipedia (Knocker-up), JSTOR Daily, Mental Floss.
 
 #shorts #history #weirdjobs #britain #didyouknow #funfacts #oldjobs #truestory
 ```
+
+## 03 · `03-brain-freeze.mp4` · inside-out · not uploaded
+**Title:** Why Ice Cream Hurts Your Forehead
+**Description:**
+```
+Brain freeze happens when cold hits the roof of your mouth: blood vessels tighten then swell, and the trigeminal nerve makes your brain feel it in your forehead. Pressing your tongue to the roof of your mouth warms it and stops it faster.
+
+Sources: Cleveland Clinic (Brain Freeze), Johns Hopkins Medicine.
+
+#shorts #brainfreeze #science #humanbody #didyouknow #funfacts #icecream #whathappensif
+```
