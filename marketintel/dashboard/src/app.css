@@ -1,0 +1,43 @@
+:root { --bg: #f6f7f9; --card: #fff; --text: #16181d; --muted: #5d6470; --line: #dfe3e8; --up: #0a7a3d; --down: #b3261e; --warn-bg: #fff4d6; --warn: #6b4a00; --accent: #1f4fbf; }
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111318; --card: #1a1d24; --text: #e8eaed; --muted: #9aa1ad; --line: #2c313a; --up: #4cc38a; --down: #ff8a80; --warn-bg: #3a2f10; --warn: #ffd98a; --accent: #8ab0ff; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.5 system-ui, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 20px; margin: 0; } h2 { font-size: 16px; margin: 20px 0 6px; } h3 { font-size: 15px; margin: 0 0 4px; }
+.muted { color: var(--muted); font-size: 13px; } .up { color: var(--up); } .down { color: var(--down); }
+.warn { background: var(--warn-bg); color: var(--warn); padding: 8px 12px; border-radius: 6px; margin: 8px 0; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; margin: 14px 0; border-bottom: 1px solid var(--line); }
+nav button { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--muted); padding: 8px 12px; font: inherit; cursor: pointer; }
+nav button[aria-selected="true"] { color: var(--accent); border-color: var(--accent); font-weight: 600; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; }
+td.wrap { white-space: normal; }
+ul { margin: 4px 0; padding-left: 18px; }
+.tag { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; border: 1px solid currentColor; }
+input, button.act { font: inherit; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--text); }
+button.act { cursor: pointer; } form { display: flex; gap: 8px; flex-wrap: wrap; }
+a { color: var(--accent); }
+
+/* Phone first: this app is used on a phone. Tables become stacked cards, tabs move to the thumb. */
+@media (max-width: 700px) {
+  body { font-size: 15px; }
+  main { padding: 12px 12px calc(76px + env(safe-area-inset-bottom)); }
+  nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; margin: 0; flex-wrap: nowrap; overflow-x: auto; gap: 0;
+        background: var(--card); border-top: 1px solid var(--line); border-bottom: 0; padding-bottom: env(safe-area-inset-bottom); }
+  nav button { flex: 1 0 auto; min-height: 52px; padding: 8px 14px; border-bottom: 0; border-top: 3px solid transparent; }
+  thead { display: none; }
+  table, tbody, tr, td { display: block; width: 100%; }
+  tr { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; margin: 8px 0; }
+  td { display: flex; justify-content: space-between; gap: 12px; white-space: normal; text-align: right; overflow-wrap: anywhere;
+       padding: 5px 0; border-bottom: 1px solid var(--line); }
+  td:last-child { border-bottom: 0; }
+  td::before { content: attr(data-label); color: var(--muted); font-size: 13px; text-align: left; flex: 0 0 auto; }
+  .card tr { border: 0; padding: 0; margin: 0; }
+  input, button.act { font-size: 16px; min-height: 44px; flex: 1 1 100%; }  /* 16px stops iOS zooming on focus */
+  td button.act { flex: 0 0 auto; }
+}
