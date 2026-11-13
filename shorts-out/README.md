@@ -56,3 +56,14 @@ Sources: The Public Domain Review (The Dancing Plague of 1518), Wikipedia, Popul
 
 #shorts #history #dancingplague #weirdhistory #1518 #mystery #didyouknow #truestory
 ```
+
+## 06 · `06-bed-rest-study.mp4` · stick-story · not uploaded
+**Title:** Paid $19,000 To Stay In Bed
+**Description:**
+```
+In 2019 NASA, ESA and the German space agency paid volunteers about $19,000 to spend 60 days in a bed tilted head-down. It mimics what weightlessness does to muscles and bones, to help protect astronauts on long missions.
+
+Sources: NBC News, NASA (bed rest studies), SYFY Wire.
+
+#shorts #nasa #space #weirdjobs #science #astronaut #didyouknow #funfacts
+```
