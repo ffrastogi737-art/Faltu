@@ -6,7 +6,10 @@ views in 90 days, or the 500-subscriber tier first). Do whatever grows them, on 
 
 - Keep **learning new video styles** (build them into `.claude/skills/faceless-shorts/styles/`) and **testing new topics,
   hooks, lengths and posting times**; keep what wins, drop what loses (`shorts-out/experiments.txt`, `shorts-out/growth-log.txt`).
-- All videos in **English** (owner's choice, 15 Nov 2026). Post to YouTube **and** Instagram Reels at the best times.
+- **No creative limits** (owner, 15 Nov 2026: "NO LIMIT MEAN NO LIMIT"): language (Hindi or English), topics, styles, formats,
+  posting times and channel strategy are all your call, decided by what the data says grows the channels. Default is
+  English because the owner disliked the Kokoro Hindi voice; use Hindi when a better Hindi voice exists or an experiment
+  calls for it. Post to YouTube **and** Instagram Reels at the best times.
 - Report to the owner in **Hindi**, short; put **⚠️ DIKKAT** at the top only when something needs them.
 - Owner's to-dos live in `shorts-out/OWNER-TODO.md`. The jewellery shop page is **on hold** until the owner says otherwise.
 
