@@ -1,0 +1,19 @@
+# solo hype experiments. Every normal video tests ONE thing; judge it 48 h after it goes public
+# against the channel median of the last 10 public videos. Newest first.
+#
+# CURRENT BEST FORMULA (update when an experiment clearly wins, 2+ videos):
+#   second-person "you" story about the body or a weird real job, hook in 2 s, ~45 s,
+#   2D style (inside-out / paper-atlas), public at 9:00 or 11:30 IST
+#
+# IDEA BANK (untested, try one at a time):
+#   topics: money myths, animal superpowers, food factory secrets, "what happens if you..." body, space for kids-level curiosity,
+#           banned/forgotten inventions, world's strangest laws (true, sourced), psychology tricks your brain plays
+#   hooks:  question ("Why can't you...?"), number ("You'd earn $X to..."), dare ("Try this right now"), mistake ("You've been doing X wrong")
+#   length: 30 s vs 45 s vs 58 s
+#   styles: a NEW style built in the skill (see factory prompt EXPERIMENTS)
+#
+# video | went public (IST) | what was tested | views 48h | verdict
+Paid $19,000 To Stay In Bed | 14 Nov 9:00 | second-person weird job, paper-atlas | 1154 (6 h) | WIN
+Why You Can't Tickle Yourself | 14 Nov 11:30 | second-person body science, inside-out | 1063 (4 h) | WIN
+The Town That Couldn't Stop Dancing | 14 Nov 7:00 | history story, 7:00 slot | 155 | weak (history or 7:00?)
+Why Ice Cream Hurts Your Forehead | 13 Nov 20:10 | body science, evening slot | 2 | evening slot loses
