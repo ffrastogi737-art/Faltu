@@ -72,7 +72,7 @@ Sources: Rockstar Games GTA VI site (via GosuGamers, GTA Boom), Sinclair/WJLA.
 **Tags:** gta 6 map, gta 6 leonida, gta 6 vice city, gta 6 map hindi, leonida keys, grassrivers, port gellhorn, ambrosia gta 6, mount kalaga, gta vi map, gta 6 jagah, rockstar games
 **Vote:** A = Lucia aur Jason kaun hain · B = GTA 6 ka map GTA 5 se kitna bada
 
-## 05 · `05-gta6-jason-lucia.mp4` · neon-versus · Phase 1 · ENGLISH (first English GTA video) · STATUS PENDING
+## 05 · `05-gta6-jason-lucia.mp4` · neon-versus · Phase 1 · ENGLISH (first English GTA video) · SCHEDULED 16 Nov 2026 16:30 IST (https://www.youtube.com/watch?v=NpniqyY1n5s) · Instagram 16 Nov 16:30 IST
 **Title:**
 ```
 GTA 6 Has Two Leads: Meet Jason and Lucia 🔥 #shorts
