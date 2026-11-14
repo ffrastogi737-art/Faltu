@@ -18,10 +18,11 @@ local Whisper word timing, numpy sound. No AI images or video, no API keys, no c
 | **Stick Story** `stick-story` | "What would you do if…?" survival steps: stick people with acting eyes, flat rooms day/night, gold step cards | 30-45 s · 9:16 |
 | **Paper Atlas** `paper-atlas` | history in cut paper: parchment maps, crimson routes, gold date ribbons, period figures | 30-45 s · 9:16 |
 | **Tall Tale 3D** `tall-tale` | funny true stories: flat 2D cartoon people (big round heads, ink outlines) acting in a sunny 3D small-town world, camera always moving, one-word captions | 40-60 s · 9:16 |
+| **Neon Versus** `neon-versus` | gaming / tech "X vs Y", top-5 lists and launch countdowns in a synthwave Vice City look: glowing panels, neon text, generic skylines and silhouettes (never real game art), Hindi voice with Hinglish captions, optional "vote for Part 2" ending | 40-58 s · 9:16 |
 
 Which style: body / health / science "what happens if" → **Deep Dive 3D** (or **Inside Out** for a lighter, faster 2D
 look) · creepy, unexplained, true crime, "this happened in 1971" → **Night File 3D** · survival, life hacks, "here's what
-you do" → **Stick Story** · a historical event, "how X happened" → **Paper Atlas** · a funny or clever true story, a con, a loophole, "this guy did X" → **Tall Tale 3D**. If it isn't obvious, ask once.
+you do" → **Stick Story** · a historical event, "how X happened" → **Paper Atlas** · a funny or clever true story, a con, a loophole, "this guy did X" → **Tall Tale 3D**. · a game, phone or gadget comparison or launch ("GTA 5 vs GTA 6") → **Neon Versus**. If it isn't obvious, ask once.
 
 Each style = `styles/<style>/style-sheet.png` (the look in one image, drawn by the style's own code) + `STYLE.md` (the rules + the engine manual) +
 `example/` (a complete project that renders as-is). **Read the style's STYLE.md in full before planning.**
@@ -34,7 +35,7 @@ contact sheet and clip it names and look at them.
 
 ## 1. Intake (ONE message, defaults filled in)
 Ask only what's unknown, all at once: topic (or "you pick 3 ideas"), a link to a short whose format they like (optional),
-length (default ~30 s), voice (`SKILL/scripts/py SKILL/scripts/voice.py --list`; default `am_michael`), voiceover mode:
+length (default ~30 s), voice (`SKILL/scripts/py SKILL/scripts/voice.py --list`; default `am_michael`); Hindi: `hm_omega` etc. with a Devanagari `"say"` per line (see Neon Versus STYLE.md), voiceover mode:
 **AI voice** (default) · **their own recording** (they record after seeing the script; `words.py --audio`) ·
 **captions-only** (no voice yet; `estimate.py`), music (built-in bed · none · their own royalty-free file), end line / handle.
 "Just go" = the defaults.

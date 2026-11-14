@@ -1,0 +1,31 @@
+{
+  "title": "GTA 5 vs GTA 6: 13 Saal Mein Kya Badla?",
+  "voice": "hm_omega",
+  "lang": "hi",
+  "speed": 1.08,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.26,
+  "music": "neon",
+  "sources": [
+    "Rockstar Games Newswire, 'Grand Theft Auto VI is Now Set to Launch November 19, 2026' (PlayStation 5 and Xbox Series X|S) https://www.rockstargames.com/newswire/article/ak3ak31a49a221/grand-theft-auto-vi-is-now-set-to-launch-november-19-2026",
+    "Rockstar trailers 1 (Dec 2023) and 2 (May 2025): Vice City in the state of Leonida; protagonists Lucia Caminos and Jason Duval",
+    "Beebom / iTechGuides / GFuel GTA 6 vs GTA 5 comparisons, Nov 2026 (map reportedly about twice GTA V's per Rockstar North's Rob Nelson; Rockstar has not published a figure) https://beebom.com/gta-6-vs-gta-5/",
+    "Take-Two earnings call, Aug 2026: GTA V has sold over 230 million units (PC Gamer / Everything Edinburgh coverage)",
+    "GTA V released September 17, 2013 on PS3 and Xbox 360; Los Santos and Blaine County; protagonists Michael, Franklin and Trevor; PC version 2015 (Rockstar Games)"
+  ],
+  "lines": [
+    { "text": "Terah saal. GTA 5 se GTA 6 tak, sab kuch badal gaya hai.", "say": "तेरह साल। जीटीए फाइव से जीटीए सिक्स तक, सब कुछ बदल गया है।", "caps": "*13 SAAL. | GTA 5 se | *GTA 6 tak, | sab kuch | *badal gaya." },
+    { "text": "Pehla farq: shehar. GTA 5 mein tha Los Santos,", "say": "पहला फ़र्क़: शहर। जीटीए फाइव में था लॉस सैंटोस,", "caps": "Pehla farq: | *SHEHAR. | GTA 5 mein | *Los Santos," },
+    { "text": "aur GTA 6 mein wapas aa raha hai Vice City, Leonida state mein.", "say": "और जीटीए सिक्स में वापस आ रहा है वाइस सिटी, लियोनिडा स्टेट में।", "caps": "aur GTA 6 mein | wapas aa raha | *Vice City, | *Leonida state mein." },
+    { "text": "Doosra: map. Reports ke mutabik naya map lagbhag do guna bada hai.", "say": "दूसरा: मैप। रिपोर्ट्स के मुताबिक़ नया मैप लगभग दो गुना बड़ा है।", "caps": "Doosra: | *MAP. | Reports ke | *mutabik | naya map | lagbhag | *2X bada." },
+    { "text": "Teesra: hero. GTA 5 mein teen the, Michael, Franklin aur Trevor.", "say": "तीसरा: हीरो। जीटीए फाइव में तीन थे, माइकल, फ्रैंकलिन और ट्रेवर।", "caps": "Teesra: | *HERO. | GTA 5 mein | *teen the, | *Michael, | *Franklin | aur *Trevor." },
+    { "text": "GTA 6 mein do hain, Lucia aur Jason, ek jodi.", "say": "जीटीए सिक्स में दो हैं, लूसिया और जेसन, एक जोड़ी।", "caps": "GTA 6 mein | *do hain, | *Lucia | aur *Jason, | ek *jodi." },
+    { "text": "Chautha: console. GTA 5 PS3 par aaya tha, aur aaj PC par bhi hai.", "say": "चौथा: कंसोल। जीटीए फाइव पीएस थ्री पर आया था, और आज पीसी पर भी है।", "caps": "Chautha: | *CONSOLE. | GTA 5 | *PS3 par aaya, | aaj *PC | par bhi." },
+    { "text": "GTA 6 sirf PS5 aur Xbox Series par aayega, PC ki koi date nahi.", "say": "जीटीए सिक्स सिर्फ़ पीएस फाइव और एक्सबॉक्स सीरीज़ पर आएगा, पीसी की कोई डेट नहीं।", "caps": "GTA 6 *sirf | *PS5 | aur *Xbox, | PC ki | koi *date nahi." },
+    { "text": "Aur GTA 5 ki teis crore se zyada copies bik chuki hain.", "say": "और जीटीए फाइव की तेईस करोड़ से ज़्यादा कॉपीज़ बिक चुकी हैं।", "caps": "Aur GTA 5 ki | *23 CRORE+ | copies | *bik chuki." },
+    { "text": "GTA 6 aa raha hai unnees November ko.", "say": "जीटीए सिक्स आ रहा है उन्नीस नवंबर को।", "caps": "GTA 6 | aa raha | *19 NOVEMBER ko." },
+    { "text": "Ab Part 2 aap chuno: A, Leonida ka poora map, ya B, Lucia aur Jason ki kahani.", "say": "अब पार्ट टू आप चुनो: ए, लियोनिडा का पूरा मैप, या बी, लूसिया और जेसन की कहानी।", "caps": "Ab *PART 2 | aap *chuno: | *A, poora map, | ya *B, | *kahani." },
+    { "text": "Comment mein A ya B likho.", "say": "कमेंट में ए या बी लिखो।", "caps": "*Comment mein | *A ya B | *likho." }
+  ]
+}
