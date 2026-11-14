@@ -78,3 +78,14 @@ Sources: Blakemore, Wolpert & Frith (Nature Neuroscience, 1998), Scientific Amer
 
 #shorts #science #brain #psychology #didyouknow #funfacts #humanbody #whyisthat
 ```
+
+## 08 · `08-emperor-norton.mp4` · tall-tale (3D) · not uploaded
+**Title:** The Man Who Made Himself Emperor of America
+**Description:**
+```
+In 1859 a bankrupt San Francisco businessman, Joshua Norton, declared himself Emperor of the United States, and the city played along: shops accepted the money he printed and about 10,000 people came to his funeral. He also ordered a bridge across the bay, decades before the Bay Bridge was built.
+
+Sources: Wikipedia (Emperor Norton), American Heritage, History.com.
+
+#shorts #history #emperornorton #sanfrancisco #weirdhistory #truestory #didyouknow #funfacts
+```
