@@ -54,7 +54,7 @@ Sources: PlayStation Store India / Xbox Store India listings (via Business Today
 **Tags:** gta 6 price in india, gta 6 release time india, gta 6 kitne ka hai, gta 6 kab aayega, gta 6 preload, gta 6 file size, gta 6 ps5, gta 6 xbox, gta 6 hindi, gta vi, gta 6 india, rockstar games
 **Vote:** A = PS5 ya Xbox, kahan khelein? · B = Launch se pehle 5 zaroori tips
 
-## 04 · `04-gta6-leonida-map.mp4` · neon-versus · Phase 1 · STATUS PENDING
+## 04 · `04-gta6-leonida-map.mp4` · neon-versus · Phase 1 · SCHEDULED 15 Nov 2026 19:30 IST (https://www.youtube.com/watch?v=1xDCoJSV7PA) · Instagram 15 Nov 19:30 IST
 **Title:**
 ```
 GTA 6 Ka Naksha: Leonida Ki 6 Jagah 🗺️🔥 #shorts
