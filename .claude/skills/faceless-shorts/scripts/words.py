@@ -54,6 +54,9 @@ def inline_fallback(P, S):
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument('project'); ap.add_argument('--audio'); a = ap.parse_args()
     P = Path(a.project); S = json.loads((P / 'script.json').read_text())
+    if S.get('lang', 'en').startswith('hi') and not a.audio and (P / 'data/lines.json').exists():
+        print('Hindi script: small.en cannot hear Hindi; spreading words inside the exact line times')   # shortcut: switch to a multilingual model if Hindi timing ever needs to be exact
+        return inline_fallback(P, S)
     try:
         from faster_whisper import WhisperModel
         model = WhisperModel('small.en', device='cpu', compute_type='int8')

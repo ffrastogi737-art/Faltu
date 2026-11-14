@@ -53,3 +53,21 @@ Sources: PlayStation Store India / Xbox Store India listings (via Business Today
 ```
 **Tags:** gta 6 price in india, gta 6 release time india, gta 6 kitne ka hai, gta 6 kab aayega, gta 6 preload, gta 6 file size, gta 6 ps5, gta 6 xbox, gta 6 hindi, gta vi, gta 6 india, rockstar games
 **Vote:** A = PS5 ya Xbox, kahan khelein? · B = Launch se pehle 5 zaroori tips
+
+## 04 · `04-gta6-leonida-map.mp4` · neon-versus · Phase 1 · STATUS PENDING
+**Title:**
+```
+GTA 6 Ka Naksha: Leonida Ki 6 Jagah 🗺️🔥 #shorts
+```
+**Description:**
+```
+GTA 6 ka state Leonida 6 jagah mein bata hai: Vice City, Leonida Keys, Grassrivers, Port Gellhorn, Ambrosia aur Mount Kalaga National Park. Yeh naam Rockstar ki official GTA VI site par diye gaye hain, aur game 19 November 2026 ko PS5 aur Xbox Series par aa raha hai.
+
+Part 2 mein kya dekhna hai? Comment karo: A = Lucia aur Jason kaun hain, B = GTA 6 ka map GTA 5 se kitna bada.
+
+Sources: Rockstar Games GTA VI site (via GosuGamers, GTA Boom), Sinclair/WJLA.
+
+#shorts #gta6 #gtavi #leonida #vicecity #gta6map #rockstargames #gta6hindi
+```
+**Tags:** gta 6 map, gta 6 leonida, gta 6 vice city, gta 6 map hindi, leonida keys, grassrivers, port gellhorn, ambrosia gta 6, mount kalaga, gta vi map, gta 6 jagah, rockstar games
+**Vote:** A = Lucia aur Jason kaun hain · B = GTA 6 ka map GTA 5 se kitna bada
