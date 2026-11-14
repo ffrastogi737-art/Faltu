@@ -2,7 +2,7 @@
 
 Hindi narration, Hinglish captions, Neon Versus style. Every video ends with an A / B vote for Part 2.
 
-## 01 · `01-gta5-vs-gta6.mp4` · neon-versus · not uploaded · POST BEFORE 19 NOV 2026 (it says "aa raha hai 19 November ko")
+## 01 · `01-gta5-vs-gta6.mp4` · neon-versus · SCHEDULED 15 Nov 2026 11:30 IST on solo hype (https://www.youtube.com/watch?v=M0GquFY5nUM, set by owner) · POST BEFORE 19 NOV 2026 (it says "aa raha hai 19 November ko")
 **Title:**
 ```
 GTA 5 vs GTA 6: 13 Saal Mein Kya Badla? 🔥 #shorts
@@ -19,7 +19,7 @@ Sources: Rockstar Games Newswire, Rockstar trailers, Take-Two earnings (Aug 2026
 ```
 **Vote:** A = Leonida ka poora map · B = Lucia aur Jason ki kahani (Part 2 follows the winner)
 
-## 02 · `02-gta6-records.mp4` · neon-versus · not uploaded · POST BEFORE 19 NOV 2026 (it says "abhi release bhi nahi hua")
+## 02 · `02-gta6-records.mp4` · neon-versus · SCHEDULED 15 Nov 2026 9:00 IST on Kratos Playz (https://www.youtube.com/watch?v=qD-RaPT1-Pc) · POST BEFORE 19 NOV 2026 (it says "abhi release bhi nahi hua")
 **Title:**
 ```
 GTA 6 Ne Release Se Pehle Hi Tod Diye Record 🔥 #shorts
