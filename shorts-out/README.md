@@ -67,3 +67,14 @@ Sources: NBC News, NASA (bed rest studies), SYFY Wire.
 
 #shorts #nasa #space #weirdjobs #science #astronaut #didyouknow #funfacts
 ```
+
+## 07 · `07-cant-tickle-yourself.mp4` · inside-out · not uploaded
+**Title:** Why You Can't Tickle Yourself
+**Description:**
+```
+Your cerebellum predicts the feeling of your own movements and tells the rest of your brain to turn it down, so your own touch never surprises you. In a 1990s robot experiment, adding a delay of a fifth of a second made people's own tickles work again.
+
+Sources: Blakemore, Wolpert & Frith (Nature Neuroscience, 1998), Scientific American, ScienceAlert.
+
+#shorts #science #brain #psychology #didyouknow #funfacts #humanbody #whyisthat
+```
