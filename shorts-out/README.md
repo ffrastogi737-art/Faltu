@@ -89,3 +89,14 @@ Sources: Wikipedia (Emperor Norton), American Heritage, History.com.
 
 #shorts #history #emperornorton #sanfrancisco #weirdhistory #truestory #didyouknow #funfacts
 ```
+
+## 09 · `09-plane-window-hole.mp4` · stick-story · not uploaded
+**Title:** Why Plane Windows Have a Tiny Hole
+**Description:**
+```
+An airliner window is three panes, and the tiny hole sits in the middle one. It lets cabin air through so the outer pane carries the pressure while the middle pane stays unstressed as a backup, and it lets moisture escape so the window does not fog.
+
+Sources: MiGFlug (The Hole in Your Aircraft Window), Slate.
+
+#shorts #aviation #airplane #engineering #didyouknow #funfacts #travel #whyisthat
+```
