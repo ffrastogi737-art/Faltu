@@ -1,0 +1,3 @@
+# Posting slots (IST), best first. The factory may re-order or swap one from view data; note why below.
+solo-hype   09:00 11:30 07:00    # 2026-11-14: 9:00 -> 1,154 views, 11:30 -> 1,063, 7:00 -> 155; evening/night 2-7 views
+kratos      16:30 09:00 19:30    # 2026-11-14: GTA 01 at 16:20 -> 594 views in ~3.5 h; 9:00 and 19:30 untested

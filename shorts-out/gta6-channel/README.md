@@ -2,7 +2,7 @@
 
 Hindi narration, Hinglish captions, Neon Versus style. Every video ends with an A / B vote for Part 2.
 
-## 01 · `01-gta5-vs-gta6.mp4` · neon-versus · SCHEDULED 15 Nov 2026 11:30 IST on solo hype (https://www.youtube.com/watch?v=M0GquFY5nUM, set by owner) · POST BEFORE 19 NOV 2026 (it says "aa raha hai 19 November ko")
+## 01 · `01-gta5-vs-gta6.mp4` · neon-versus · PUBLIC on Kratos Playz 14 Nov 16:20 IST (https://www.youtube.com/watch?v=7xMov2RIgfs, by owner) + copy SCHEDULED on solo hype 15 Nov 11:30 IST (https://www.youtube.com/watch?v=M0GquFY5nUM, by owner) · POST BEFORE 19 NOV 2026 (it says "aa raha hai 19 November ko")
 **Title:**
 ```
 GTA 5 vs GTA 6: 13 Saal Mein Kya Badla? 🔥 #shorts
