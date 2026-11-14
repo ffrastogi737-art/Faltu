@@ -18,3 +18,20 @@ Sources: Rockstar Games Newswire, Rockstar trailers, Take-Two earnings (Aug 2026
 #shorts #gta6 #gta5 #gtavi #gta6hindi #rockstargames #vicecity #gaming
 ```
 **Vote:** A = Leonida ka poora map · B = Lucia aur Jason ki kahani (Part 2 follows the winner)
+
+## 02 · `02-gta6-records.mp4` · neon-versus · not uploaded · POST BEFORE 19 NOV 2026 (it says "abhi release bhi nahi hua")
+**Title:**
+```
+GTA 6 Ne Release Se Pehle Hi Tod Diye Record 🔥 #shorts
+```
+**Description:**
+```
+GTA 6 ke pehle trailer ne 24 ghante mein YouTube par 9 crore (90.4 million) views ke saath Guinness World Record banaya, aur doosre trailer ko Rockstar ke mutabik sab platforms milakar 47 crore (475 million) views mile. Release date pehle 2025 thi, phir 26 May 2026, aur ab 19 November 2026.
+
+Part 2 mein kya dekhna hai? Comment karo: A = GTA ki poori history, B = GTA 6 ke naye kirdaar.
+
+Sources: Guinness World Records, Rockstar via The Hollywood Reporter / TechRadar, Rockstar Games Newswire.
+
+#shorts #gta6 #gtavi #gta6trailer #rockstargames #gaming #gta6hindi #record
+```
+**Vote:** A = GTA ki poori history · B = GTA 6 ke naye kirdaar
