@@ -35,3 +35,21 @@ Sources: Guinness World Records, Rockstar via The Hollywood Reporter / TechRadar
 #shorts #gta6 #gtavi #gta6trailer #rockstargames #gaming #gta6hindi #record
 ```
 **Vote:** A = GTA ki poori history · B = GTA 6 ke naye kirdaar
+
+## 03 · `03-gta6-india-time-price.mp4` · neon-versus · Phase 1 · STATUS PENDING · POST BEFORE 19 NOV 2026 00:00 IST (says "4 din baaki")
+**Title:**
+```
+GTA 6 India Mein Kitne Baje Aur Kitne Ka? 🔥 #shorts
+```
+**Description:**
+```
+GTA 6 19 November 2026 ko PS5 aur Xbox Series par aa raha hai, aur PlayStation Store India ke hisaab se raat 12 baje (IST) unlock hoga. India mein Standard Edition ₹5,999 aur Ultimate Edition ₹7,499 ka hai, PC version abhi announce nahi hua, aur pre-load 10 November se live hai (212 GB tak jagah chahiye).
+
+Part 2 mein kya dekhna hai? Comment karo: A = PS5 ya Xbox, kahan khelein? B = Launch se pehle 5 zaroori tips.
+
+Sources: PlayStation Store India / Xbox Store India listings (via Business Today, Esquire India), Rockstar Games Newswire (via GamesRadar, TechRadar). Store prices can change, check your own store page.
+
+#shorts #gta6 #gta6india #gta6price #gtavi #ps5 #rockstargames #gta6hindi
+```
+**Tags:** gta 6 price in india, gta 6 release time india, gta 6 kitne ka hai, gta 6 kab aayega, gta 6 preload, gta 6 file size, gta 6 ps5, gta 6 xbox, gta 6 hindi, gta vi, gta 6 india, rockstar games
+**Vote:** A = PS5 ya Xbox, kahan khelein? · B = Launch se pehle 5 zaroori tips
