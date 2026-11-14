@@ -101,7 +101,7 @@ Sources: MiGFlug (The Hole in Your Aircraft Window), Slate.
 #shorts #aviation #airplane #engineering #didyouknow #funfacts #travel #whyisthat
 ```
 
-## 10 · `10-pinboy.mp4` · paper-atlas · not uploaded
+## 10 · `10-pinboy.mp4` · paper-atlas · UPLOADED PRIVATE (https://www.youtube.com/watch?v=hhY56rh0zhU)
 **Title:** The Dangerous Job Behind Every Bowling Lane
 **Description:**
 ```
