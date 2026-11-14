@@ -17,7 +17,7 @@ Sources: Rockstar Games Newswire, Rockstar trailers, Take-Two earnings (Aug 2026
 
 #shorts #gta6 #gta5 #gtavi #gta6hindi #rockstargames #vicecity #gaming
 ```
-**Vote:** A = Leonida ka poora map · B = Lucia aur Jason ki kahani (Part 2 follows the winner)
+**Vote:** A = Leonida ka poora map · B = Lucia aur Jason ki kahani (Part 2 follows the winner) · votes 14 Nov 21:55 IST: A 0 / B 0
 
 ## 02 · `02-gta6-records.mp4` · neon-versus · SCHEDULED 15 Nov 2026 9:00 IST on Kratos Playz (https://www.youtube.com/watch?v=qD-RaPT1-Pc) · POST BEFORE 19 NOV 2026 (it says "abhi release bhi nahi hua")
 **Title:**
@@ -36,7 +36,7 @@ Sources: Guinness World Records, Rockstar via The Hollywood Reporter / TechRadar
 ```
 **Vote:** A = GTA ki poori history · B = GTA 6 ke naye kirdaar
 
-## 03 · `03-gta6-india-time-price.mp4` · neon-versus · Phase 1 · STATUS PENDING · POST BEFORE 19 NOV 2026 00:00 IST (says "4 din baaki")
+## 03 · `03-gta6-india-time-price.mp4` · neon-versus · Phase 1 · SCHEDULED 15 Nov 2026 16:30 IST (https://www.youtube.com/watch?v=O_2A-ZKJON4) · POST BEFORE 19 NOV 2026 00:00 IST (says "4 din baaki")
 **Title:**
 ```
 GTA 6 India Mein Kitne Baje Aur Kitne Ka? 🔥 #shorts
