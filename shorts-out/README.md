@@ -100,3 +100,14 @@ Sources: MiGFlug (The Hole in Your Aircraft Window), Slate.
 
 #shorts #aviation #airplane #engineering #didyouknow #funfacts #travel #whyisthat
 ```
+
+## 10 · `10-pinboy.mp4` · paper-atlas · not uploaded
+**Title:** The Dangerous Job Behind Every Bowling Lane
+**Description:**
+```
+Before machines, bowling pins were reset by hand by pinboys, usually teenagers, in a job that was low paid and dangerous. From the early 1950s the automatic pinspotter replaced them in almost every bowling centre within about a decade.
+
+Sources: Wikipedia (Pinsetter), Smithsonian Lemelson Center, International Bowling Museum.
+
+#shorts #history #weirdjobs #bowling #didyouknow #oldjobs #truestory #funfacts
+```
