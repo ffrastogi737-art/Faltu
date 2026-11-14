@@ -71,3 +71,22 @@ Sources: Rockstar Games GTA VI site (via GosuGamers, GTA Boom), Sinclair/WJLA.
 ```
 **Tags:** gta 6 map, gta 6 leonida, gta 6 vice city, gta 6 map hindi, leonida keys, grassrivers, port gellhorn, ambrosia gta 6, mount kalaga, gta vi map, gta 6 jagah, rockstar games
 **Vote:** A = Lucia aur Jason kaun hain · B = GTA 6 ka map GTA 5 se kitna bada
+
+## 05 · `05-gta6-jason-lucia.mp4` · neon-versus · Phase 1 · ENGLISH (first English GTA video) · STATUS PENDING
+**Title:**
+```
+GTA 6 Has Two Leads: Meet Jason and Lucia 🔥 #shorts
+```
+**Description:**
+```
+GTA 6 has two playable leads: Lucia Caminos, just out of Leonida Penitentiary, and Jason Duval, an Army vet doing jobs for local criminals in the Keys. Rockstar describes Lucia as possibly the best or worst thing to ever happen to Jason, and the game launches November 19, 2026 on PS5 and Xbox Series X|S.
+
+Part 2 is your call. Comment: A = the other Leonida characters, B = how much bigger the map is than GTA 5.
+
+Sources: Rockstar Games via Game Informer, GosuGamers, GTA Boom, Gamereactor.
+
+#shorts #gta6 #gtavi #jasonduval #luciacaminos #rockstargames #vicecity #gaming
+```
+**Tags:** gta 6 characters, gta 6 jason and lucia, jason duval, lucia caminos, gta 6 story, gta 6 protagonists, gta vi characters, gta 6 explained, gta 6 lucia prison, gta 6 news, rockstar games, gta 6 release date
+**Vote:** A = the other Leonida characters · B = map size vs GTA 5
+**Language:** English · Experiment: language (English vs Hindi 01-04)
