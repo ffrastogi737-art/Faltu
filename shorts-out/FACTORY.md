@@ -96,7 +96,9 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
    A change that WON twice rewrites CURRENT BEST FORMULA. Keep the IDEA BANK fresh.
 2. About 2 of 3 videos follow the best formula; the 3rd changes ONE thing (topic kind, hook, length, slot, language,
    style). Log `<title> | <goes public IST> | <what is tested> | | `.
-3. New 2D style when none was tested in the last 2 days (not in saver mode): original look, built like chalk-talk
+3. New style when none was tested in the last 2 days (not in saver mode). FIRST CHOICE: a vertical style from the
+   owner's Nafay 3D Style Library, see shorts-out/STYLE-LIBRARY.md (picks per channel, how to rebuild and render;
+   never commit their source to this repo). Otherwise a new 2D style of our own: original look, built like chalk-talk
    (copy the closest 2D style folder, own kit, this video as example, STYLE.md, style-sheet.png, SKILL.md row).
 4. A style or idea that loses twice: stop using it, note it.
 
