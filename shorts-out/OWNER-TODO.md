@@ -1,8 +1,4 @@
-## ⚠️ ZAROORI (15 Nov 2026): Composio ko naye routines par lagao
-1. claude.ai kholo, Routines / Scheduled tasks mein jao.
-2. "Shorts factory" aur "Shorts publisher" dono kholo, Connectors mein **Composio** add karo, Save.
-Bina iske naye runs video bana ke push karenge, par YouTube upload aur Instagram post nahi kar paayenge.
-(Purana "Faceless shorts factory" band kar diya hai: wo ek hi bade session mein chalta tha aur weekly usage kha raha tha.)
+## DONE 15 Nov 2026: Composio is on the routines "Shorts factory" and "Shorts publisher".
 
 # Aapke karne ke kaam (Krishna)  ·  updated 15 Nov 2026, 1:30 AM IST
 
