@@ -90,3 +90,22 @@ Sources: Rockstar Games via Game Informer, GosuGamers, GTA Boom, Gamereactor.
 **Tags:** gta 6 characters, gta 6 jason and lucia, jason duval, lucia caminos, gta 6 story, gta 6 protagonists, gta vi characters, gta 6 explained, gta 6 lucia prison, gta 6 news, rockstar games, gta 6 release date
 **Vote:** A = the other Leonida characters · B = map size vs GTA 5
 **Language:** English · Experiment: language (English vs Hindi 01-04)
+
+## 06 · `06-gta6-three-days-left.mp4` · neon-versus · Phase 1 · ENGLISH · SCHEDULED 16 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=h2xXkk-kWQM) · Instagram 16 Nov 09:00 IST · POST BEFORE 19 NOV (says "3 days")
+**Title:**
+```
+GTA 6: 3 Days Left, Do These 4 Things Tonight 🔥 #shorts
+```
+**Description:**
+```
+Three days until GTA 6 (November 19, 2026): four things to do tonight. Free up storage (Rockstar says the pre-load needs up to 212 GB), pre-load if you bought digitally, check your unlock time (store listings reportedly show midnight local time), and remember it is PS5 and Xbox Series X|S only with no PC version announced.
+
+Part 2 is your call. Comment: A = GTA 5 habits to drop, B = a launch night plan.
+
+Sources: Prima Games, IBTimes UK, ARY News, GTA Boom, Stevivor, GTA Intel. Unlock times are reported from store listings, not announced by Rockstar.
+
+#shorts #gta6 #gtavi #gta6launch #ps5 #xbox #rockstargames #gaming
+```
+**Tags:** gta 6 launch, gta 6 3 days left, gta 6 preload, gta 6 unlock time, gta 6 storage, gta 6 ps5, gta 6 xbox, gta 6 pc, gta 6 november 19, gta 6 before you play, gta vi, rockstar games
+**Vote:** A = GTA 5 habits to drop · B = launch night plan
+**Language:** English · player-centric "do this tonight" countdown (playbook) · Experiment: promise+deadline title
