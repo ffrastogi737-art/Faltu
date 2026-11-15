@@ -143,7 +143,9 @@ Step P of a later run posts it. No send_later. Backfill: max 1 older video a day
   youtube_volt-equal) and Instagram comments; write counts into the gta6 README entry. If the channel has not commented
   on a video yet, post ONE comment (YOUTUBE_POST_COMMENT channelId UCO8lnJFO1TLtHPkn9cCNPng): "You decide Part 2 👇\nA =
   <A>\nB = <B>\nReply with just A or B, the winner gets the next video! 🔥".
-- Replies: up to 3 genuine new viewer comments per channel (YOUTUBE_CREATE_COMMENT_REPLY): short, friendly, true, no
+- Replies: up to 3 genuine new viewer comments per channel (YouTube: YOUTUBE_CREATE_COMMENT_REPLY; Instagram: read with
+  INSTAGRAM_GET_IG_MEDIA_COMMENTS {ig_media_id}, reply with INSTAGRAM_REPLY_TO_COMMENT {ig_comment_id, message}; skip
+  comments we already replied to): short, friendly, true, no
   links, no begging; ignore spam. Good questions -> topic ideas in growth-log.txt.
 
 ## REPORT (Hindi, short)
