@@ -25,4 +25,6 @@ already-scheduled YouTube videos still go public on their own). The quota resets
 into the next free slots. Budget: about 3 Kratos Playz + 2 solo hype uploads a day; skip optional API writes
 (category fixes, extra comments) when the day's uploads are not done yet.
 
-The factory routine (scheduled task "Faceless shorts factory") holds the full step-by-step; this file is the why.
+The step-by-step is shorts-out/FACTORY.md, run by the scheduled tasks "Shorts factory" (08:55 + 16:55 IST) and "Shorts publisher"
+(11:25 + 19:25 IST), each in a FRESH session to save the owner's weekly Claude usage (15 Nov 2026: the old every-4-h runs
+inside one huge session nearly used up the week). This file is the why.

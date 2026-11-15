@@ -1,5 +1,5 @@
 {
-  "_how": "Instagram Reels queue for @solohype_1 (Composio account instagram_osiery-fun). Each entry is posted at its time by a send_later message. status: PENDING -> DONE <permalink> (or FAILED <reason>).",
+  "_how": "Instagram Reels queue for @solohype_1 (Composio account instagram_osiery-fun). The factory (08:55, 16:55 IST) and publisher (11:25, 19:25 IST) runs post every PENDING entry whose time has come. status: PENDING -> DONE <permalink> (or FAILED <reason>).",
   "posts": [
     {
       "id": "ig-bed-rest",
@@ -63,6 +63,13 @@
       "file": "shorts-out/11-goosebumps.mp4",
       "status": "PENDING",
       "caption": "Why does one song give you goosebumps? 🎵 Every hair on your skin has its own tiny muscle, and a cold breeze or a big feeling makes thousands of them squeeze at once. In furry animals that puffs up the fur; in you it's mostly a leftover from your furry ancestors.\n\nFollow for a weird true fact every day 🧠\n\n#goosebumps #science #humanbody #didyouknow #biology #facts #reels #explore"
+    },
+    {
+      "id": "ig-stomach-growl",
+      "at": "2026-11-16T06:00:00Z",
+      "file": "shorts-out/12-stomach-growl.mp4",
+      "status": "PENDING",
+      "caption": "Your stomach growled in a silent room and everyone heard it 😳 That noise isn't just hunger: when your stomach has been empty for a couple of hours, a wave of muscle sweeps through like a broom, and with nothing inside to muffle it, the gas echoes like water in an empty pipe.\n\nFollow for a weird true fact every day 🧠\n\n#stomach #science #humanbody #didyouknow #biology #facts #reels #explore"
     }
   ]
 }

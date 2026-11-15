@@ -124,3 +124,16 @@ Sources: Wikipedia (Goose bumps), Why Evolution Is True, Durham University resea
 ```
 **Tags:** why do we get goosebumps, goosebumps explained, goosebumps science, arrector pili, why do i get chills from music, human body facts, vestigial traits, biology facts, science shorts, body facts
 **Experiment:** NEW STYLE chalk-talk (topic = best formula: second-person body science)
+
+## 12 · `12-stomach-growl.mp4` · inside-out · WAITING UPLOAD (YouTube API quota) · target slot 16 Nov 11:30 IST
+**Title:** Why Your Stomach Growls
+**Description:**
+```
+A stomach growl is gas and liquid being pushed through your gut by waves of muscle. When the stomach has been empty for a couple of hours, a cleaning wave (the migrating motor complex) sweeps leftovers along, and with no food to muffle it the sound gets loud.
+
+Sources: Scientific American, Wikipedia (Borborygmus, Migrating motor complex).
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #stomach
+```
+**Tags:** why does my stomach growl, stomach growling explained, borborygmi, migrating motor complex, hungry stomach noise, human body facts, gut facts, biology facts, science shorts, body facts
+**Experiment:** best formula (second-person body science, inside-out)

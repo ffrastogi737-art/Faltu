@@ -1,2 +1,2 @@
-# solo hype videos waiting to be made public at their slot (a send_later message does it). One line each:
+# solo hype videos waiting to be made public at their slot (the next factory or publisher run does it). One line each:
 # <slot UTC>  <videoId>  <title>  PENDING|DONE

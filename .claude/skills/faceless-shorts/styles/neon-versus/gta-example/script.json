@@ -1,0 +1,27 @@
+{
+  "title": "GTA 6 Has Two Leads: Meet Jason and Lucia",
+  "voice": "am_michael",
+  "lang": "en-us",
+  "speed": 1.05,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.24,
+  "music": "neon",
+  "sources": [
+    "Game Informer (6 May 2025), Rockstar details the GTA VI characters https://www.gameinformer.com/2025/05/06/rockstar-details-9-of-grand-theft-auto-vi-presumably-many-many-characters",
+    "GosuGamers: Jason (Army vet working for local drug runners in the Keys), Lucia (out of Leonida Penitentiary thanks to a stroke of luck) https://www.gosugamers.net/entertainment/news/74896-all-major-gta-vi-characters-revealed-so-far-including-jason-and-lucia",
+    "GTA Boom: everything confirmed about Jason and Lucia (best or worst thing to ever happen to him) https://www.gtaboom.com/everything-confirmed-about-jason-and-lucia-in-gta-6-cc2c",
+    "Gamereactor: all GTA VI characters revealed to date https://www.gamereactor.eu/grand-theft-auto-vi-all-the-characters-revealed-to-date-1538703/"
+  ],
+  "lines": [
+    { "text": "GTA 6 has two leads, not one. Meet Jason and Lucia.", "caps": "GTA 6 has | *TWO leads, | not one. | Meet *Jason | and *Lucia." },
+    { "text": "Lucia Caminos. She just got out of Leonida Penitentiary, thanks to a stroke of luck.", "caps": "*Lucia Caminos. | Just out of | *Leonida Penitentiary, | a *stroke of luck." },
+    { "text": "Now she has a plan to change the odds in her favor, no matter what it takes.", "caps": "Now she has | a *plan | to change *the odds, | *no matter what." },
+    { "text": "Jason Duval. An Army vet, now doing jobs for local criminals in the Keys.", "caps": "*Jason Duval. | An *Army vet, | doing jobs | in *the Keys." },
+    { "text": "When the easy life slips away, he falls back on what he knows.", "caps": "When the *easy life | *slips away, | he falls back | on *what he knows." },
+    { "text": "Then he meets Lucia, and Rockstar says she could be the best, or the worst, thing that ever happened to him.", "caps": "Then he meets *Lucia. | She could be | the *best, | or the *worst, | thing for him." },
+    { "text": "Two people, one plan, all of Leonida. Out November nineteenth.", "caps": "*Two people, | *one plan, | all of *Leonida. | Out *November 19." },
+    { "text": "Part two is your call: A, the other Leonida characters, or B, how much bigger the map is than GTA 5?", "caps": "*Part 2 | is *your call: | *A, the other characters, | or *B, | the *map size?" },
+    { "text": "Comment A or B.", "caps": "*Comment | *A or B." }
+  ]
+}
