@@ -19,3 +19,9 @@ Why You Can't Tickle Yourself | 14 Nov 11:30 | second-person body science, insid
 The Town That Couldn't Stop Dancing | 14 Nov 7:00 | history story, 7:00 slot | 155 | weak (history or 7:00?)
 Why Ice Cream Hurts Your Forehead | 13 Nov 20:10 | body science, evening slot | 2 | evening slot loses
 Why Your Stomach Growls | 16 Nov 11:30 | best formula (second-person body science, inside-out) | | 
+
+IDEA BANK (owner, after showing viral "what happens if" 3D shorts; decided: test after the usage reset)
+- Physics / "can X beat Y" questions in deep-dive 3D (our own topics, never copy another channel's topic, characters or
+  look): e.g. what really happens to a dropped vs thrown object, why a falling cat lands on its feet, can you cut ice with
+  a string. Short (30-45 s), direct question title, satisfying visual payoff. Run 1 test, judge, keep if it wins.
+- Realistic look (Blender characters on a GPU, or paid AI video) only if the deep-dive test wins and the owner agrees.
