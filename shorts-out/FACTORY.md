@@ -26,7 +26,9 @@ Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). 
 Commit lines end with the session attribution the system gives you.
 
 ## P. PUBLISH DUE (every run, factory and publisher; first)
-FIRST check you can push: `git push --dry-run origin ccr-8c1babe8-9jk0db`. If it fails, change NOTHING outside the repo
+FIRST check you can push: `git push --dry-run origin ccr-8c1babe8-9jk0db`. If it fails (routine sessions start without the
+repo attached), call the claude-code-remote tool `add_repo` {owner: "ffrastogi737-art", repo: "Faltu", access: "push"},
+re-clone if it says so, and check again. If it still fails, change NOTHING outside the repo
 (no upload, no post, no public switch: an unsaved status makes the next run post it twice), report ⚠️ DIKKAT and stop.
 No Composio tools (ToolSearch "+composio" finds nothing): skip step P and all uploads, still build and push the video,
 mark it `WAITING UPLOAD (no Composio)`, and start the report with "⚠️ DIKKAT: Composio connector is routine par nahi laga".
