@@ -1,2 +1,4 @@
 # solo hype videos waiting to be made public at their slot (the next factory or publisher run does it). One line each:
 # <slot UTC>  <videoId>  <title>  PENDING|DONE
+2026-11-16T03:30:00Z  yz_VUXgICfM  Why You Get Goosebumps  PENDING
+2026-11-16T06:00:00Z  UjPBhNKGc6A  Why Your Stomach Growls  PENDING

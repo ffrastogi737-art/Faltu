@@ -112,7 +112,7 @@ Sources: Wikipedia (Pinsetter), Smithsonian Lemelson Center, International Bowli
 #shorts #history #weirdjobs #bowling #didyouknow #oldjobs #truestory #funfacts
 ```
 
-## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · WAITING UPLOAD (YouTube API quota hit 15 Nov 05:45 IST) · target slot 16 Nov 9:00 IST
+## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · QUEUED: goes public 16 Nov 09:00 IST (https://www.youtube.com/watch?v=yz_VUXgICfM)
 **Title:** Why You Get Goosebumps
 **Description:**
 ```
@@ -125,7 +125,7 @@ Sources: Wikipedia (Goose bumps), Why Evolution Is True, Durham University resea
 **Tags:** why do we get goosebumps, goosebumps explained, goosebumps science, arrector pili, why do i get chills from music, human body facts, vestigial traits, biology facts, science shorts, body facts
 **Experiment:** NEW STYLE chalk-talk (topic = best formula: second-person body science)
 
-## 12 · `12-stomach-growl.mp4` · inside-out · WAITING UPLOAD (YouTube API quota) · target slot 16 Nov 11:30 IST
+## 12 · `12-stomach-growl.mp4` · inside-out · QUEUED: goes public 16 Nov 11:30 IST (https://www.youtube.com/watch?v=UjPBhNKGc6A)
 **Title:** Why Your Stomach Growls
 **Description:**
 ```
