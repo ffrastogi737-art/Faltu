@@ -15,7 +15,7 @@ player and the style's helpers; replace only the story (TL, scenes, words, props
 - solo hype (facts / body / history / mysteries): myth-or-fact, comic-panels, storybook, marker-board, blueprint,
   evidence-board, isotype, timeline-rail, parchment-map, chat-story, shadow-puppets, woodcut-tale, rubber-hose-reel;
   3D (slower render without GPU): size-lineup, cosmic-scale, bio-glow, iso-cutaway, exploded-view.
-- Kratos Playz (GTA formats; brand look stays neon-versus, test these as FORMAT experiments): versus-split, tier-list,
+- Kratos Playz (GTA; any of these may replace neon-versus if they win): versus-split, tier-list,
   top-5-countdown, quiz-countdown, breaking-desk, pixel-quest, glitch-pack, neon-line; 3D: synth-grid.
 
 ## All 62 ids

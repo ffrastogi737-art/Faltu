@@ -65,7 +65,7 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Facts: every fact and number agrees across 2+ reliable sources (WebSearch; WebFetch is mostly blocked). List them in
   script.json "sources". Unverifiable: drop it or change topic. Reported claims are said as reported.
 
-### A · NORMAL (solo hype, English by default)
+### A · NORMAL (solo hype; language, style, format: your call from trends and data)
 - EXPERIMENTS 1-2 first. Topic: true, evergreen; no breaking news, politics, allegations about living people, medical
   advice, gore, or mocking any group. Not already in shorts-out/README.md.
 - Format: second person present tense, hook in 2 s, escalate, twist that explains why, short looping last line; 95-120
@@ -74,8 +74,9 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Deliver shorts-out/<NN>-<slug>.mp4 + README entry (number, file, style, Title, Description: two factual sentences,
   "Sources: ...", 6-8 hashtags starting #shorts; Tags: 8-12 phrases; Experiment; status).
 
-### B · GTA / GAMING (Kratos Playz, English by default)
-- Style ALWAYS neon-versus: `new_video.sh neon-versus <name>`, then copy
+### B · GTA / GAMING (Kratos Playz; language, style, format: your call from trends and data)
+- Current style neon-versus (any style may replace it if trends/data say so, incl. library styles). For neon-versus:
+  `new_video.sh neon-versus <name>`, then copy
   `.claude/skills/faceless-shorts/styles/neon-versus/gta-example/{src,script.json}` over it (the newest GTA video:
   priceTag, clockFace, moon, progress, leonida map, scenes, regionShot, voteCards). Never real game footage, screenshots,
   logos or character art.
@@ -86,8 +87,8 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Fresh WebSearch each time; rumours only as "reports" with the REPORTED chip. Not already in gta6-channel/README.md.
 - Part 2 rule: a clear A/B winner (3+ votes and ahead, YouTube + Instagram) -> make that next, hook "You voted, so
   here's Part 2".
-- Voice am_michael (am_onyx for dark topics) ~1.05, "lang" "en-us", 40-58 s, 95-125 words, music "neon"; numbered
-  list or versus; ALWAYS end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
+- What has worked so far (change freely when data says): voice am_michael (am_onyx dark) ~1.05, English, 40-58 s, 95-125
+  words, music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
 - Deliver shorts-out/gta6-channel/<NN>-<slug>.mp4 + README entry like entry 05 (Title, Description with the vote line,
   Sources, hashtags #shorts #gta6 ..., Tags, A/B options, phase, language, POST BEFORE if time-sensitive).
 
