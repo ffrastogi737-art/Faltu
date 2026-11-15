@@ -85,12 +85,31 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
   characters, missions, secrets, tips, records; newest news first; never leaked or pirated material); from 11 Dec ~70%
   GTA 6 / ~30% nearby gaming topics (log tests in shorts-out/gta6-channel/experiments.txt).
 - Fresh WebSearch each time; rumours only as "reports" with the REPORTED chip. Not already in gta6-channel/README.md.
+- GTA PLAYBOOK (owner's research notes, Lucro video "Tiny Channels Are Blowing Up on GTA 6"; treat as hypotheses, verify
+  with our own data):
+  - PLAYER, not news: tell the viewer what happens TO THEM in the game ("GTA 6 will punish these players", "GTA 5 habits
+    that get you killed in GTA 6", "GTA 5 problems GTA 6 finally fixes"). Start titles from GTA 5 when it fits (huge
+    audience). Every claim still needs 2+ sources: before launch only confirmed or clearly "reported" features; after
+    launch, what reviews/outlets confirm.
+  - Promise + deadline titles before launch: "<N> days left: everything to know before you play".
+  - One strong title word/pattern may repeat (e.g. "impossible": map, police AI) while the TOPIC changes.
+  - Same-day news (new screenshots, trailers, announcements): Shorts only, fast. Do not chase news nobody plays.
+  - A video that wins: make its sequel next (same theme, new angle), before others copy it. Never copy a pattern late
+    on the same topic someone else already won with: copy the pattern, bring a NEW topic.
+  - Write 3 opening hooks, keep the strongest. Read the script aloud test: cut lines nobody would say to a friend.
+  - Game-specific test: any line that could fit a video about another game gets cut or replaced with a real GTA fact.
+  - Long-form (9-20 min) is where small GTA channels broke out; consider a long-form test once usage allows (log it).
 - Part 2 rule: a clear A/B winner (3+ votes and ahead, YouTube + Instagram) -> make that next, hook "You voted, so
   here's Part 2".
 - What has worked so far (change freely when data says): voice am_michael (am_onyx dark) ~1.05, English, 40-58 s, 95-125
   words, music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
 - Deliver shorts-out/gta6-channel/<NN>-<slug>.mp4 + README entry like entry 05 (Title, Description with the vote line,
   Sources, hashtags #shorts #gta6 ..., Tags, A/B options, phase, language, POST BEFORE if time-sensitive).
+
+### AUTHENTIC CONTENT (YouTube monetization policy, "inauthentic content", July 2025)
+Mass-produced look-alike videos from one template can be demonetized. AI is allowed; sameness is not. Each video needs
+its own research, its own angle and opening, and the format / opening style / structure should vary from the previous
+few videos on that channel. Never reuse an old script with names swapped.
 
 ### EXPERIMENTS (logs: shorts-out/experiments.txt, shorts-out/gta6-channel/experiments.txt)
 1. Judge logged videos public 48 h+ without a verdict: views vs median of the channel's last 10 (WIN = 2x+, OK, weak).
@@ -139,6 +158,9 @@ Step P of a later run posts it. No send_later. Backfill: max 1 older video a day
 - Stats for both channels + Instagram (INSTAGRAM_GET_IG_USER_MEDIA fields id,caption,permalink,timestamp,like_count,
   comments_count; INSTAGRAM_GET_USER_INFO followers_count; account instagram_osiery-fun) -> one dated block at the top
   of shorts-out/growth-log.txt (keep 14 days): what wins (topic, slot, language, platform), distance to monetization.
+- Title refresh: a public video 2-3 days old with views under half the channel median gets ONE better title
+  (YOUTUBE_UPDATE_VIDEO title, only after the day's uploads are done: it costs quota); log old -> new title and the
+  result in experiments.txt. A good title cannot save a topic nobody wants: if it still loses, drop the topic kind.
 - Slots: if 2+ videos clearly show another hour beating a slot, swap ONE slot in slots.txt with a reason.
 - Votes: public GTA videos from the last 4 days: count A/B in YouTube (YOUTUBE_LIST_COMMENT_THREADS2, account
   youtube_volt-equal) and Instagram comments; write counts into the gta6 README entry. If the channel has not commented
