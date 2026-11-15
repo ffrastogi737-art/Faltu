@@ -1,0 +1,79 @@
+{
+ "duration": 42.854,
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lines": [
+  {
+   "i": 0,
+   "text": "You hear one perfect song, and your arms explode in tiny bumps.",
+   "start": 0.4,
+   "end": 4.667
+  },
+  {
+   "i": 1,
+   "text": "Here's why. Every hair on your skin has its own tiny muscle.",
+   "start": 4.927,
+   "end": 8.647
+  },
+  {
+   "i": 2,
+   "text": "When you get cold, or a feeling hits you hard,",
+   "start": 8.907,
+   "end": 11.507
+  },
+  {
+   "i": 3,
+   "text": "your nervous system flips into alert mode,",
+   "start": 11.977,
+   "end": 14.387
+  },
+  {
+   "i": 4,
+   "text": "and thousands of those muscles squeeze at once, pulling every hair straight up.",
+   "start": 14.477,
+   "end": 19.476
+  },
+  {
+   "i": 5,
+   "text": "The skin around each one bunches into a bump.",
+   "start": 19.736,
+   "end": 22.507
+  },
+  {
+   "i": 6,
+   "text": "For a furry animal, that's a superpower.",
+   "start": 22.767,
+   "end": 25.126
+  },
+  {
+   "i": 7,
+   "text": "Puffed-up fur traps warm air, and makes it look bigger to a threat.",
+   "start": 25.386,
+   "end": 29.218
+  },
+  {
+   "i": 8,
+   "text": "A scared cat does exactly this.",
+   "start": 29.478,
+   "end": 31.407
+  },
+  {
+   "i": 9,
+   "text": "But you lost most of your fur, so you're mostly left with the bumps,",
+   "start": 31.667,
+   "end": 35.89
+  },
+  {
+   "i": 10,
+   "text": "a leftover from your furry ancestors,",
+   "start": 35.89,
+   "end": 38.017
+  },
+  {
+   "i": 11,
+   "text": "still firing every time a song gives you chills.",
+   "start": 38.427,
+   "end": 41.694
+  }
+ ]
+}

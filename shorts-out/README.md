@@ -111,3 +111,16 @@ Sources: Wikipedia (Pinsetter), Smithsonian Lemelson Center, International Bowli
 
 #shorts #history #weirdjobs #bowling #didyouknow #oldjobs #truestory #funfacts
 ```
+
+## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · STATUS PENDING
+**Title:** Why You Get Goosebumps
+**Description:**
+```
+Every hair on your skin has a tiny muscle, the arrector pili, and when you're cold or a strong feeling hits, your nervous system makes thousands of them squeeze at once, pulling the hairs up and bunching the skin into bumps. In furry animals this traps warm air and makes them look bigger; in humans it is mostly a leftover from our furry ancestors.
+
+Sources: Wikipedia (Goose bumps), Why Evolution Is True, Durham University research repository.
+
+#shorts #goosebumps #science #humanbody #didyouknow #biology #funfacts #whyisthat
+```
+**Tags:** why do we get goosebumps, goosebumps explained, goosebumps science, arrector pili, why do i get chills from music, human body facts, vestigial traits, biology facts, science shorts, body facts
+**Experiment:** NEW STYLE chalk-talk (topic = best formula: second-person body science)

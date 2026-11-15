@@ -13,6 +13,7 @@
 #   styles: a NEW style built in the skill (see factory prompt EXPERIMENTS)
 #
 # video | went public (IST) | what was tested | views 48h | verdict
+Why You Get Goosebumps | 16 Nov 9:00 | NEW STYLE: chalk-talk (body science, best-formula topic) | | 
 Paid $19,000 To Stay In Bed | 14 Nov 9:00 | second-person weird job, paper-atlas | 1154 (6 h) | WIN
 Why You Can't Tickle Yourself | 14 Nov 11:30 | second-person body science, inside-out | 1063 (4 h) | WIN
 The Town That Couldn't Stop Dancing | 14 Nov 7:00 | history story, 7:00 slot | 155 | weak (history or 7:00?)
