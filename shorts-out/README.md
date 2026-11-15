@@ -112,7 +112,7 @@ Sources: Wikipedia (Pinsetter), Smithsonian Lemelson Center, International Bowli
 #shorts #history #weirdjobs #bowling #didyouknow #oldjobs #truestory #funfacts
 ```
 
-## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · STATUS PENDING
+## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · WAITING UPLOAD (YouTube API quota hit 15 Nov 05:45 IST) · target slot 16 Nov 9:00 IST
 **Title:** Why You Get Goosebumps
 **Description:**
 ```

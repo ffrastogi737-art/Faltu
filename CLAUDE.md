@@ -17,4 +17,12 @@ Hard limits (platform rules, or the channels get banned): no bought views/subs/f
 or DMs on other accounts, no misleading titles, no copyrighted footage/music/art, no fake facts (2+ sources), never
 delete a video or post, never make a YouTube upload public immediately (private + schedule).
 
+YouTube API quota (learned 15 Nov 2026): the YouTube Data API has a daily quota and an upload costs far more than a
+read, so roughly 5-6 uploads per day fit across both channels. If a call returns `quotaExceeded`: do not retry, still
+build and push the video, set its README status to `WAITING UPLOAD (quota)`, and carry on (Instagram is not affected;
+already-scheduled YouTube videos still go public on their own). The quota resets at midnight Pacific time
+(08:00 UTC = 13:30 IST in winter): the first factory run after that uploads every WAITING video first, oldest first,
+into the next free slots. Budget: about 3 Kratos Playz + 2 solo hype uploads a day; skip optional API writes
+(category fixes, extra comments) when the day's uploads are not done yet.
+
 The factory routine (scheduled task "Faceless shorts factory") holds the full step-by-step; this file is the why.
