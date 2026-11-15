@@ -26,6 +26,9 @@ Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). 
 Commit lines end with the session attribution the system gives you.
 
 ## P. PUBLISH DUE (every run, factory and publisher; first)
+No Composio tools (ToolSearch "+composio" finds nothing): skip step P and all uploads, still build and push the video,
+mark it `WAITING UPLOAD (no Composio)`, and start the report with "⚠️ DIKKAT: Composio connector is routine par nahi laga".
+If /home/user/Faltu is missing: `git clone https://github.com/ffrastogi737-art/Faltu /home/user/Faltu`.
 Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOLS.
 1. Solo hype timed switch: for each `PENDING` line in shorts-out/publish-queue.txt whose UTC time is <= now + 10 min:
    YOUTUBE_UPDATE_VIDEO {"video_id": <id>, "privacy_status": "public"} account `youtube_maimon-mealy`; read back with
