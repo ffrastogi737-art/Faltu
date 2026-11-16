@@ -137,3 +137,16 @@ Sources: Scientific American, Wikipedia (Borborygmus, Migrating motor complex).
 ```
 **Tags:** why does my stomach growl, stomach growling explained, borborygmi, migrating motor complex, hungry stomach noise, human body facts, gut facts, biology facts, science shorts, body facts
 **Experiment:** best formula (second-person body science, inside-out)
+
+## 13 · `13-finger-wrinkles.mp4` · chalk-talk · QUEUED (upload pending)
+**Title:** Why Your Fingers Wrinkle In Water
+**Description:**
+```
+Wrinkly fingers in the bath are not skin swelling with water. Your nervous system makes the tiny blood vessels in your fingertips narrow, the skin gets pulled in and wrinkles, and nerve-damaged fingers stay smooth. The grooves may help you grip wet objects, though scientists still debate that part.
+
+Sources: Scientific American, Popular Science, UTMB Medical Discovery News.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #bathtime
+```
+**Tags:** why do fingers wrinkle in water, pruney fingers, wrinkly fingers explained, why fingers prune, autonomic nervous system, human body facts, biology facts, science shorts, body facts, did you know
+**Experiment:** best formula (second-person body science), chalk-talk 2nd time; slot 19:30 IST (new slot test for solo hype)
