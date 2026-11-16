@@ -25,3 +25,7 @@ IDEA BANK (owner, after showing viral "what happens if" 3D shorts; decided: test
   look): e.g. what really happens to a dropped vs thrown object, why a falling cat lands on its feet, can you cut ice with
   a string. Short (30-45 s), direct question title, satisfying visual payoff. Run 1 test, judge, keep if it wins.
 - Realistic look (Blender characters on a GPU, or paid AI video) only if the deep-dive test wins and the owner agrees.
+
+IDEA from a real viewer comment (owner saw it 16 Nov on "Why You Can't Tickle Yourself": "how about tickle your elbow"):
+- "Can you tickle your own elbow?" / why some body parts are ticklish and others not. Best-formula topic (body science).
+- TODO next CHANNEL CARE after YouTube quota resets (13:30 IST): read + reply to that comment (YOUTUBE_CREATE_COMMENT_REPLY, account youtube_maimon-mealy).
