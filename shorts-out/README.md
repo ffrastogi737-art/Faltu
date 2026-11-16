@@ -138,7 +138,7 @@ Sources: Scientific American, Wikipedia (Borborygmus, Migrating motor complex).
 **Tags:** why does my stomach growl, stomach growling explained, borborygmi, migrating motor complex, hungry stomach noise, human body facts, gut facts, biology facts, science shorts, body facts
 **Experiment:** best formula (second-person body science, inside-out)
 
-## 13 · `13-finger-wrinkles.mp4` · chalk-talk · QUEUED (upload pending)
+## 13 · `13-finger-wrinkles.mp4` · chalk-talk · QUEUED: goes public 16 Nov 2026 19:30 IST (https://www.youtube.com/watch?v=DWY9ThV6WNY)
 **Title:** Why Your Fingers Wrinkle In Water
 **Description:**
 ```
