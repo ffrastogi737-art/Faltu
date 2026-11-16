@@ -1,5 +1,15 @@
 # Shorts factory: step by step
 
+## RUNNER MODE (from 16 Nov 2026; overrides anything below that conflicts)
+Scheduled routines cannot push to GitHub, so the factory now runs in sessions created with create_session (repo attached,
+push works) by a small scheduler session. In such a session:
+- You MAY and SHOULD use send_later again for timed work: the solo hype public switch (YOUTUBE_UPDATE_VIDEO public at the
+  slot time) and each Instagram reel at its `at` time, with the messages described in step P (include the entry id and
+  tell the woken turn to git pull, post, mark DONE, commit, push). Also still write the PENDING lines/entries so a later
+  run can recover them.
+- Solo hype slots may be any time then (09:00, 11:30, 17:00, 19:30 IST).
+- The session ends after its report; wake-ups from its send_later calls keep it alive just long enough to post.
+
 The scheduled tasks "Shorts factory" (08:55 and 16:55 IST) and "Shorts publisher" (11:25 and 19:25 IST) each start a
 FRESH cloud session and follow this file. The why is in /home/user/Faltu/CLAUDE.md: read it first.
 
