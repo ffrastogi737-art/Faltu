@@ -110,7 +110,7 @@ Sources: Prima Games, IBTimes UK, ARY News, GTA Boom, Stevivor, GTA Intel. Unloc
 **Vote:** A = GTA 5 habits to drop · B = launch night plan
 **Language:** English · player-centric "do this tonight" countdown (playbook) · Experiment: promise+deadline title
 
-## 07 · `07-gta5-vs-gta6-day-one.mp4` · neon-versus · Phase 1 · ENGLISH · WAITING UPLOAD · POST BEFORE 19 NOV (says "out November 19")
+## 07 · `07-gta5-vs-gta6-day-one.mp4` · neon-versus · Phase 1 · ENGLISH · SCHEDULED 16 Nov 2026 19:30 IST (https://www.youtube.com/watch?v=mVX_Ig9iiuM) · Instagram 16 Nov 19:30 IST · POST BEFORE 19 NOV (says "out November 19")
 **Title:**
 ```
 GTA 5 vs GTA 6: 4 Things That Change on Day One 🔥 #shorts
