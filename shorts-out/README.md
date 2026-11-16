@@ -125,7 +125,7 @@ Sources: Wikipedia (Goose bumps), Why Evolution Is True, Durham University resea
 **Tags:** why do we get goosebumps, goosebumps explained, goosebumps science, arrector pili, why do i get chills from music, human body facts, vestigial traits, biology facts, science shorts, body facts
 **Experiment:** NEW STYLE chalk-talk (topic = best formula: second-person body science)
 
-## 12 · `12-stomach-growl.mp4` · inside-out · QUEUED: goes public 16 Nov 11:30 IST (https://www.youtube.com/watch?v=UjPBhNKGc6A)
+## 12 · `12-stomach-growl.mp4` · inside-out · PUBLIC 16 Nov 2026 08:16 UTC (read-back confirmed) (https://www.youtube.com/watch?v=UjPBhNKGc6A)
 **Title:** Why Your Stomach Growls
 **Description:**
 ```
