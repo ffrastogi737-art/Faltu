@@ -109,3 +109,22 @@ Sources: Prima Games, IBTimes UK, ARY News, GTA Boom, Stevivor, GTA Intel. Unloc
 **Tags:** gta 6 launch, gta 6 3 days left, gta 6 preload, gta 6 unlock time, gta 6 storage, gta 6 ps5, gta 6 xbox, gta 6 pc, gta 6 november 19, gta 6 before you play, gta vi, rockstar games
 **Vote:** A = GTA 5 habits to drop · B = launch night plan
 **Language:** English · player-centric "do this tonight" countdown (playbook) · Experiment: promise+deadline title
+
+## 07 · `07-gta5-vs-gta6-day-one.mp4` · neon-versus · Phase 1 · ENGLISH · WAITING UPLOAD · POST BEFORE 19 NOV (says "out November 19")
+**Title:**
+```
+GTA 5 vs GTA 6: 4 Things That Change on Day One 🔥 #shorts
+```
+**Description:**
+```
+GTA 5 players, four things change on day one: two leads (Jason and Lucia) instead of three, Leonida with six regions (Vice City included) instead of Los Santos, PS5 and Xbox Series X|S only with no PC version announced, and a pre-load Rockstar says needs up to 212 GB. Out November 19, 2026.
+
+Part 2 is your call. Comment: A = which edition to buy, B = which region to visit first.
+
+Sources: Game Informer, GosuGamers, GTA Boom, Rockstar Newswire (via GamesRadar, TechRadar), Prima Games, IBTimes UK.
+
+#shorts #gta6 #gtavi #gta5 #gta6launch #ps5 #xbox #rockstargames
+```
+**Tags:** gta 5 vs gta 6, gta 6 day one, gta 6 changes, gta 6 pc, gta 6 preload, gta 6 leonida, gta 6 jason lucia, gta 6 november 19, gta vi, rockstar games
+**Vote:** A = which edition to buy · B = first region to visit
+**Language:** English · 39 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: GTA-5-audience title angle
