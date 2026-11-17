@@ -1,10 +1,8 @@
 {
- "as_of": "2026-11-13",
+ "as_of": "2026-11-16",
  "kind": "final",
- "generated_at": "2026-11-16T14:12:22+05:30",
- "sources": [
-  "yahoo-finance (unofficial, delayed)"
- ],
+ "generated_at": "2026-11-17T15:16:16+05:30",
+ "sources": [],
  "warnings": [
   "No NSE holiday list loaded for 2026: every weekday is treated as a trading day.",
   "No fundamentals loaded: long-term and avoid lists are empty, setups rest on price evidence only."
@@ -12,108 +10,108 @@
  "regime": {
   "label": "sideways",
   "high_volatility": false,
-  "close": 25144.30078125,
-  "sma50": 23331.791875,
-  "sma200": 23991.757236328125,
-  "volatility_percentile_1y": 0.7936507936507936
+  "close": 25291.099609375,
+  "sma50": 23356.4978515625,
+  "sma200": 23992.425234375,
+  "volatility_percentile_1y": 0.7579365079365079
  },
  "macro": [
   {
    "name": "NIFTY 50",
    "symbol": "^NSEI",
-   "last": 25183.80078125,
-   "change": 0.0015709325283546072,
-   "date": "2026-11-16",
+   "last": 25413.0,
+   "change": 0.004819892867758746,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "India VIX",
    "symbol": "^INDIAVIX",
-   "last": 15.829999923706055,
-   "change": 0.021290317658455127,
-   "date": "2026-11-16",
+   "last": 15.557499885559082,
+   "change": -0.007812526609215942,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "S&P 500",
    "symbol": "^GSPC",
-   "last": 7561.669921875,
-   "change": -0.0040474660007389085,
-   "date": "2026-11-13",
+   "last": 7416.58984375,
+   "change": -0.019186248490601354,
+   "date": "2026-11-16",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Nasdaq",
    "symbol": "^IXIC",
-   "last": 25136.26953125,
-   "change": -0.009060139497874764,
-   "date": "2026-11-13",
+   "last": 24509.759765625,
+   "change": -0.02492453245085191,
+   "date": "2026-11-16",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Dow Jones",
    "symbol": "^DJI",
-   "last": 52347.55078125,
-   "change": 0.000964889970948013,
-   "date": "2026-11-13",
+   "last": 51608.171875,
+   "change": -0.014124422159495387,
+   "date": "2026-11-16",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Nikkei 225",
    "symbol": "^N225",
-   "last": 59662.01953125,
-   "change": -0.02421123809307202,
-   "date": "2026-11-16",
+   "last": 58860.4296875,
+   "change": -0.013435513079307349,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Hang Seng",
    "symbol": "^HSI",
-   "last": 23753.83984375,
-   "change": 0.004917598922730582,
-   "date": "2026-11-16",
+   "last": 23508.169921875,
+   "change": -0.0103423245879819,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "USD/INR",
    "symbol": "INR=X",
-   "last": 93.98500061035156,
-   "change": -0.0005189368965918817,
-   "date": "2026-11-16",
+   "last": 93.5,
+   "change": -0.007831224883040888,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Crude WTI",
    "symbol": "CL=F",
-   "last": 89.38999938964844,
-   "change": 0.009372197989340858,
-   "date": "2026-11-16",
+   "last": 86.05999755859375,
+   "change": 0.003966359461606173,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Brent",
    "symbol": "BZ=F",
-   "last": 96.58999633789062,
-   "change": 0.007825542869970725,
-   "date": "2026-11-16",
+   "last": 92.9800033569336,
+   "change": 0.005841636751033441,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   },
   {
    "name": "Gold",
    "symbol": "GC=F",
-   "last": 3859.60009765625,
-   "change": -0.006870275284052263,
-   "date": "2026-11-16",
+   "last": 3866.0,
+   "change": 0.0033739942901636066,
+   "date": "2026-11-17",
    "stale": false,
    "source": "yahoo-finance (unofficial, delayed)"
   }
@@ -130,466 +128,15 @@
   },
   "breakout": {
    "rule": "close within 3% below (or above) the 20-day high, ADX > 20, technical score > 0; sorted by relative volume",
-   "items": [
-    {
-     "symbol": "GODREJIND",
-     "name": "Godrej Industries Ltd.",
-     "sector": "Diversified",
-     "price": 1117.1500244140625,
-     "direction": "WAIT",
-     "score": 0.24941992248255207,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 17.84292167750695,
-     "quant_score": -0.2797113695026042,
-     "fno": false,
-     "p_bull": 0.2900766961651917,
-     "p_bear": 0.2812743362831858,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "AMBER",
-     "name": "Amber Enterprises India Ltd.",
-     "sector": "Consumer Durables",
-     "price": 6772.0,
-     "direction": "WAIT",
-     "score": 0.1207683180513157,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 13.883157601155618,
-     "quant_score": -0.1529944953845032,
-     "fno": false,
-     "p_bull": 0.2889371342269209,
-     "p_bear": 0.29608740796677363,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "POWERINDIA",
-     "name": "Hitachi Energy India Ltd.",
-     "sector": "Capital Goods",
-     "price": 31595.0,
-     "direction": "WAIT",
-     "score": 0.4541089286602632,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 5.750873693325911,
-     "quant_score": 0.032214947386062606,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ACE",
-     "name": "Action Construction Equipment Ltd.",
-     "sector": "Capital Goods",
-     "price": 1180.0,
-     "direction": "WAIT",
-     "score": 0.46597217429819254,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 5.020439398002498,
-     "quant_score": 0.07175909951249368,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "AEGISVOPAK",
-     "name": "Aegis Vopak Terminals Ltd.",
-     "sector": "Oil Gas & Consumable Fuels",
-     "price": 285.92999267578125,
-     "direction": "WAIT",
-     "score": 0.3080030196027266,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 4.463504584502507,
-     "quant_score": -0.0844343791020225,
-     "fno": false,
-     "p_bull": 0.2960638097036058,
-     "p_bear": 0.27513215027373983,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ANURAS",
-     "name": "Anupam Rasayan India Ltd.",
-     "sector": "Chemicals",
-     "price": 1300.5999755859375,
-     "direction": "WAIT",
-     "score": 0.3864048850406442,
-     "confidence": 0,
-     "risk": "medium",
-     "rvol": 3.8243258370010094,
-     "quant_score": -0.00828001282748242,
-     "fno": false,
-     "p_bull": 0.2960638097036058,
-     "p_bear": 0.27513215027373983,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ENRIN",
-     "name": "Siemens Energy India Ltd.",
-     "sector": "Capital Goods",
-     "price": 3125.89990234375,
-     "direction": "WAIT",
-     "score": 0.20786787871788032,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 3.4757901571502754,
-     "quant_score": -0.23303299686632487,
-     "fno": false,
-     "p_bull": 0.2900766961651917,
-     "p_bear": 0.2812743362831858,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "POLICYBZR",
-     "name": "PB Fintech Ltd.",
-     "sector": "Financial Services",
-     "price": 1105.0,
-     "direction": "WAIT",
-     "score": -0.007979908345496889,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 3.0700750431783956,
-     "quant_score": -0.39697006485536,
-     "fno": false,
-     "p_bull": 0.29021144043798375,
-     "p_bear": 0.2920049084387389,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ZFCVINDIA",
-     "name": "ZF Commercial Vehicle Control Systems India Ltd.",
-     "sector": "Automobile and Auto Components",
-     "price": 2332.39990234375,
-     "direction": "WAIT",
-     "score": 0.2895123900785688,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 2.4821792636660622,
-     "quant_score": -0.146069810849215,
-     "fno": false,
-     "p_bull": 0.2960638097036058,
-     "p_bear": 0.27513215027373983,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "MFSL",
-     "name": "Max Financial Services Ltd.",
-     "sector": "Financial Services",
-     "price": 1401.0999755859375,
-     "direction": "WAIT",
-     "score": 0.23921128135407854,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 2.1723604590203465,
-     "quant_score": -0.3137401732641826,
-     "fno": false,
-     "p_bull": 0.2900766961651917,
-     "p_bear": 0.2812743362831858,
-     "fundamental_score": null
-    }
-   ]
+   "items": []
   },
   "breakdown": {
    "rule": "close within 3% above (or below) the 20-day low, ADX > 20, technical score < 0; sorted by relative volume",
-   "items": [
-    {
-     "symbol": "PAGEIND",
-     "name": "Page Industries Ltd.",
-     "sector": "Textiles",
-     "price": 31325.0,
-     "direction": "WAIT",
-     "score": -0.46702893598900624,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 8.736023472103367,
-     "quant_score": -0.07528163848187269,
-     "fno": false,
-     "p_bull": 0.32027562771380025,
-     "p_bear": 0.30366245044364737,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "APTUS",
-     "name": "Aptus Value Housing Finance India Ltd.",
-     "sector": "Financial Services",
-     "price": 174.97999572753906,
-     "direction": "WAIT",
-     "score": -0.4922717488777941,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 1.1698480713172015,
-     "quant_score": -0.3446095332963508,
-     "fno": false,
-     "p_bull": 0.32027562771380025,
-     "p_bear": 0.30366245044364737,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ESCORTS",
-     "name": "Escorts Kubota Ltd.",
-     "sector": "Capital Goods",
-     "price": 2401.800048828125,
-     "direction": "WAIT",
-     "score": -0.5121390626646635,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.965050642851374,
-     "quant_score": -0.41083391258591534,
-     "fno": false,
-     "p_bull": 0.32027562771380025,
-     "p_bear": 0.30366245044364737,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "THANGAMAYL",
-     "name": "Thangamayil Jewellery Ltd.",
-     "sector": "Consumer Durables",
-     "price": 4195.0,
-     "direction": "WAIT",
-     "score": -0.2808485850845833,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.8597163567343241,
-     "quant_score": 0.17494916082916656,
-     "fno": false,
-     "p_bull": 0.2996271474419483,
-     "p_bear": 0.30137341891636776,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "AZAD",
-     "name": "Azad Engineering Ltd.",
-     "sector": "Capital Goods",
-     "price": 2455.89990234375,
-     "direction": "WAIT",
-     "score": -0.21213735762543395,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.5855538824072205,
-     "quant_score": 0.40398658569299783,
-     "fno": false,
-     "p_bull": 0.2996271474419483,
-     "p_bear": 0.30137341891636776,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "PIIND",
-     "name": "PI Industries Ltd.",
-     "sector": "Chemicals",
-     "price": 1714.800048828125,
-     "direction": "WAIT",
-     "score": -0.49914863796410064,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.5236366173570354,
-     "quant_score": -0.36753249691737244,
-     "fno": false,
-     "p_bull": 0.32027562771380025,
-     "p_bear": 0.30366245044364737,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "CONCORDBIO",
-     "name": "Concord Biotech Ltd.",
-     "sector": "Healthcare",
-     "price": 594.0,
-     "direction": "WAIT",
-     "score": -0.3973557130638387,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.48832583517826783,
-     "quant_score": -0.028222747249832716,
-     "fno": false,
-     "p_bull": 0.2996271474419483,
-     "p_bear": 0.30137341891636776,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "HEXT",
-     "name": "Hexaware Technologies Ltd.",
-     "sector": "Information Technology",
-     "price": 493.6000061035156,
-     "direction": "WAIT",
-     "score": -0.45621297158765456,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.16229106099867,
-     "quant_score": -0.22441360899588553,
-     "fno": false,
-     "p_bull": 0.32027562771380025,
-     "p_bear": 0.30366245044364737,
-     "fundamental_score": null
-    }
-   ]
+   "items": []
   },
   "momentum": {
    "rule": "quant score > 0.3, ADX > 25, technical score > 0; sorted by quant score",
-   "items": [
-    {
-     "symbol": "LAURUSLABS",
-     "name": "Laurus Labs Ltd.",
-     "sector": "Healthcare",
-     "price": 2424.0,
-     "direction": "WAIT",
-     "score": 0.5771356863797876,
-     "confidence": 0,
-     "risk": "medium",
-     "rvol": 0.8986098572169072,
-     "quant_score": 0.6274893249696626,
-     "fno": false,
-     "p_bull": 0.2874740419105154,
-     "p_bear": 0.2894326977534453,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "WELSPUNLIV",
-     "name": "Welspun Living Ltd.",
-     "sector": "Textiles",
-     "price": 250.13999938964844,
-     "direction": "WAIT",
-     "score": 0.5753849122404333,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.2860287161682837,
-     "quant_score": 0.6216534111718148,
-     "fno": false,
-     "p_bull": 0.2874740419105154,
-     "p_bear": 0.2894326977534453,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "SONACOMS",
-     "name": "Sona BLW Precision Forgings Ltd.",
-     "sector": "Automobile and Auto Components",
-     "price": 919.0,
-     "direction": "WAIT",
-     "score": 0.5340123275569749,
-     "confidence": 0,
-     "risk": "medium",
-     "rvol": 0.42486661562708494,
-     "quant_score": 0.48374479556028666,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ANANDRATHI",
-     "name": "Anand Rathi Wealth Ltd.",
-     "sector": "Financial Services",
-     "price": 2381.199951171875,
-     "direction": "WAIT",
-     "score": 0.47755429885873824,
-     "confidence": 0,
-     "risk": "medium",
-     "rvol": 0.608135573028187,
-     "quant_score": 0.4807365517513499,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ATHERENERG",
-     "name": "Ather Energy Ltd.",
-     "sector": "Automobile and Auto Components",
-     "price": 1945.0,
-     "direction": "WAIT",
-     "score": 0.4667060775754438,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.628400327119925,
-     "quant_score": 0.44457581414036823,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "SHYAMMETL",
-     "name": "Shyam Metalics and Energy Ltd.",
-     "sector": "Capital Goods",
-     "price": 1315.9000244140625,
-     "direction": "WAIT",
-     "score": 0.5182895657225461,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.270946480430082,
-     "quant_score": 0.4313355894455241,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "GLAND",
-     "name": "Gland Pharma Ltd.",
-     "sector": "Healthcare",
-     "price": 3334.10009765625,
-     "direction": "WAIT",
-     "score": 0.5141090651203658,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.42704136038383744,
-     "quant_score": 0.4174005874382565,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "MCX",
-     "name": "Multi Commodity Exchange of India Ltd.",
-     "sector": "Financial Services",
-     "price": 3720.0,
-     "direction": "WAIT",
-     "score": 0.5136904885011084,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 1.4791941518500502,
-     "quant_score": 0.416005332040732,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "ACUTAAS",
-     "name": "Acutaas Chemicals Ltd.",
-     "sector": "Healthcare",
-     "price": 4039.10009765625,
-     "direction": "WAIT",
-     "score": 0.5101899487314996,
-     "confidence": 0,
-     "risk": "high",
-     "rvol": 0.6450550940801226,
-     "quant_score": 0.4043368661420357,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    },
-    {
-     "symbol": "AUROPHARMA",
-     "name": "Aurobindo Pharma Ltd.",
-     "sector": "Healthcare",
-     "price": 1823.199951171875,
-     "direction": "WAIT",
-     "score": 0.5099447750270594,
-     "confidence": 0,
-     "risk": "medium",
-     "rvol": 0.921170931840867,
-     "quant_score": 0.4035196204605681,
-     "fno": false,
-     "p_bull": 0.28530300169907497,
-     "p_bear": 0.28914951859543137,
-     "fundamental_score": null
-    }
-   ]
+   "items": []
   },
   "long_term": {
    "rule": "fundamental label 'strong' (score >= 0.4 on at least 6 metrics); sorted by fundamental score. Needs fundamentals data.",
@@ -601,62 +148,17 @@
   }
  },
  "calibration": {
-  "samples": 423729,
+  "samples": 0,
   "base_rates": {
-   "bull": 0.2944948304222746,
-   "bear": 0.2906928720951363,
-   "neutral": 0.41481229748258913
+   "bull": 0.3333333333333333,
+   "bear": 0.3333333333333333,
+   "neutral": 0.3333333333333333
   },
   "buckets": [
    {
-    "n": 42373,
-    "p_bull": 0.32027562771380025,
-    "p_bear": 0.30366245044364737
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.2996271474419483,
-    "p_bear": 0.30137341891636776
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.29547385312441005,
-    "p_bear": 0.29117896922786485
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.29021144043798375,
-    "p_bear": 0.2920049084387389
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.2889371342269209,
-    "p_bear": 0.29608740796677363
-   },
-   {
-    "n": 42372,
-    "p_bull": 0.2900766961651917,
-    "p_bear": 0.2812743362831858
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.2960638097036058,
-    "p_bear": 0.27513215027373983
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.28530300169907497,
-    "p_bear": 0.28914951859543137
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.2874740419105154,
-    "p_bear": 0.2894326977534453
-   },
-   {
-    "n": 42373,
-    "p_bull": 0.2915329431753823,
-    "p_bear": 0.287662828015858
+    "n": 0,
+    "p_bull": 0.3333333333333333,
+    "p_bear": 0.3333333333333333
    }
   ]
  },
@@ -667,54 +169,12 @@
  },
  "disclaimer": "Research output generated by an automated model, not investment advice. Probabilities are historical frequencies, not guarantees. No orders are placed by this system.",
  "setups": [],
- "scanned": 469,
- "skipped": 30,
- "skipped_examples": [
-  {
-   "symbol": "BHARATCOAL",
-   "reason": "only 202 bars, need 300"
-  },
-  {
-   "symbol": "GROWW",
-   "reason": "only 249 bars, need 300"
-  },
-  {
-   "symbol": "CANHLIFE",
-   "reason": "only 265 bars, need 300"
-  },
-  {
-   "symbol": "CGCL",
-   "reason": "1 daily moves over 40% (unadjusted split/bonus or bad tick?)"
-  },
-  {
-   "symbol": "CMPDI",
-   "reason": "only 155 bars, need 300"
-  },
-  {
-   "symbol": "CLEANMAX",
-   "reason": "only 173 bars, need 300"
-  },
-  {
-   "symbol": "EMMVEE",
-   "reason": "only 245 bars, need 300"
-  },
-  {
-   "symbol": "FRACTAL",
-   "reason": "only 183 bars, need 300"
-  },
-  {
-   "symbol": "GPIL",
-   "reason": "1 daily moves over 40% (unadjusted split/bonus or bad tick?)"
-  },
-  {
-   "symbol": "HEGAM",
-   "reason": "1 daily moves over 40% (unadjusted split/bonus or bad tick?)"
-  }
- ],
- "failures": 2,
+ "scanned": 0,
+ "skipped": 0,
+ "skipped_examples": [],
+ "failures": 1,
  "failure_examples": [
-  "prices BAGMANE: https://query1.finance.yahoo.com/v8/finance/chart/BAGMANE.NS: HTTP 404",
-  "prices DUMMYHEG: https://query1.finance.yahoo.com/v8/finance/chart/DUMMYHEG.NS: HTTP 404"
+  "NSE list NIFTY 500: https://www.niftyindices.com/IndexConstituent/ind_nifty500list.csv: HTTP 403"
  ],
  "performance": {
   "trades": 0,
@@ -723,8 +183,8 @@
   "pending": 938
  },
  "run": {
-  "ledger_rows_restored": 469,
-  "symbols_listed": 501,
-  "price_series_fetched": 500
+  "ledger_rows_restored": 938,
+  "symbols_listed": 0,
+  "price_series_fetched": 1
  }
 }
