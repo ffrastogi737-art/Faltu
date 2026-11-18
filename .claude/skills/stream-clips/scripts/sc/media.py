@@ -5,11 +5,16 @@ import shutil
 import time
 from pathlib import Path
 
-from .common import Problem, read_json, run, say, write_json
+from .common import Problem, probe, read_json, run, say, write_json
 
 META_KEYS = ("id", "title", "channel", "uploader", "duration", "view_count", "live_status",
              "is_live", "was_live", "webpage_url", "extractor_key", "timestamp",
              "release_timestamp", "upload_date")
+
+
+def is_local(url):
+    """A video file on this computer (or in the cloud session), not a link."""
+    return Path(url).is_file()
 
 
 def ytdlp_args(url, cookies=None):
@@ -51,6 +56,12 @@ def metadata(url, args, work, refresh=False):
     stale = meta and meta.get("live_status") == "is_live" and time.time() - meta.get("_at", 0) > 300
     if meta and not refresh and not stale:
         return meta
+    if is_local(url):
+        path = Path(url)
+        meta = {"title": path.stem, "name": "my video", "duration": probe(path)["duration"],
+                "live_status": None, "extractor_key": "", "_at": time.time()}
+        write_json(cached, meta)
+        return meta
     import json
     try:
         full = json.loads(run(["yt-dlp", "-J", *args, url], timeout=240))
@@ -76,6 +87,12 @@ def audio(url, args, work, live=False):
         return have[0]
     for old in work.glob("audio.*"):
         old.unlink(missing_ok=True)
+    if is_local(url):
+        dest = work / "audio.m4a"
+        run(["ffmpeg", "-y", "-v", "error", "-i", url, "-vn", "-c:a", "aac", "-b:a", "96k", str(dest)],
+            timeout=4 * 3600)
+        say(f"audio ready ({dest.stat().st_size / 1e6:.0f} MB)", "good")
+        return dest
     say("downloading the audio track (video comes later, only for the clips)...", "step")
     extra = ["--live-from-start"] if live and "youtu" in url else []
     try:
@@ -96,6 +113,12 @@ def video_slice(url, args, start, end, dest: Path, max_height):
         return dest
     for old in dest.parent.glob(dest.stem + ".*"):
         old.unlink(missing_ok=True)
+    if is_local(url):
+        run(["ffmpeg", "-y", "-v", "error", "-ss", f"{max(0, start):.2f}", "-i", url,
+             "-t", f"{end - start:.2f}", "-vf", f"scale=-2:min(ih\\,{max_height})",
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "20", "-c:a", "aac", str(dest)],
+            timeout=1800)
+        return dest
     fmt = (f"bv*[height<={max_height}][vcodec^=avc1]+ba/bv*[height<={max_height}]+ba/"
            f"b[height<={max_height}]/bv*+ba/b")
     try:
