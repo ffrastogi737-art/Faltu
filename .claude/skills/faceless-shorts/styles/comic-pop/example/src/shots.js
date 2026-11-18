@@ -88,7 +88,7 @@ export function buildShots() {
       const p = eo(seg(lt, 0.3, nn + 0.4)); scoreRing(540, 720, 260, p * 0.99, count(lt, 0.3, nn + 0.4, 99), GOLD, eob(seg(lt, 0.1, 0.35)));
       chip('CRITIC SCORE · METACRITIC', 540, 1120, CYAN, lt > me - 0.2 ? eob(seg(lt, me - 0.2, me + 0.1)) : 0, 42);
     } });
-    cue(0.02, 'slam', { gain: 0.5 }); cue(0.3, 'slide', { dur: nn + 0.1 }); cue(nn + 0.4, 'slam', { gain: 0.8 }); cue(me - 0.2, 'pop'); }
+    cue(0.02, 'slam', { gain: 0.5 }); cue(0.3, 'riser', { dur: nn + 0.1 }); cue(nn + 0.4, 'boom'); cue(me - 0.2, 'pop'); }
 
   // 2 · ties the highest score ever
   { const st = cut(1), ti = Wd('ties', 1) - st, ev = Wd('ever', 1) - st;
@@ -98,7 +98,7 @@ export function buildShots() {
       neon('ALL-TIME HIGH', 540, 1000, 110, ORANGE, lt > ti - 0.1 ? eob(seg(lt, ti - 0.1, ti + 0.2)) : 0);
       chip('TIED · RECORD', 540, 1180, GOLD, lt > ev - 0.2 ? eob(seg(lt, ev - 0.2, ev + 0.1)) : 0, 50);
     } });
-    cue(st, 'whoosh'); cue(st + ti - 0.1, 'slam', { gain: 0.6 }); cue(st + ev - 0.2, 'sparkle', { dur: 0.6 }); }
+    cue(st, 'swoosh'); cue(st + ti - 0.1, 'hit'); cue(st + ev - 0.2, 'ding'); cue(st + ev - 0.1, 'sparkle', { dur: 0.6 }); }
 
   // 3 · the only other one: Ocarina of Time, 1998
   { const st = cut(2), oc = Wd('Ocarina', 2) - st, ni = Wd('nineteen', 2) - st;
@@ -111,7 +111,7 @@ export function buildShots() {
       chip('1998', 780, 920, CYAN, lt > ni - 0.1 ? eob(seg(lt, ni - 0.1, ni + 0.2)) : 0, 40);
       neon('=', 540, 700, 110, GOLD, o);
     } });
-    cue(st, 'whoosh'); cue(st + 0.05, 'pop'); cue(st + oc - 0.2, 'slam', { gain: 0.6 }); cue(st + ni - 0.1, 'pop'); }
+    cue(st, 'swoosh'); cue(st + 0.05, 'pop'); cue(st + oc - 0.2, 'hit'); cue(st + ni - 0.1, 'ding'); }
 
   // 4 · beats GTA 4 (98) and GTA 5 (97)
   { const st = cut(3), ro = Wd('Rockstar', 3) - st, g4 = Wd('ninety', 3) - st, w5 = lineWords(3).filter((w) => w.w.startsWith('ninety'))[1].s - st;
@@ -121,7 +121,7 @@ export function buildShots() {
       B.forEach(([lab, p, v, c, t0], k) => { const on = lt > t0 ? eo(seg(lt, t0, t0 + 0.5)) : 0; ctx.globalAlpha = on > 0 ? 1 : 0.35; bar(120, 520 + k * 250, 840, 96, (p - 0.9) * 10 * on, c, lab, on > 0 ? v : '?'); ctx.globalAlpha = 1; });
       chip('#1', 940, 470, GOLD, lt > w5 + 0.3 ? eob(seg(lt, w5 + 0.3, w5 + 0.55)) : 0, 46);
     } });
-    cue(st, 'whoosh'); cue(st + ro - 0.2, 'pop'); cue(st + g4 - 0.15, 'slide', { dur: 0.5 }); cue(st + w5 - 0.15, 'slide', { dur: 0.5 }); cue(st + w5 + 0.3, 'slam', { gain: 0.5 }); }
+    cue(st, 'swoosh'); cue(st + ro - 0.2, 'pop'); cue(st + g4 - 0.15, 'slide', { dur: 0.5 }); cue(st + w5 - 0.15, 'slide', { dur: 0.5 }); cue(st + w5 + 0.3, 'hit'); cue(st + w5 + 0.35, 'coin'); }
 
   // 5 · not one review, 100+ critics
   { const st = cut(4), on = Wd('one', 4) - st, hu = Wd('hundred', 4) - st;
@@ -133,7 +133,7 @@ export function buildShots() {
       if (fill < 0.5) critic(540, 760, 2.4, GOLD, eob(seg(lt, on - 0.3, on)) * (1 - fill * 2));
       neon(lt > hu - 0.1 ? '100+ CRITICS' : 'ONE REVIEW?', 540, 300, 100, lt > hu - 0.1 ? GOLD : RED, eob(seg(lt, 0.05, 0.3)));
     } });
-    cue(st, 'whoosh'); cue(st + on - 0.3, 'pop'); cue(st + hu - 0.6, 'slide', { dur: 1.0 }); cue(st + hu, 'slam', { gain: 0.6 }); }
+    cue(st, 'swoosh'); cue(st + on - 0.3, 'pop'); cue(st + hu - 0.9, 'riser', { dur: 0.9 }); cue(st + hu, 'boom'); cue(st + hu + 0.05, 'applause', { dur: 2.0 }); }
 
   // 6 · score can still move
   { const st = cut(5), mv = Wd('move', 5) - st, ton = Wd('tonight', 5) - st;
@@ -144,7 +144,7 @@ export function buildShots() {
       neon('99', 820, 640, 120, GOLD, 1); neon('MAY MOVE', 540, 860, 70, CYAN, lt > mv - 0.2 ? eob(seg(lt, mv - 0.2, mv + 0.1)) : 0);
       chip('WATCH IT TONIGHT', 540, 1120, ORANGE, lt > ton - 0.3 ? eob(seg(lt, ton - 0.3, ton)) : 0, 46);
     } });
-    cue(st, 'whoosh'); cue(st + mv - 0.2, 'pop'); cue(st + ton - 0.3, 'pop'); }
+    cue(st, 'swoosh'); cue(st + mv - 0.2, 'pop'); cue(st + ton - 0.3, 'ding'); }
 
   // 7 · pre-loaded? unlocks at midnight, PS5 + Xbox
   { const st = cut(6), pr = Wd('pre', 6) - st, mi = Wd('midnight', 6) - st, ps = Wd('PS5', 6) - st, xb = Wd('Xbox', 6) - st;
@@ -156,7 +156,7 @@ export function buildShots() {
       chip('REPORTED · STORE LISTINGS', 540, 1060, GOLD, lt > mi + 0.2 ? eob(seg(lt, mi + 0.2, mi + 0.45)) : 0, 34);
       consoleBox(380, 1290, 0.75, V6, 'PS5', 1, lt > ps - 0.1 ? 1 : 0.28); consoleBox(700, 1290, 0.75, V5, 'XBOX', 1, lt > xb - 0.1 ? 1 : 0.28);
     } });
-    cue(st, 'whoosh'); cue(st + pr - 0.2, 'slide', { dur: 0.8 }); cue(st + mi - 0.1, 'slam', { gain: 0.6 }); cue(st + ps - 0.1, 'pop'); cue(st + xb - 0.1, 'pop'); }
+    cue(st, 'swoosh'); cue(st + pr - 0.2, 'riser', { dur: 0.8 }); cue(st + 0.4, 'tickclock', { dur: mi - 0.6 }); cue(st + mi - 0.1, 'boom'); cue(st + ps - 0.1, 'pop'); cue(st + xb - 0.1, 'pop'); }
 
   // 8 · vote
   { const st = cut(7), a = WdX('A', 7) - st, b = WdX('B', 7) - st;
@@ -168,7 +168,7 @@ export function buildShots() {
       voteCard(540, 640, 'A', VA, V5, lt > a - 0.1 ? eob(seg(lt, a - 0.1, a + 0.15)) : 0);
       voteCard(540, 1020, 'B', VB, RED, lt > b - 0.1 ? eob(seg(lt, b - 0.1, b + 0.15)) : 0);
     } });
-    cue(st, 'whoosh'); cue(st + 0.05, 'slam', { gain: 0.5 }); cue(st + a - 0.1, 'pop', { gain: 0.7 }); cue(st + b - 0.1, 'pop', { gain: 0.7 }); }
+    cue(st, 'swoosh'); cue(st + 0.05, 'hit'); cue(st + a - 0.1, 'ding'); cue(st + b - 0.1, 'ding'); }
 
   // 9 · comment A or B
   { const st = cut(8); const VA = ['WHAT THEY', 'LOVED MOST'], VB = ['WHAT THEY', "DIDN'T LIKE"];
@@ -179,7 +179,7 @@ export function buildShots() {
       neon('COMMENT', 540, 330, 120, GOLD, eob(seg(lt, 0.05, 0.3)));
       neon('A  /  B', 540, 1330, 110, ORANGE, eob(seg(lt, 0.3, 0.55)));
     } });
-    cue(st, 'whoosh'); cue(st + 0.05, 'pop'); cue(st + 0.3, 'pop'); }
+    cue(st, 'swoosh'); cue(st + 0.05, 'pop'); cue(st + 0.3, 'pop'); }
 
   return { shots: S, cues: CUES };
 }

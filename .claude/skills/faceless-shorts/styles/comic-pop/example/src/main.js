@@ -19,9 +19,21 @@ function draw(t) {
   const punch = 1 + 0.06 * (1 - eo(clamp(lt / 0.25)));
   const drift = 1 + (sh.zoom ?? 0.06) * eio(clamp(lt / d));
   const [cx, cy] = sh.cam || [540, 900];
-  ctx.save(); ctx.translate(cx, cy); ctx.scale(punch * drift, punch * drift); ctx.translate(-cx, -cy);
+  // impacts (comic-pop): every boom / hit / slam cue shakes the camera, punches in and flashes; booms also throw confetti
+  let shake = 0, kick = 0, flash = 0; const hits = OP._impacts || [];
+  for (const h of hits) { const a = t - h.t; if (a < 0 || a > 0.7) continue; const k = Math.exp(-a * 9) * h.g; shake += k; kick += k * 0.05; if (a < 0.09) flash = Math.max(flash, (1 - a / 0.09) * 0.45 * h.g); }
+  const sx = Math.sin(t * 83) * 26 * shake, sy = Math.cos(t * 71) * 22 * shake;
+  ctx.save(); ctx.translate(cx + sx, cy + sy); ctx.scale(punch * drift * (1 + kick), punch * drift * (1 + kick)); ctx.rotate(Math.sin(t * 57) * 0.012 * shake); ctx.translate(-cx, -cy);
   sh.draw(lt, d, t);
   ctx.restore();
+  for (const h of hits) { if (h.type !== 'boom') continue; const a = t - h.t; if (a < 0 || a > 1.6) continue;
+    const COL = ['#FFE600', '#FF3FA4', '#00B8FF', '#2EE86B', '#FF8A00', '#FFFFFF'];
+    for (let k = 0; k < 70; k++) { const r1 = Math.sin(k * 12.9898 + h.t * 78.233) * 43758.5453, u = r1 - Math.floor(r1), r2 = Math.sin(k * 93.989 + h.t * 7.1) * 24634.6345, v = r2 - Math.floor(r2);
+      const ang = -Math.PI / 2 + (u - 0.5) * 2.6, sp = 900 + v * 1300, x = 540 + Math.cos(ang) * sp * a, y = 760 + Math.sin(ang) * sp * a + 1500 * a * a;
+      ctx.save(); ctx.globalAlpha = Math.max(0, 1 - a / 1.6); ctx.translate(x, y); ctx.rotate(a * (6 + k % 5) + k); ctx.fillStyle = COL[k % COL.length]; ctx.fillRect(-14, -8, 28, 16); ctx.restore(); } }
+  if (flash > 0) { ctx.fillStyle = '#FFFFFF'; ctx.globalAlpha = flash; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1; }
+  // comic wipe on each cut: a coloured diagonal band sweeps across in 0.18 s
+  if (i > 0 && lt < 0.18) { const p = lt / 0.18, xw = -600 + p * 2300; ctx.save(); ctx.fillStyle = ['#FFE600', '#FF3FA4', '#00B8FF', '#2EE86B'][i % 4]; ctx.beginPath(); ctx.moveTo(xw - 260, 0); ctx.lineTo(xw + 140, 0); ctx.lineTo(xw - 260 + 400 - 500, H); ctx.lineTo(xw - 260 - 500, H); ctx.closePath(); ctx.fill(); ctx.lineWidth = 12; ctx.strokeStyle = '#111'; ctx.stroke(); ctx.restore(); }
   ctx.globalAlpha = 1; ctx.letterSpacing = '0px';
 
   // fade from / to black on the first and last 0.25 s
@@ -44,6 +56,7 @@ function draw(t) {
     OP.frame = (t, q = 0.92) => { draw(t); return cv.toDataURL('image/jpeg', q); };
     OP.shots = () => shots.map((s, i) => ({ id: s.id, at: +s.at.toFixed(3), end: +(i < shots.length - 1 ? shots[i + 1].at : T.dur).toFixed(3), note: s.note || '' }));
     OP.captions = () => captionList().map((c) => ({ s: +c.s.toFixed(3), e: +c.e.toFixed(3), text: c.words.map((w) => (w.hi ? '*' : '') + w.txt).join(' ') }));
+    OP._impacts = cues.filter((c) => ['boom', 'hit', 'slam'].includes(c.type)).map((c) => ({ t: c.t, type: c.type, g: c.type === 'boom' ? 1 : c.type === 'hit' ? 0.6 : 0.4 * (c.gain || 1) }));
     OP.cues = () => cues.slice().sort((a, b) => a.t - b.t);
     OP.ready = true;
     // preview mode (not capture): play in real time, ?t=12.3 to hold a frame

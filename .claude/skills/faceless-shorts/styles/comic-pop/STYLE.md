@@ -26,3 +26,16 @@ Port a neon-versus shot: copy it, add `SCENE = n;` (done automatically if you re
 ## QA pitfalls
 - A dim placeholder at alpha 0.28 reads as grey mud on bright colours: keep placeholders white at 0.35+ or hide them.
 - Labels inside bars at 52 px are the minimum readable size.
+
+## Voice, sound, motion (owner 18 Nov 2026: "aawaz flat hai, sound effects aur graphics mein maza nahi")
+- **Voice: Chatterbox TTS** (Resemble AI, MIT, runs on CPU, ~2.5 min per 35 s). One-time install (~6 GB, needs Python 3.11):
+  `uv venv -p /usr/bin/python3.11 /root/cbx && VIRTUAL_ENV=/root/cbx uv pip install chatterbox-tts "setuptools<81"`.
+  Then `/root/cbx/bin/python SKILL/scripts/cbx_voice.py <proj> 0.7 1.08` (exaggeration, tempo) instead of voice.py, then
+  words.py as usual. Per-line `"emo"` in script.json overrides exaggeration (0.85-0.9 for hype lines, 0.5 for calm).
+  Write lines with "!" and "?" where you want energy. ALWAYS re-transcribe with Whisper and compare: it can drop a short
+  word ("A,") - rewrite that line ("A: what...") and regenerate. Chatterbox adds Resemble's inaudible Perth watermark.
+- **Sound** (`tools/mix.py`, also in inside-out): music `"hype"` (140 BPM trap/pop bed) and hype cues `boom` (big reveal,
+  max ~1 per 8 s), `riser` (dur, ends ON the reveal), `hit`, `ding`, `swoosh` (every cut), `applause` (dur), `tickclock`
+  (dur), `scratch` (record-stop for a myth/twist), `coin`. Old soft cues still work.
+- **Motion** (`src/main.js`): every boom/hit/slam cue auto-shakes the camera, punches in and flashes white; booms throw
+  confetti; every cut gets a coloured comic wipe. Nothing to add in shots.js beyond the cues.
