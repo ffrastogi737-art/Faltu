@@ -1,0 +1,134 @@
+{
+ "title": "4 Weird Things Your Body Does (And Why Science Still Argues)",
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lead": 0.5,
+ "outro": 1.5,
+ "gap": 0.34,
+ "music": "bed",
+ "sources": [
+  "YAWN: Gizmodo AU, 'brain cooling' summary https://gizmodo.com.au/?p=799683 ; Discover Magazine, 'Are you yawning because your brain's hot?' https://www.discovermagazine.com/planet-earth/are-you-yawning-because-your-brains-hot ; Gallup 2007 contagious-yawning study https://journals.sagepub.com/doi/10.1177/147470490700500109 ; Frontiers for Young Minds https://kids.frontiersin.org/article/10.3389/frym.2017.00052",
+  "HICCUP: PMC article on the hiccup reflex https://pmc.ncbi.nlm.nih.gov/articles/PMC3504071 ; Discover Magazine, purpose of hiccuping https://discovermagazine.com/health/what-is-the-purpose-of-hiccuping ; The Swaddle, theories behind hiccups https://www.theswaddle.com/the-various-theories-behind-why-we-hiccup",
+  "SNEEZE: PBS NewsHour, Does the sun make you sneeze https://www.pbs.org/newshour/science/does-the-sun-make-you-sneeze ; Healthline, photic sneeze reflex https://www.healthline.com/health/photic-sneeze-reflex ; ScienceBlog 18-35 percent https://scienceblog.com/m-somewhere-between-18-and-35-percent-of-people-sneeze-when-they-step-into-bright-sunlight-but-nobody-has-established-how-light-hitting-the-eye-triggers-the-sneeze-reflex/",
+  "FOOT: MSD Manual, When the foot is asleep https://msdmanuals.com/home/multimedia/table/when-the-foot-is-asleep ; NBC News, What makes our feet fall asleep https://www.nbcnews.com/news/amp/wbna3076701 ; Big Think https://bigthink.com/surprising-science/foot-falls-asleep/ ; Acibadem https://acibademinternational.com/blog/pins-and-needles-why-limbs-fall-asleep-and-when-it-matters/"
+ ],
+ "lines": [
+  {
+   "text": "Your body does four strange things every single day, and science still argues about why."
+  },
+  {
+   "text": "A yawn you can't stop. A hiccup out of nowhere. A sneeze from sunlight. A foot that falls asleep."
+  },
+  {
+   "text": "Let's take them one by one, starting with the one that's probably about to happen to you."
+  },
+  {
+   "text": "Number one: the yawn."
+  },
+  {
+   "text": "You do it when you're tired, when you're bored, or when you just watched someone else do it."
+  },
+  {
+   "text": "For years, people said you yawn to get more oxygen into your blood."
+  },
+  {
+   "text": "But old experiments found that breathing pure oxygen didn't reduce yawning, and extra carbon dioxide didn't increase it."
+  },
+  {
+   "text": "The leading idea today is that a yawn helps cool your brain."
+  },
+  {
+   "text": "In rats, brain temperature rose before a yawn, and dropped right after."
+  },
+  {
+   "text": "In one small human study, people told to breathe through their noses didn't catch yawns from others at all."
+  },
+  {
+   "text": "It's still not proven. Babies yawn in the womb, and so do cold-blooded animals, which is hard to explain with cooling."
+  },
+  {
+   "text": "And contagious yawning seems to be about connection, but only around six or seven in ten people catch it."
+  },
+  {
+   "text": "Number two: the hiccup."
+  },
+  {
+   "text": "A hiccup is a tiny glitch in your breathing."
+  },
+  {
+   "text": "Your diaphragm, the big muscle under your lungs, suddenly jerks downward, and you start to breathe in."
+  },
+  {
+   "text": "A split second later, your vocal cords snap shut. That snap is the hic sound."
+  },
+  {
+   "text": "The signal runs along two big nerves, the phrenic nerve and the vagus nerve."
+  },
+  {
+   "text": "But why do we do it? Nobody knows for sure."
+  },
+  {
+   "text": "One theory says it's a leftover from ancestors who breathed with gills. The control center for hiccups sits near the one that runs gill breathing in lower animals."
+  },
+  {
+   "text": "Another idea says it helped babies feed, like a burp. A third says it's breathing practice before birth."
+  },
+  {
+   "text": "Experts don't even agree on whether it helps us at all."
+  },
+  {
+   "text": "Number three: the sun sneeze."
+  },
+  {
+   "text": "Step out into bright light, and for some people, a sneeze comes out of nowhere."
+  },
+  {
+   "text": "It's called the photic sneeze reflex, and studies estimate somewhere between eighteen and thirty-five percent of people have it."
+  },
+  {
+   "text": "It runs in families. If one of your parents has it, you have about a fifty percent chance of having it too."
+  },
+  {
+   "text": "Scientists still don't know exactly how light sets it off."
+  },
+  {
+   "text": "The best guess is that signals from the eye cross over into nearby nerve pathways that also serve your nose."
+  },
+  {
+   "text": "It may be the sudden change in brightness that matters, more than the light itself."
+  },
+  {
+   "text": "It's harmless, with one catch: you close your eyes when you sneeze, which is a problem if you're driving."
+  },
+  {
+   "text": "Number four: the foot that falls asleep."
+  },
+  {
+   "text": "You sit on your foot for a while, and when you stand up, it buzzes like static."
+  },
+  {
+   "text": "The popular story says your foot ran out of blood."
+  },
+  {
+   "text": "But many scientists say the main cause is pressure on a nerve."
+  },
+  {
+   "text": "The nerve that serves your foot gets squeezed, so its messages can't get through, and the foot goes numb."
+  },
+  {
+   "text": "When you move and the pressure lifts, the nerve restarts, and its fibers fire in a scrambled way. That's the pins and needles."
+  },
+  {
+   "text": "It's harmless when it fades quickly. If it keeps coming back, get it checked."
+  },
+  {
+   "text": "Four strange habits of your body, and for every one of them, the full story is still being worked out."
+  },
+  {
+   "text": "Which one should we explain next? Tell us in the comments."
+  },
+  {
+   "text": "Subscribe, and we'll see you in the next one."
+  }
+ ]
+}
