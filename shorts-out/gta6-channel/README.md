@@ -148,7 +148,7 @@ Sources: Keengamer, MP1st, PC-Welt (update 1.002, reported), Rockstar Newswire v
 **Vote:** A = what reviews say · B = first hour plan
 **Language:** English · 50 s · player checklist (playbook: promise + deadline) · Experiment: launch-night checklist (new topic kind)
 
-## 09 · `09-gta6-metacritic-99.mp4` · comic-pop (NEW STYLE, owner asked) · Phase 2 launch · ENGLISH · status: building upload
+## 09 · `09-gta6-metacritic-99.mp4` · comic-pop (NEW STYLE, owner asked) · Phase 2 launch · ENGLISH · SCHEDULED 19 Nov 2026 00:30 IST (https://www.youtube.com/watch?v=Cfs1iSjYjFU) · Instagram 19 Nov 00:30 IST · v1 (Kokoro voice) tev-QLHyKy0 kept PRIVATE, replaced after owner feedback
 **Title:**
 ```
 GTA 6 Just Tied The Highest Review Score Ever 🔥 #shorts
@@ -165,4 +165,4 @@ Sources: Insider Gaming, Notebookcheck, Dexerto, Make Tech Easier, Yahoo News UK
 ```
 **Tags:** gta 6 review, gta 6 metacritic, gta 6 99, gta 6 review score, gta 6 reviews, highest rated game ever, ocarina of time, gta 6 vs gta 5, gta 6 launch, gta vi, rockstar games
 **Vote:** A = what reviewers loved most · B = what they didn't like
-**Language:** English · 47 s · same-day news (playbook: news Shorts fast) · Experiment: NEW STYLE comic-pop (bright colours instead of neon) + review-score news
+**Language:** English · 33 s · Chatterbox voice (expressive, exaggeration 0.7) · same-day news (playbook: news Shorts fast) · Experiment: NEW STYLE comic-pop (bright colours instead of neon) + review-score news
