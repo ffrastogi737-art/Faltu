@@ -1,0 +1,27 @@
+{
+  "title": "5 Types Of GTA 6 Players",
+  "voice": "chatterbox",
+  "lang": "en-us",
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.2,
+  "music": "hype",
+  "sources": [
+    "Kotaku review: a more grounded game that requires more planning and consideration if you want to survive and succeed https://kotaku.com/grand-theft-auto-6-the-kotaku-review-2000757842",
+    "Review roundups: reviewers praise the density of the world and how people react to you - Outputlag https://outputlag.com/news/gta-6-review-roundup/ ; The PC Enthusiast https://thepcenthusiast.com/gta-6-reviews-metascore-critic-reactions/",
+    "TheGamer review: movement, shooting and driving feel far better than ever https://www.thegamer.com/grand-theft-auto-6-review/",
+    "Rockstar targets 30 fps on every console (60 fps mode not promised) - TweakTown https://www.tweaktown.com/news/113337/rockstar-says-gta-6-will-run-at-30-fps-and-its-tech-team-is-still-unsure-about-a-60-fps-mode/ ; HWBusters https://hwbusters.com/news/gta-6-runs-at-30-fps-on-console-and-rockstar-isnt-promising-a-60-fps-mode/",
+    "Rockstar: pre-load needs up to 212 GB - GamesRadar, TechRadar (via Rockstar Newswire)",
+    "Main story roughly 50-80 hours - Outputlag roundup https://outputlag.com/news/gta-6-review-roundup/ ; ScreenRant https://screenrant.com/gta-6-main-story-length-completion/ ; GamesRadar https://www.gamesradar.com/games/grand-theft-auto/how-long-is-gta-6-about-80-hours-according-to-one-rockstar-devs-playthrough/"
+  ],
+  "lines": [
+    { "text": "Five types of GTA 6 players! Which one are you?", "emo": 0.85 },
+    { "text": "Number one, the Rusher! He runs in guns blazing, but reviewers say GTA 6 is more grounded, so you need to plan to survive.", "emo": 0.8 },
+    { "text": "Number two, the Explorer! Reviewers keep praising how dense the world is, and how people react to you.", "emo": 0.75 },
+    { "text": "Number three, the Driver! TheGamer says driving feels better than ever.", "emo": 0.8 },
+    { "text": "Number four, the Frame Counter! Rockstar is targeting thirty frames per second on every console, and he has opinions.", "emo": 0.8 },
+    { "text": "Number five, the Preloader! Rockstar says the pre-load needs up to two hundred twelve gigabytes, and he cleared his storage days ago.", "emo": 0.8 },
+    { "text": "The main story is around fifty to eighty hours, so you can be all five!", "emo": 0.85 },
+    { "text": "Comment your number!", "emo": 0.9 }
+  ]
+}

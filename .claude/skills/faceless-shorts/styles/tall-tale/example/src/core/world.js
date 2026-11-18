@@ -338,3 +338,69 @@ export function snapshot(E, scene, cam, w = 1024, h = 768) {
   const r = E.renderer; const prev = r.getRenderTarget(); r.setRenderTarget(rt); r.render(scene, cam); r.setRenderTarget(prev);
   return rt.texture;
 }
+
+// ---------- GTA-style sunny coast (original: no game art). Road along -z (x -4..4), beach + ocean on -x, pastel shops + palms on +x ----------
+export function palm(s = 1, lean = 0.12) {
+  const g = new THREE.Group(), tm = mat({ color: '#B98A56', map: T.planks('#B98A56', [1, 3]) });
+  let x = 0, y = 0; const n = 7;
+  for (let i = 0; i < n; i++) { const seg = cyl(0.13 * s * (1 - i * 0.04), 0.15 * s * (1 - i * 0.04), 0.62 * s, tm, x, y + 0.31 * s, 0, g, 8); seg.rotation.z = -lean * 0.6; x += Math.sin(lean) * 0.62 * s; y += Math.cos(lean * 0.6) * 0.62 * s; }
+  const top = new THREE.Group(); top.position.set(x, y, 0); g.add(top);
+  const leaf = mat({ color: '#2FA84F', side: THREE.DoubleSide }), leaf2 = mat({ color: '#52C45F', side: THREE.DoubleSide });
+  for (let i = 0; i < 9; i++) {
+    const a = i / 9 * Math.PI * 2, fr = new THREE.Group(), L = 1.7 * s;
+    const blade = new THREE.Mesh(new THREE.PlaneGeometry(0.45 * s, L, 1, 6), i % 2 ? leaf : leaf2);
+    const p = blade.geometry.attributes.position; for (let k = 0; k < p.count; k++) { const yy = Math.max(0, p.getY(k) + L / 2); p.setZ(k, -Math.pow(yy / L, 2) * 0.9 * s); p.setX(k, p.getX(k) * (1 - 0.7 * Math.pow(yy / L, 1.5))); }
+    blade.geometry.computeVertexNormals(); blade.position.y = L / 2; blade.castShadow = true; fr.add(blade);
+    fr.rotation.y = a; fr.rotation.x = 1.15; top.add(fr);
+  }
+  [[0.1, -0.05, 0.1], [-0.1, -0.08, 0.05], [0.02, -0.1, -0.12]].forEach(([dx, dy, dz]) => { const c = new THREE.Mesh(new THREE.SphereGeometry(0.13 * s, 8, 6), mat({ color: '#7A4F2A' })); c.position.set(dx * s * 2, dy * s * 2, dz * s * 2); top.add(c); });
+  return g;
+}
+export function umbrella(col = '#FF5E8A') {
+  const g = new THREE.Group(); cyl(0.03, 0.03, 2.2, mat({ color: '#EDEDED' }), 0, 1.1, 0, g, 6);
+  const c = new THREE.Mesh(new THREE.ConeGeometry(1.1, 0.55, 12, 1, true), mat({ color: col, side: THREE.DoubleSide })); c.position.y = 2.3; c.castShadow = true; g.add(c);
+  const c2 = new THREE.Mesh(new THREE.ConeGeometry(1.11, 0.56, 12, 1, true, 0, Math.PI / 3), mat({ color: '#FFFFFF', side: THREE.DoubleSide })); c2.position.y = 2.3; g.add(c2); return g;
+}
+export function surfboard(col = '#FFE600') { const g = new THREE.Group(); const b = new THREE.Mesh(new THREE.CapsuleGeometry(0.22, 1.7, 4, 10), mat({ color: col, roughness: 0.3 })); b.scale.set(1, 1, 0.18); b.position.y = 1.1; b.rotation.z = 0.12; b.castShadow = true; g.add(b);
+  const st = new THREE.Mesh(new THREE.BoxGeometry(0.1, 1.7, 0.02), mat({ color: '#FF3FA4' })); st.position.set(0.0, 1.1, 0.04); st.rotation.z = 0.12; g.add(st); return g; }
+export function convertible(col = '#FF5E9A') {
+  const g = new THREE.Group(), m = mat({ color: col, roughness: 0.25, metalness: 0.25 }), dark = mat({ color: '#1E1E24', roughness: 0.6 }), chrome = mat({ color: '#E8ECF2', metalness: 0.8, roughness: 0.2 });
+  box(1.7, 0.55, 4.2, m, 0, 0.7, 0, g); box(1.6, 0.35, 1.3, m, 0, 0.95, 1.3, g); box(1.5, 0.3, 1.1, m, 0, 0.95, -1.5, g);
+  box(1.3, 0.1, 1.2, mat({ color: '#F3EAD7' }), 0, 0.98, -0.1, g);
+  const ws = box(1.5, 0.55, 0.06, mat({ color: '#9CD8FF', roughness: 0.05, transparent: true, opacity: 0.6 }), 0, 1.35, 0.55, g); ws.rotation.x = -0.4;
+  [[-0.88, 1.35], [0.88, 1.35], [-0.88, -1.35], [0.88, -1.35]].forEach(([x, z]) => { const w = cyl(0.4, 0.4, 0.26, dark, x, 0.4, z, g, 18); w.rotation.z = Math.PI / 2; const h = cyl(0.22, 0.22, 0.28, chrome, x, 0.4, z, g, 12); h.rotation.z = Math.PI / 2; });
+  [-0.55, 0.55].forEach((x) => { const l = new THREE.Mesh(new THREE.SphereGeometry(0.15, 10, 8), mat({ color: '#FFF6C8', emissive: '#FFE680', emissiveIntensity: 0.5 })); l.position.set(x, 0.85, 2.12); g.add(l); });
+  box(1.5, 0.08, 0.12, chrome, 0, 0.5, 2.15, g); return g;
+}
+/** coast(E, { names }) -> { scene, sun, people, buildings, faceAll } */
+export function coast(E, { len = 70, sunset = false, shops } = {}) {
+  const scene = new THREE.Scene(), buildings = [];
+  sky(scene, sunset ? { top: '#6B4CC8', horizon: '#FF8F6B', ground: '#FFB38A' } : { top: '#1F86FF', horizon: '#CFF0FF', ground: '#8ED8F0' });
+  const sun = sunlight(scene, E, sunset ? { col: '#FF9A62', i: 2.4, pos: [-10, 5, -16], sky: '#C9A6E0', ground: '#7A4A5A', hemi: 1.0, box: 16 } : { col: '#FFF1CC', i: 2.8, pos: [-9, 12, 6], box: 16, sky: '#BFE6FF', ground: '#E7C58B', hemi: 1.3 });
+  clouds(scene, [[-30, 26, -100, 16], [20, 34, -110, 20], [55, 22, -90, 12], [-60, 30, -80, 14], [5, 20, -70, 9], [-12, 40, -40, 10]], sunset ? '#FFC9B0' : '#FFFFFF');
+  const road = new THREE.Mesh(new THREE.PlaneGeometry(8, len + 40), mat({ map: canvasTex('asphalt', 256, 256, (g, w, h) => { g.fillStyle = '#4A4A58'; g.fillRect(0, 0, w, h); for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(${rnd(i) > 0.5 ? '255,255,255' : '0,0,0'},0.07)`; g.fillRect(rnd(i * 2.1) * w, rnd(i * 3.7) * h, 2, 2); } g.fillStyle = '#FFE066'; g.fillRect(w / 2 - 5, 0, 10, h * 0.55); }, [1, (len + 40) / 8]) })); road.rotation.x = -Math.PI / 2; road.position.set(0, 0, -len / 2 + 10); road.receiveShadow = true; scene.add(road);
+  const sand = new THREE.Mesh(new THREE.PlaneGeometry(40, len + 40), mat({ map: T.dirt('#F2D9A0', [8, 14], false) })); sand.rotation.x = -Math.PI / 2; sand.position.set(-24, -0.02, -len / 2 + 10); sand.receiveShadow = true; scene.add(sand);
+  const sea = new THREE.Mesh(new THREE.PlaneGeometry(260, len + 200), mat({ map: canvasTex('sea', 256, 256, (g, w, h) => { g.fillStyle = '#17B5C9'; g.fillRect(0, 0, w, h); g.strokeStyle = 'rgba(255,255,255,0.55)'; g.lineWidth = 4; for (let i = 0; i < 40; i++) { const y = rnd(i) * h, x = rnd(i * 3) * w; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 18, y - 8, x + 36, y); g.stroke(); } }, [30, 30]), roughness: 0.2, metalness: 0.1 })); sea.rotation.x = -Math.PI / 2; sea.position.set(-170, -0.35, -len / 2); scene.add(sea);
+  const foam = new THREE.Mesh(new THREE.PlaneGeometry(2.2, len + 40), mat({ color: '#FFFFFF', transparent: true, opacity: 0.85 })); foam.rotation.x = -Math.PI / 2; foam.position.set(-43.5, -0.3, -len / 2 + 10); scene.add(foam);
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(400, 400), mat({ map: T.grass('#8BD66A', [80, 80]) })); back.rotation.x = -Math.PI / 2; back.position.set(190, -0.05, 0); scene.add(back);
+  const SH = shops || [['SUNSET MOTEL', '#FF9EC4', 'wood', '#FF5E8A'], ['SURF SHACK', '#6FE0D2', 'wood', '#FFE600'], ['PALM CAFE', '#FFD86B', 'wood', '#2FA84F'], ['TACO BEACH', '#FF8A5C', 'wood', '#FFFFFF'], ['ICE CREAM', '#B9A3FF', 'wood', '#FF5E8A'], ['GAS & GO', '#8AD7FF', 'wood', '#FF3B3B']];
+  let z = 8, k = 0;
+  while (z > -len) {
+    const [name, wall, kind, aw] = SH[k % SH.length]; const w = 5.5 + rnd(k) * 2, h = 5 + rnd(k * 3) * 2.5; k++;
+    const front = mat({ map: facade(name, { wall, kind, awning: aw, w, h, seed: k, trim: '#FFFFFF', sign: shade(wall, 0.55), signText: '#FFFFFF' }) }), side = mat({ color: shade(wall, 0.9) });
+    const b = new THREE.Mesh(new THREE.BoxGeometry(6, h, w), [side, front, side, side, side, side]); b.position.set(9.2, h / 2, z - w / 2); b.castShadow = b.receiveShadow = true; scene.add(b);
+    box(6.3, 0.2, w + 0.2, mat({ color: '#FFFFFF' }), 9.2, h + 0.1, z - w / 2, scene); buildings.push({ name, z: z - w / 2, w, h, x: 6.2 });
+    const a = box(1.4, 0.06, w - 0.4, mat({ color: aw || '#FFFFFF' }), 5.6, 2.9, z - w / 2, scene); a.rotation.z = 0.35;
+    z -= w + 0.15;
+  }
+  box(2.2, 0.16, len + 20, mat({ color: '#EFE6D2' }), 5.1, 0.08, -len / 2 + 5, scene);
+  for (let zz = 6, i = 0; zz > -len; zz -= 5.5, i++) { const p = palm(1.1 + rnd(i) * 0.4, 0.08 + rnd(i * 2) * 0.1); p.position.set(4.5, 0.16, zz); p.rotation.y = rnd(i) * 6; scene.add(p); }
+  for (let zz = 2, i = 0; zz > -len; zz -= 7, i++) { const p = palm(1.2 + rnd(i * 5) * 0.4, 0.12 + rnd(i) * 0.1); p.position.set(-6 - rnd(i * 3) * 4, 0, zz); p.rotation.y = rnd(i + 4) * 6; scene.add(p); }
+  [[-11, -6, '#FF5E8A'], [-13, -14, '#FFE600'], [-10, -22, '#2EC4FF'], [-14, -30, '#FF8A00'], [-12, -40, '#7B4DFF']].forEach(([x, zz, c]) => { const u = umbrella(c); u.position.set(x, 0, zz); u.rotation.z = 0.12; scene.add(u); });
+  [[-13, -4, '#FFE600'], [-14, -10, '#FF3FA4'], [-13.5, -18, '#2EC4FF']].forEach(([x, zz, c]) => { const s = surfboard(c); s.position.set(x, 0, zz); scene.add(s); });
+  for (let zz = -2; zz > -len; zz -= 14) { const l = lamp(); l.position.set(4.3, 0.16, zz); scene.add(l); }
+  const bb = signBoard('GRAND OPENING', { w: 4, h: 1.2, bg: '#FF3FA4', fg: '#FFFFFF', font: 'Inter' }); bb.position.set(-5.2, 3.6, -16); bb.rotation.y = 0.5; scene.add(bb); [-1.6, 1.6].forEach((dx) => cyl(0.06, 0.06, 3, mat({ color: '#444' }), -5.2 + dx * Math.cos(0.5), 1.5, -16 - dx * Math.sin(0.5), scene, 6));
+  const carsList = [[2, -14, '#FF5E9A'], [-2, -32, '#2EC4FF']].map(([x, zz, c]) => { const v = convertible(c); v.position.set(x, 0, zz); if (x < 0) v.rotation.y = Math.PI; scene.add(v); return v; });
+  const crowd = extras(scene, [[5.6, -7, 1], [-4.6, -9, 3, 'happy'], [5.4, -16, 5], [-5.0, -24, 2], [5.5, -30, 6], [-5.2, -36, 7, 'laugh']]);
+  return { scene, sun, people: crowd, cars: carsList, buildings, faceAll(cam) { crowd.forEach((p) => p.face(cam)); } };
+}
