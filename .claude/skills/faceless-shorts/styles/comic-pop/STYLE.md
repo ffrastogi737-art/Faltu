@@ -39,3 +39,18 @@ Port a neon-versus shot: copy it, add `SCENE = n;` (done automatically if you re
   (dur), `scratch` (record-stop for a myth/twist), `coin`. Old soft cues still work.
 - **Motion** (`src/main.js`): every boom/hit/slam cue auto-shakes the camera, punches in and flashes white; booms throw
   confetti; every cut gets a coloured comic wipe. Nothing to add in shots.js beyond the cues.
+
+## Auto engine: write the script, the shots build themselves (19 Nov 2026)
+Two data-driven variants: each script line carries a `vis` and `src/shots.js` turns it into a shot + sound cues, so a
+new video = a new `make_script.py` (no hand-placed shots). Kinds: `I` icon + headline (+ `sub` chip) · `T` chapter title ·
+`S` big stat (counts up if numeric) · `Q` question · `M` myth stamp (`stamp:` for TWIST etc.) · `F` fact stamp ·
+`C` chain of 2-3 icons with arrows (each lands on its word) · `V` versus cards. `fx: 'boom' | 'hit'`, `at: '<word>'`.
+Icons (drawn in code): person lungs brain nerve clock bubble thermo sun eye nose icecream bed cup skin cat note hand water
+stomach foot (+ ear tube plane gum in the vertical one). Add new icons to `ICON` in the same ink-sticker look.
+- `long-example/` = 16:9 1920x1080 LONG video (L01 "10 Weird Things Your Body Does", 5:10, chapter badges, captions y 985).
+  Voice: `cbx_long.py <proj> gen k n` in n parallel workers (OMP_NUM_THREADS=cores/n), cached per line, then
+  `cbx_long.py <proj> join 0.92` (Chatterbox talks ~4 words/s: slow to 0.92 for long-form; 980 words = 5:10).
+  Render: `node SKILL/scripts/render_html.mjs <proj> renders/out.mp4 --jobs 3` (~28 fps on 4 cores), then
+  `-crf 31 -tune animation` for a ~45 MB repo copy. Whisper-check with a per-line transcribe of data/_cbx/l<i>.wav.
+- `auto-vertical-example/` = the same engine laid out 1080x1920 for Shorts (15 "Why Your Ears Pop On A Plane").
+  `S` with a `pop`-style word holds the reveal 0.75 s before the next cut.

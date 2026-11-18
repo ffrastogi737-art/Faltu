@@ -163,3 +163,16 @@ Sources: NBC News, ScienceAlert, Big Think, NINDS (via The Healthy), Wonderopoli
 ```
 **Tags:** why does my foot fall asleep, foot falls asleep, pins and needles, paresthesia, numb foot, nerve compression, human body facts, biology facts, science shorts, body facts
 **Experiment:** best formula topic (second-person body science) + NEW: Chatterbox expressive voice, hype music/SFX, impact shake/confetti (owner: voice was flat)
+
+## 15 · `15-ears-pop.mp4` · comic-pop auto-vertical (NEW style for solo hype) · STATUS_15
+**Title:** Why Your Ears Pop On A Plane
+**Description:**
+```
+Behind each eardrum is a small pocket of air linked to your throat by the eustachian tube. When the cabin pressure drops on a climb, that trapped air pushes on the eardrum until a swallow or yawn opens the tube and the pressure evens out with a pop, which is why chewing gum helps.
+
+Sources: Mayo Clinic (Airplane ear), Merck / MSD Manual (Barotrauma of the ear), Altru Health.
+
+#shorts #science #humanbody #didyouknow #airplane #funfacts #travel #biology
+```
+**Tags:** why do ears pop on a plane, ear popping, airplane ear, eustachian tube, ear pressure flight, chewing gum on plane, human body facts, science shorts, body facts, travel tips
+**Experiment:** NEW STYLE for solo hype: bright comic-pop (auto engine) instead of inside-out/chalk-talk; Chatterbox voice, 27 s

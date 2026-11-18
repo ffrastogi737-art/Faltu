@@ -1,0 +1,945 @@
+{
+ "title": "10 Weird Things Your Body Does (And Why)",
+ "series": "10 WEIRD THINGS YOUR BODY DOES",
+ "music_db": -25,
+ "lead": 0.35,
+ "outro": 1.2,
+ "gap": 0.42,
+ "music": "hype",
+ "sources": [
+  "Hiccups: Mayo Clinic (Hiccups), WebMD, MedicineNet: diaphragm spasm + vocal cords close, phrenic/vagus nerves, triggers, most stop on their own",
+  "Yawning: Gallup & Eldakar 2011 (Frontiers in Evolutionary Neuroscience, more yawning in cooler season), Massen et al. 2014 (Physiology & Behavior); NBC News, ScienceDaily; no link with blood oxygen",
+  "Photic sneeze: PBS NewsHour (10-35%), ScienceAlert (17-35%), Science Blog (18-35%), runs in families",
+  "Brain freeze: Healthline (sphenopalatine ganglioneuralgia, tongue on palate), Texas A&M Vital Record, ScienceDaily",
+  "Hypnic jerk: NBC News, Sleep.com (up to 70%), 1News NZ; caffeine/stress/fatigue",
+  "Goosebumps: Wikipedia (Goose bumps, arrector pili), Why Evolution Is True, Durham University repository",
+  "Wrinkly fingers: Scientific American, Popular Science, UTMB Medical Discovery News (nerve-controlled vasoconstriction; no wrinkling after nerve damage; grip hypothesis, Newcastle 2013)",
+  "Stomach growl: Scientific American, Wikipedia (Borborygmus, Migrating motor complex)",
+  "Foot asleep: NBC News, ScienceAlert, Big Think, NINDS (paresthesia)",
+  "Hiccup record: Guinness World Records, Smithsonian Magazine (Charles Osborne, 68 years, 1922-1990)",
+  "Wrinkly fingers grip study: Newcastle University press release + Nature (2013, 12% faster with wet marbles); Smithsonian (2014 Berlin study found no difference)",
+  "Unger Ig Nobel 2009 (Medicine): Improbable Research, Live Science, The Tech",
+  "Knuckles: Kawchuk et al. 2015 PLOS ONE (MRI, gas cavity), IFLScience, JSTOR Daily; Unger letter (Arthritis & Rheumatism); Castellanos & Axelrod 1990 (300 people, no excess arthritis)"
+ ],
+ "lines": [
+  {
+   "text": "Your body does weird stuff every single day!",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "YOUR BODY",
+    "sub": "IS WEIRD"
+   }
+  },
+  {
+   "text": "It hiccups, it yawns, it sneezes at the sun,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "lungs",
+      "HICCUP"
+     ],
+     [
+      "person",
+      "YAWN"
+     ],
+     [
+      "sun",
+      "SUN SNEEZE"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "and sometimes it jolts you awake, just as you fall asleep.",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "JOLT!"
+   }
+  },
+  {
+   "text": "So here are ten weird things your body does, and the real reason behind each one.",
+   "vis": {
+    "k": "S",
+    "big": "10",
+    "label": "WEIRD THINGS"
+   }
+  },
+  {
+   "text": "Some of them, even scientists are still arguing about!",
+   "vis": {
+    "k": "Q",
+    "head": "STILL A MYSTERY"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Number one: hiccups!",
+   "vis": {
+    "k": "T",
+    "n": 1,
+    "title": "HICCUPS",
+    "icon": "lungs"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Under your lungs sits a big, dome-shaped muscle called the diaphragm.",
+   "vis": {
+    "k": "I",
+    "icon": "lungs",
+    "head": "DIAPHRAGM",
+    "sub": "UNDER YOUR LUNGS"
+   }
+  },
+  {
+   "text": "With every normal breath, it pulls down smoothly, and air flows in.",
+   "vis": {
+    "k": "I",
+    "icon": "lungs",
+    "head": "BREATHE IN",
+    "sub": "NICE AND SMOOTH"
+   }
+  },
+  {
+   "text": "But when the nerves that control it get irritated,",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "NERVES IRRITATED"
+   }
+  },
+  {
+   "text": "say from eating too fast, fizzy drinks, or a sudden change in temperature,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "clock",
+      "EAT FAST"
+     ],
+     [
+      "bubble",
+      "FIZZY"
+     ],
+     [
+      "thermo",
+      "TEMP CHANGE"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "the diaphragm suddenly spasms, and yanks air in!",
+   "vis": {
+    "k": "I",
+    "icon": "lungs",
+    "head": "SPASM!",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "A split second later, your vocal cords snap shut,",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "SNAP SHUT"
+   }
+  },
+  {
+   "text": "and that sudden stop is the hic you hear!",
+   "vis": {
+    "k": "S",
+    "big": "HIC!",
+    "label": "THE SOUND",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Most hiccups go away on their own, within minutes.",
+   "vis": {
+    "k": "I",
+    "icon": "clock",
+    "head": "MINUTES",
+    "sub": "GONE BY ITSELF"
+   }
+  },
+  {
+   "text": "But one man, Charles Osborne, hiccupped for sixty-eight years, from nineteen twenty-two to nineteen ninety!",
+   "vis": {
+    "k": "S",
+    "big": "68 YEARS",
+    "label": "LONGEST HICCUPS EVER",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "It's a world record nobody wants.",
+   "vis": {
+    "k": "F",
+    "head": "WORLD RECORD"
+   }
+  },
+  {
+   "text": "And here's the strange part: scientists still aren't sure why we have them at all.",
+   "vis": {
+    "k": "Q",
+    "head": "WHY DO WE HICCUP?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Number two: yawning.",
+   "vis": {
+    "k": "T",
+    "n": 2,
+    "title": "YAWNING",
+    "icon": "person"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "You've probably heard that you yawn because you need more oxygen.",
+   "vis": {
+    "k": "Q",
+    "head": "MORE OXYGEN?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "But studies haven't found a link between yawning and the oxygen in your blood.",
+   "vis": {
+    "k": "M",
+    "head": "NO LINK FOUND"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "One leading idea is that a yawn cools your brain,",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "BRAIN COOLER",
+    "sub": "ONE THEORY"
+   }
+  },
+  {
+   "text": "pulling in a big gulp of air, and pumping blood toward your head, like a radiator.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "LIKE A RADIATOR",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "In one study, people yawned more in cooler weather than in hot weather,",
+   "vis": {
+    "k": "V",
+    "a": [
+     "COOL DAYS",
+     "MORE YAWNS"
+    ],
+    "b": [
+     "HOT DAYS",
+     "FEWER YAWNS"
+    ]
+   }
+  },
+  {
+   "text": "And that makes sense, because cooler air cools better.",
+   "vis": {
+    "k": "I",
+    "icon": "thermo",
+    "head": "COOL AIR WORKS"
+   }
+  },
+  {
+   "text": "And yes, yawns really are contagious.",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "CONTAGIOUS!"
+   }
+  },
+  {
+   "text": "You might even yawn just hearing about it, right now.",
+   "vis": {
+    "k": "Q",
+    "head": "YAWNED YET?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Number three: sneezing at the sun!",
+   "vis": {
+    "k": "T",
+    "n": 3,
+    "title": "SUN SNEEZE",
+    "icon": "sun"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Step out into bright light, and some people instantly sneeze.",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "sun",
+      "BRIGHT LIGHT"
+     ],
+     [
+      "nose",
+      "ACHOO!"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "It's called the photic sneeze reflex,",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "PHOTIC SNEEZE",
+    "sub": "REFLEX"
+   }
+  },
+  {
+   "text": "and estimates say somewhere between eighteen and thirty-five percent of people have it.",
+   "vis": {
+    "k": "S",
+    "big": "18-35%",
+    "label": "OF PEOPLE",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "It often runs in families.",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "RUNS IN FAMILIES"
+   }
+  },
+  {
+   "text": "The best guess is that the nerve signals from your eyes and your nose run very close together,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "eye",
+      "EYES"
+     ],
+     [
+      "nerve",
+      "SIGNALS"
+     ],
+     [
+      "nose",
+      "NOSE"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "so a blast of light gets mixed up with an itch in your nose.",
+   "vis": {
+    "k": "I",
+    "icon": "nose",
+    "head": "MIXED SIGNALS",
+    "sub": "BEST GUESS"
+   }
+  },
+  {
+   "text": "Nobody has proven exactly how it works yet.",
+   "vis": {
+    "k": "Q",
+    "head": "NOT PROVEN YET"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Number four: brain freeze.",
+   "vis": {
+    "k": "T",
+    "n": 4,
+    "title": "BRAIN FREEZE",
+    "icon": "icecream"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "You take a big bite of ice cream, and boom! A sudden pain in your forehead.",
+   "vis": {
+    "k": "I",
+    "icon": "icecream",
+    "head": "OUCH!",
+    "fx": "boom",
+    "at": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "The cold hits the roof of your mouth,",
+   "vis": {
+    "k": "I",
+    "icon": "icecream",
+    "head": "ROOF OF MOUTH"
+   }
+  },
+  {
+   "text": "where there's a bundle of nerves called the sphenopalatine ganglion.",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "NERVE BUNDLE"
+   }
+  },
+  {
+   "text": "Doctors even call it sphenopalatine ganglioneuralgia. Try saying that fast!",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "SPHENOPALATINE",
+    "sub": "GANGLIONEURALGIA"
+   }
+  },
+  {
+   "text": "One theory is that the blood vessels there react to the sudden cold,",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "BLOOD VESSELS",
+    "sub": "ONE THEORY"
+   }
+  },
+  {
+   "text": "and your brain reads it as pain in your head.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "PAIN SIGNAL",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "The fix? Press your tongue on the roof of your mouth, to warm it up,",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "TONGUE UP!",
+    "sub": "WARMS IT UP"
+   }
+  },
+  {
+   "text": "or just eat cold stuff slowly.",
+   "vis": {
+    "k": "I",
+    "icon": "clock",
+    "head": "GO SLOW"
+   }
+  },
+  {
+   "text": "It hurts, but it's harmless, and it passes in seconds.",
+   "vis": {
+    "k": "F",
+    "head": "HARMLESS"
+   }
+  },
+  {
+   "text": "Number five: the hypnic jerk.",
+   "vis": {
+    "k": "T",
+    "n": 5,
+    "title": "HYPNIC JERK",
+    "icon": "bed"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "You're drifting off to sleep, and suddenly it feels like you're falling,",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "FALLING?!"
+   }
+  },
+  {
+   "text": "and your whole body jolts you awake!",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "JOLT!",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "That's a hypnic jerk, also called a sleep start.",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "SLEEP START"
+   }
+  },
+  {
+   "text": "Up to seventy percent of people get them.",
+   "vis": {
+    "k": "S",
+    "big": "70%",
+    "label": "OF PEOPLE",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Nobody knows for sure why they happen.",
+   "vis": {
+    "k": "Q",
+    "head": "WHY?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "One idea is that as your muscles relax, your brain is switching from awake to asleep,",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "AWAKE > ASLEEP",
+    "sub": "ONE IDEA"
+   }
+  },
+  {
+   "text": "and that switch can misfire into a quick twitch.",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "MISFIRE!",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Caffeine, stress, and being very tired can make them more likely.",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "cup",
+      "CAFFEINE"
+     ],
+     [
+      "brain",
+      "STRESS"
+     ],
+     [
+      "bed",
+      "TIRED"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "They're harmless. Just a little rude.",
+   "vis": {
+    "k": "F",
+    "head": "HARMLESS"
+   }
+  },
+  {
+   "text": "Number six: goosebumps.",
+   "vis": {
+    "k": "T",
+    "n": 6,
+    "title": "GOOSEBUMPS",
+    "icon": "skin"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Get cold, or hear an amazing song, and tiny bumps pop up all over your skin.",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "thermo",
+      "COLD"
+     ],
+     [
+      "note",
+      "MUSIC"
+     ],
+     [
+      "skin",
+      "BUMPS"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "Each one is a tiny muscle, pulling a hair straight up.",
+   "vis": {
+    "k": "I",
+    "icon": "skin",
+    "head": "TINY MUSCLE",
+    "sub": "PULLS A HAIR UP"
+   }
+  },
+  {
+   "text": "Doctors call them cutis anserina, which literally means goose skin.",
+   "vis": {
+    "k": "I",
+    "icon": "skin",
+    "head": "CUTIS ANSERINA",
+    "sub": "= GOOSE SKIN"
+   }
+  },
+  {
+   "text": "For furry animals, that makes their fur stand up and trap warm air,",
+   "vis": {
+    "k": "I",
+    "icon": "cat",
+    "head": "FUR PUFF",
+    "sub": "TRAPS HEAT"
+   }
+  },
+  {
+   "text": "or makes them look bigger, to scare off a threat.",
+   "vis": {
+    "k": "I",
+    "icon": "cat",
+    "head": "LOOK BIGGER!",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "We lost most of our fur, but we kept the reflex.",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "KEPT THE REFLEX"
+   }
+  },
+  {
+   "text": "So goosebumps are just a leftover, from our hairy ancestors!",
+   "vis": {
+    "k": "F",
+    "head": "LEFTOVER!"
+   }
+  },
+  {
+   "text": "Number seven: wrinkly fingers in the bath.",
+   "vis": {
+    "k": "T",
+    "n": 7,
+    "title": "PRUNE FINGERS",
+    "icon": "hand"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Most people think your skin just soaks up water and puckers.",
+   "vis": {
+    "k": "Q",
+    "head": "SOAKS UP WATER?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "But here's the twist: it's actually your nerves doing it!",
+   "vis": {
+    "k": "M",
+    "head": "IT'S YOUR NERVES",
+    "stamp": "TWIST"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Your nervous system shrinks the blood vessels in your fingertips,",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "VESSELS SHRINK"
+   }
+  },
+  {
+   "text": "and the skin on top folds into wrinkles.",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "WRINKLES!"
+   }
+  },
+  {
+   "text": "In fact, if the nerve to a finger is damaged, that finger doesn't wrinkle at all!",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "NO NERVE",
+    "sub": "NO WRINKLES",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "One idea is that wrinkles work like tire treads, helping you grip wet things.",
+   "vis": {
+    "k": "I",
+    "icon": "water",
+    "head": "LIKE TIRE TREADS",
+    "sub": "BETTER GRIP?"
+   }
+  },
+  {
+   "text": "In one study, people with wrinkly fingers moved wet marbles about twelve percent faster,",
+   "vis": {
+    "k": "S",
+    "big": "12%",
+    "label": "FASTER WITH WET MARBLES"
+   }
+  },
+  {
+   "text": "but a later study found no difference, so the jury's still out.",
+   "vis": {
+    "k": "Q",
+    "head": "JURY STILL OUT"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Number eight: cracking your knuckles.",
+   "vis": {
+    "k": "T",
+    "n": 8,
+    "title": "KNUCKLE CRACK",
+    "icon": "hand"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "That pop is not your bones grinding.",
+   "vis": {
+    "k": "M",
+    "head": "BONES GRINDING?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "Your joints sit in a slippery fluid,",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "JOINT FLUID"
+   }
+  },
+  {
+   "text": "and when you pull the joint apart, a gas-filled bubble forms in that fluid, with a pop!",
+   "vis": {
+    "k": "I",
+    "icon": "bubble",
+    "head": "GAS BUBBLE",
+    "sub": "POP!",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Scientists actually filmed it happening inside an MRI scanner, in twenty fifteen.",
+   "vis": {
+    "k": "S",
+    "big": "2015",
+    "label": "FILMED IN AN MRI"
+   }
+  },
+  {
+   "text": "So, will it give you arthritis?",
+   "vis": {
+    "k": "Q",
+    "head": "ARTHRITIS?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "One doctor cracked the knuckles of only one hand, for sixty years.",
+   "vis": {
+    "k": "V",
+    "a": [
+     "LEFT HAND",
+     "CRACKED"
+    ],
+    "b": [
+     "RIGHT HAND",
+     "NEVER"
+    ]
+   }
+  },
+  {
+   "text": "Neither hand got arthritis.",
+   "vis": {
+    "k": "F",
+    "head": "NO ARTHRITIS",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "He even won an Ig Nobel prize for it, in two thousand nine!",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "IG NOBEL PRIZE",
+    "sub": "2009"
+   }
+  },
+  {
+   "text": "And bigger studies haven't found a link either.",
+   "vis": {
+    "k": "F",
+    "head": "NO LINK FOUND"
+   }
+  },
+  {
+   "text": "Number nine: your stomach growling.",
+   "vis": {
+    "k": "T",
+    "n": 9,
+    "title": "STOMACH GROWL",
+    "icon": "stomach"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "That rumble isn't your stomach begging for food.",
+   "vis": {
+    "k": "M",
+    "head": "BEGGING FOR FOOD?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "It's gas and liquid being squeezed through your gut by waves of muscle.",
+   "vis": {
+    "k": "I",
+    "icon": "stomach",
+    "head": "GAS + LIQUID",
+    "sub": "SQUEEZED ALONG"
+   }
+  },
+  {
+   "text": "A couple of hours after your stomach empties, a cleaning wave sweeps the leftovers along,",
+   "vis": {
+    "k": "I",
+    "icon": "stomach",
+    "head": "CLEANING WAVE",
+    "sub": "EVERY FEW HOURS"
+   }
+  },
+  {
+   "text": "and with no food inside to muffle it, the sound gets loud!",
+   "vis": {
+    "k": "S",
+    "big": "GRRR!",
+    "label": "NOTHING TO MUFFLE IT",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Your gut rumbles when you're full too; the food just muffles it.",
+   "vis": {
+    "k": "I",
+    "icon": "stomach",
+    "head": "FULL? STILL RUMBLES"
+   }
+  },
+  {
+   "text": "Doctors even have a name for it: borborygmi.",
+   "vis": {
+    "k": "I",
+    "icon": "stomach",
+    "head": "BORBORYGMI"
+   }
+  },
+  {
+   "text": "And number ten: your foot falling asleep.",
+   "vis": {
+    "k": "T",
+    "n": 10,
+    "title": "FOOT ASLEEP",
+    "icon": "foot"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Most people think the blood gets cut off.",
+   "vis": {
+    "k": "Q",
+    "head": "BLOOD CUT OFF?"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "But mostly, you're squashing a nerve.",
+   "vis": {
+    "k": "M",
+    "head": "SQUASHED NERVE",
+    "stamp": "TWIST"
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "The squashed nerve stops carrying messages, so your foot goes numb.",
+   "vis": {
+    "k": "I",
+    "icon": "foot",
+    "head": "NUMB"
+   }
+  },
+  {
+   "text": "When you move, the pressure comes off, and the nerve fires a messy burst of signals,",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "SIGNAL BURST",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "which your brain reads as pins and needles!",
+   "vis": {
+    "k": "I",
+    "icon": "foot",
+    "head": "PINS + NEEDLES"
+   }
+  },
+  {
+   "text": "So your body isn't broken. It's just running some very old, very weird code!",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "OLD CODE"
+   }
+  },
+  {
+   "text": "Which one surprised you most? Tell me in the comments,",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "COMMENT 1 TO 10"
+   }
+  },
+  {
+   "text": "and subscribe to solo hype, for a weird true fact every day!",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "SUBSCRIBE!",
+    "fx": "boom"
+   },
+   "emo": 0.85
+  }
+ ]
+}
