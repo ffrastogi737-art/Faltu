@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><style>@font-face{font-family:Inter;font-weight:900;src:url(fonts/Inter-Black.otf)}@font-face{font-family:Inter;font-weight:800;src:url(fonts/Inter-ExtraBold.otf)}body{margin:0;background:#000}</style><canvas id="cv" width="1920" height="1080"></canvas>
+<script type="module">
+import { W, H, setCtx, ctx } from './src/core/lib.js';
+import { K, text, stamp, star, car, copCar, brackets } from './src/core/kit.js';
+await document.fonts.load('900 100px Inter'); setCtx(document.getElementById('cv').getContext('2d'));
+const g = ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,'#0b1424'); g.addColorStop(1,'#1b2a44'); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+for (let i=0;i<16;i++){ const bx=i*125-10, bh=260+((i*97)%7)*45; ctx.fillStyle='#0e1726'; ctx.fillRect(bx,760-bh,112,bh); for(let r=0;r<8;r++)for(let c=0;c<3;c++) if(((i*31+r*5+c)*7919)%10>4){ctx.fillStyle='rgba(255,200,100,0.55)';ctx.fillRect(bx+16+c*30,760-bh+20+r*34,16,18);} }
+ctx.fillStyle='#131b27'; ctx.fillRect(0,760,W,320);
+copCar(330,1000,2.6,0,1); copCar(1590,1000,2.6,1,-1); car(960,1000,2.4,'#9db3c9');
+brackets(560,730,800,330,K.red,60,1,10);
+text('GTA 5 HABITS',960,200,190,K.amber,{glow:40}); text('THAT GET YOU',960,390,150,K.white);
+stamp('CAUGHT',960,590,K.red,1,190,-0.05);
+for(let i=0;i<6;i++) star(560+i*160,800,54,K.amber,30);
+window.OP={ready:true,duration:()=>1,draw(){},frame:(t,q)=>document.getElementById('cv').toDataURL('image/jpeg',q)};
+</script>

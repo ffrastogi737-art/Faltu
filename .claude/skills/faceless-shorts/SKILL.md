@@ -20,6 +20,7 @@ local Whisper word timing, numpy sound. No AI images or video, no API keys, no c
 | **Tall Tale 3D** `tall-tale` | funny true stories: flat 2D cartoon people (big round heads, ink outlines) acting in a sunny 3D small-town world, camera always moving, one-word captions | 40-60 s · 9:16 |
 | **Neon Versus** `neon-versus` | gaming / tech "X vs Y", top-5 lists and launch countdowns in a synthwave Vice City look: glowing panels, neon text, generic skylines and silhouettes (never real game art), Hindi voice with Hinglish captions, optional "vote for Part 2" ending | 40-58 s · 9:16 |
 | **Chalk Talk** `chalk-talk` | "why does your body do that?" explainers drawn on a green chalkboard: chalk lines that draw themselves on, stick people, cross-section diagrams with labels and arrows, chalk-white captions with one yellow word | 35-50 s · 9:16 |
+| **CCTV Dossier** `cctv-wide` | LONG-FORM 16:9 (1920x1080) checklist / fact-file explainers in a surveillance-room look: REC HUD, evidence cards, CONFIRMED / REPORTED stamps, drawn icons, auto subtitles, no game footage | 4-5 min · 16:9 |
 
 Which style: body / health / science "what happens if" → **Deep Dive 3D** (or **Inside Out** for a lighter, faster 2D
 look) · creepy, unexplained, true crime, "this happened in 1971" → **Night File 3D** · survival, life hacks, "here's what
