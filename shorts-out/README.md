@@ -150,3 +150,16 @@ Sources: Scientific American, Popular Science, UTMB Medical Discovery News.
 ```
 **Tags:** why do fingers wrinkle in water, pruney fingers, wrinkly fingers explained, why fingers prune, autonomic nervous system, human body facts, biology facts, science shorts, body facts, did you know
 **Experiment:** best formula (second-person body science), chalk-talk 2nd time; slot 19:30 IST (new slot test for solo hype)
+
+## 14 · `14-foot-asleep.mp4` · inside-out + hype sound/impacts · status: uploading
+**Title:** Why Your Foot Falls Asleep
+**Description:**
+```
+A foot "falls asleep" mostly because you are pressing on a nerve, not mainly because the blood is cut off: squashed nerves stop carrying messages, so the foot goes numb. When the pressure comes off, the nerve fires a messy burst of signals your brain reads as pins and needles (paresthesia), which is usually harmless.
+
+Sources: NBC News, ScienceAlert, Big Think, NINDS (via The Healthy), Wonderopolis.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #pinsandneedles
+```
+**Tags:** why does my foot fall asleep, foot falls asleep, pins and needles, paresthesia, numb foot, nerve compression, human body facts, biology facts, science shorts, body facts
+**Experiment:** best formula topic (second-person body science) + NEW: Chatterbox expressive voice, hype music/SFX, impact shake/confetti (owner: voice was flat)
