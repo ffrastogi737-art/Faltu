@@ -25,8 +25,9 @@ upload public at upload time (private, then publishAt or the timed switch).
 ## USAGE SAVER (the owner's Claude plan has a weekly limit; running out stops everything)
 - Fresh session per run; keep it lean: read only the files a step needs (use `tail`, `grep`, `sed -n`), never re-read
   big files, no extra WebSearch beyond the 2-source fact check, at most 2 QA fix rounds, no optional API writes.
-- Until the weekly reset on **Wed 18 Nov 2026 16:30 IST**: each factory run makes **ONE** video (rule 0 picks the channel).
-  After it: two per run (one GTA + one normal), so each channel gets 2 a day.
+- From 18 Nov 2026 (the weekly limit ran out on 16 Nov, so stay lean): each factory run makes **ONE** video (rule 0 picks
+  the channel), two runs a day. Use Sonnet. Watch usage; if a later week shows spare room, raise to two per run.
+- GTA phase 2 (launch, 19 Nov - 10 Dec) starts tomorrow: follow the phase text below.
 - If the plan's limit is hit mid-run, stop cleanly after pushing what is done.
 
 ## Git
