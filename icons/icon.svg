@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#fcee0a"/>
-  <path d="M0 0h512v512H0z" fill="url(#s)" opacity=".08"/>
-  <defs><pattern id="s" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="4" height="24" fill="#0a0a12"/></pattern></defs>
-  <path d="M256 64 L422 160 V352 L256 448 L90 352 V160 Z" fill="#0a0a12"/>
-  <path d="M256 64 L422 160 V352 L256 448 L90 352 V160 Z" fill="none" stroke="#ff2a6d" stroke-width="14" transform="translate(10 8)" opacity=".9"/>
-  <path d="M256 140 L278 234 L372 256 L278 278 L256 372 L234 278 L140 256 L234 234 Z" fill="#00f0ff" transform="translate(-6 0)"/>
-  <path d="M256 140 L278 234 L372 256 L278 278 L256 372 L234 278 L140 256 L234 234 Z" fill="#fcee0a"/>
-</svg>

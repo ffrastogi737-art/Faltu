@@ -1,0 +1,152 @@
+# Shorts catalog
+
+Every finished video, with a ready-to-paste title and description. Download a file from this folder, upload it, then change its status here if you like.
+
+## 01 · `01-emu-war.mp4` · paper-atlas · UPLOADED (https://www.youtube.com/watch?v=DhXqCUFCe7g)
+**Title:** Australia Lost a War to Birds 🐦
+**Description:**
+```
+In 1932 Australia sent the army, two machine guns and 10,000 bullets against 20,000 emus. The emus won. True story.
+
+Sources: Encyclopaedia Britannica (Emu War), Australian Geographic.
+
+#shorts #emuwar #history #australia #weirdhistory #funfacts #didyouknow #truestory
+```
+
+## 02 · `02-knocker-up.mp4` · stick-story · not uploaded
+**Title:** The Job That Replaced Your Alarm Clock
+**Description:**
+```
+Before cheap alarm clocks, British factory workers paid a "knocker-up" a few pennies a week to tap on their bedroom window with a long pole. The job survived in some towns until the 1970s.
+
+Sources: Wikipedia (Knocker-up), JSTOR Daily, Mental Floss.
+
+#shorts #history #weirdjobs #britain #didyouknow #funfacts #oldjobs #truestory
+```
+
+## 03 · `03-brain-freeze.mp4` · inside-out · not uploaded
+**Title:** Why Ice Cream Hurts Your Forehead
+**Description:**
+```
+Brain freeze happens when cold hits the roof of your mouth: blood vessels tighten then swell, and the trigeminal nerve makes your brain feel it in your forehead. Pressing your tongue to the roof of your mouth warms it and stops it faster.
+
+Sources: Cleveland Clinic (Brain Freeze), Johns Hopkins Medicine.
+
+#shorts #brainfreeze #science #humanbody #didyouknow #funfacts #icecream #whathappensif
+```
+
+## 04 · `04-gta6-13-years.mp4` · stick-story · not uploaded · TIME-SENSITIVE: post before Nov 19, 2026
+**Title:** You Waited 13 Years For This (GTA 6)
+**Description:**
+```
+GTA V came out in 2013. After two delays, Grand Theft Auto VI launches Thursday, November 19, 2026 on PS5 and Xbox Series X|S. PC has no date yet.
+
+Sources: Rockstar Games Newswire, ESPN, Guinness World Records.
+
+#shorts #gta6 #gtavi #grandtheftauto #gaming #rockstargames #ps5 #xbox
+```
+
+## 05 · `05-dancing-plague.mp4` · paper-atlas · not uploaded
+**Title:** The Town That Couldn't Stop Dancing
+**Description:**
+```
+In July 1518 a woman in Strasbourg began dancing in the street and did not stop. Within weeks dozens had joined her, some accounts say up to 400, and historians still debate why.
+
+Sources: The Public Domain Review (The Dancing Plague of 1518), Wikipedia, Popular Science.
+
+#shorts #history #dancingplague #weirdhistory #1518 #mystery #didyouknow #truestory
+```
+
+## 06 · `06-bed-rest-study.mp4` · stick-story · not uploaded
+**Title:** Paid $19,000 To Stay In Bed
+**Description:**
+```
+In 2019 NASA, ESA and the German space agency paid volunteers about $19,000 to spend 60 days in a bed tilted head-down. It mimics what weightlessness does to muscles and bones, to help protect astronauts on long missions.
+
+Sources: NBC News, NASA (bed rest studies), SYFY Wire.
+
+#shorts #nasa #space #weirdjobs #science #astronaut #didyouknow #funfacts
+```
+
+## 07 · `07-cant-tickle-yourself.mp4` · inside-out · not uploaded
+**Title:** Why You Can't Tickle Yourself
+**Description:**
+```
+Your cerebellum predicts the feeling of your own movements and tells the rest of your brain to turn it down, so your own touch never surprises you. In a 1990s robot experiment, adding a delay of a fifth of a second made people's own tickles work again.
+
+Sources: Blakemore, Wolpert & Frith (Nature Neuroscience, 1998), Scientific American, ScienceAlert.
+
+#shorts #science #brain #psychology #didyouknow #funfacts #humanbody #whyisthat
+```
+
+## 08 · `08-emperor-norton.mp4` · tall-tale (3D) · not uploaded
+**Title:** The Man Who Made Himself Emperor of America
+**Description:**
+```
+In 1859 a bankrupt San Francisco businessman, Joshua Norton, declared himself Emperor of the United States, and the city played along: shops accepted the money he printed and about 10,000 people came to his funeral. He also ordered a bridge across the bay, decades before the Bay Bridge was built.
+
+Sources: Wikipedia (Emperor Norton), American Heritage, History.com.
+
+#shorts #history #emperornorton #sanfrancisco #weirdhistory #truestory #didyouknow #funfacts
+```
+
+## 09 · `09-plane-window-hole.mp4` · stick-story · not uploaded
+**Title:** Why Plane Windows Have a Tiny Hole
+**Description:**
+```
+An airliner window is three panes, and the tiny hole sits in the middle one. It lets cabin air through so the outer pane carries the pressure while the middle pane stays unstressed as a backup, and it lets moisture escape so the window does not fog.
+
+Sources: MiGFlug (The Hole in Your Aircraft Window), Slate.
+
+#shorts #aviation #airplane #engineering #didyouknow #funfacts #travel #whyisthat
+```
+
+## 10 · `10-pinboy.mp4` · paper-atlas · UPLOADED PRIVATE (https://www.youtube.com/watch?v=hhY56rh0zhU)
+**Title:** The Dangerous Job Behind Every Bowling Lane
+**Description:**
+```
+Before machines, bowling pins were reset by hand by pinboys, usually teenagers, in a job that was low paid and dangerous. From the early 1950s the automatic pinspotter replaced them in almost every bowling centre within about a decade.
+
+Sources: Wikipedia (Pinsetter), Smithsonian Lemelson Center, International Bowling Museum.
+
+#shorts #history #weirdjobs #bowling #didyouknow #oldjobs #truestory #funfacts
+```
+
+## 11 · `11-goosebumps.mp4` · chalk-talk (NEW style) · PUBLIC 16 Nov 2026 03:31 UTC (switch sent; read-back blocked by quota) · was due 09:00 IST (https://www.youtube.com/watch?v=yz_VUXgICfM)
+**Title:** Why You Get Goosebumps
+**Description:**
+```
+Every hair on your skin has a tiny muscle, the arrector pili, and when you're cold or a strong feeling hits, your nervous system makes thousands of them squeeze at once, pulling the hairs up and bunching the skin into bumps. In furry animals this traps warm air and makes them look bigger; in humans it is mostly a leftover from our furry ancestors.
+
+Sources: Wikipedia (Goose bumps), Why Evolution Is True, Durham University research repository.
+
+#shorts #goosebumps #science #humanbody #didyouknow #biology #funfacts #whyisthat
+```
+**Tags:** why do we get goosebumps, goosebumps explained, goosebumps science, arrector pili, why do i get chills from music, human body facts, vestigial traits, biology facts, science shorts, body facts
+**Experiment:** NEW STYLE chalk-talk (topic = best formula: second-person body science)
+
+## 12 · `12-stomach-growl.mp4` · inside-out · PUBLIC 16 Nov 2026 08:16 UTC (read-back confirmed) (https://www.youtube.com/watch?v=UjPBhNKGc6A)
+**Title:** Why Your Stomach Growls
+**Description:**
+```
+A stomach growl is gas and liquid being pushed through your gut by waves of muscle. When the stomach has been empty for a couple of hours, a cleaning wave (the migrating motor complex) sweeps leftovers along, and with no food to muffle it the sound gets loud.
+
+Sources: Scientific American, Wikipedia (Borborygmus, Migrating motor complex).
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #stomach
+```
+**Tags:** why does my stomach growl, stomach growling explained, borborygmi, migrating motor complex, hungry stomach noise, human body facts, gut facts, biology facts, science shorts, body facts
+**Experiment:** best formula (second-person body science, inside-out)
+
+## 13 · `13-finger-wrinkles.mp4` · chalk-talk · PUBLIC 18 Nov 2026 12:00 UTC (late: weekly limit) (https://www.youtube.com/watch?v=DWY9ThV6WNY)
+**Title:** Why Your Fingers Wrinkle In Water
+**Description:**
+```
+Wrinkly fingers in the bath are not skin swelling with water. Your nervous system makes the tiny blood vessels in your fingertips narrow, the skin gets pulled in and wrinkles, and nerve-damaged fingers stay smooth. The grooves may help you grip wet objects, though scientists still debate that part.
+
+Sources: Scientific American, Popular Science, UTMB Medical Discovery News.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #bathtime
+```
+**Tags:** why do fingers wrinkle in water, pruney fingers, wrinkly fingers explained, why fingers prune, autonomic nervous system, human body facts, biology facts, science shorts, body facts, did you know
+**Experiment:** best formula (second-person body science), chalk-talk 2nd time; slot 19:30 IST (new slot test for solo hype)

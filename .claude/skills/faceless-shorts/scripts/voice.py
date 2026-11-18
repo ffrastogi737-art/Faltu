@@ -27,7 +27,8 @@ GOOD = {
     'am_michael': 'US male, steady explainer (default)', 'am_puck': 'US male, lively, playful', 'am_fenrir': 'US male, deeper',
     'am_onyx': 'US male, low', 'af_heart': 'US female, warm (best overall)', 'af_bella': 'US female, bright',
     'af_nicole': 'US female, soft and close', 'bm_george': 'UK male, documentary', 'bm_fable': 'UK male, storyteller',
-    'bf_emma': 'UK female, calm',
+    'bf_emma': 'UK female, calm', 'hm_omega': 'Hindi male (lang hi; write the line in Devanagari as "say")',
+    'hm_psi': 'Hindi male, lighter', 'hf_alpha': 'Hindi female', 'hf_beta': 'Hindi female, softer',
 }
 SR = 24000
 
@@ -76,19 +77,20 @@ def main():
     P = Path(a.project); S = json.loads((P / 'script.json').read_text())
     voice = a.voice or S.get('voice', 'am_michael'); speed = a.speed or S.get('speed', 1.0)
     k = Kokoro(str(KDIR / 'kokoro-v1.0.onnx'), str(KDIR / 'voices-v1.0.bin'))
-    lang = 'en-gb' if voice.startswith('b') else 'en-us'
+    lang = S.get('lang') or ('hi' if voice.startswith('h') else 'en-gb' if voice.startswith('b') else 'en-us')
+    spoken = lambda ln: ln.get('say') or ln['text']        # "say" = what the voice reads (e.g. Devanagari); "text" = what captions/timing use
     say = lambda text: trim(np.asarray(k.create(text, voice=voice, speed=speed, lang=lang)[0], dtype=np.float64))
     # group the lines into whole sentences (a line ending in . ? ! closes one; "break": true forces a close)
     groups, cur = [], []
     for i, ln in enumerate(S['lines']):
         cur.append(i)
-        if re.search(r'[.?!]["\')]*$', ln['text'].strip()) or ln.get('break') or i == len(S['lines']) - 1: groups.append(cur); cur = []
+        if re.search(r'[.?!।]["\')]*$', spoken(ln).strip()) or ln.get('break') or i == len(S['lines']) - 1: groups.append(cur); cur = []
     out = [np.zeros(int(S.get('lead', 0.4) * SR))]; t = len(out[0]) / SR; lines = [None] * len(S['lines'])
     for g in groups:
-        x = say(' '.join(S['lines'][i]['text'] for i in g))
+        x = say(' '.join(spoken(S['lines'][i]) for i in g))
         cuts = [0.0]
         if len(g) > 1:                                    # find each cut inside the sentence
-            lens = np.array([len(say(S['lines'][i]['text'])) for i in g], dtype=float)
+            lens = np.array([len(say(spoken(S['lines'][i]))) for i in g], dtype=float)
             pauses = silences(x)
             for c in np.cumsum(lens)[:-1] / lens.sum() * len(x) / SR:
                 near = [p for p in pauses if abs((p[0] + p[1]) / 2 - c) < 0.4]
