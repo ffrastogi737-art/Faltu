@@ -34,7 +34,7 @@ upload public at upload time (private, then publishAt or the timed switch).
   skill and commit it.
 - CHAIN: at the very end of each run (after the report), start the next run yourself with
   mcp__claude-code-remote__create_session (source_url https://github.com/ffrastogi737-art/Faltu, source_revision
-  ccr-8c1babe8-9jk0db, clone_depth 20, title "Shorts factory run", model claude-opus-5-5, the same prompt you got).
+  ccr-8c1babe8-9jk0db, clone_depth 20, title "Shorts factory run", model claude-sonnet-5-5, the same prompt you got).
   Before starting work, call list_sessions: if another "Shorts factory run" session is WORKING, do only step P and exit
   without chaining (one chain at a time). If you hit a usage-limit error, stop; the scheduler restarts the chain later.
 - YouTube upload quota (~5-6 uploads/day): when an upload returns quotaExceeded, do not wait: add the video to
@@ -53,6 +53,12 @@ upload public at upload time (private, then publishAt or the timed switch).
   applause, scratch for a myth/twist). Copy tools/mix.py from styles/comic-pop/example if a style lacks them.
 - GRAPHICS: bright colours, never dark/neon. GTA = comic-pop. Any style: copy the impacts block (shake, flash, confetti,
   wipe) from styles/comic-pop/example/src/main.js into the project's main.js.
+
+## TOKEN BUDGET (owner, 18 Nov 2026: weekly usage must last until next Wednesday; 17% already used)
+- Runs and chained sessions use **claude-sonnet-5-5** (never Opus). Easy, mechanical work goes to a **haiku** subagent
+  (Agent tool, model "haiku"): uploads/scheduling, Instagram posting, README/log/queue edits, git commit+push, stats reads.
+- Save tokens: view ONE contact sheet per video (0.5-1 s step, small), not many full frames; short reports; no repeated
+  WebSearch for facts already in the READMEs; reuse styles/scripts instead of writing new kits.
 
 ## Git
 Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own branch):
