@@ -1,0 +1,3 @@
+numpy>=1.24
+yt-dlp          # sirf URL input ke liye
+faster-whisper  # transcript + subtitles ke liye (optional, par recommended)
