@@ -186,7 +186,7 @@ Sources: Rockstar via TweakTown and HWBusters (30 fps target), Outputlag review 
 **Vote:** A = what reviewers loved most · B = how big the map really is
 **Language:** English · 30 s · player-centric warnings list (playbook) · Experiment: "reviews warn you" angle
 
-## 11 · `11-gta6-not-gta5.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+## 11 · `11-gta6-not-gta5.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · SCHEDULED 19 Nov 2026 16:30 IST (https://www.youtube.com/watch?v=bYZzwATIrvs) · Instagram 19 Nov 16:45 IST
 **Title:**
 ```
 GTA 5 Players: GTA 6 Is NOT What You Think 😳 #shorts
