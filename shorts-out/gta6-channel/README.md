@@ -167,7 +167,7 @@ Sources: Insider Gaming, Notebookcheck, Dexerto, Make Tech Easier, Yahoo News UK
 **Vote:** A = what reviewers loved most · B = what they didn't like
 **Language:** English · 33 s · Chatterbox voice (expressive, exaggeration 0.7) · same-day news (playbook: news Shorts fast) · Experiment: NEW STYLE comic-pop (bright colours instead of neon) + review-score news
 
-## 10 · `10-gta6-review-warnings.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+## 10 · `10-gta6-review-warnings.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · SCHEDULED 19 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=cCBrCIFGU0Q) · Instagram 19 Nov 11:30 IST
 **Title:**
 ```
 GTA 6 Reviews Warn You About These 3 Things ⚠️ #shorts
