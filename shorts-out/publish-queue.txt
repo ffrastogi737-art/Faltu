@@ -2,4 +2,4 @@
 # <slot UTC>  <videoId>  <title>  PENDING|DONE
 2026-11-16T03:30:00Z  yz_VUXgICfM  Why You Get Goosebumps  DONE
 2026-11-16T06:00:00Z  UjPBhNKGc6A  Why Your Stomach Growls  DONE
-2026-11-16T14:00:00Z  DWY9ThV6WNY  Why Your Fingers Wrinkle In Water  PENDING
+2026-11-16T14:00:00Z  DWY9ThV6WNY  Why Your Fingers Wrinkle In Water  DONE
