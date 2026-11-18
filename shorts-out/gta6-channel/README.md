@@ -204,3 +204,22 @@ Sources: Kotaku review, Windows Central review, TheGamer review, Outputlag and T
 **Tags:** gta 5 players gta 6, gta 6 vs gta 5, gta 6 review, gta 6 grounded, gta 6 realism, gta 6 tips, gta 6 driving, gta 6 shooting, gta 5 habits, gta vi, rockstar games
 **Vote:** A = GTA 5 habits to drop · B = best things to do first
 **Language:** English · 31 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: split-screen GTA 5 vs GTA 6 framing
+
+## 12 · `12-gta6-five-types.mp4` · tall-tale GTA crew (NEW: original cartoon crew in a sunny coast, comic stickers) · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+**Title:**
+```
+5 Types Of GTA 6 Players (Which One Are You?) 🔥 #shorts
+```
+**Description:**
+```
+Five types of GTA 6 players: the Rusher (reviewers say it is more grounded, so plan to survive), the Explorer (reviewers praise how dense the world is and how people react to you), the Driver (TheGamer says driving feels better than ever), the Frame Counter (Rockstar targets 30 fps on every console), and the Preloader (the pre-load needs up to 212 GB). The main story is around 50 to 80 hours, so you can be all five.
+
+Comment your number!
+
+Sources: Kotaku review, TheGamer review, Outputlag and The PC Enthusiast review roundups, TweakTown and HWBusters (30 fps target), GamesRadar and TechRadar (212 GB pre-load), ScreenRant and GamesRadar (story length).
+
+#shorts #gta6 #gtavi #gta6review #gaming #rockstargames #ps5 #gtaplayers
+```
+**Tags:** gta 6 players, gta 6 types, gta 6 explorer, gta 6 driving, gta 6 30 fps, gta 6 preload, gta 6 story length, gta 6 tips, gta vi, rockstar games
+**Vote:** comment your number (1-5)
+**Language:** English · 33 s · list of player types (playbook: player-centric) · Experiment: NEW tall-tale crew look (original characters, sunny coast) + comic stickers
