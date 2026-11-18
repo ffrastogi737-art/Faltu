@@ -43,6 +43,17 @@ upload public at upload time (private, then publishAt or the timed switch).
   "MANUAL UPLOAD: <channel> · <title>", and keep making videos. Instagram is separate: keep posting reels there.
 - If the plan's limit is hit mid-run, stop cleanly after pushing what is done.
 
+## QUALITY BAR (owner, 18 Nov 2026 night: "neon se thak gaya", "aawaz flat hai", "sound effects, graphics mein maza nahi")
+- VOICE: never plain Kokoro again. Use Chatterbox (expressive, MIT): install once per fresh session (~6 min, 6 GB):
+  `uv venv -q -p /usr/bin/python3.11 /root/cbx && VIRTUAL_ENV=/root/cbx uv pip install -q chatterbox-tts "setuptools<81"`
+  (run it in the background at the START of the run), then `/root/cbx/bin/python .claude/skills/faceless-shorts/scripts/cbx_voice.py
+  <proj> 0.7 1.08` instead of voice.py, then words.py. Per-line "emo" 0.5-0.9; write "!" / "?" for energy; Whisper-check every
+  word (it can drop "A,"). Shorter, punchier: ~30-40 s.
+- SOUND: music "hype" + hype cues (boom on the big reveals with a riser into them, hit, ding, swoosh on every cut,
+  applause, scratch for a myth/twist). Copy tools/mix.py from styles/comic-pop/example if a style lacks them.
+- GRAPHICS: bright colours, never dark/neon. GTA = comic-pop. Any style: copy the impacts block (shake, flash, confetti,
+  wipe) from styles/comic-pop/example/src/main.js into the project's main.js.
+
 ## Git
 Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own branch):
 `git fetch origin ccr-8c1babe8-9jk0db && git checkout -B ccr-8c1babe8-9jk0db origin/ccr-8c1babe8-9jk0db`.
