@@ -147,3 +147,22 @@ Sources: Keengamer, MP1st, PC-Welt (update 1.002, reported), Rockstar Newswire v
 **Tags:** gta 6 launch, gta 6 unlock time, gta 6 midnight, gta 6 preload, gta 6 update 1.002, gta 6 ps5, gta 6 xbox, gta 6 pc, gta 6 november 19, gta vi, rockstar games
 **Vote:** A = what reviews say · B = first hour plan
 **Language:** English · 50 s · player checklist (playbook: promise + deadline) · Experiment: launch-night checklist (new topic kind)
+
+## 09 · `09-gta6-metacritic-99.mp4` · comic-pop (NEW STYLE, owner asked) · Phase 2 launch · ENGLISH · status: building upload
+**Title:**
+```
+GTA 6 Just Tied The Highest Review Score Ever 🔥 #shorts
+```
+**Description:**
+```
+GTA 6's review embargo lifted on 18 November and its Metacritic critic score opened at 99, from more than a hundred critic reviews. That ties The Legend of Zelda: Ocarina of Time (1998) for the highest Metacritic score ever and beats Rockstar's own GTA 4 (98) and GTA 5 (97). The score can still move as more reviews come in. Store listings reportedly show it unlocking at midnight local time on PS5 and Xbox Series X|S.
+
+Part 2 is your call. Comment: A = what reviewers loved most, B = what they didn't like.
+
+Sources: Insider Gaming, Notebookcheck, Dexerto, Make Tech Easier, Yahoo News UK (Variety). Unlock time is reported (store listings), not announced by Rockstar.
+
+#shorts #gta6 #gtavi #gta6review #metacritic #ps5 #xbox #rockstargames
+```
+**Tags:** gta 6 review, gta 6 metacritic, gta 6 99, gta 6 review score, gta 6 reviews, highest rated game ever, ocarina of time, gta 6 vs gta 5, gta 6 launch, gta vi, rockstar games
+**Vote:** A = what reviewers loved most · B = what they didn't like
+**Language:** English · 47 s · same-day news (playbook: news Shorts fast) · Experiment: NEW STYLE comic-pop (bright colours instead of neon) + review-score news

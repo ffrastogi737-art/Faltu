@@ -103,8 +103,9 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
   "Sources: ...", 6-8 hashtags starting #shorts; Tags: 8-12 phrases; Experiment; status).
 
 ### B · GTA / GAMING (Kratos Playz; language, style, format: your call from trends and data)
-- Current style neon-versus (any style may replace it if trends/data say so, incl. library styles). For neon-versus:
-  `new_video.sh neon-versus <name>`, then copy
+- Current style **comic-pop** (owner, 18 Nov 2026: neon look is tiring, viewers skip it; make it colourful, different,
+  high-CTR). `new_video.sh comic-pop <name>` and rewrite script + shots (port neon-versus kit pieces as needed). Do NOT
+  go back to the dark neon look. Old neon-versus notes, for reference only: `new_video.sh neon-versus <name>`, then copy
   `.claude/skills/faceless-shorts/styles/neon-versus/gta-example/{src,script.json}` over it (the newest GTA video:
   priceTag, clockFace, moon, progress, leonida map, scenes, regionShot, voteCards). Never real game footage, screenshots,
   logos or character art.
@@ -130,7 +131,7 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Part 2 rule: a clear A/B winner (3+ votes and ahead, YouTube + Instagram) -> make that next, hook "You voted, so
   here's Part 2".
 - What has worked so far (change freely when data says): voice am_michael (am_onyx dark) ~1.05, English, 40-58 s, 95-125
-  words, music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
+  words, comic-pop look (since 18 Nov), music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
 - Deliver shorts-out/gta6-channel/<NN>-<slug>.mp4 + README entry like entry 05 (Title, Description with the vote line,
   Sources, hashtags #shorts #gta6 ..., Tags, A/B options, phase, language, POST BEFORE if time-sensitive).
 
