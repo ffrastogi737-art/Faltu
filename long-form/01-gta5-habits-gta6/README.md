@@ -37,5 +37,6 @@ Long-form test #1 (log: `long-form/experiments.txt`): 4:19 English "player-side 
 ## Sources (facts, 2+ outlets each; full list in script.json)
 See `script.json` "sources" and `trend-research.md`. Unconfirmed items are said as "reported" / "unconfirmed" on screen and in the narration. TIME-SENSITIVE: the narration says "launches on November nineteenth"; post on 18-19 Nov; after launch re-check facts (30 FPS, Heat, online) against real reviews before Part 2.
 ## STATUS
-UPLOADED PRIVATE to Kratos Playz 18 Nov 2026: https://www.youtube.com/watch?v=ID0o6Y-NKes (id ID0o6Y-NKes), category 20, SCHEDULED public 19 Nov 2026 16:30 IST (publishAt 2026-11-19T11:00:00Z).
-Thumbnail: NOT SET on YouTube, API says the Kratos Playz channel is not phone-verified (owner: verify at https://www.youtube.com/verify, then run YOUTUBE_UPDATE_THUMBNAIL videoId ID0o6Y-NKes with thumbnailUrl https://raw.githubusercontent.com/ffrastogi737-art/Faltu/ccr-fa5fa7f1-do17r2/long-form/01-gta5-habits-gta6/thumb.jpg).
+- **v2 (effects + beat music) = the real one:** https://www.youtube.com/watch?v=IQK5LW-4vok (id IQK5LW-4vok), private, SCHEDULED public 19 Nov 2026 16:30 IST (2026-11-19T11:00:00Z). The mp4 in this folder is v2 (52 MB).
+- v1 (flat, no effects) = ID0o6Y-NKes: kept (never delete), private, its publishAt pushed to 2027-11-19 so it cannot go public by mistake. Owner may delete it by hand.
+- Thumbnail NOT set on either: Kratos Playz channel is not phone-verified (youtube.com/verify); then YOUTUBE_UPDATE_THUMBNAIL videoId IQK5LW-4vok with thumbnailUrl https://raw.githubusercontent.com/ffrastogi737-art/Faltu/ccr-fa5fa7f1-do17r2/long-form/01-gta5-habits-gta6/thumb.jpg

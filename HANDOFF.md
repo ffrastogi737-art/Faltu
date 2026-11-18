@@ -3,7 +3,7 @@
 ## Done in this session
 - **Long video 01** for Kratos Playz: "GTA 5 Habits That Will Get You Caught In GTA 6", 4:19, 1920x1080, 31 MB.
   Files: `long-form/01-gta5-habits-gta6/` (mp4, thumb.jpg, script.json with sources, README with title / description / chapters / tags, trend-research.md).
-  YouTube: https://www.youtube.com/watch?v=ID0o6Y-NKes, uploaded PRIVATE, scheduled public 19 Nov 2026 16:30 IST. Test logged in `long-form/experiments.txt`
+  YouTube: **v2 https://www.youtube.com/watch?v=IQK5LW-4vok** (effects + beat music), private, scheduled public 19 Nov 2026 16:30 IST. v1 ID0o6Y-NKes (flat) stays private, publishAt moved to 2027. Test logged in `long-form/experiments.txt`
   (judge after 7 days: views + average view duration vs the Kratos Shorts median).
 - **New style `cctv-wide` (CCTV Dossier)**, 16:9 long-form, in `.claude/skills/faceless-shorts/styles/cctv-wide/` (STYLE.md, example, style-sheet.png) and a row in SKILL.md.
   Reuse: `bash scripts/new_video.sh cctv-wide <name>`.
@@ -16,3 +16,6 @@
 - Facts are pre-launch (game releases 19 Nov, so no reviews existed on 18 Nov). After launch: re-check 30 FPS, Heat, online, map size against real reviews, then make Part 2.
 - Worked in this session branch only; the factory branch ccr-8c1babe8-9jk0db and shorts-out/ were not changed (HANDOFF.md did not exist before, created now).
 - Note: the "chalk-wide" style mentioned in the brief does not exist in the repo; cctv-wide is the first 16:9 style.
+
+- 60-day plan + monetization research: `long-form/GROWTH-PLAN-60-DAYS.md`. Key fact: YPP bar for new channels reportedly rises 1 Feb 2027, so the target is to qualify by 31 Jan 2027.
+- Effects spec for every cctv-wide video: STYLE.md section EFFECTS (cuts, shake, hook, beat music, loudnorm).

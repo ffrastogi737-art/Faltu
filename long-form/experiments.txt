@@ -1,4 +1,4 @@
 # Long-form experiments (Kratos Playz). One change per video, verdict after 7 days vs the channel's Shorts median.
 # video | went public (IST) | what was tested | views 7d / avg view duration | verdict
-GTA 5 Habits That Will Get You Caught In GTA 6 | 19 Nov 16:30 IST (ID0o6Y-NKes) | FIRST LONG-FORM: 4:19, 16:9, new style cctv-wide, "GTA 5 habits" player-side list (angle proven at 2.78M by a bigger channel), English, confirmed-only | | 
+GTA 5 Habits That Will Get You Caught In GTA 6 | 19 Nov 16:30 IST (ID0o6Y-NKes (v1, flat) / IQK5LW-4vok (v2)) | FIRST LONG-FORM: 4:19, 16:9, new style cctv-wide, "GTA 5 habits" player-side list (angle proven at 2.78M by a bigger channel), English, confirmed-only | | 
 # IDEA BANK: Part 2 after real reviews (what held up / what Rockstar got different); "GTA 6 police explained"; 8-10 min cut of the same list; map-region guide (needs real post-launch sources).
