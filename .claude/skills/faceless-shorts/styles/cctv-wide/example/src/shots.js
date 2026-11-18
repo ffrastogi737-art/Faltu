@@ -8,11 +8,13 @@ const FEED = [120, 150, 1680, 730];               // x, y, w, h of the "camera f
 export function buildShots() {
   const S = [], CUES = [], cue = (t, type, o = {}) => CUES.push({ t: +t.toFixed(3), type, ...o });
   // scene(line, startWord|null, habit, note, fn, cues): one shot. fn gets {lt, d, t, w, A, E} (A = pop-in 0..1 on a word, E = has the word been said)
-  function scene(line, sw, habit, note, fn, cues = []) {
+  let nCut = 0; const CUTS = ['whip', 'glitch', 'whip', 'flash'];
+  function scene(line, sw, habit, note, fn, cues = [], o = {}) {
     const st = sw ? Wd(sw, line) - 0.1 : L(line), w = (word, ln_ = line) => Wd(word, ln_) - st;
-    S.push({ id: `L${line}${sw ? '-' + sw : ''}`, at: st, habit, note, draw: (lt, d, t) => fn({ lt, d, t, st, w, A: (word, dur = 0.3, l = line) => eob(seg(lt, w(word, l), w(word, l) + dur)), E: (word, l = line) => lt >= w(word, l) }) });
-    cue(st, 'whoosh', { gain: 0.45 }); for (const [word, type, gain] of cues) cue(st + w(word), type, { gain: gain ?? 0.6 });
+    const cut = o.cut || CUTS[nCut++ % CUTS.length]; S.push({ id: `L${line}${sw ? '-' + sw : ''}`, at: st, habit, note, cut, draw: (lt, d, t) => fn({ lt, d, t, st, w, A: (word, dur = 0.3, l = line) => eob(seg(lt, w(word, l), w(word, l) + dur)), E: (word, l = line) => lt >= w(word, l) }) });
+    if (S.length > 1) { if (cut === 'whip') cue(st, 'whoosh', { gain: 1.0 }); else if (cut === 'glitch') cue(st, 'glitch', { gain: 0.9 }); else cue(st, 'slam', { gain: 0.45 }); } if (o.riser) { cue(st - 1.0, 'riser', { gain: 0.9 }); cue(st, 'boom', { gain: 1.0 }); } for (const [word, type, gain] of cues) cue(st + w(word), type, { gain: gain ?? 0.6 });
   }
+  cue(0.15, 'slam', { gain: 0.9 }); cue(0.65, 'slam', { gain: 1.0 }); cue(0.65, 'boom', { gain: 1.0 });
   const conf = (a, x = 960, y = 190, label = 'CONFIRMED · GAME INFORMER') => chip(label, x, y, K.green, a, 28);
   const unk = (lt, t, x, y, label, a) => { card(x - 250, y - 70, 500, 140, K.amber, a); qmark(x - 190, y, 90, K.amber, a, t); text(label, x + 30, y, 40, K.white, { a }); };
 
@@ -34,8 +36,8 @@ export function buildShots() {
     (o.icons || []).forEach((ic) => { const a = A(ic.word); if (a > 0) ic.fn(ic.x, ic.y, a); });
   };
   const titleCard = (n, l1, l2, o) => { const { lt, d, t } = o, a = eob(seg(lt, 0, 0.35)), a2 = eo(seg(lt, 0.15, 0.5)); ctx.save(); ctx.font = '900 92px Inter'; const mw = Math.max(ctx.measureText(l1).width, l2 ? ctx.measureText(l2).width : 0); ctx.restore(); const fs = Math.min(92, 92 * 900 / mw);
-    text(String(n).padStart(2, '0'), 470, 470, 440, K.amber, { a, glow: 36, sc: lerp(0.8, 1, a) }); text('HABIT TO UNLEARN', 880, 330, 38, K.dim, { align: 'left', a: a2, mono: true });
-    text(l1, 880, 450, fs, K.white, { align: 'left', a: a2 }); if (l2) text(l2, 880, 560, fs, K.white, { align: 'left', a: a2 }); ln(880, 640, 880 + 760, 640, K.amber, 8, eo(seg(lt, 0.2, 0.8))); };
+    text(String(n).padStart(2, '0'), 470, 480, 560, K.amber, { a, glow: 36, sc: lerp(2.2, 1, a), font: 'Anton' }); text('HABIT TO UNLEARN', 880, 330, 38, K.dim, { align: 'left', a: a2, mono: true });
+    text(l1, 880, 450, fs * 1.25, K.white, { align: 'left', a: a2, font: 'Anton' }); if (l2) text(l2, 880, 560, fs * 1.25, K.white, { align: 'left', a: a2, font: 'Anton' }); ln(880, 640, 880 + 760, 640, K.amber, 8, eo(seg(lt, 0.2, 0.8))); };
 
   // ── 0 · hook ──────────────────────────────────────────────────────────────────
   scene(0, null, 0, 'night street: a car turns two corners', ({ lt, t, w, A, E }) => {
@@ -72,7 +74,7 @@ export function buildShots() {
   }, [['eight', 'pop'], ['habits', 'pop'], ['unlearn', 'pop']]);
 
   // ── habit 1 · the lazy getaway ─────────────────────────────────────────────────
-  scene(5, null, 1, 'habit 1 title', (h) => titleCard(1, 'THE LAZY GETAWAY', null, h), [['Habit', 'slam', 0.5]]);
+  scene(5, null, 1, 'habit 1 title', (h) => titleCard(1, 'THE LAZY GETAWAY', null, h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(6, null, 1, 'suspect scan: vehicle + clothing tags', ({ lt, t, w, A, E }) => {
     conf(A('identify', 0.3)); const sc = lt % 2.4 / 2.4; person(470, 850, 2.0, '#5f7389'); const sy = lerp(300, 860, sc); ln(260, sy, 680, sy, K.cyan, 5); brackets(330, 280, 280, 590, K.cyan, 30, 1, 5); text('SUSPECT', 470, 250, 30, K.cyan, { mono: true });
     card(900, 300, 800, 200, K.cyan, A('vehicle', 0.3)); car(1060, 430, 1.0, '#9db3c9', { a: A('vehicle') }); text('VEHICLE', 1330, 400, 64, K.white, { a: A('vehicle') }); 
@@ -97,7 +99,7 @@ export function buildShots() {
   scene(9, null, 1, 'my plan card 1', (h) => planCard({ h, rows: [{ txt: 'ASSUME THE COPS REMEMBER:', word: 'plan', size: 50, col: K.amber }, { txt: 'MY CAR', word: 'car', size: 70 }, { txt: 'MY OUTFIT', word: 'outfit', size: 70 }], icons: [{ word: 'car', x: 880, y: 510, fn: (x, y, a) => car(x, y, 0.8, '#9db3c9', { a }) }, { word: 'outfit', x: 880, y: 630, fn: (x, y, a) => shirt(x, y, 0.8, K.cyan, a) }] }), [['car', 'pop'], ['outfit', 'pop']]);
 
   // ── habit 2 · ignoring the stars ───────────────────────────────────────────────
-  scene(10, null, 2, 'habit 2 title', (h) => titleCard(2, 'IGNORING THE STARS', null, h), [['Habit', 'slam', 0.5]]);
+  scene(10, null, 2, 'habit 2 title', (h) => titleCard(2, 'IGNORING THE STARS', null, h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   const gauge = (x, y, r, val, a = 1, t = 0, q = false) => { ctx.save(); ctx.globalAlpha = a; ctx.lineWidth = 34; ctx.lineCap = 'butt'; [[K.green, 0], [K.amber, 1], [K.red, 2]].forEach(([c, i]) => { ctx.beginPath(); ctx.arc(x, y, r, Math.PI + i * Math.PI / 3, Math.PI + (i + 1) * Math.PI / 3); ctx.strokeStyle = c; ctx.stroke(); });
     const ang = Math.PI + val * Math.PI; ln(x, y, x + Math.cos(ang) * (r - 20), y + Math.sin(ang) * (r - 20), K.white, 10); circle(x, y, 18, K.white); ctx.restore(); text('HEAT', x, y + 70, 54, K.red, { a, glow: 20 }); };
   scene(11, null, 2, 'six stars + Heat gauge', ({ lt, t, w, A, E }) => {
@@ -114,7 +116,7 @@ export function buildShots() {
   scene(13, null, 2, 'plan: timer -> record', (h) => planCard({ h, rows: [{ txt: 'STARS = A TIMER', word: 'stop', strike: 'start', size: 80, col: K.dim }, { txt: 'STARS = A RECORD', word: 'record', size: 80, col: K.green }], icons: [{ word: 'record', x: 1500, y: 520, fn: (x, y, a) => star(x, y, 70 * a, K.amber, 24) }] }), [['start', 'slam', 0.5], ['record', 'pop']]);
 
   // ── habit 3 · the weather ──────────────────────────────────────────────────────
-  scene(14, null, 3, 'habit 3 title', (h) => titleCard(3, 'TREATING THE WEATHER', 'LIKE WALLPAPER', h), [['Habit', 'slam', 0.5]]);
+  scene(14, null, 3, 'habit 3 title', (h) => titleCard(3, 'TREATING THE WEATHER', 'LIKE WALLPAPER', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(15, null, 3, 'hurricane + rebuilt weather', ({ lt, t, w, A, E }) => {
     conf(A('rebuilt', 0.3)); hurricane(560, 480, 290, t, K.cyan, A('rebuilt', 0.5));
     card(1000, 300, 720, 150, K.cyan, A('scratch', 0.3)); text('REBUILT FROM SCRATCH', 1360, 375, 50, K.white, { a: A('scratch', 0.3) });
@@ -129,7 +131,7 @@ export function buildShots() {
   scene(17, null, 3, 'plan: check the sky', (h) => planCard({ h, rows: [{ txt: 'THE SKY IS NOT JUST DECORATION', word: 'assume', size: 50 }, { txt: 'CHECK IT BEFORE A BIG JOB', word: 'Check', size: 50, col: K.cyan }, { txt: 'HAVE A BACKUP PLAN', word: 'backup', size: 50, col: K.amber }], icons: [{ word: 'decoration', x: 1380, y: 520, fn: (x, y, a) => cloud(x, y, 1.6 * a, '#5b6b80') }] }), [['Check', 'pop'], ['backup', 'pop']]);
 
   // ── habit 4 · animals ──────────────────────────────────────────────────────────
-  scene(18, null, 4, 'habit 4 title', (h) => titleCard(4, 'RUNNING PAST', 'THE ANIMALS', h), [['Habit', 'slam', 0.5]]);
+  scene(18, null, 4, 'habit 4 title', (h) => titleCard(4, 'RUNNING PAST', 'THE ANIMALS', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(19, null, 4, '170+ species counter with dots', ({ lt, t, w, A, E }) => {
     conf(A('reports', 0.3)); const k = eo(seg(lt, w('hundred') - 0.3, w('seventy') + 0.5)), n = Math.round(170 * k);
     for (let i = 0; i < 170; i++) if (i < n) circle(260 + (i % 34) * 41, 640 + Math.floor(i / 34) * 44, 11, i % 5 === 0 ? K.amber : K.cyan);
@@ -151,7 +153,7 @@ export function buildShots() {
   scene(22, null, 4, 'plan: slow down, look around', (h) => planCard({ h, rows: [{ txt: 'LEAVE THE CITY', word: 'plan', size: 64 }, { txt: 'SLOW DOWN', word: 'slowing', size: 64, col: K.amber }, { txt: 'LOOK AROUND', word: 'looking', size: 64, col: K.cyan }], icons: [{ word: 'looking', x: 1380, y: 520, fn: (x, y, a) => eye(x, y, 1.6 * a, K.cyan, Math.max(0, Math.sin(h.t * 2.2) - 0.9) * 10) }] }), [['looking', 'pop']]);
 
   // ── habit 5 · 30 fps ───────────────────────────────────────────────────────────
-  scene(23, null, 5, 'habit 5 title', (h) => titleCard(5, 'EXPECTING SMOOTH', '60 FPS', h), [['Habit', 'slam', 0.5]]);
+  scene(23, null, 5, 'habit 5 title', (h) => titleCard(5, 'EXPECTING SMOOTH', '60 FPS', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(24, null, 5, '30 frames in one second', ({ lt, t, w, A, E }) => {
     conf(A('targets', 0.3), 960, 190, 'ROCKSTAR: 30 FPS TARGET'); text('30', 960, 380, 300, K.white, { a: Math.max(0.25, A('thirty', 0.4)), glow: 30 }); text('FRAMES PER SECOND', 960, 540, 56, K.cyan, { a: Math.max(0.25, A('frames', 0.3)) });
     for (let i = 0; i < 30; i++) { const on = E('thirty') && Math.floor((lt - w('thirty')) * 30 % 30) >= i && (lt - w('thirty')) * 30 % 30 >= 0; rr(180 + i * 53, 640, 40, 80, 6); ctx.fillStyle = on ? K.cyan : '#1e2a3a'; ctx.fill(); }
@@ -168,7 +170,7 @@ export function buildShots() {
   scene(25, 'eyes', 5, 'give your eyes time', ({ lt, t, w, A, E }) => { eye(960, 440, 3.2 * eob(seg(lt, 0.05, 0.4)), K.cyan, Math.max(0, Math.sin(t * 2.2) - 0.9) * 10); text('GIVE YOUR EYES A LITTLE TIME', 960, 740, 64, K.white, { a: A('give', 0.4) }); }, [['give', 'pop']]);
 
   // ── habit 6 · online ──────────────────────────────────────────────────────────
-  scene(26, null, 6, 'habit 6 title', (h) => titleCard(6, 'PLANNING ON ONLINE', 'WITH FRIENDS', h), [['Habit', 'slam', 0.5]]);
+  scene(26, null, 6, 'habit 6 title', (h) => titleCard(6, 'PLANNING ON ONLINE', 'WITH FRIENDS', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(27, null, 6, 'single-player: Jason and Lucia', ({ lt, t, w, A, E }) => {
     conf(A('selling', 0.3), 960, 190, 'ROCKSTAR: "SINGLE-PLAYER"'); text('SINGLE-PLAYER STORY', 960, 280, 70, K.white, { a: eob(seg(lt, 0.1, 0.4)), glow: 20 });
     person(640, 860, 2.0, K.cyan, 0.22 + 0.78 * clamp(A('Jason', 0.3))); text('JASON', 640, 900, 46, K.cyan, { a: A('Jason') }); person(1280, 860, 2.0, '#ff7aa8', 0.22 + 0.78 * clamp(A('Lucia', 0.3))); text('LUCIA', 1280, 900, 46, '#ff7aa8', { a: A('Lucia') });
@@ -178,12 +180,12 @@ export function buildShots() {
     text('ONLINE MODE: NOT ANNOUNCED', 960, 700, 60, K.white, { a: A('online', 0.3) }); stamp('NO DATE', 960, 820, K.red, A('date', 0.2), 70, -0.05);
   }, [['online', 'pop'], ['date', 'slam', 0.6]]);
   scene(28, null, 6, '2027? one report, unconfirmed', ({ lt, t, w, A, E }) => {
-    text('2027?', 960, 400, 380, K.amber, { a: A('twenty', 0.4), glow: 40 }); chip('ONE REPORT', 960, 640, K.cyan, A('report', 0.3), 50); stamp('UNCONFIRMED', 960, 790, K.red, A('unconfirmed', 0.2), 80, -0.05);
+    text('2027?', 960, 400, 460, K.amber, { a: A('twenty', 0.4), glow: 40, font: 'Anton' }); chip('ONE REPORT', 960, 640, K.cyan, A('report', 0.3), 50); stamp('UNCONFIRMED', 960, 790, K.red, A('unconfirmed', 0.2), 80, -0.05);
   }, [['twenty', 'pop'], ['unconfirmed', 'slam', 0.7]]);
   scene(28, 'enjoy', 6, 'enjoy the story first', ({ lt, t, w, A, E }) => { person(700, 840, 1.9, K.cyan, eob(seg(lt, 0.05, 0.4))); person(1220, 840, 1.9, '#ff7aa8', eob(seg(lt, 0.15, 0.5))); text('STORY FIRST', 960, 330, 110, K.white, { a: A('story', 0.4), glow: 24 }); }, [['story', 'pop']]);
 
   // ── habit 7 · the map ──────────────────────────────────────────────────────────
-  scene(29, null, 7, 'habit 7 title', (h) => titleCard(7, 'THINKING YOU', 'KNOW THE MAP', h), [['Habit', 'slam', 0.5]]);
+  scene(29, null, 7, 'habit 7 title', (h) => titleCard(7, 'THINKING YOU', 'KNOW THE MAP', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(30, null, 7, 'about twice the size (invented shapes)', ({ lt, t, w, A, E }) => {
     const k = eo(seg(lt, w('twice') - 0.2, w('twice') + 1.2)); landmass(560, 500, 150, 1.3, '#1f3a4f', 1, K.cyan); text('GTA 5 MAP', 560, 760, 44, K.cyan, { a: 1 });
     landmass(1250, 500, lerp(150, 212, k), 4.1, 'rgba(255,176,0,0.2)', 1, K.amber); text('LEONIDA ≈ 2×', 1250, 760, 52, K.amber, { a: A('twice', 0.4) });
@@ -206,7 +208,7 @@ export function buildShots() {
   scene(32, null, 7, 'plan: one region at a time', (h) => planCard({ h, rows: [{ txt: 'PICK ONE REGION', word: 'pick', size: 64 }, { txt: 'EXPLORE IT PROPERLY', word: 'explore', size: 64, col: K.cyan }, { txt: 'THEN RACE ACROSS THE STATE', word: 'racing', size: 54, col: K.amber }], icons: [{ word: 'pick', x: 1450, y: 520, fn: (x, y, a) => marker(x, y, '', K.amber, 2 * a) }] }), [['pick', 'pop'], ['explore', 'pop'], ['racing', 'pop']]);
 
   // ── habit 8 · download ─────────────────────────────────────────────────────────
-  scene(33, null, 8, 'habit 8 title', (h) => titleCard(8, 'LEAVING THE', 'DOWNLOAD LATE', h), [['Habit', 'slam', 0.5]]);
+  scene(33, null, 8, 'habit 8 title', (h) => titleCard(8, 'LEAVING THE', 'DOWNLOAD LATE', h), [['Habit', 'slam', 0.5]], { cut: 'flash', riser: true });
   scene(34, null, 8, '212 GB disk bar', ({ lt, t, w, A, E }) => {
     const k = eo(seg(lt, w('twelve') - 1.4, w('twelve') + 0.3)); chip('UP TO', 960, 250, K.amber, A('needs', 0.3), 40); text(Math.round(212 * k) + ' GB', 960, 410, 240, K.white, { glow: 30 });
     disk(260, 560, 1400, 120, k, K.cyan, 'FREE SPACE NEEDED'); text('DEPENDING ON YOUR DEVICE', 960, 780, 52, K.dim, { a: A('depending', 0.4) });

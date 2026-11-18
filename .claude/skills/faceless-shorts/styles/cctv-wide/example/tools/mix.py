@@ -93,9 +93,23 @@ def heartbeat(**_):
     one = lambda d, f: np.sin(2 * np.pi * f * tt(d)) * env(int(d * SR), 0.004, 7)
     x = np.concatenate([one(0.16, 58), np.zeros(int(0.09 * SR)), one(0.2, 52) * 0.75]); return lp(x, 300) * 1.0
 
-FX = dict(inhale=inhale, heartbeat=heartbeat, whoosh=whoosh, slide=slide, pop=pop, plop=plop, gulp=gulp, boing=boing, bubbles=bubbles, sizzle=sizzle,
+
+def riser(d=1.0, **_):
+    t = tt(d); n = bp(noise(d), 500, 6000); k = (t / d) ** 2
+    x = n / (np.abs(n).max() + 1e-9) * k * 0.55 + sweep(180, 1400, d) * k * 0.35
+    return x
+def boom(**_):
+    d = 1.2; t = tt(d); x = np.sin(2 * np.pi * (38 + 70 * np.exp(-t * 9)) * t) * env(len(t), 0.002, 3.2)
+    return np.tanh(1.8 * (x + lp(noise(d), 700) * env(len(t), 0.001, 6) * 0.5)) * 0.95
+def glitch(**_):
+    d = 0.3; x = np.zeros(int(d * SR))
+    for k in range(9):
+        i = int(k * 0.028 * SR); n = int(0.022 * SR); f = rng.uniform(180, 1800); x[i:i + n] += np.sign(np.sin(2 * np.pi * f * tt(0.022))) * 0.4 * rng.uniform(0.4, 1)
+    return lp(x, 4500) + bp(noise(d), 2500, 6000) * env(len(x), 0.002, 12) * 0.25
+
+FX = dict(riser=riser, boom=boom, glitch=glitch, inhale=inhale, heartbeat=heartbeat, whoosh=whoosh, slide=slide, pop=pop, plop=plop, gulp=gulp, boing=boing, bubbles=bubbles, sizzle=sizzle,
           sparkle=sparkle, thud=thud, slam=slam, tock=tock, zip=zip_, alarm=alarm)
-LEVEL = dict(inhale=-15, heartbeat=-8, whoosh=-17, slide=-19, pop=-14, plop=-15, gulp=-11, boing=-15, bubbles=-21, sizzle=-18, sparkle=-17,
+LEVEL = dict(riser=-9, boom=-4, glitch=-10, inhale=-15, heartbeat=-8, whoosh=-17, slide=-19, pop=-14, plop=-15, gulp=-11, boing=-15, bubbles=-21, sizzle=-18, sparkle=-17,
              thud=-11, slam=-9, tock=-18, zip=-14, alarm=-17)
 
 
@@ -157,6 +171,32 @@ def music_tension():
     x = lp(x, 2200); fade = np.ones(N); fo = int(1.5 * SR); fade[-fo:] = np.linspace(1, 0, fo); fi = int(0.8 * SR); fade[:fi] *= np.linspace(0, 1, fi)
     return x / (np.abs(x).max() + 1e-9) * fade
 
+
+def music_drive():
+    """half-time beat (98 BPM): kick, clap, hats, triangle bass, soft pad, A-F-C-G (ported idea from the Creator Motion Graphics style)"""
+    bpm = 98; step = 60 / bpm / 4; bar = step * 16; x = np.zeros(N)
+    roots = [55.0, 43.65, 65.41, 49.0]; pads = [[220, 261.6, 329.6], [174.6, 220, 261.6], [261.6, 329.6, 392], [196, 246.9, 293.7]]
+    def put(sig, at):
+        i = int(at * SR); n = min(len(sig), N - i)
+        if n > 0 and i >= 0: x[i:i + n] += sig[:n]
+    kick = sweep(150, 46, 0.32) * env(int(0.32 * SR), 0.002, 7) * 1.0
+    clap = (bp(noise(0.16), 1200, 2600) * env(int(0.16 * SR), 0.002, 14)) * 0.9
+    hat = hp(noise(0.04), 7000) * env(int(0.04 * SR), 0.001, 12) * 0.25
+    nb = int(DUR / bar) + 2
+    for b in range(nb):
+        tb = b * bar; r = roots[b % 4]
+        pt = tt(bar + 0.2); e = np.minimum(1, pt / 0.3) * np.minimum(1, (bar + 0.2 - pt) / 0.3)
+        put(sum(np.sin(2 * np.pi * f * pt) + 0.3 * np.sin(2 * np.pi * f * 2 * pt) for f in pads[b % 4]) * e * 0.07, tb)
+        for st in range(16):
+            ts = tb + st * step
+            if st in (0, 10): put(kick, ts)
+            if st in (4, 12): put(clap, ts)
+            if st % 2 == 0: put(hat, ts)
+            if st in (0, 3, 6, 10, 14):
+                bt = tt(step * 2.6); put(lp(np.sin(2 * np.pi * r * bt) + 0.4 * np.sin(4 * np.pi * r * bt), 380) * env(len(bt), 0.006, 5) * 0.55, ts)
+    fade = np.ones(N); fo = int(2.0 * SR); fade[-fo:] = np.linspace(1, 0, fo); fi = int(0.5 * SR); fade[:fi] *= np.linspace(0, 1, fi)
+    return x / (np.abs(x).max() + 1e-9) * fade
+
 def load_audio(f):
     out = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(f), '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
     a = np.frombuffer(out, dtype=np.float32).reshape(-1, 2).astype(np.float64); return a
@@ -173,20 +213,20 @@ if vf.exists():
 # music
 mus = script.get('music', 'bed')
 if mus and mus != 'none':
-    m = music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_neon() if mus == 'neon' else None
+    m = music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_neon() if mus == 'neon' else music_drive() if mus == 'drive' else None
     if m is None:
         a = load_audio(P / mus)[:N]; m = np.zeros(N); m[:len(a)] = a.mean(1); m /= np.abs(m).max() + 1e-9
-    m = np.stack([m, m], 1) * db(-24 if voice is not None else -20)
+    m = np.stack([m, m], 1) * db(-12 if voice is not None else -8)
     if voice is not None:                                                        # duck under the voice
         lev = np.abs(voice.mean(1)); lev = signal.lfilter([1 - 0.9995], [1, -0.9995], lev); lev /= lev.max() + 1e-9
-        m *= (1 - 0.55 * np.clip(lev * 3, 0, 1))[:, None]
+        m *= (1 - 0.40 * np.clip(lev * 3, 0, 1))[:, None]
     mix += m
 # effects
 for c in cj['cues']:
     fn = FX.get(c['type'])
     if not fn: print('unknown cue type, skipped:', c['type']); continue
     x = fn(**({'d': c['dur']} if c.get('dur') else {}))
-    x = lp(x, 5000) * db(LEVEL[c['type']]) * c.get('gain', 1.0) / (np.abs(x).max() + 1e-9) * 0.9
+    x = lp(x, 7000) * db(LEVEL[c['type']] + script.get('sfx_boost', 0)) * c.get('gain', 1.0) / (np.abs(x).max() + 1e-9) * 0.9
     i = int(c['t'] * SR); n = min(len(x), N - i)
     if n > 0 and i >= 0: pan = c.get('pan', 0.0); mix[i:i + n, 0] += x[:n] * (1 - max(0, pan)); mix[i:i + n, 1] += x[:n] * (1 + min(0, pan))
 # master: gentle soft-clip, peak -1 dBFS

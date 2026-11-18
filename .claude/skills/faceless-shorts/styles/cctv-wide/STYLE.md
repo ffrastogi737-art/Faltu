@@ -41,3 +41,12 @@ hurricane · rain · gator · manatee · flamingo · bird · disk · clock · ey
 - Icons drawn without an alpha gate show before their card (gate with `E('word')`).
 - Long titles run off the right edge: `titleCard` now fits the font to 900 px.
 - A card that appears on one word and its text on a later word shows an empty card: gate both on the same word.
+
+## EFFECTS (added after the owner called v1 "flat", 18 Nov 2026): every cctv-wide video MUST have these
+Ported idea from the owner's "Creator Motion Graphics" kit (ai-video-editor zip). All automatic from `src/main.js`; `shots.js` only sets `cut` and cues.
+- **Cuts**: every shot starts with a whip (motion-blur slide), glitch (RGB split + slices) or flash cut (`scene(..., { cut: 'flash', riser: true })` for big beats).
+- **Camera**: punch zoom 1.1 -> 1.0 on every cut, slow push, **shake + zoom pulse on every `slam` cue**, hook zoom-in (1.32 -> 1.0 in 1.5 s).
+- **Hook**: a headline slams in word by word in the first 3 s (Anton font), then slides away.
+- **Finish**: film specks, scanlines, drifting warm/cool light leaks, progress bar, pop-on-word subtitles.
+- **Sound** (`tools/mix.py`): music `"drive"` (98 BPM half-time beat: kick, clap, hats, bass, pad) about 8 dB under the voice, `"sfx_boost": 5`; cues: whoosh on whip cuts, glitch on glitch cuts, slam on flash cuts, riser 1 s before and boom on every habit card, pop / tock on reveals. Final encode with `-af loudnorm=I=-16:TP=-1.5:LRA=11`.
+- v1 had music 19 dB under the voice and soft SFX only, and a 3 % camera move: it sounded and looked flat. Never ship that again; check levels with numbers (no ears here) and ask the owner to listen once.

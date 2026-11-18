@@ -6,9 +6,9 @@ export const K = { bg: '#070A0F', panel: '#111823', edge: '#2A3647', amber: '#FF
 
 /** text with optional scale / alpha / weight. align: center | left | right */
 export function text(s, x, y, size, col = K.white, o = {}) {
-  const { a = 1, sc = 1, align = 'center', weight = 900, mono = false, rot = 0, glow = 0 } = o; if (a <= 0 || sc <= 0) return;
+  const { a = 1, sc = 1, align = 'center', weight = 900, mono = false, rot = 0, glow = 0, font = 'Inter' } = o; if (a <= 0 || sc <= 0) return;
   ctx.save(); ctx.globalAlpha = a; ctx.translate(x, y); ctx.rotate(rot); ctx.scale(sc, sc);
-  ctx.font = mono ? `700 ${size}px "DejaVu Sans Mono", monospace` : `${weight} ${size}px Inter`; ctx.textAlign = align; ctx.textBaseline = 'middle';
+  ctx.font = mono ? `700 ${size}px "DejaVu Sans Mono", monospace` : font === 'Anton' ? `400 ${size}px Anton` : `${weight} ${size}px Inter`; ctx.textAlign = align; ctx.textBaseline = 'middle';
   if (glow) { ctx.shadowColor = col; ctx.shadowBlur = glow; }
   ctx.fillStyle = col; ctx.fillText(s, 0, 0); ctx.restore();
 }
