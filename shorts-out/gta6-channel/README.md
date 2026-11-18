@@ -185,3 +185,22 @@ Sources: Rockstar via TweakTown and HWBusters (30 fps target), Outputlag review 
 **Tags:** gta 6 review, gta 6 30 fps, gta 6 60 fps, gta 6 ps5 pro, gta 6 how long to beat, gta 6 story length, gta 6 pacing, gta 6 tips, gta 6 before you play, gta vi, rockstar games
 **Vote:** A = what reviewers loved most · B = how big the map really is
 **Language:** English · 30 s · player-centric warnings list (playbook) · Experiment: "reviews warn you" angle
+
+## 11 · `11-gta6-not-gta5.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+**Title:**
+```
+GTA 5 Players: GTA 6 Is NOT What You Think 😳 #shorts
+```
+**Description:**
+```
+GTA 5 players, reviews say GTA 6 is more grounded: Kotaku says you need to plan if you want to survive and succeed, and Windows Central points to realistic stakes and mechanical depth. The good news, per TheGamer: movement, shooting and driving feel better than ever, and reviewers keep praising how the world reacts to you.
+
+Part 2 is your call. Comment: A = GTA 5 habits to drop, B = best things to do first.
+
+Sources: Kotaku review, Windows Central review, TheGamer review, Outputlag and The PC Enthusiast review roundups.
+
+#shorts #gta6 #gtavi #gta5 #gta6review #gaming #rockstargames #ps5
+```
+**Tags:** gta 5 players gta 6, gta 6 vs gta 5, gta 6 review, gta 6 grounded, gta 6 realism, gta 6 tips, gta 6 driving, gta 6 shooting, gta 5 habits, gta vi, rockstar games
+**Vote:** A = GTA 5 habits to drop · B = best things to do first
+**Language:** English · 31 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: split-screen GTA 5 vs GTA 6 framing
