@@ -22,12 +22,25 @@ Hard limits: no bought views/subs/followers, no sub4sub, no comments or DMs on o
 titles, no copyrighted footage/music/art, no fake facts (2+ sources), never delete a video or post, never make a YouTube
 upload public at upload time (private, then publishAt or the timed switch).
 
-## USAGE SAVER (the owner's Claude plan has a weekly limit; running out stops everything)
-- Fresh session per run; keep it lean: read only the files a step needs (use `tail`, `grep`, `sed -n`), never re-read
-  big files, no extra WebSearch beyond the 2-source fact check, at most 2 QA fix rounds, no optional API writes.
-- From 18 Nov 2026 (the weekly limit ran out on 16 Nov, so stay lean): each factory run makes **ONE** video (rule 0 picks
-  the channel), two runs a day. Use Sonnet. Watch usage; if a later week shows spare room, raise to two per run.
-- GTA phase 2 (launch, 19 Nov - 10 Dec) starts tomorrow: follow the phase text below.
+## CONTINUOUS MODE (owner, 18 Nov 2026: "jab tak main mana na karun, lagatar banate raho")
+- Make videos non-stop for BOTH channels until the owner says stop or the Claude usage limit is hit. Best quality:
+  research sound effects / music fit, hooks, styles; keep trying new styles (incl. shorts-out/STYLE-LIBRARY.md) and
+  new topics, keep what wins (experiments.txt).
+- Each run: ONE Short per channel (solo hype + Kratos Playz). Every 3rd run also ONE LONG video (6-10 min, 16:9
+  1920x1080, alternate channels; GTA 6 launch guides/tips for Kratos, a deep "everything about X" for solo hype).
+  Long video: use a 16:9 Nafay library style (creator-motion, data-story, clean-tech, pop-info, chalk-talk; see
+  STYLE-LIBRARY.md) or adapt our kit to 1920x1080; Kokoro narration + words.json; chapters in the description; render in
+  background segments; same QA. First long video: build tools/render_html.mjs (seek per frame + SFX.render) into the
+  skill and commit it.
+- CHAIN: at the very end of each run (after the report), start the next run yourself with
+  mcp__claude-code-remote__create_session (source_url https://github.com/ffrastogi737-art/Faltu, source_revision
+  ccr-8c1babe8-9jk0db, clone_depth 20, title "Shorts factory run", model claude-opus-5-5, the same prompt you got).
+  Before starting work, call list_sessions: if another "Shorts factory run" session is WORKING, do only step P and exit
+  without chaining (one chain at a time). If you hit a usage-limit error, stop; the scheduler restarts the chain later.
+- YouTube upload quota (~5-6 uploads/day): when an upload returns quotaExceeded, do not wait: add the video to
+  shorts-out/MANUAL-UPLOAD.md (channel, file raw link https://raw.githubusercontent.com/ffrastogi737-art/Faltu/
+  ccr-8c1babe8-9jk0db/<path>, title, description, tags, suggested time IST), SendUserFile the MP4 with caption
+  "MANUAL UPLOAD: <channel> · <title>", and keep making videos. Instagram is separate: keep posting reels there.
 - If the plan's limit is hit mid-run, stop cleanly after pushing what is done.
 
 ## Git
