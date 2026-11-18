@@ -128,3 +128,22 @@ Sources: Game Informer, GosuGamers, GTA Boom, Rockstar Newswire (via GamesRadar,
 **Tags:** gta 5 vs gta 6, gta 6 day one, gta 6 changes, gta 6 pc, gta 6 preload, gta 6 leonida, gta 6 jason lucia, gta 6 november 19, gta vi, rockstar games
 **Vote:** A = which edition to buy · B = first region to visit
 **Language:** English · 39 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: GTA-5-audience title angle
+
+## 08 · `08-gta6-unlocks-tonight.mp4` · neon-versus · Phase 1 · ENGLISH · status: BUILT (upload pending) · POST BEFORE 19 NOV 00:00 local
+**Title:**
+```
+GTA 6 Unlocks Tonight: Do These 4 Things First 🔥 #shorts
+```
+**Description:**
+```
+GTA 6 unlocks at midnight tonight (store listings reportedly show midnight local time; PlayStation Store India shows 12 AM IST). Four things to do first: free up storage (Rockstar says the pre-load needs up to 212 GB), install the update (a 1.002 patch has reportedly rolled out), check your unlock time, and remember it is PS5 and Xbox Series X|S only with no PC version announced. Rockstar has not described how online will work at launch.
+
+Part 2 is your call. Comment: A = what reviews say, B = a first hour plan.
+
+Sources: Keengamer, MP1st, PC-Welt (update 1.002, reported), Rockstar Newswire via GamesRadar/TechRadar (212 GB), Business Today, Esquire India, Prima Games (unlock time, reported), GTA Intel. Unlock time and patch are reported, not announced by Rockstar.
+
+#shorts #gta6 #gtavi #gta6launch #ps5 #xbox #rockstargames #gaming
+```
+**Tags:** gta 6 launch, gta 6 unlock time, gta 6 midnight, gta 6 preload, gta 6 update 1.002, gta 6 ps5, gta 6 xbox, gta 6 pc, gta 6 november 19, gta vi, rockstar games
+**Vote:** A = what reviews say · B = first hour plan
+**Language:** English · 50 s · player checklist (playbook: promise + deadline) · Experiment: launch-night checklist (new topic kind)
