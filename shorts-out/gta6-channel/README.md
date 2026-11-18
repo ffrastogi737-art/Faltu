@@ -166,3 +166,22 @@ Sources: Insider Gaming, Notebookcheck, Dexerto, Make Tech Easier, Yahoo News UK
 **Tags:** gta 6 review, gta 6 metacritic, gta 6 99, gta 6 review score, gta 6 reviews, highest rated game ever, ocarina of time, gta 6 vs gta 5, gta 6 launch, gta vi, rockstar games
 **Vote:** A = what reviewers loved most · B = what they didn't like
 **Language:** English · 33 s · Chatterbox voice (expressive, exaggeration 0.7) · same-day news (playbook: news Shorts fast) · Experiment: NEW STYLE comic-pop (bright colours instead of neon) + review-score news
+
+## 10 · `10-gta6-review-warnings.mp4` · comic-pop · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+**Title:**
+```
+GTA 6 Reviews Warn You About These 3 Things ⚠️ #shorts
+```
+**Description:**
+```
+GTA 6 scored a 99 on Metacritic, but reviews still flag three things before you play: it targets 30 fps on every console, PS5 Pro included, and Rockstar has not promised a 60 fps mode; some reviews (GameSpot among them) say the pacing drags in places, especially early on; and reviewers put the main story at roughly 50 to 80 hours.
+
+Part 2 is your call. Comment: A = what reviewers loved most, B = how big the map really is.
+
+Sources: Rockstar via TweakTown and HWBusters (30 fps target), Outputlag review roundup, The PC Enthusiast and Deadline review roundups (GameSpot pacing), ScreenRant, Vice and GamesRadar (story length).
+
+#shorts #gta6 #gtavi #gta6review #ps5pro #gaming #rockstargames #xbox
+```
+**Tags:** gta 6 review, gta 6 30 fps, gta 6 60 fps, gta 6 ps5 pro, gta 6 how long to beat, gta 6 story length, gta 6 pacing, gta 6 tips, gta 6 before you play, gta vi, rockstar games
+**Vote:** A = what reviewers loved most · B = how big the map really is
+**Language:** English · 30 s · player-centric warnings list (playbook) · Experiment: "reviews warn you" angle
