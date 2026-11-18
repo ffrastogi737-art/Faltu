@@ -205,7 +205,7 @@ Sources: Kotaku review, Windows Central review, TheGamer review, Outputlag and T
 **Vote:** A = GTA 5 habits to drop · B = best things to do first
 **Language:** English · 31 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: split-screen GTA 5 vs GTA 6 framing
 
-## 12 · `12-gta6-five-types.mp4` · tall-tale GTA crew (NEW: original cartoon crew in a sunny coast, comic stickers) · Phase 2 launch · ENGLISH · Chatterbox voice · status: uploading
+## 12 · `12-gta6-five-types.mp4` · tall-tale GTA crew (NEW: original cartoon crew in a sunny coast, comic stickers) · Phase 2 launch · ENGLISH · Chatterbox voice · SCHEDULED 19 Nov 2026 19:30 IST (https://www.youtube.com/watch?v=1xBFlE3oniQ) · Instagram 19 Nov 19:45 IST
 **Title:**
 ```
 5 Types Of GTA 6 Players (Which One Are You?) 🔥 #shorts
