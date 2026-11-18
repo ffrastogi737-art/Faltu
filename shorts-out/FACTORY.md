@@ -60,6 +60,12 @@ upload public at upload time (private, then publishAt or the timed switch).
 - Save tokens: view ONE contact sheet per video (0.5-1 s step, small), not many full frames; short reports; no repeated
   WebSearch for facts already in the READMEs; reuse styles/scripts instead of writing new kits.
 
+## CLOUD SETUP (owner, 18 Nov 2026: "naye cloud computer par sab apne aap download ho jaaye")
+- The environment's setup script runs `.claude/skills/faceless-shorts/scripts/cloud_bootstrap.sh` on every fresh container:
+  Kokoro + Whisper (setup.sh), numpy/scipy, uv, Chatterbox venv (/root/cbx, Python 3.11) and its model weights.
+  Log: /tmp/cloud_bootstrap.log. If `chatterbox` is missing at run start, run that script yourself (about 1 minute once cached).
+- Add any new heavy tool to cloud_bootstrap.sh (repo), not to the environment script, so it is versioned with the code.
+
 ## Git
 Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own branch):
 `git fetch origin ccr-8c1babe8-9jk0db && git checkout -B ccr-8c1babe8-9jk0db origin/ccr-8c1babe8-9jk0db`.
