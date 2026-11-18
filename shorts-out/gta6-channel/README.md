@@ -129,7 +129,7 @@ Sources: Game Informer, GosuGamers, GTA Boom, Rockstar Newswire (via GamesRadar,
 **Vote:** A = which edition to buy · B = first region to visit
 **Language:** English · 39 s · player-centric GTA 5 -> GTA 6 (playbook) · Experiment: GTA-5-audience title angle
 
-## 08 · `08-gta6-unlocks-tonight.mp4` · neon-versus · Phase 1 · ENGLISH · status: BUILT (upload pending) · POST BEFORE 19 NOV 00:00 local
+## 08 · `08-gta6-unlocks-tonight.mp4` · neon-versus · Phase 1 · ENGLISH · SCHEDULED 18 Nov 2026 19:30 IST (https://www.youtube.com/watch?v=9S9G7oLu81Y) · Instagram 18 Nov 19:30 IST · POST BEFORE 19 NOV 00:00 local
 **Title:**
 ```
 GTA 6 Unlocks Tonight: Do These 4 Things First 🔥 #shorts
