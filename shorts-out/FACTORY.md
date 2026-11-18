@@ -1,5 +1,15 @@
 # Shorts factory: step by step
 
+## CURRENT PLAN (owner, 18 Nov 2026 evening: "video bana band kar do", then this quota)
+- STOP making new videos now. Only these remain, then stop:
+  - Kratos Playz (GTA): 3 more Shorts.
+  - Solo hype: 1 more Short.
+- After those, ONE LONG 16:9 video per channel per week (one for Kratos Playz, one for solo hype), using the long-video
+  tools (scripts/render_html.mjs, scripts/cbx_long.py). Pick the week's topic from the channel's best performer.
+- Each week, change the formula from the numbers: copy what won, drop what lost (growth-log.txt, experiments.txt).
+- Scheduled posts already queued stay as they are (no new ones) until the owner says otherwise.
+- The old CONTINUOUS MODE (non-stop daily shorts) is OFF. Do not chain new runs unless the owner asks.
+
 ## RUNNER MODE (from 16 Nov 2026; overrides anything below that conflicts)
 Scheduled routines cannot push to GitHub, so the factory now runs in sessions created with create_session (repo attached,
 push works) by a small scheduler session. In such a session:
