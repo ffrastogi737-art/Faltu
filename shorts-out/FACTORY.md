@@ -19,7 +19,7 @@ build, upload, scheduling, the timed public switch, Instagram posting, CHANNEL C
 Jewellery shop page: ON HOLD, do nothing for it.
 
 Hard limits: no bought views/subs/followers, no sub4sub, no comments or DMs on other people's accounts, no misleading
-titles, no copyrighted footage/music/art, no fake facts (2+ sources), never delete a video or post, never make a YouTube
+titles, no fake facts (2+ sources), never delete a video or post, never make a YouTube
 upload public at upload time (private, then publishAt or the timed switch).
 
 ## USAGE SAVER (the owner's Claude plan has a weekly limit; running out stops everything)
