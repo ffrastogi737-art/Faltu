@@ -1,5 +1,18 @@
 # Shorts factory: step by step
 
+## RUN ORDER (owner, 19 Nov 2026: check first, then research, then comments, then new videos)
+Every factory run does these in this order. Stop a step if the tokens or the time are tight; never skip CHECK.
+1. CHECK (Haiku, light): today's live count per channel (IST day): Kratos Playz target 3, solo hype target 2, plus the
+   weekly long video. Check what is due (step P), what is private with no publishAt (fix it or report it), duplicates,
+   and the Instagram reels that are due. Fix what the records say is wrong. Keep tool output small.
+2. RESEARCH (Sonnet, heavy): only after CHECK. Fresh WebSearch for the next topic (see sections A and B).
+3. COMMENTS (Haiku): read new comments on the last 4 days of videos on both channels; reply to at most 3 per channel.
+4. BUILD + UPLOAD (Sonnet for build and QA, Haiku for upload, Instagram posts and logs).
+- Target shortfall: if today's live count is below target, switch an already-uploaded, already-scheduled video to public
+  now (timed privacy switch, read back). Do NOT schedule today's new builds for tomorrow to fill today: the next run builds
+  tomorrow's videos itself. If the target is met, do nothing extra.
+- Tokens: Haiku for every mechanical step, Sonnet only for research, scripting, build and QA. One sub-agent at a time.
+
 ## CURRENT PLAN (owner, 18 Nov 2026 evening: "video bana band kar do", then this quota)
 - STOP making new videos now. Only these remain, then stop:
   - Kratos Playz (GTA): 3 more Shorts.
