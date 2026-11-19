@@ -176,3 +176,16 @@ Sources: Mayo Clinic (Airplane ear), Merck / MSD Manual (Barotrauma of the ear),
 ```
 **Tags:** why do ears pop on a plane, ear popping, airplane ear, eustachian tube, ear pressure flight, chewing gum on plane, human body facts, science shorts, body facts, travel tips
 **Experiment:** NEW STYLE for solo hype: bright comic-pop (auto engine) instead of inside-out/chalk-talk; Chatterbox voice, 27 s
+
+## 16 · `16-sun-sneeze.mp4` · comic-pop auto-vertical (2nd time) · WAITING UPLOAD
+**Title:** Why You Sneeze In Bright Sunlight
+**Description:**
+```
+Up to about 1 in 3 people sneeze when they step into bright light, a quirk called the photic sneeze reflex or ACHOO syndrome. A leading theory is that light signals cross with the nerve that senses an itchy nose, but scientists have not proven exactly how it works.
+
+Sources: PBS NewsHour, Cleveland Clinic, ScienceBlog / PubMed 27568353.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #sunsneeze
+```
+**Tags:** why does sunlight make me sneeze, photic sneeze reflex, ACHOO syndrome, sneezing in sunlight, bright light sneeze, human body facts, biology facts, science shorts, body facts, did you know
+**Experiment:** best formula topic (second-person body science) + comic-pop auto engine 2nd time, 31 s, Chatterbox; slot 20 Nov 09:00 IST
