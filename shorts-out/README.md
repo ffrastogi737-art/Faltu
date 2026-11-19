@@ -164,7 +164,7 @@ Sources: NBC News, ScienceAlert, Big Think, NINDS (via The Healthy), Wonderopoli
 **Tags:** why does my foot fall asleep, foot falls asleep, pins and needles, paresthesia, numb foot, nerve compression, human body facts, biology facts, science shorts, body facts
 **Experiment:** best formula topic (second-person body science) + NEW: Chatterbox expressive voice, hype music/SFX, impact shake/confetti (owner: voice was flat)
 
-## 15 · `15-ears-pop.mp4` · comic-pop auto-vertical (NEW style for solo hype) · QUEUED: goes public 19 Nov 2026 11:30 IST (https://www.youtube.com/watch?v=Am7tbU67ZnA) · IG 11:45 IST
+## 15 · `15-ears-pop.mp4` · comic-pop auto-vertical (NEW style for solo hype) · PUBLIC 19 Nov 2026 13:44 IST (late, read-back confirmed) (https://www.youtube.com/watch?v=Am7tbU67ZnA) · IG https://www.instagram.com/reel/Df6oNlym3gG/
 **Title:** Why Your Ears Pop On A Plane
 **Description:**
 ```
