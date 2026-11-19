@@ -151,7 +151,7 @@ Sources: Scientific American, Popular Science, UTMB Medical Discovery News.
 **Tags:** why do fingers wrinkle in water, pruney fingers, wrinkly fingers explained, why fingers prune, autonomic nervous system, human body facts, biology facts, science shorts, body facts, did you know
 **Experiment:** best formula (second-person body science), chalk-talk 2nd time; slot 19:30 IST (new slot test for solo hype)
 
-## 14 · `14-foot-asleep.mp4` · inside-out + hype sound/impacts · QUEUED: goes public 19 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=sZczrHnr_NM)
+## 14 · `14-foot-asleep.mp4` · inside-out + hype sound/impacts · PUBLIC 19 Nov 2026 13:45 IST (late switch) (https://www.youtube.com/watch?v=sZczrHnr_NM)
 **Title:** Why Your Foot Falls Asleep
 **Description:**
 ```
