@@ -4,7 +4,7 @@ Built with the 16:9 comic-pop long engine (`.claude/skills/faceless-shorts/style
 data-driven shots from script.json `vis`), Chatterbox voice in parallel workers (`scripts/cbx_long.py`) and the
 parallel segment renderer (`scripts/render_html.mjs`).
 
-## L01 · `long/01-10-weird-body-things.mp4` · comic-pop 16:9 · 5:10 · QUEUED: goes public 19 Nov 2026 17:00 IST (https://www.youtube.com/watch?v=MulUvaewsDc)
+## L01 · `long/01-10-weird-body-things.mp4` · comic-pop 16:9 · 5:10 · PUBLIC (found 19 Nov 2026 about 17:55 IST; slot was 17:00 IST, switch time not recorded) (https://www.youtube.com/watch?v=MulUvaewsDc)
 **Title:** 10 Weird Things Your Body Does (And Why)
 **Description:**
 ```

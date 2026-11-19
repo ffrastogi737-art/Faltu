@@ -225,7 +225,7 @@ Sources: Kotaku review, TheGamer review, Outputlag and The PC Enthusiast review 
 **Language:** English · 33 s · list of player types (playbook: player-centric) · Experiment: NEW tall-tale crew look (original characters, sunny coast) + comic stickers
 
 
-## 13 · `13-gta6-jason-lucia.mp4` · comic-pop reviewer quotes (original duo figures, city skyline, vote cards) · ENGLISH · Chatterbox voice · UNLISTED on Kratos Playz 19 Nov 2026 (https://www.youtube.com/watch?v=VyY9BsmtGWs); not scheduled, owner to set public
+## 13 · `13-gta6-jason-lucia.mp4` · comic-pop reviewer quotes (original duo figures, city skyline, vote cards) · ENGLISH · Chatterbox voice · PRIVATE, scheduled publishAt 20 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=VyY9BsmtGWs)
 **Title:**
 ```
 3 Things Reviewers Say About Jason And Lucia 🔥 #shorts
