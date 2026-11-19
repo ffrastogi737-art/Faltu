@@ -1,0 +1,10 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+sqlalchemy>=2.0
+psycopg2-binary>=2.9
+httpx>=0.27
+python-multipart
+boto3>=1.34
+edge-tts>=6.1
+pytest>=8
+# optional, heavy (CPU transcription for clipping): pip install faster-whisper

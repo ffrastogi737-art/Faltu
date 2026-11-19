@@ -1,0 +1,20 @@
+# Weekly DB backup -> R2 (Supabase free tier has no point-in-time restore)
+name: gta6-backup
+on:
+  schedule: [{ cron: "0 20 * * 0" }]
+  workflow_dispatch:
+jobs:
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      - run: pip install awscli
+      - name: dump + upload
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_KEY }}
+        run: |
+          URL="${DATABASE_URL/postgresql+psycopg2/postgresql}"
+          pg_dump "$URL" | gzip > db-$(date +%F).sql.gz
+          aws s3 cp db-*.sql.gz s3://${{ secrets.S3_BUCKET }}/backups/ --endpoint-url ${{ secrets.S3_ENDPOINT }}
