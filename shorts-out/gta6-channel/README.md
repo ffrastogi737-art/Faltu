@@ -223,3 +223,23 @@ Sources: Kotaku review, TheGamer review, Outputlag and The PC Enthusiast review 
 **Tags:** gta 6 players, gta 6 types, gta 6 explorer, gta 6 driving, gta 6 30 fps, gta 6 preload, gta 6 story length, gta 6 tips, gta vi, rockstar games
 **Vote:** comment your number (1-5)
 **Language:** English · 33 s · list of player types (playbook: player-centric) · Experiment: NEW tall-tale crew look (original characters, sunny coast) + comic stickers
+
+
+## 13 · `13-gta6-jason-lucia.mp4` · comic-pop reviewer quotes (original duo figures, city skyline, vote cards) · ENGLISH · Chatterbox voice · UNLISTED (to be set by the parent session)
+**Title:**
+```
+3 Things Reviewers Say About Jason And Lucia 🔥 #shorts
+```
+**Description:**
+```
+GTA 6 is out, and reviewers are talking about Jason and Lucia. Three things they say: 1) reviewers praised the relationship between Jason and Lucia, 2) Empire called the game a "grand satire of Americana", 3) their story keeps the series' satire and the world feels dense and reactive, and Windows Central says the realistic stakes and mechanical depth matter.
+
+Part two is your call. A: the story. Or B: the world? Comment A or B!
+
+Sources: Forbes (18 Nov 2026 review coverage), Outputlag and The PC Enthusiast review roundups, Windows Central review.
+
+#shorts #gta6 #gtavi #gta6review #gaming #rockstargames #jasonandlucia
+```
+**Tags:** gta 6 review, jason and lucia, gta 6 reviewers, gta 6 story, gta 6 satire, gta 6 world, gta vi, rockstar games
+**Vote:** comment A (the story) or B (the world)
+**Language:** English · 23 s · reviewer-quote list (3 things) · Experiment: reviewer-quote shorts on launch day
