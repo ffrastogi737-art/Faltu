@@ -6,6 +6,7 @@ It ranks; it does not decide. Pick one, say why in experiments.txt ("NEW STYLE" 
 import re, sys, pathlib, csv, statistics as st
 D = pathlib.Path(__file__).parent
 LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale'}
+PORTED = set()  # add a library id here once its render_html port is built and tested
 SLOW3D = {'deep-dive', 'night-file', 'tall-tale'}
 # library ids (STYLE-LIBRARY.md, vertical): usable but need a render_html port, so a small penalty
 LIB = set('''size-lineup cosmic-scale bio-glow iso-cutaway exploded-view myth-or-fact comic-panels storybook marker-board blueprint
@@ -68,7 +69,8 @@ print('EXPLORE MODE: no first-time style in the last 3 videos, so the next one M
 fit = set(FITS.get(want, '').split())
 rows = []
 for s in sorted(LOCAL | LIB):
-    if s in blocked or s in last: continue
+    if s in blocked or s in last2: continue  # HARD: never the last two styles on this channel (owner 19 Nov: same template again)
+    if s in LIB and s not in PORTED: continue  # library ids are listed only after a render_html port exists
     if explore and used.get(s): continue
     if fit and s not in fit: continue  # only styles that suit the topic kind
     sc = 3 * (s in fit) + 3 * (not used.get(s)) + (used.get(s, 0) == 1) - 2 * (s in last2) + (s in LOCAL) - (s in SLOW3D) - (s in LIB)
