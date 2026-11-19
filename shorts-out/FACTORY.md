@@ -127,6 +127,21 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Both channels full through tomorrow: skip building, do CHANNEL CARE only.
 - After delivering append to shorts-out/factory-log.txt: `<kind>  <file name> (<YYYY-MM-DD>)`.
 
+## DECIDE: topic kind + style (19 Nov 2026, owner: "tu hi decide kar"; runs after research, before BUILD)
+Order of every video: research (what is wanted/trending, 2 sources) -> topic kind -> style -> script -> build -> QA -> upload.
+1. Topic kind: pick one from `FITS` in `shorts-out/pick_style.py`. If the same kind is 3 of the last 5 videos on that
+   channel the script prints TOPIC SATURATED: change kind, no exceptions (owner 19 Nov: "body wala bahut repeat hua").
+   The channel is a discovery channel, not a body channel. Test demand for the new kind with 1 WebSearch, not a hunch.
+2. Style: `python3 shorts-out/pick_style.py solo|gta <kind>` ranks styles (local 9 + the 62 library ids in
+   STYLE-LIBRARY.md) by fit to the kind, never used, not the last two, not blocked. YOU decide from its list.
+   EXPLORE MODE (printed when none of the last 3 videos used a first-time style): the pick must be a never-used style.
+   A library style needs the render_html port (STYLE-LIBRARY.md "Status"); if that is too costly for this run, take the
+   best ready never-used local style and say why in experiments.txt. The explore quota carries over, it is not dropped.
+3. Record: the README header names the style id exactly as in the script (it reads that); first use -> experiments.txt
+   `NEW STYLE (library|local): <id>`. 48 h later append a verdict to `shorts-out/style-verdicts.txt`
+   (`<style> WIN|OK|LOSE <date> <why>`); a LOSE blocks the style until a later OK/WIN. Same rule for topic kinds in
+   experiments.txt (IDEA BANK).
+
 ## BUILD (skill `.claude/skills/faceless-shorts`; follow its build + QA sections, skip its ask/confirm steps)
 - `export CHROME=/opt/pw-browsers/chromium`; the environment's setup script already ran setup.sh. New project:
   `bash .claude/skills/faceless-shorts/scripts/new_video.sh <style> <name>`.
