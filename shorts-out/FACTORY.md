@@ -129,6 +129,9 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 
 ## DECIDE: topic kind + style (19 Nov 2026, owner: "tu hi decide kar"; runs after research, before BUILD)
 Order of every video: research (what is wanted/trending, 2 sources) -> topic kind -> style -> script -> build -> QA -> upload.
+0. Results first: `pick_style.py` prints PERFORMANCE from `shorts-out/perf.csv` (views per style, per slot, per topic kind; the
+   channel median). Rank by that, not by taste: a style/slot/kind with n>=2 above 1.5x the median scores up, below 0.3x down.
+   Add the new video's row to perf.csv when you deliver it (kind from `FITS`).
 1. Topic kind: pick one from `FITS` in `shorts-out/pick_style.py`. If the same kind is 3 of the last 5 videos on that
    channel the script prints TOPIC SATURATED: change kind, no exceptions (owner 19 Nov: "body wala bahut repeat hua").
    The channel is a discovery channel, not a body channel. Test demand for the new kind with 1 WebSearch, not a hunch.
@@ -248,6 +251,8 @@ B = ... 👇", normal: "Follow for a weird true fact every day 🧠", 6-8 plain 
 Step P of a later run posts it. No send_later. Backfill: max 1 older video a day into 19:30 IST when a run has spare time.
 
 ## CHANNEL CARE (16:55 IST run only; short)
+- Refresh `shorts-out/perf.csv`: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH, saves the printed
+  lines, then `python3 shorts-out/perf_merge.py < lines.txt`. A 48 h+ video with n>=2 evidence goes to style-verdicts.txt.
 - Stats for both channels + Instagram (INSTAGRAM_GET_IG_USER_MEDIA fields id,caption,permalink,timestamp,like_count,
   comments_count; INSTAGRAM_GET_USER_INFO followers_count; account instagram_osiery-fun) -> one dated block at the top
   of shorts-out/growth-log.txt (keep 14 days): what wins (topic, slot, language, platform), distance to monetization.

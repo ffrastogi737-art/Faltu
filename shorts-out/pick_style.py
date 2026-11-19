@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Style + topic-kind advisor. The agent runs it AFTER research and BEFORE building, then decides.
    python3 shorts-out/pick_style.py solo|gta <topic-kind>
-Reads usage from the README headers (the single source of truth), blocks from style-verdicts.txt.
+Reads style usage from the README headers, results (views per style / slot / kind) from perf.csv, blocks from style-verdicts.txt.
 It ranks; it does not decide. Pick one, say why in experiments.txt ("NEW STYLE" when first use)."""
-import re, sys, pathlib
+import re, sys, pathlib, csv, statistics as st
 D = pathlib.Path(__file__).parent
 LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale'}
 SLOW3D = {'deep-dive', 'night-file', 'tall-tale'}
@@ -28,9 +28,6 @@ FITS = {  # topic kind -> styles that suit it (agent may still choose outside th
  'gaming-news': 'comic-pop breaking-desk tall-tale',
  'gaming-versus': 'versus-split comic-pop tier-list neon-versus',
  'gaming-list': 'top-5-countdown tier-list quiz-countdown pixel-quest comic-pop'}
-KEYS = [('body-science', r'^why (you|your)'), ('weird-jobs', r'job|paid \$|pinboy|alarm'), ('history', r'emperor|dancing|town|war'),
-        ('gaming-news', r'gta|metacritic|reviews?')]
-
 def entries(readme):
     out, cur = [], None
     for line in (D / readme).read_text().splitlines():
@@ -39,10 +36,9 @@ def entries(readme):
         elif cur is not None and line.startswith('**Title:**') and not cur['title']: cur['title'] = line[10:].strip()
     return out
 
-def kind(title):
-    t = title.lower()
-    return next((k for k, p in KEYS if re.search(p, t)), 'other')
-
+def perf(ch):
+    P = [r for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == ch and r['public_ist'] and r['public_ist'] <= '2026-11-19 23:59' and r['checked']]
+    return [(r['style'], r['public_ist'][11:], int(r['views']), r['kind']) for r in P]
 channel, want = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else '')
 E = entries('README.md' if channel == 'solo' else 'gta6-channel/README.md')
 if channel == 'solo': E = [e for e in E if 'gta' not in e['title'].lower()]  # README 04 is a GTA video on solo hype
@@ -51,13 +47,20 @@ for e in E:
     for s in e['styles']: used[s] = used.get(s, 0) + 1
 last = E[-1]['styles'] if E else set()
 last2 = set().union(*[e['styles'] for e in E[-2:]]) if E else set()
+PF = perf(channel)
+med = st.median([v for _, _, v, _ in PF]) if PF else 0
+def by(i):
+    d = {}
+    for row in PF: d.setdefault(row[i], []).append(row[2])
+    return {k: (len(v), st.median(v)) for k, v in d.items()}
+SM, TM, KM = by(0), by(1), by(3)
 blocked = {l.split()[0] for l in (D / 'style-verdicts.txt').read_text().splitlines() if ' LOSE' in l and not l.startswith('#')}
 first = {}
 for i, e in enumerate(E):
     for st in e['styles']: first.setdefault(st, i)
 first_use_in_last3 = any(i >= len(E) - 3 for i in first.values())
 explore = not first_use_in_last3
-kinds = [kind(e['title']) for e in E[-5:]]
+kinds = [r['kind'] for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == channel][-5:]  # kinds live in perf.csv
 print(f'channel={channel}  videos={len(E)}  last kinds={kinds}')
 if want and kinds.count(want) >= 3: print(f'!! TOPIC SATURATED: "{want}" is {kinds.count(want)} of the last {len(kinds)}. Pick another kind.')
 print('kinds not in the last 5:', ', '.join(k for k in FITS if k not in kinds and k.startswith('gaming') == (channel == 'gta')))
@@ -69,7 +72,13 @@ for s in sorted(LOCAL | LIB):
     if explore and used.get(s): continue
     if fit and s not in fit: continue  # only styles that suit the topic kind
     sc = 3 * (s in fit) + 3 * (not used.get(s)) + (used.get(s, 0) == 1) - 2 * (s in last2) + (s in LOCAL) - (s in SLOW3D) - (s in LIB)
+    n, m = SM.get(s, (0, 0))
+    sc += (2 if m >= 1.5 * med else -2 if m < 0.3 * med else 0) * (n >= 2) + (1 if m >= 1.5 * med else 0) * (n == 1)
     rows.append((sc, s))
 for sc, s in sorted(rows, reverse=True)[:6]:
     print(f'{sc:>3}  {s:<18} used {used.get(s, 0)}x  {"fits " + want if s in fit else "no fit":<14} {"ready" if s in LOCAL else "library: port via render_html"}{" (slow 3D)" if s in SLOW3D else ""}')
+print(f'\nPERFORMANCE (public videos, channel median {med:.0f} views):')
+print(' styles:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(SM.items(), key=lambda x: -x[1][1])))
+print(' slots IST:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(TM.items(), key=lambda x: -x[1][1])))
+print(' kinds:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(KM.items(), key=lambda x: -x[1][1])))
 print('blocked:', ', '.join(sorted(blocked)) or '-')
