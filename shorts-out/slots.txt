@@ -2,4 +2,4 @@
 # Since 15 Nov 2026 (usage saver) solo hype goes public only when a run is awake: 08:55 / 16:55 factory, 11:25 / 19:25 publisher.
 # So solo hype slots must be one of 09:00, 11:30, 17:00, 19:30. Kratos Playz uses publishAt, any time works.
 solo-hype   09:00 11:30 17:00    # 2026-11-14: 9:00 -> 1,154 views, 11:30 -> 1,063, 7:00 -> 155 (dropped); 17:00 untested
-kratos      16:30 09:00 19:30    # 2026-11-14: GTA 01 at 16:20 -> 594 views in ~3.5 h; 9:00 and 19:30 untested
+kratos      09:00 16:30 00:30    # 19 Nov data: 09:00 med 453, 16:30 med 114 (one 406), 19:30 med 53 (n=4) so 19:30 dropped; 00:30 and 12:30 untested (test one soon)

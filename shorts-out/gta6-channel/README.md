@@ -243,3 +243,18 @@ Sources: Forbes (18 Nov 2026 review coverage), Outputlag and The PC Enthusiast r
 **Tags:** gta 6 review, jason and lucia, gta 6 reviewers, gta 6 story, gta 6 satire, gta 6 world, gta vi, rockstar games
 **Vote:** comment A (the story) or B (the world)
 **Language:** English · 23 s · reviewer-quote list (3 things) · Experiment: reviewer-quote shorts on launch day
+
+## 14 · `14-gta6-police-heat.mp4` · comic-pop auto-vertical (GTA, new icons: car shirt camera star) · Phase 2 launch · ENGLISH · Chatterbox · WAITING UPLOAD
+**Title:** GTA 6 Police Remember Your Car And Clothes 🚨 #shorts
+**Description:**
+```
+GTA 5 players: previews say GTA 6 police remember what they actually saw (your car, your clothes, even CCTV footage), and a separate Heat level tracks what they know while the stars only show the chase. Changing clothes or vehicle can reduce what police know, and at six stars police reportedly search the whole map. All of this is preview-based, reviews will tell us more.
+
+Comment: which GTA 5 trick will you miss most?
+
+Sources: Shacknews (six-star system), GamesRadar and Games.gg (Heat explained), Beebom, Gfinity, Dexerto (clothing, vehicle, CCTV), IBTimes UK (erase evidence, hide vehicles). Whole-map search is reported, outlets differ.
+
+#shorts #gta6 #gtavi #gta5 #rockstargames #gaming #gta6police #gta6tips
+```
+**Tags:** gta 6 police, gta 6 wanted level, gta 6 heat system, gta 5 vs gta 6, gta 6 six stars, gta 6 tips, gta 6 preview, gta 5 players, rockstar games, gta 6
+**Experiment:** first run of the DECIDE system (pick_style: comic-pop kept, only style with data, median 1,180); kind gaming-versus (best GTA kind, median 406); player-centric GTA 5 angle; slot 20 Nov 16:30 IST
