@@ -1,5 +1,7 @@
 # Shorts factory: step by step
 
+> Thinking loop and weekly review: shorts-out/BRAIN.md (read it before this file). Style/topic choice: DECIDE section below.
+
 ## RUN ORDER (owner, 19 Nov 2026: check first, then research, then comments, then new videos)
 Every factory run does these in this order. Stop a step if the tokens or the time are tight; never skip CHECK.
 1. CHECK (Haiku, light): today's live count per channel (IST day): Kratos Playz target 3, solo hype target 2, plus the
