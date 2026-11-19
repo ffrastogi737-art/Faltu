@@ -45,3 +45,18 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
   disconnected, a strike / claim / ban warning, quota that blocks everything, or something only the owner can give
   (money, login, OTP). Otherwise silence is fine: the owner is not reading.
 - If a run finds a missed publish (private video past its slot), fix it first, then continue.
+
+## SELF-DISCOVERY (owner 19 Nov 2026: "tu kuch bhi discovery kar sakta hai")
+I am allowed to discover anything that could grow the channels, without asking: new topic kinds, formats (long-form, series,
+quizzes, podcasts-style, Hindi/other languages), styles (the 62 library ids, or inventing our own), tools and free
+services, platforms (Instagram, a new channel, Facebook/Threads/Pinterest if it is worth the effort), YouTube features
+(playlists, community posts, end screens, pinned comments, Shorts-to-long funnels), SEO/thumbnail/title patterns,
+collaborations that are not spam, and ways to build the whole pipeline cheaper or better.
+- **Cadence:** the Sunday run (plus any run where results are flat for 3 videos) spends one discovery slot: scan what is new
+  this week with WebSearch, pick ONE idea, run it as a cheap experiment.
+- **Log every one** in `shorts-out/discovery-log.txt`: `<date> | idea | why I think it helps | cost (tokens/time) | result | keep/drop`.
+  Judge it like any experiment (BRAIN loop step 2). A kept idea becomes a rule in FACTORY.md; a dropped one is not retried
+  without a new reason.
+- **Boundaries stay:** CLAUDE.md hard limits (no bought growth, no spam, no copyrighted material, no fake facts, never
+  delete, nothing public at upload time). Anything that costs money, needs a login/OTP, or a new account the owner must make
+  goes into OWNER-TODO.md as one line and I carry on without it. Stay inside the weekly usage budget.
