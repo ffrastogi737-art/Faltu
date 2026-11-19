@@ -23,3 +23,10 @@
       b) ya fal.ai account + credits, phir "fal lagao" bolo.
 - [ ] Roz 3-5 pieces ki photo/video Drive folder "Jewellery Shop Uploads" mein (file naam: naam_price_type.jpg).
 - [ ] (Optional) Codesign plugin install karna hai ya nahi.
+
+## 19 Nov 2026 audit: owner decisions
+
+- Instagram @solohype_1: the ears-pop reel was posted twice, Df6oNlym3gG and Df6oSfvkd7E. Owner decides whether to delete one. (Nothing was deleted.)
+- Kratos Playz: tev-QLHyKy0 is a private duplicate of the public Cfs1iSjYjFU (same title). Owner decides whether to delete it or keep it private.
+- Kratos Playz: ID0o6Y-NKes is an unlisted duplicate of the public IQK5LW-4vok. Owner decides whether to delete it or keep it unlisted.
+- Timing: the gta11 and gta12 Instagram reels went out about 3 and 6 hours before their planned times (the reminder fired early). The Shorts factory and publisher routines were switched back on at 12:21 UTC today.
