@@ -17,7 +17,7 @@ views in 90 days, or the 500-subscriber tier first). Do whatever grows them, on 
 - Owner's to-dos live in `shorts-out/OWNER-TODO.md`. The jewellery shop page is **on hold** until the owner says otherwise.
 
 Hard limits (platform rules, or the channels get banned): no bought views/subs/followers, no sub4sub, no spam comments
-or DMs on other accounts, no misleading titles, no copyrighted footage/music/art, no fake facts (2+ sources), never
+or DMs on other accounts, no misleading titles, no fake facts (2+ sources), never
 delete a video or post, never make a YouTube upload public immediately (private + schedule).
 
 YouTube API quota (learned 15 Nov 2026): the YouTube Data API has a daily quota and an upload costs far more than a
