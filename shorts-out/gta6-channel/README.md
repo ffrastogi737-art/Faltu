@@ -244,7 +244,7 @@ Sources: Forbes (18 Nov 2026 review coverage), Outputlag and The PC Enthusiast r
 **Vote:** comment A (the story) or B (the world)
 **Language:** English · 23 s · reviewer-quote list (3 things) · Experiment: reviewer-quote shorts on launch day
 
-## 14 · `14-gta6-police-heat.mp4` · comic-pop auto-vertical (GTA, new icons: car shirt camera star) · Phase 2 launch · ENGLISH · Chatterbox · WAITING UPLOAD
+## 14 · `14-gta6-police-heat.mp4` · comic-pop auto-vertical (GTA, new icons: car shirt camera star) · Phase 2 launch · ENGLISH · Chatterbox · SCHEDULED 20 Nov 2026 16:30 IST (https://www.youtube.com/watch?v=LQIE9zZegT0)
 **Title:** GTA 6 Police Remember Your Car And Clothes 🚨 #shorts
 **Description:**
 ```
