@@ -1,0 +1,8 @@
+{"_how": "Index of the owner's clips in Drive Bg_pool (folder 1lUThefWzAEQdJj-I_DPIOGLBHqG9ZKyy, neerajjewellers88), listed 20 Nov 2026. NOT the pool: a clip enters pool.json only via `render_commentary.py pool add <id> <local file>` after it is downloaded and ffprobe-measured. The Drive MCP connector refuses files over 10 MB, so these need another route (see STYLE.md).",
+ "clips": [
+  {"id": "17AN9f09zIr512Qo0D7WGxB0Z7kZNTOWu", "name": "lv_0_20261120213523.mp4", "bytes": 50113962},
+  {"id": "1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux", "name": "lv_0_20261120213056.mp4", "bytes": 72203494},
+  {"id": "1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8", "name": "lv_0_20261120213720.mp4", "bytes": 46780354},
+  {"id": "1l5l_is6c0-_F0JNCKP0dEC2q5zFNqWTG", "name": "lv_0_20261120213259.mp4", "bytes": 71166002},
+  {"id": "1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg", "name": "lv_0_20261120213612.mp4", "bytes": 57817162},
+  {"id": "1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe", "name": "lv_0_20261120213403.mp4", "bytes": 69654422}]}

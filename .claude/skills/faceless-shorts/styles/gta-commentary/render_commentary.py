@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """gta-commentary (Kratos Playz only): gameplay background from the Drive bg_pool + Fair Use image cards + word-synced captions, one ffmpeg pass.
   python3 render_commentary.py next                        STANDARD or COMMENTARY for the next gta video (strict alternation, see due())
+  python3 render_commentary.py pool add <drive_file_id> <local_file> [name]   register a downloaded Bg_pool clip with its exact ffprobe duration
+  python3 render_commentary.py pool list
   python3 render_commentary.py pick <seconds>                 random non-repeating segment of the pool for a voiceover of that length (reserves it in used.json)
   python3 render_commentary.py asset <proj> <name> --src "IGN" (--url U | --page ARTICLE_URL | --file F)   add a credited image to <proj>/assets/
   python3 render_commentary.py render <proj>                  <proj>/renders/out.mp4 from script.json + data/words.json + data/narration.wav + bg/<file>
@@ -9,6 +11,8 @@
 script.json: {"lines":[{"text":..}], "bg":{"name":"clip.mp4","start":12.5,"len":31.0,"cx":0.5,"file_id":".."}, "music":"hype"|"audio/x.mp3"|"none",
   "popups":[{"at":"word","kind":"image","img":"assets/a.jpg","label":"LEAKED?","mark":{"circle":[0.5,0.4,0.12],"arrow":[0.7,0.3]},"dur":2.6},
             {"at":"word","kind":"text","text":"110 MILLION","sub":"PRE-ORDERS"}]}    (marks are fractions of the image; the credit comes from assets/credits.json)
+Background footage (owner, 21 Nov 2026): ONLY the owner's own non-copyright gameplay clips from the Drive folder Bg_pool, registered in pool.json via `pool add`;
+render refuses any other background. Stolen/ripped videos and copyrighted music stay banned (CLAUDE.md).
 shortcut: popups fade in and slide up (no scale pop); the beat has no pop SFX; the 105% zoom is a fixed crop, not a slow push. Upgrade when the pilot shows it matters."""
 import json, random, re, subprocess, sys, tempfile
 from pathlib import Path
@@ -153,10 +157,12 @@ def bgm_path(P, S, total):
     run([sys.executable, str(MIXPY), str(T)]); return T / 'data/mix.wav'
 
 # ---------------- render ----------------
-def render(proj, out='renders/out.mp4'):
+def render(proj, out='renders/out.mp4', pool=None):
     P = Path(proj); S = json.loads((P / 'script.json').read_text())
     words = json.loads((P / 'data/words.json').read_text()); total = json.loads((P / 'data/lines.json').read_text())['duration']
     bg = S['bg']; seg = P / 'bg' / bg['name']
+    ids = {e['id'] for e in (json.loads(POOL.read_text()) if pool is None else pool)}
+    if bg.get('file_id') not in ids: raise SystemExit(f"background {bg.get('name')} is not a registered owner Bg_pool clip (pool.json): only the owner's own clips are allowed as background")
     if not seg.exists(): raise SystemExit(f'{seg} missing: download it from Drive bg_pool/ first')
     if bg['len'] < total * SPEED - 0.05: raise SystemExit(f"segment {bg['len']}s is shorter than the voiceover needs ({total*SPEED:.1f}s): run pick again with {total:.2f}")
     credits = json.loads((P / 'assets/credits.json').read_text()) if (P / 'assets/credits.json').exists() else {}
@@ -185,6 +191,19 @@ def render(proj, out='renders/out.mp4'):
     run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex_script', 'data/graph.txt', '-map', '[vout]', '-map', '[aout]', '-t', str(total),
          '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], cwd=P)
     print(f'{P / out} ({total:.1f}s, {len(pops)} popups)'); return P / out
+
+# ---------------- pool registration (owner's Bg_pool clips only) ----------------
+def probe_duration(path):
+    d = json.loads(run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=codec_type,width,height:format=duration', '-of', 'json', str(path)]).stdout)
+    if not d.get('streams'): raise SystemExit(f'{path} has no video stream')
+    return round(float(d['format']['duration']), 2), d['streams'][0]['width'], d['streams'][0]['height']
+
+def pool_add(file_id, path, name=None, pool_file=None):
+    pf = pool_file or POOL; pool = json.loads(pf.read_text()) if pf.exists() else []
+    dur, w, h = probe_duration(path)
+    if dur < SEG_MIN + 1: raise SystemExit(f'{path} is only {dur}s: a segment needs {SEG_MIN}s+')
+    entry = {'id': file_id, 'name': name or Path(path).name, 'dur': dur, 'size': f'{w}x{h}', 'source': 'owner Bg_pool (non-copyright, owner-provided)'}
+    pool = [e for e in pool if e['id'] != file_id] + [entry]; pf.parent.mkdir(parents=True, exist_ok=True); pf.write_text(json.dumps(pool, indent=1)); return entry
 
 # ---------------- alternation (gta only, parallel to pick_style.py which is untouched) ----------------
 PERF = REPO / 'shorts-out/perf.csv'
@@ -228,12 +247,23 @@ def _test():
     run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'sine=f=220:d=6', str(T / 'data/narration.wav')])
     Image.new('RGB', (1200, 700), (40, 90, 160)).save(T / 'shot.jpg'); add_asset(T, 'shot', 'TEST OUTLET', file=T / 'shot.jpg')
     (T / 'data/words.json').write_text(json.dumps(ws)); (T / 'data/lines.json').write_text(json.dumps({'duration': 5.0}))
-    (T / 'script.json').write_text(json.dumps({'bg': {'name': 't.mp4', 'start': 1.0, 'len': 6.0}, 'music': 'hype', 'popups': [
+    PL = [{'id': 'tid', 'name': 't.mp4', 'dur': 12.0}]
+    (T / 'script.json').write_text(json.dumps({'bg': {'file_id': 'tid', 'name': 't.mp4', 'start': 1.0, 'len': 6.0}, 'music': 'hype', 'popups': [
         {'at': 'leak', 'kind': 'image', 'img': 'assets/shot.jpg', 'label': 'LEAKED?', 'mark': {'circle': [0.5, 0.5, 0.1], 'arrow': [0.7, 0.3]}}, {'at': 'huge', 'kind': 'text', 'text': 'HUGE', 'sub': 'test'}]}))
-    o = render(T)
+    try: render(T, pool=[{'id': 'other'}]); raise AssertionError('an unregistered background must be refused')
+    except SystemExit as e: assert 'not a registered' in str(e)
+    o = render(T, pool=PL)
     d = json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height,codec_type:format=duration', '-of', 'json', str(o)]).stdout)
     assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 5.0) < 0.2, d
     assert sheet(T).exists()
+    clip = T / 'bg/long.mp4'; pf = T / 'pool.json'
+    run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'testsrc2=s=320x180:r=10:d=30', '-pix_fmt', 'yuv420p', str(clip)])
+    e = pool_add('tid', clip, pool_file=pf); assert abs(e['dur'] - 30.0) < 0.2 and e['size'] == '320x180', e     # exact ffprobe duration, not an estimate
+    try: pool_add('short', T / 'bg/t.mp4', pool_file=pf); raise AssertionError('a clip shorter than one segment must be refused')
+    except SystemExit: pass
+    pool_add('tid', clip, pool_file=pf); assert len(json.loads(pf.read_text())) == 1, 'same id is replaced, not duplicated'
+    try: pool_add('x', T / 'data/narration.wav', pool_file=pf); raise AssertionError('audio-only file must be refused')
+    except SystemExit: pass
     mk = lambda *st: [{'channel': 'gta', 'style': x} for x in st]
     assert due([]) == 'STANDARD' and due(mk('comic-pop')) == 'COMMENTARY' and due(mk('comic-pop', 'gta-commentary')) == 'STANDARD' and due(mk('gta-commentary', 'neon-versus')) == 'COMMENTARY'
     assert due([{'channel': 'solo', 'style': 'gta-commentary'}] + mk('comic-pop')) == 'COMMENTARY', 'solo rows never count'
@@ -242,6 +272,8 @@ def _test():
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[:1] == ['--test']: _test()
+    elif a[:1] == ['pool'] and a[1:2] == ['add']: print(json.dumps(pool_add(a[2], a[3], a[4] if len(a) > 4 else None)))
+    elif a[:1] == ['pool'] and a[1:2] == ['list']: [print(f"{e['id']}  {e['dur']}s  {e['size']}  {e['name']}") for e in json.loads(POOL.read_text())] or print('pool.json is empty')
     elif a[:1] == ['next']: t, why = next_track(); print(f'{t}\n{why}')
     elif a[:1] == ['sheet']: sheet(a[1])
     elif a[:1] == ['pick']: print(json.dumps(pick(float(a[1]))))
