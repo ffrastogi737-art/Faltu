@@ -47,14 +47,14 @@ clip not downloadable) the run is a STANDARD one and commentary stays due for th
 
 ## --react-clip: timed beat-by-beat reaction over a cropped third-party gaming clip (owner request 20 Nov; Kratos Playz only; rules in CLAUDE.md)
 A third gta format on demand, NOT part of the 50/50 (perf.csv style id `gta-react`; due() ignores those rows). The clip is never added to pool.json; render refuses a pool clip.
-`script.json`: `"react": {"clip":"bg/x.mp4","zoom":1.15,"cy":0.5,"pill":"MODDED GTA 5 - 10/10 ROBBERY","credit":"<creator>","pill_y":250,
-"beats":[{"start":0.0,"end":8.0,"text":"..."},...],"punch":{"t":17.8,"circle":[fx,fy,fr]}}` (circle = fractions of the 1080x1920 output).
+`script.json`: `"react": {"clip":"bg/x.mp4","zoom":1.15,"cy":0.5,"pill":"GTA 6 - 10/10 ROBBERY","credit":"<creator>","pill_y":250,"music":"neon",
+"beats":[{"start":0.0,"end":8.0,"text":"...","emo":0.95,"cfg":0.3,"tempo":1.0},...],"punch":{"t":17.8,"circle":[fx,fy,fr]}}` (circle = fractions of the 1080x1920 output).
 1. Download the clip from Drive (Composio route above, 3 MB is fine) into `<proj>/bg/`. `ffprobe` it and look at it first: `cropdetect` shows black bars, a contact sheet shows where its own captions sit.
 2. `/root/cbx/bin/python render_commentary.py react-voice <proj>`: one Chatterbox line per beat at the beat's own start (beat 1 not before the 150 ms lead-in), silence between beats
-   (the clip's punchline plays there); a line longer than its window is sped up to 1.3x at most, otherwise the run stops. Then `scripts/py scripts/words.py <proj>`.
+   (the clip's punchline plays there). Funny, commentary-style read: per beat `emo` 0.9-1.0 (Chatterbox exaggeration), `cfg` 0.3, `tempo` 0.95-1.05 (slower = less rushed); a line longer than its window is sped up to 1.3x at most, otherwise the run stops. Then `scripts/py scripts/words.py <proj>`.
 3. `render_commentary.py --react-clip <proj>`: zoom/crop (1.12-1.18x is the framing range) + top context pill with the mandatory `CLIP: <creator>` credit + 5 px #FFE600 progress bar;
    karaoke captions (Anton, MarginV 600) ONLY while the narrator speaks; the clip's audio ducks to -27 LUFS while the narrator speaks and rises to -16 LUFS in the pauses (smooth 0.12 s / 0.25 s ramps from the word timings);
-   the narrator is -16 LUFS; no beat, no SFX; at `punch.t` a 7 % impact zoom and a red circle callout. Then `render_commentary.py sheet <proj>` (shows every beat, every pause and the punch).
+   the narrator is -16 LUFS; optional music bed `react.music` ("neon" = the synthwave bed from mix.py, Vice City mood; hype/bed/tension also work) at -28 LUFS, to the last frame; no SFX; at `punch.t` a 7 % impact zoom and a red circle callout. Then `render_commentary.py sheet <proj>` (shows every beat, every pause and the punch).
 4. QA with the sheet, in this order: (a) is the creator's own title/branding still visible (it must be); (b) no overlap between our pill, our captions and the clip's own captions; (c) black bars hidden.
    A 1.12-1.18x crop only removes text that sits within about 6-9 % of the top/bottom EDGE. Captions in the middle of the frame, or a source letterbox that comes and goes, are NOT removed by it:
    say so and ask, do not push the zoom up to hide them (and never to hide the creator's name).

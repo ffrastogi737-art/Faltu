@@ -462,7 +462,7 @@ def sheet(proj, every=2.5, video='renders/out.mp4'):
 
 # ---------------- --react-clip: timed beat-by-beat reaction commentary over a cropped third-party gaming clip ----------------
 # script.json: "react": {"clip":"bg/ref.mp4", "zoom":1.15, "cy":0.5, "pill":"MODDED GTA 5 - 10/10 ROBBERY", "credit":"<the clip's creator>", "pill_y":250,
-#   "beats":[{"start":0.0,"end":8.0,"text":"..."}, ...], "punch":{"t":19.3,"circle":[fx,fy,fr]}}   (circle fractions of the 1080x1920 frame)
+#   "beats":[{"start":0.0,"end":8.0,"text":"...","emo":0.95,"cfg":0.3,"tempo":1.0}, ...], "music":"neon", "punch":{"t":19.3,"circle":[fx,fy,fr]}}   (circle: fractions of the 1080x1920 frame)
 # The clip is NEVER added to pool.json. The credit is mandatory (pill + description); the creator's own branding must stay visible (CLAUDE.md).
 DUCK_PAUSE, DUCK_SPEAK = -16.0, -27.0              # LUFS of the clip's own audio: full in the narrator's pauses, ducked while the narrator speaks
 
@@ -507,13 +507,13 @@ def _ff_audio(w, sr, af):
     if r.returncode: raise SystemExit(f'ffmpeg failed: {r.stderr.decode()[-300:]}')
     return np.frombuffer(r.stdout, dtype=np.float32)
 
-def _chatterbox(text, emo=0.75):
+def _chatterbox(text, emo=0.75, cfg=0.35):
     """Default TTS (CPU Chatterbox, same settings as cbx_voice.py). Needs the cbx python: /root/cbx/bin/python render_commentary.py react-voice <proj>."""
     global _CBX
     if '_CBX' not in globals():
         import torch; from chatterbox.tts import ChatterboxTTS
         torch.manual_seed(7); _CBX = ChatterboxTTS.from_pretrained(device='cpu')
-    return _CBX.generate(text, exaggeration=emo, cfg_weight=0.35).squeeze().numpy(), _CBX.sr
+    return _CBX.generate(text, exaggeration=emo, cfg_weight=cfg).squeeze().numpy(), _CBX.sr
 
 def react_voice(proj, tts=None, tempo=1.1):
     """One Chatterbox line per timed beat, placed at the beat's own start time (beat 1 not before the 150 ms lead-in); everything between the beats stays silent so the
@@ -522,8 +522,8 @@ def react_voice(proj, tts=None, tempo=1.1):
     P = Path(proj).resolve(); S = json.loads((P / 'script.json').read_text()); R = S['react']; tts = tts or _chatterbox
     total = _react_total(P, R); out = None; lines = []
     for i, b in enumerate(R['beats']):
-        w, sr = tts(b['text'], b.get('emo', 0.75)); out = np.zeros(int(total * sr) + sr) if out is None else out
-        w = _ff_audio(w, sr, f'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo={tempo}')
+        w, sr = tts(b['text'], b.get('emo', 0.75), b.get('cfg', 0.35)); out = np.zeros(int(total * sr) + sr) if out is None else out
+        w = _ff_audio(w, sr, f'silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo={b.get("tempo", tempo)}')
         start = max(b['start'], LEAD) if i == 0 else b['start']; room = b['end'] - start; dur = len(w) / sr
         if dur > room:
             f = dur / room * 1.01
@@ -557,7 +557,7 @@ def react_render(proj, out='renders/out.mp4'):
     if not 1.12 <= zoom <= 1.18: print(f'note: react.zoom {zoom} is outside the documented 1.12-1.18 framing range')
     words = json.loads((P / 'data/words.json').read_text()); total = _react_total(P, R)
     if not words or words[0]['s'] < LEAD - 0.01: raise SystemExit(f'beat 1 must start at {LEAD}s or later (150 ms lead-in)')
-    spans = speech_spans(words); lc = lufs(clip)
+    spans = speech_spans(words); lc = lufs(clip); bgm = bgm_path(P, {'music': R.get('music', 'none')}, total)      # "neon" = the synthwave bed of mix.py (Vice City mood)
     (P / 'renders').mkdir(exist_ok=True); (P / 'data/caps.ass').write_text(make_ass(words, total)); bar_png(P / 'data/bar.png'); pill_png(P / 'data/pill.png', R.get('pill', ''), R['credit'])
     pu = R.get('punch'); pe = ''
     if pu: pe = f"*(1+0.07*clip((t-{pu['t']})/0.12,0,1)*clip(1-(t-{pu['t'] + 0.12})/0.5,0,1))"
@@ -571,10 +571,13 @@ def react_render(proj, out='renders/out.mp4'):
         inputs += ['-framerate', str(FPS), '-i', 'data/punch/c_%03d.png']
         f += [f"[4:v]format=rgba,setpts=PTS+{pu['t']}/TB[pc]", f"[v1][pc]overlay=x={cx:.0f}:y={cyy:.0f}:eof_action=pass[v2]"]; last = 'v2'
     f += [f"[2:v]format=rgba[bar]", f"[{last}][bar]overlay=x='-W+W*t/{total}':y=0:eof_action=pass[vb]", f"[vb]ass=data/caps.ass:fontsdir={FONTS}[vout]"]
-    gv = -16.0 - lufs(P / 'data/narration.wav')
+    gv = -16.0 - lufs(P / 'data/narration.wav'); mix_in = '[vo][ca]'
+    if bgm:                                                                              # beat -28 LUFS, 12 dB under the narrator, to the last frame
+        inputs += ['-i', str(bgm)]; bi2 = 5 if pu else 4; gb = -28.0 - lufs(bgm)
+        f.append(f"[{bi2}:a]aloop=loop=-1:size=2147483647,atrim=duration={total},volume={gb:.2f}dB,afade=t=out:st={round(total - 0.3, 2)}:d=0.3[bm]"); mix_in += '[bm]'
     f += [f"[1:a]volume={gv:.2f}dB,alimiter=limit=0.95,apad,atrim=duration={total}[vo]",
           f"[0:a]volume=volume='{duck_expr(spans, DUCK_PAUSE - lc, DUCK_SPEAK - lc)}':eval=frame,apad,atrim=duration={total}[ca]",
-          "[vo][ca]amix=inputs=2:normalize=0:duration=longest[aout]"]
+          f"{mix_in}amix=inputs={3 if bgm else 2}:normalize=0:duration=longest[aout]"]
     (P / 'data/graph.txt').write_text(';\n'.join(f))
     run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex_script', 'data/graph.txt', '-map', '[vout]', '-map', '[aout]', '-t', str(total), '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20',
          '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], cwd=P)
@@ -671,11 +674,11 @@ def _test():
     def win(a, b): w = T / 'w.wav'; run(['ffmpeg', '-v', 'error', '-y', '-ss', str(a), '-t', str(b - a), '-i', str(duck), str(w)]); return lufs(w)
     assert abs(win(0.4, 1.8) + 16) < 0.8 and abs(win(3.4, 4.6) + 27) < 0.8 and abs(win(6.5, 8.5) + 16) < 0.8, 'clip audio: -16 LUFS in the pauses, -27 LUFS while the narrator speaks, back up after'
     sys.path.insert(0, str(HERE.parents[1] / 'scripts')); import words as WD
-    fake = lambda text, emo=0.75: ((0.3 * np.sin(2 * np.pi * 300 * np.arange(int(24000 * 0.05 * len(text))) / 24000)).astype('float32'), 24000)        # 0.05 s per character
+    fake = lambda text, emo=0.75, cfg=0.35: ((0.3 * np.sin(2 * np.pi * 300 * np.arange(int(24000 * 0.05 * len(text))) / 24000)).astype('float32'), 24000)        # 0.05 s per character
     R = T / 'react'; (R / 'bg').mkdir(parents=True); (R / 'data').mkdir()
     run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'color=c=0x3366cc:s=720x1280:r=30:d=10', '-f', 'lavfi', '-i', 'sine=f=1000:d=10', '-vf', 'drawbox=x=0:y=0:w=720:h=70:color=white:t=fill,drawbox=x=0:y=1210:w=720:h=70:color=white:t=fill',
          '-pix_fmt', 'yuv420p', '-shortest', str(R / 'bg/clip.mp4')])                         # white bands = burned-in captions at the very top and bottom edge
-    rs = {'react': {'clip': 'bg/clip.mp4', 'zoom': 1.15, 'pill': 'Test pill - 10/10', 'credit': 'Some Creator', 'beats': [{'start': 0.0, 'end': 4.0, 'text': 'x' * 40}, {'start': 6.0, 'end': 9.0, 'text': 'y' * 40}], 'punch': {'t': 7.0, 'circle': [0.5, 0.5, 0.15]}}}
+    rs = {'react': {'clip': 'bg/clip.mp4', 'zoom': 1.15, 'pill': 'Test pill - 10/10', 'credit': 'Some Creator', 'music': 'neon', 'beats': [{'start': 0.0, 'end': 4.0, 'text': 'x' * 40}, {'start': 6.0, 'end': 9.0, 'text': 'y' * 40}], 'punch': {'t': 7.0, 'circle': [0.5, 0.5, 0.15]}}}
     (R / 'script.json').write_text(json.dumps(rs)); ln = react_voice(R, tts=fake)
     assert ln[0]['start'] >= LEAD and abs(ln[1]['start'] - 6.0) < 0.01, 'beat 1 keeps the 150 ms lead-in, beat 2 lands in its own window'
     import wave; wv = wave.open(str(R / 'data/narration.wav')); sr = wv.getframerate(); nr = np.frombuffer(wv.readframes(wv.getnframes()), dtype='<i2').astype(float)
