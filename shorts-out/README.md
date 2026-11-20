@@ -211,3 +211,14 @@ A fictional office skit: the boss takes credit for an idea, then the karma hits.
 ```
 **Tags:** instant karma, office skit, boss gets karma, funny animation, cartoon skit, office comedy, skit shorts, karma shorts
 **Experiment:** new format (chaos skit, owner brief + suggestion), tall-tale 3D look with an original cast; 25.7 s, Chatterbox x1.12; slot 17:00 IST (first free solo slot on 20 Nov). Compare after 24 h and 48 h against chalk-talk (median 922) and comic-pop (median 1,001). Build source: `shorts-out/formats/office-karma/`.
+
+## 19 · `19-name-in-crowd.mp4` · comic-panels (NEW for solo hype; match #2 behind inside-out, chosen for the dialogue/crowd hook) · YouTube WAITING UPLOAD
+**Title:** Why You Hear Your Name In A Noisy Room
+**Description:**
+```
+The cocktail party effect: your brain keeps scanning sounds you ignore for words that matter to you, like your name. In a 1959 test only about one in three people noticed their name; later work found 65 percent of people with low working memory capacity noticed it vs 20 percent with high capacity.
+Sources: Moray 1959 (Q J Exp Psychol); Wood & Cowan 1995 (JEP:LMC); Conway, Cowan & Bunting 2001 (Psychonomic Bulletin & Review).
+#shorts #psychology #brain #didyouknow #facts #cocktailpartyeffect #science #mindblown
+```
+**Tags:** cocktail party effect, hear your name, psychology facts, brain facts, selective attention, why you hear your name, attention psychology, did you know, science facts, human brain
+**Experiment:** kind psychology-myth (new, after 3 body-science); story-first hook "someone says your name across a loud party" in comic-panels dialogue panels; 28.6 s, Chatterbox 0.7x1.08. Compare vs chalk-talk 922 / comic-pop 1,001.

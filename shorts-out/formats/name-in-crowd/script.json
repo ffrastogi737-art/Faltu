@@ -1,0 +1,147 @@
+{
+ "title": "Why You Hear Your Name In A Noisy Room",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.25,
+ "music": "hype",
+ "sources": [
+  "Moray 1959, Quarterly Journal of Experimental Psychology 11:56-60 (about a third heard own name in the ignored ear)",
+  "Wood & Cowan 1995, J. Exp. Psychology: Learning, Memory & Cognition 21:255-260 (replication, ~35 percent)",
+  "Conway, Cowan & Bunting 2001, Psychonomic Bulletin & Review 8:331-335 (65 percent low vs 20 percent high working memory capacity)"
+ ],
+ "lines": [
+  {
+   "text": "You're deep in a loud party, and somewhere behind you, someone says your name.",
+   "vis": {
+    "k": "P",
+    "panels": [
+     [
+      "note",
+      "LOUD MUSIC..."
+     ],
+     [
+      "bubble",
+      "Hey, Sam!"
+     ],
+     [
+      "ear",
+      "Wait... ME?!"
+     ]
+    ],
+    "bam": "?!"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "You weren't even listening to them. So how did you hear it?",
+   "vis": {
+    "k": "P",
+    "panels": [
+     [
+      "person",
+      "I was not listening!"
+     ],
+     [
+      "brain",
+      "...but I heard it."
+     ]
+    ]
+   }
+  },
+  {
+   "text": "It's called the cocktail party effect.",
+   "vis": {
+    "k": "I",
+    "icon": "bubble",
+    "head": "COCKTAIL PARTY",
+    "sub": "EFFECT",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Your brain secretly scans the noise you ignore, hunting for words that matter to you, like your name.",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "note",
+      "NOISE"
+     ],
+     [
+      "brain",
+      "SCAN"
+     ],
+     [
+      "person",
+      "YOUR NAME"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "When scientists tested it in nineteen fifty-nine, only about one in three people noticed their name.",
+   "vis": {
+    "k": "S",
+    "big": "1 IN 3",
+    "label": "NOTICED THEIR NAME",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "But here's the twist!",
+   "vis": {
+    "k": "S",
+    "big": "TWIST!",
+    "label": "WAIT FOR IT",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Later studies found people with weaker focus noticed it way more: sixty-five percent!",
+   "vis": {
+    "k": "S",
+    "big": "65%",
+    "label": "WEAKER FOCUS",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Strong focusers? Just twenty percent.",
+   "vis": {
+    "k": "S",
+    "big": "20%",
+    "label": "STRONG FOCUS"
+   }
+  },
+  {
+   "text": "So hearing your name means your brain let a little extra sound slip in.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "SOUND SLIPS IN",
+    "sub": "EXTRA NOISE",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Next time someone calls your name, you'll know why!",
+   "vis": {
+    "k": "P",
+    "panels": [
+     [
+      "bubble",
+      "Sam!"
+     ],
+     [
+      "ear",
+      "Oh! I know why."
+     ]
+    ],
+    "bam": "BAM!"
+   },
+   "emo": 0.85
+  }
+ ]
+}
