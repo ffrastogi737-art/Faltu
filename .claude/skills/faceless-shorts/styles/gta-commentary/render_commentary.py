@@ -17,7 +17,8 @@ script.json: {"lead":0.15,"gap":0.12,"outro":0.7,"lines":[{"text":..}],"bg":{"fi
  (marks/crops are fractions of the image; the SOURCE line comes from assets/credits.json; `dur` overrides a card's length)
 Look: cards pop in 0.82x -> 1.0x in 120 ms with a drop shadow, images Ken-Burns 1.0x -> 1.08x, the background is dimmed 17 % with a vignette while cards show,
 captions are 2-3 white words (lower-centre, MarginV 600) with the spoken word in #FFE600 at 112 %. Audio: voice -16 LUFS (>= 150 ms lead-in), beat -28 LUFS,
-whoosh/pop/thud SFX (mix.py, unmodified) at about -19 dBFS on every card.
+whoosh/pop/thud SFX (mix.py, unmodified) at about -19 dBFS on every card. Retention polish: a 5 px glowing #FFE600 progress bar along the top edge, a 2-frame
+3 px micro-shake on the hook and poll entrances, and the closing poll card held >= 2.0 s (the video tail is extended when the voice ends too early).
 Background footage (owner, 20 Nov 2026): ONLY the owner's own non-copyright gameplay clips from the Drive folder Bg_pool, registered in pool.json via `pool add`;
 render refuses any other background. Stolen/ripped videos and copyrighted music stay banned (CLAUDE.md).
 shortcut: the 105% zoom is a fixed crop, not a slow push; card text is not word-synced, only the card start is. Upgrade when the pilot shows it matters."""
@@ -336,8 +337,25 @@ def sfx_cues(pops):
         if p['kind'] in ('hook', 'poll'): cues.append({'t': round(p['t'] + 0.02, 3), 'type': 'thud'})
     return cues
 
+SHAKE_PX = 3       # micro-shake amplitude (px), 2 frames, on the hook and poll entrances
+
+def bar_png(path):
+    """1080x30 strip: a 5 px #FFE600 bar on the top edge, a soft yellow glow under it and a bright head at the right end. render() slides it in from the left,
+    so the visible width is the progress (0 % at t=0, 100 % at the last frame)."""
+    clear = (255, 230, 0, 0)
+    glow = Image.new('RGBA', (W, 30), clear); ImageDraw.Draw(glow).rectangle([0, 0, W, 9], fill=(255, 230, 0, 150)); glow = glow.filter(ImageFilter.GaussianBlur(5))
+    halo = Image.new('RGBA', (W, 30), clear); ImageDraw.Draw(halo).ellipse([W - 34, -14, W + 10, 22], fill=(255, 240, 90, 210)); halo = halo.filter(ImageFilter.GaussianBlur(7))
+    im = Image.alpha_composite(glow, halo); ImageDraw.Draw(im).rectangle([0, 0, W, 4], fill=(255, 230, 0, 255)); im.save(path)
+
+def shake_expr(ts, amp=SHAKE_PX):
+    """crop x / y expressions for the 1086x1932 upscaled frame: base offset (3, 6) + a 2-frame +/-amp px diagonal pulse at each time in ts."""
+    def pulse(a):
+        return '+'.join(f"if(between(t,{t - 0.01 + k / FPS:.3f},{t + 0.01 + k / FPS:.3f}),{a * (1 if k == 0 else -1)},0)" for t in ts for k in (0, 1))
+    return f"3+{pulse(amp)}", f"6+{pulse(-amp)}"
+
 # ---------------- render ----------------
 LEAD = 0.15        # seconds of clean audio before the first spoken word (the 0.0 s opening syllable is never clipped)
+POLL_HOLD = 2.0    # the closing poll card stays on screen at least this long
 
 def render(proj, out='renders/out.mp4', pool=None):
     P = Path(proj).resolve(); S = json.loads((P / 'script.json').read_text())   # ffmpeg runs with cwd=P, so P must be absolute
@@ -348,10 +366,14 @@ def render(proj, out='renders/out.mp4', pool=None):
     if not seg.exists(): raise SystemExit(f'{seg} missing: download it from Drive Bg_pool first')
     pad = max(0.0, LEAD - words[0]['s'])                                          # lead-in: shift everything, delay the voice
     if pad: words = [dict(w, s=round(w['s'] + pad, 3), e=round(w['e'] + pad, 3)) for w in words]; total = round(total + pad, 3)
-    if bg['len'] < total * SPEED - 0.05: raise SystemExit(f"segment {bg['len']}s is shorter than the voiceover needs ({total*SPEED:.1f}s): run pick again with {total:.2f}")
+    if not 90 <= len(words) <= 120: print(f'warning: {len(words)} words; target 95-115 (24-28 s)')
     credits = json.loads((P / 'assets/credits.json').read_text()) if (P / 'assets/credits.json').exists() else {}
-    pops = popup_times(S.get('popups', []), words, total); check_popups(pops)
-    (P / 'renders').mkdir(exist_ok=True); (P / 'data/caps.ass').write_text(make_ass(words, total)); render_cards(pops, P, credits); dim_png(P / 'data/dim.png')
+    pops = popup_times(S.get('popups', []), words, total)
+    if pops and pops[-1]['t'] + POLL_HOLD + 0.25 > total:                          # the closing poll stays up >= POLL_HOLD s: extend the tail of the video
+        total = round(pops[-1]['t'] + POLL_HOLD + 0.25, 3); pops = popup_times(S.get('popups', []), words, total)
+    check_popups(pops)
+    if bg['len'] < total * SPEED - 0.05: raise SystemExit(f"segment {bg['len']}s is shorter than the video needs ({total*SPEED:.1f}s): run pick again with {total:.2f}")
+    (P / 'renders').mkdir(exist_ok=True); (P / 'data/caps.ass').write_text(make_ass(words, total)); render_cards(pops, P, credits); dim_png(P / 'data/dim.png'); bar_png(P / 'data/bar.png')
     (P / 'data/beats.json').write_text(json.dumps([{'t': p['t'], 'd': p['d'], 'kind': p['kind']} for p in pops]))
     t0, t1 = pops[0]['t'], min(total, pops[-1]['t'] + pops[-1]['d'])
     inputs = ['-ss', str(bg['start']), '-t', str(bg['len']), '-i', str(seg), '-i', 'data/narration.wav',
@@ -367,7 +389,10 @@ def render(proj, out='renders/out.mp4', pool=None):
         inputs += ['-framerate', str(FPS), '-i', f'data/popups/p{k}_%03d.png']; i = n + k
         f.append(f"[{i}:v]format=rgba,setpts=PTS+{p['t']}/TB[c{k}]")
         f.append(f"[vd{k}][c{k}]overlay=x=(W-w)/2:y={p['y']}:enable='between(t,{p['t']},{round(p['t'] + p['d'], 2)})':eof_action=pass[vd{k + 1}]")
-    f.append(f"[vd{len(pops)}]ass=data/caps.ass[vout]")
+    inputs += ['-loop', '1', '-framerate', str(FPS), '-t', str(total), '-i', 'data/bar.png']; bi = n + len(pops); sx, sy = shake_expr([pops[0]['t'], pops[-1]['t']])
+    f.append(f"[vd{len(pops)}]scale=1086:1932,crop=1080:1920:x='{sx}':y='{sy}'[vs]")                         # micro-shake on the hook and poll entrances (whole frame)
+    f.append(f"[{bi}:v]format=rgba[bar]"); f.append(f"[vs][bar]overlay=x='-W+W*t/{total}':y=0:eof_action=pass[vb]")      # top progress bar, steady (after the shake)
+    f.append("[vb]ass=data/caps.ass[vout]")
     f.append(f"[1:a]{'adelay=' + str(round(pad * 1000)) + '|' + str(round(pad * 1000)) + ',' if pad else ''}apad,atrim=duration={total},loudnorm=I=-16:TP=-1.5:LRA=11[vo]")
     mix_in = ['[vo]']
     if bgm: f.append(f"[{ai}:a]aloop=loop=-1:size=2147483647,atrim=duration={total},loudnorm=I=-28:TP=-3:LRA=7[bm]"); mix_in.append('[bm]')   # beat -28 LUFS: 12 dB under the voice
@@ -469,17 +494,19 @@ def _test():
     for c in cards:                                                      # all 4 layouts + the generic image card build and animate
         cd = _build(c, T, cr); f1, f2 = card_frame(cd, 0.03, 2.0), card_frame(cd, 0.5, 2.0); assert f1.size == f2.size == (CW, cd['base'].height) and f2.getchannel('A').getbbox(), c['kind']
         ref[c['kind']] = (f1.getchannel('A').getbbox(), f2.getchannel('A').getbbox())
+    bp = T / 'bar.png'; bar_png(bp); bi = Image.open(bp); assert bi.size == (W, 30) and bi.getpixel((500, 2)) == (255, 230, 0, 255) and 0 < bi.getpixel((500, 9))[3] < 255 and bi.getpixel((500, 28))[3] < 8, 'bar: 5 px solid, glow fades out'
+    sx, sy = shake_expr([0.0, 4.55]); assert sx.count('between') == 4 and sy.count('between') == 4 and '4.540' in sx and '-0.010' in sx, (sx, sy)
     b1, b2 = ref['hook']; assert (b1[2] - b1[0]) < (b2[2] - b2[0]), 'card pops in: smaller at 30 ms than at full scale'
     im0 = Image.open(T / 'shot.jpg'); assert _kb(im0, (0, 0, 1, 1), 100, 100, 1.0).tobytes() != _kb(im0, (0, 0, 1, 1), 100, 100, 1.08).tobytes(), 'Ken Burns zooms'
     (T / 'data/words.json').write_text(json.dumps(ws)); (T / 'data/lines.json').write_text(json.dumps({'duration': 5.0}))
     PL = [{'id': 'tid', 'name': 't.mp4', 'dur': 12.0}]
-    (T / 'script.json').write_text(json.dumps({'bg': {'file_id': 'tid', 'name': 't.mp4', 'start': 1.0, 'len': 6.0}, 'music': 'hype', 'popups': [
+    (T / 'script.json').write_text(json.dumps({'bg': {'file_id': 'tid', 'name': 't.mp4', 'start': 1.0, 'len': 8.0}, 'music': 'hype', 'popups': [
         K, dict(cards[1], at='dropped'), dict(cards[2], at='about'), dict(cards[4], at='huge')]}))
     try: render(T, pool=[{'id': 'other'}]); raise AssertionError('an unregistered background must be refused')
     except SystemExit as e: assert 'not a registered' in str(e)
     o = render(T, pool=PL)
     d = json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height,codec_type:format=duration', '-of', 'json', str(o)]).stdout)
-    assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 5.15) < 0.1, d      # 5.0 s voice + the 150 ms lead-in
+    assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 6.8) < 0.1, d      # poll card at 4.55 s (150 ms lead-in) + 2.0 s hold + 0.25 s tail
     assert sheet(T).exists()
     clip = T / 'bg/long.mp4'; pf = T / 'pool.json'
     run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'testsrc2=s=320x180:r=10:d=30', '-pix_fmt', 'yuv420p', str(clip)])
