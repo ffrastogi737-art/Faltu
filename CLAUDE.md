@@ -31,6 +31,11 @@ Background gameplay (owner, 20 Nov 2026): the owner's own non-copyright backgrou
 `Bg_pool` folder are explicitly allowed as the visual base of gta-commentary videos (Kratos Playz only). Only clips
 registered in `shorts-out/gta-commentary/pool.json` are used. The ban stays on stolen copyrighted videos (anyone's
 video ripped from YouTube or elsewhere) and copyrighted music.
+Reaction clips (owner, 20 Nov 2026): timed beat-by-beat reaction commentary over a cropped third-party gaming clip (`render_commentary.py --react-clip`, Kratos Playz only)
+is allowed, but only as transformative commentary: our narration comments on the action beat by beat, the clip's own punchline plays in the silent gaps, and it is never an unedited
+repost. House rules added to keep it defensible: the clip's creator is credited on screen (top pill) and in the description; the creator's own title / branding / watermark is never
+cropped, blurred or covered (the crop is for framing only); the clip is never added to `pool.json` (the pool holds only the owner's own clips). On a claim or strike: drop that
+video and carry on. Fair Use is a defence, not a guarantee.
 
 YouTube API quota (learned 15 Nov 2026): the YouTube Data API has a daily quota and an upload costs far more than a
 read, so roughly 5-6 uploads per day fit across both channels. If a call returns `quotaExceeded`: do not retry, still

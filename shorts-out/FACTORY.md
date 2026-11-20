@@ -180,6 +180,7 @@ The script chooses the template; a template never forces the script.
    `lead` 0.15 / `gap` 0.12; never claim a release or confirmation you did not verify with a dated source in this run (no "the game is out now", no "CONFIRMED"); always end on an
    open question that the poll card shows, written so its last words flow into the first line (loop-ready). Script target 95-115 words (24-28 s); poll card held >= 2 s.
    Voice -16 LUFS, beat -28 LUFS, SFX about -19 dBFS (mix.py itself is never changed). Top progress bar + 2-frame micro-shake are built into the renderer; fonts are Anton + Montserrat ExtraBold (in the style folder), audio plays to the last frame.
+   Reaction mode (`render_commentary.py --react-clip`, STYLE.md, rules in CLAUDE.md) is an extra gta format only when the owner asks for it: perf style `gta-react`, creator credit mandatory, not part of the 50/50.
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
 
