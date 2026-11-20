@@ -176,6 +176,9 @@ The script chooses the template; a template never forces the script.
    COMMENTARY = skip `match`, follow `.claude/skills/faceless-shorts/styles/gta-commentary/STYLE.md` (own script, Drive footage, image cards), then the SAME
    BUILD-QA (contact sheet), DELIVER, UPLOAD, INSTAGRAM, perf.csv steps. The clip pool loops forever (used segments recycle), so running out of clips is never a reason to fall back. Fallback: Drive folder `Bg_pool` (Composio account googledrive_keened-heap, route in STYLE.md) missing, empty,
    unreachable or the clip not downloadable = do a STANDARD run on that same script instead; never fail an upload for it.
+   Commentary rules (details in STYLE.md): every beat (one per 1.8-2.5 s) shows a real credited image, text-only cards are refused; hook card at 0.0 s, poll card last; script.json
+   `lead` 0.15 / `gap` 0.12; never claim a release or confirmation you did not verify with a dated source in this run (no "the game is out now", no "CONFIRMED"); always end on an
+   open question that the poll card shows. Voice -16 LUFS, beat -28 LUFS, SFX about -19 dBFS (mix.py itself is never changed).
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
 
