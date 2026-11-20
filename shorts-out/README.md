@@ -190,7 +190,7 @@ Sources: PBS NewsHour, Cleveland Clinic, ScienceBlog / PubMed 27568353.
 **Tags:** why does sunlight make me sneeze, photic sneeze reflex, ACHOO syndrome, sneezing in sunlight, bright light sneeze, human body facts, biology facts, science shorts, body facts, did you know
 **Experiment:** best formula topic (second-person body science) + comic-pop auto engine 2nd time, 31 s, Chatterbox; slot 20 Nov 09:00 IST
 
-## 17 · `17-leech-collector.mp4` · chalk-talk (4th use? first for weird-jobs; chalk-talk med 922) · YouTube WAITING UPLOAD (quota) · IG DONE 20 Nov 2026 17:00 IST (https://www.instagram.com/reel/Df9i6LnlW8n/) · IG ig-leech 17:00 IST
+## 17 · `17-leech-collector.mp4` · chalk-talk (4th use? first for weird-jobs; chalk-talk med 922) · YouTube QUEUED: goes public 21 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=ejIN3DjIahw) · IG DONE 20 Nov 2026 17:00 IST (https://www.instagram.com/reel/Df9i6LnlW8n/) · IG ig-leech 17:00 IST
 **Title:** The Job Where Your Leg Was The Bait
 **Description:**
 ```
@@ -212,7 +212,7 @@ A fictional office skit: the boss takes credit for an idea, then the karma hits.
 **Tags:** instant karma, office skit, boss gets karma, funny animation, cartoon skit, office comedy, skit shorts, karma shorts
 **Experiment:** new format (chaos skit, owner brief + suggestion), tall-tale 3D look with an original cast; 25.7 s, Chatterbox x1.12; slot 17:00 IST (first free solo slot on 20 Nov). Compare after 24 h and 48 h against chalk-talk (median 922) and comic-pop (median 1,001). Build source: `shorts-out/formats/office-karma/`.
 
-## 19 · `19-name-in-crowd.mp4` · comic-panels (NEW for solo hype; match #2 behind inside-out, chosen for the dialogue/crowd hook) · YouTube WAITING UPLOAD
+## 19 · `19-name-in-crowd.mp4` · comic-panels (NEW for solo hype; match #2 behind inside-out, chosen for the dialogue/crowd hook) · YouTube QUEUED: goes public 22 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=v9lceBAmneQ)
 **Title:** Why You Hear Your Name In A Noisy Room
 **Description:**
 ```
