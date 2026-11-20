@@ -177,7 +177,7 @@ Sources: Mayo Clinic (Airplane ear), Merck / MSD Manual (Barotrauma of the ear),
 **Tags:** why do ears pop on a plane, ear popping, airplane ear, eustachian tube, ear pressure flight, chewing gum on plane, human body facts, science shorts, body facts, travel tips
 **Experiment:** NEW STYLE for solo hype: bright comic-pop (auto engine) instead of inside-out/chalk-talk; Chatterbox voice, 27 s
 
-## 16 · `16-sun-sneeze.mp4` · comic-pop auto-vertical (2nd time) · QUEUED: goes public 20 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=7Bib1_OprFw) · IG ig-sun-sneeze 09:15 IST
+## 16 · `16-sun-sneeze.mp4` · comic-pop auto-vertical (2nd time) · QUEUED (09:00 IST switch failed: quotaExceeded; retry 13:35 IST after the quota reset, else the 16:55 run) (https://www.youtube.com/watch?v=7Bib1_OprFw) · IG ig-sun-sneeze 09:15 IST
 **Title:** Why You Sneeze In Bright Sunlight
 **Description:**
 ```
