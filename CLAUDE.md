@@ -27,7 +27,7 @@ keep it Fair Use: stills only, shown briefly (about 3 s) while our own commentar
 source on the card; never a whole gallery from one outlet; never as the whole video; never fabricate or edit a
 screenshot (a fake Reddit post is a fake fact); on a claim or takedown, drop that image and keep going. Fair Use is a
 legal defence, not a guarantee.
-Background gameplay (owner, 21 Nov 2026): the owner's own non-copyright background gameplay clips in the Google Drive
+Background gameplay (owner, 20 Nov 2026): the owner's own non-copyright background gameplay clips in the Google Drive
 `Bg_pool` folder are explicitly allowed as the visual base of gta-commentary videos (Kratos Playz only). Only clips
 registered in `shorts-out/gta-commentary/pool.json` are used. The ban stays on stolen copyrighted videos (anyone's
 video ripped from YouTube or elsewhere) and copyrighted music.

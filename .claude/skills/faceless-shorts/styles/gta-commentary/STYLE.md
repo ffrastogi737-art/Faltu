@@ -10,10 +10,12 @@ clip not downloadable) the run is a STANDARD one and commentary stays due for th
    (non-repeating, 27.5-38.5 s source = 25-35 s on screen at 1.1x). Put it in `script.json` as `"bg"`, download `name` from the Drive folder into `<proj>/bg/`.
    Drive folder `Bg_pool` (neerajjewellers88; search is case-insensitive); its 6 clips are indexed in `drive-clips.json`. Only the owner's own non-copyright
    clips, registered with `render_commentary.py pool add <drive_file_id> <downloaded file>` (exact ffprobe duration; Drive gives none), can be a background:
-   `render` refuses anything not in `pool.json` (CLAUDE.md, owner 21 Nov 2026).
-   BLOCKER (21 Nov): the Drive MCP connector refuses files over 10 MB, and Composio had no googledrive account. Route to try once Composio googledrive is
-   connected (owner authorises): workbench `GOOGLEDRIVE_DOWNLOAD_FILE` -> `downloaded_file_content.s3url` (short-lived) -> `curl -o <proj>/bg/<name>` in the container
-   (unverified: whether the proxy lets the container reach that URL). Until a clip is registered, `next` stays STANDARD.
+   `render` refuses anything not in `pool.json` (CLAUDE.md, owner 20 Nov 2026).
+   FETCH ROUTE (works, checked 20 Nov): the Drive MCP connector refuses files over 10 MB, so use Composio's googledrive account `googledrive_keened-heap`
+   (neerajjewellers88): in COMPOSIO_REMOTE_WORKBENCH `run_composio_tool('GOOGLEDRIVE_DOWNLOAD_FILE', {'fileId': id}, account='googledrive_keened-heap')` ->
+   `downloaded_file_content.s3url` (valid 1 h) -> `curl -o <proj>/bg/<name> '<s3url>'` in the container (size matched Drive exactly). Never commit a clip or an s3url.
+   Pool today: 6 clips, 30-41 s, 1080x1920 60 fps with their own audio (the render drops it). Each clip fits ONE non-overlapping segment, so the pool
+   serves about 6 videos; add more clips to Bg_pool (then `pool add`) before it runs out. `next` falls back to STANDARD on its own when the pool is used up.
 3. Images: `render_commentary.py asset <proj> <name> --src "IGN" --page <article-url> | --url <image-url> | --file <path>`; every card shows `SOURCE: ...`
    (CLAUDE.md Fair Use rules: stills, about 3 s, credited, never edited).
 4. `render_commentary.py render <proj>` -> `renders/out.mp4` (ffmpeg only: crop 105% zoom 1080x1920, 1.1x, popups, ASS captions). Beat: mix.py's procedural

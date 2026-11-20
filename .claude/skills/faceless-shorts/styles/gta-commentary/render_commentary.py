@@ -11,7 +11,7 @@
 script.json: {"lines":[{"text":..}], "bg":{"name":"clip.mp4","start":12.5,"len":31.0,"cx":0.5,"file_id":".."}, "music":"hype"|"audio/x.mp3"|"none",
   "popups":[{"at":"word","kind":"image","img":"assets/a.jpg","label":"LEAKED?","mark":{"circle":[0.5,0.4,0.12],"arrow":[0.7,0.3]},"dur":2.6},
             {"at":"word","kind":"text","text":"110 MILLION","sub":"PRE-ORDERS"}]}    (marks are fractions of the image; the credit comes from assets/credits.json)
-Background footage (owner, 21 Nov 2026): ONLY the owner's own non-copyright gameplay clips from the Drive folder Bg_pool, registered in pool.json via `pool add`;
+Background footage (owner, 20 Nov 2026): ONLY the owner's own non-copyright gameplay clips from the Drive folder Bg_pool, registered in pool.json via `pool add`;
 render refuses any other background. Stolen/ripped videos and copyrighted music stay banned (CLAUDE.md).
 shortcut: popups fade in and slide up (no scale pop); the beat has no pop SFX; the 105% zoom is a fixed crop, not a slow push. Upgrade when the pilot shows it matters."""
 import json, random, re, subprocess, sys, tempfile
@@ -158,7 +158,7 @@ def bgm_path(P, S, total):
 
 # ---------------- render ----------------
 def render(proj, out='renders/out.mp4', pool=None):
-    P = Path(proj); S = json.loads((P / 'script.json').read_text())
+    P = Path(proj).resolve(); S = json.loads((P / 'script.json').read_text())   # ffmpeg runs with cwd=P, so P must be absolute
     words = json.loads((P / 'data/words.json').read_text()); total = json.loads((P / 'data/lines.json').read_text())['duration']
     bg = S['bg']; seg = P / 'bg' / bg['name']
     ids = {e['id'] for e in (json.loads(POOL.read_text()) if pool is None else pool)}
@@ -223,7 +223,7 @@ def next_track():
     return 'STANDARD', 'due (first video, or the last gta video was a commentary one)'
 
 def sheet(proj, every=2.5):
-    P = Path(proj); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'
+    P = Path(proj).resolve(); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'
     run(['ffmpeg', '-v', 'error', '-y', '-i', str(P / 'renders/out.mp4'), '-vf', f'fps=1/{every},scale=216:384,tile=5x3:padding=4:color=black', '-frames:v', '1', str(o)])
     print(o); return o
 
