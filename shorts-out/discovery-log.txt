@@ -1,1 +1,2 @@
 # date | idea | why it should help | cost | result | keep/drop
+2026-11-20 | token tools review: RTK, Caveman, claude-mem | save tokens for the weekly limit | Caveman: official repo not on npm, npm "caveman-skill" is another author (not installed); RTK: Bash-only, may hide QA output, wrong crates.io package | claude-mem adds Claude calls to compress memory (more tokens) | keep: short-output rule in BRAIN.md; RTK later in a test session; claude-mem dropped for now | keep (rule only)

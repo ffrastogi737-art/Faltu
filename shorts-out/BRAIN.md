@@ -38,6 +38,8 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
 - Never chase a trend nobody can verify. Never mass-produce the same template (YouTube "inauthentic content").
 
 ## Budget and health
+- Output discipline (20 Nov 2026, replaces the Caveman idea; zero per-turn overhead): tool/work replies are short facts, no restating the
+  question, no recap of files already read. Owner report: 5-8 lines of Hindi, numbers first. Never paste big JSON or logs back.
 - Owner's Claude weekly limit: stay at or under day/7 + 5% used. Over pace -> care-only run (observe + comments), no build.
   Haiku subagent: uploads, queue edits, log lines, stats pulls. Sonnet: research, build, QA. Opus: weekly review only.
 - Keep tool output small (workbench prints, `tail`, `grep`). One subagent at a time.
