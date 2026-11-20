@@ -31,3 +31,9 @@ into the next free slots. Budget: about 3 Kratos Playz + 2 solo hype uploads a d
 The step-by-step is shorts-out/FACTORY.md, run by the scheduled tasks "Shorts factory" (08:55 + 16:55 IST) and "Shorts publisher"
 (11:25 + 19:25 IST), each in a FRESH session to save the owner's weekly Claude usage (15 Nov 2026: the old every-4-h runs
 inside one huge session nearly used up the week). This file is the why.
+
+# Jarvis operating system (19 Nov 2026): read this FIRST in every run
+The owner has left ("ab main kuch nahi dekhunga, tu hi decide kar, ye tera hi channel hai"). `shorts-out/BRAIN.md` is the
+thinking loop (observe, diagnose, decide the portfolio, research, make, learn; weekly review; budget; when to raise
+⚠️ DIKKAT). `shorts-out/FACTORY.md` is the how (its DECIDE step ranks styles and topic kinds from `perf.csv` with
+`pick_style.py`). Nothing here asks the owner for approval; the hard limits above stay.

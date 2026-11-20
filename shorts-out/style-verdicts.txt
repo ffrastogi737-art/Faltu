@@ -1,0 +1,2 @@
+# <style> WIN|OK|LOSE <date> <why>. A LOSE blocks the style for pick_style.py until a later line says OK/WIN. One line per verdict.
+neon-versus LOSE 2026-11-18 owner and numbers rejected the dark look for GTA (Instagram only OK)

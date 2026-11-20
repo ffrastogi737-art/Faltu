@@ -1,5 +1,36 @@
 # Shorts factory: step by step
 
+> Thinking loop and weekly review: shorts-out/BRAIN.md (read it before this file). Style/topic choice: DECIDE section below.
+
+> HOW THE RUNS START (fixed 20 Nov 2026): the old "Shorts factory" routine started sessions WITHOUT the repo (git 403, nothing ran).
+> It is OFF. The trigger "Shorts factory tick (this session)" (08:55 + 16:55 IST) wakes the long-lived Jarvis chat, which calls
+> create_session with source_url Faltu + outcome_branch ccr-8c1babe8-9jk0db, so every factory run has the repo and push works. A Haiku "Shorts
+> scheduler" session cannot do this (auto-mode denies create_session there): do not rebuild that. Quota: YouTube uploads/switches fail after the
+> daily quota (resets 13:30 IST); a timed retry via send_later at 13:35 IST handles a missed public switch.
+
+## RUN ORDER (owner, 19 Nov 2026: check first, then research, then comments, then new videos)
+Every factory run does these in this order. Stop a step if the tokens or the time are tight; never skip CHECK.
+1. CHECK (Haiku, light): today's live count per channel (IST day): Kratos Playz target 3, solo hype target 2, plus the
+   weekly long video. Check what is due (step P), what is private with no publishAt (fix it or report it), duplicates,
+   and the Instagram reels that are due. Fix what the records say is wrong. Keep tool output small.
+2. RESEARCH (Sonnet, heavy): only after CHECK. Fresh WebSearch for the next topic (see sections A and B).
+3. COMMENTS (Haiku): read new comments on the last 4 days of videos on both channels; reply to at most 3 per channel.
+4. BUILD + UPLOAD (Sonnet for build and QA, Haiku for upload, Instagram posts and logs).
+- Target shortfall: if today's live count is below target, switch an already-uploaded, already-scheduled video to public
+  now (timed privacy switch, read back). Do NOT schedule today's new builds for tomorrow to fill today: the next run builds
+  tomorrow's videos itself. If the target is met, do nothing extra.
+- Tokens: Haiku for every mechanical step, Sonnet only for research, scripting, build and QA. One sub-agent at a time.
+
+## CURRENT PLAN (owner, 18 Nov 2026 evening: "video bana band kar do", then this quota)
+- STOP making new videos now. Only these remain, then stop:
+  - Kratos Playz (GTA): 3 more Shorts.
+  - Solo hype: 1 more Short.
+- After those, ONE LONG 16:9 video per channel per week (one for Kratos Playz, one for solo hype), using the long-video
+  tools (scripts/render_html.mjs, scripts/cbx_long.py). Pick the week's topic from the channel's best performer.
+- Each week, change the formula from the numbers: copy what won, drop what lost (growth-log.txt, experiments.txt).
+- Scheduled posts already queued stay as they are (no new ones) until the owner says otherwise.
+- The old CONTINUOUS MODE (non-stop daily shorts) is OFF. Do not chain new runs unless the owner asks.
+
 ## RUNNER MODE (from 16 Nov 2026; overrides anything below that conflicts)
 Scheduled routines cannot push to GitHub, so the factory now runs in sessions created with create_session (repo attached,
 push works) by a small scheduler session. In such a session:
@@ -22,13 +53,49 @@ Hard limits: no bought views/subs/followers, no sub4sub, no comments or DMs on o
 titles, no copyrighted footage/music/art, no fake facts (2+ sources), never delete a video or post, never make a YouTube
 upload public at upload time (private, then publishAt or the timed switch).
 
-## USAGE SAVER (the owner's Claude plan has a weekly limit; running out stops everything)
-- Fresh session per run; keep it lean: read only the files a step needs (use `tail`, `grep`, `sed -n`), never re-read
-  big files, no extra WebSearch beyond the 2-source fact check, at most 2 QA fix rounds, no optional API writes.
-- From 18 Nov 2026 (the weekly limit ran out on 16 Nov, so stay lean): each factory run makes **ONE** video (rule 0 picks
-  the channel), two runs a day. Use Sonnet. Watch usage; if a later week shows spare room, raise to two per run.
-- GTA phase 2 (launch, 19 Nov - 10 Dec) starts tomorrow: follow the phase text below.
+## CONTINUOUS MODE (owner, 18 Nov 2026: "jab tak main mana na karun, lagatar banate raho")
+- Make videos non-stop for BOTH channels until the owner says stop or the Claude usage limit is hit. Best quality:
+  research sound effects / music fit, hooks, styles; keep trying new styles (incl. shorts-out/STYLE-LIBRARY.md) and
+  new topics, keep what wins (experiments.txt).
+- Each run: ONE Short per channel (solo hype + Kratos Playz). Every 3rd run also ONE LONG video (6-10 min, 16:9
+  1920x1080, alternate channels; GTA 6 launch guides/tips for Kratos, a deep "everything about X" for solo hype).
+  Long video: use a 16:9 Nafay library style (creator-motion, data-story, clean-tech, pop-info, chalk-talk; see
+  STYLE-LIBRARY.md) or adapt our kit to 1920x1080; Kokoro narration + words.json; chapters in the description; render in
+  background segments; same QA. First long video: build tools/render_html.mjs (seek per frame + SFX.render) into the
+  skill and commit it.
+- CHAIN: at the very end of each run (after the report), start the next run yourself with
+  mcp__claude-code-remote__create_session (source_url https://github.com/ffrastogi737-art/Faltu, source_revision
+  ccr-8c1babe8-9jk0db, clone_depth 20, title "Shorts factory run", model claude-sonnet-5-5, the same prompt you got).
+  Before starting work, call list_sessions: if another "Shorts factory run" session is WORKING, do only step P and exit
+  without chaining (one chain at a time). If you hit a usage-limit error, stop; the scheduler restarts the chain later.
+- YouTube upload quota (~5-6 uploads/day): when an upload returns quotaExceeded, do not wait: add the video to
+  shorts-out/MANUAL-UPLOAD.md (channel, file raw link https://raw.githubusercontent.com/ffrastogi737-art/Faltu/
+  ccr-8c1babe8-9jk0db/<path>, title, description, tags, suggested time IST), SendUserFile the MP4 with caption
+  "MANUAL UPLOAD: <channel> · <title>", and keep making videos. Instagram is separate: keep posting reels there.
 - If the plan's limit is hit mid-run, stop cleanly after pushing what is done.
+
+## QUALITY BAR (owner, 18 Nov 2026 night: "neon se thak gaya", "aawaz flat hai", "sound effects, graphics mein maza nahi")
+- VOICE: never plain Kokoro again. Use Chatterbox (expressive, MIT): install once per fresh session (~6 min, 6 GB):
+  `uv venv -q -p /usr/bin/python3.11 /root/cbx && VIRTUAL_ENV=/root/cbx uv pip install -q chatterbox-tts "setuptools<81"`
+  (run it in the background at the START of the run), then `/root/cbx/bin/python .claude/skills/faceless-shorts/scripts/cbx_voice.py
+  <proj> 0.7 1.08` instead of voice.py, then words.py. Per-line "emo" 0.5-0.9; write "!" / "?" for energy; Whisper-check every
+  word (it can drop "A,"). Shorter, punchier: ~30-40 s.
+- SOUND: music "hype" + hype cues (boom on the big reveals with a riser into them, hit, ding, swoosh on every cut,
+  applause, scratch for a myth/twist). Copy tools/mix.py from styles/comic-pop/example if a style lacks them.
+- GRAPHICS: bright colours, never dark/neon. GTA = comic-pop. Any style: copy the impacts block (shake, flash, confetti,
+  wipe) from styles/comic-pop/example/src/main.js into the project's main.js.
+
+## TOKEN BUDGET (owner, 18 Nov 2026: weekly usage must last until next Wednesday; 17% already used)
+- Runs and chained sessions use **claude-sonnet-5-5** (never Opus). Easy, mechanical work goes to a **haiku** subagent
+  (Agent tool, model "haiku"): uploads/scheduling, Instagram posting, README/log/queue edits, git commit+push, stats reads.
+- Save tokens: view ONE contact sheet per video (0.5-1 s step, small), not many full frames; short reports; no repeated
+  WebSearch for facts already in the READMEs; reuse styles/scripts instead of writing new kits.
+
+## CLOUD SETUP (owner, 18 Nov 2026: "naye cloud computer par sab apne aap download ho jaaye")
+- The environment's setup script runs `.claude/skills/faceless-shorts/scripts/cloud_bootstrap.sh` on every fresh container:
+  Kokoro + Whisper (setup.sh), numpy/scipy, uv, Chatterbox venv (/root/cbx, Python 3.11) and its model weights.
+  Log: /tmp/cloud_bootstrap.log. If `chatterbox` is missing at run start, run that script yourself (about 1 minute once cached).
+- Add any new heavy tool to cloud_bootstrap.sh (repo), not to the environment script, so it is versioned with the code.
 
 ## Git
 Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own branch):
@@ -68,6 +135,24 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Both channels full through tomorrow: skip building, do CHANNEL CARE only.
 - After delivering append to shorts-out/factory-log.txt: `<kind>  <file name> (<YYYY-MM-DD>)`.
 
+## DECIDE: topic kind + style (19 Nov 2026, owner: "tu hi decide kar"; runs after research, before BUILD)
+Order of every video: research (what is wanted/trending, 2 sources) -> topic kind -> style -> script -> build -> QA -> upload.
+0. Results first: `pick_style.py` prints PERFORMANCE from `shorts-out/perf.csv` (views per style, per slot, per topic kind; the
+   channel median). Rank by that, not by taste: a style/slot/kind with n>=2 above 1.5x the median scores up, below 0.3x down.
+   Add the new video's row to perf.csv when you deliver it (kind from `FITS`).
+1. Topic kind: pick one from `FITS` in `shorts-out/pick_style.py`. If the same kind is 3 of the last 5 videos on that
+   channel the script prints TOPIC SATURATED: change kind, no exceptions (owner 19 Nov: "body wala bahut repeat hua").
+   The channel is a discovery channel, not a body channel. Test demand for the new kind with 1 WebSearch, not a hunch.
+2. Style: `python3 shorts-out/pick_style.py solo|gta <kind>` ranks styles (local 9 + the 62 library ids in
+   STYLE-LIBRARY.md) by fit to the kind, never used, not the last two, not blocked. YOU decide from its list.
+   EXPLORE MODE (printed when none of the last 3 videos used a first-time style): the pick must be a never-used style.
+   A library style needs the render_html port (STYLE-LIBRARY.md "Status"); if that is too costly for this run, take the
+   best ready never-used local style and say why in experiments.txt. The explore quota carries over, it is not dropped.
+3. Record: the README header names the style id exactly as in the script (it reads that); first use -> experiments.txt
+   `NEW STYLE (library|local): <id>`. 48 h later append a verdict to `shorts-out/style-verdicts.txt`
+   (`<style> WIN|OK|LOSE <date> <why>`); a LOSE blocks the style until a later OK/WIN. Same rule for topic kinds in
+   experiments.txt (IDEA BANK).
+
 ## BUILD (skill `.claude/skills/faceless-shorts`; follow its build + QA sections, skip its ask/confirm steps)
 - `export CHROME=/opt/pw-browsers/chromium`; the environment's setup script already ran setup.sh. New project:
   `bash .claude/skills/faceless-shorts/scripts/new_video.sh <style> <name>`.
@@ -90,8 +175,9 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
   "Sources: ...", 6-8 hashtags starting #shorts; Tags: 8-12 phrases; Experiment; status).
 
 ### B · GTA / GAMING (Kratos Playz; language, style, format: your call from trends and data)
-- Current style neon-versus (any style may replace it if trends/data say so, incl. library styles). For neon-versus:
-  `new_video.sh neon-versus <name>`, then copy
+- Current style **comic-pop** (owner, 18 Nov 2026: neon look is tiring, viewers skip it; make it colourful, different,
+  high-CTR). `new_video.sh comic-pop <name>` and rewrite script + shots (port neon-versus kit pieces as needed). Do NOT
+  go back to the dark neon look. Old neon-versus notes, for reference only: `new_video.sh neon-versus <name>`, then copy
   `.claude/skills/faceless-shorts/styles/neon-versus/gta-example/{src,script.json}` over it (the newest GTA video:
   priceTag, clockFace, moon, progress, leonida map, scenes, regionShot, voteCards). Never real game footage, screenshots,
   logos or character art.
@@ -117,7 +203,7 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
 - Part 2 rule: a clear A/B winner (3+ votes and ahead, YouTube + Instagram) -> make that next, hook "You voted, so
   here's Part 2".
 - What has worked so far (change freely when data says): voice am_michael (am_onyx dark) ~1.05, English, 40-58 s, 95-125
-  words, music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
+  words, comic-pop look (since 18 Nov), music "neon"; numbered list or versus; end with "Part 2 is your call: A, ... or B, ...?" "Comment A or B." + voteCards.
 - Deliver shorts-out/gta6-channel/<NN>-<slug>.mp4 + README entry like entry 05 (Title, Description with the vote line,
   Sources, hashtags #shorts #gta6 ..., Tags, A/B options, phase, language, POST BEFORE if time-sensitive).
 
@@ -173,6 +259,8 @@ B = ... 👇", normal: "Follow for a weird true fact every day 🧠", 6-8 plain 
 Step P of a later run posts it. No send_later. Backfill: max 1 older video a day into 19:30 IST when a run has spare time.
 
 ## CHANNEL CARE (16:55 IST run only; short)
+- Refresh `shorts-out/perf.csv`: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH, saves the printed
+  lines, then `python3 shorts-out/perf_merge.py < lines.txt`. A 48 h+ video with n>=2 evidence goes to style-verdicts.txt.
 - Stats for both channels + Instagram (INSTAGRAM_GET_IG_USER_MEDIA fields id,caption,permalink,timestamp,like_count,
   comments_count; INSTAGRAM_GET_USER_INFO followers_count; account instagram_osiery-fun) -> one dated block at the top
   of shorts-out/growth-log.txt (keep 14 days): what wins (topic, slot, language, platform), distance to monetization.
