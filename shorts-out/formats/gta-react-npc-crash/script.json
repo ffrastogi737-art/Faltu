@@ -1,0 +1,48 @@
+{
+ "title": "NPC Robbery Reaction",
+ "lang": "en",
+ "react": {
+  "clip": "bg/ref_npc_crash.mp4",
+  "zoom": 1.18,
+  "cy": 0.0,
+  "pill": "MODDED GTA 5 — 10/10 ROBBERY",
+  "credit": "Goofy Oblivion",
+  "pill_y": 400,
+  "beats": [
+   {
+    "start": 0.0,
+    "end": 8.0,
+    "text": "Bro pulled up acting like the final boss of Vice City, screaming and waving guns just to steal a bike."
+   },
+   {
+    "start": 9.0,
+    "end": 14.0,
+    "text": "Even his hype man backed him up. So yeah, I politely stepped off."
+   },
+   {
+    "start": 16.2,
+    "end": 21.3,
+    "text": "He really hit me with a polite 'Appreciate it'... and immediately forgot how steering works. Ten out of ten robbery."
+   }
+  ],
+  "punch": {
+   "t": 17.8,
+   "circle": [
+    0.465,
+    0.4,
+    0.17
+   ]
+  }
+ },
+ "lines": [
+  {
+   "text": "Bro pulled up acting like the final boss of Vice City, screaming and waving guns just to steal a bike."
+  },
+  {
+   "text": "Even his hype man backed him up. So yeah, I politely stepped off."
+  },
+  {
+   "text": "He really hit me with a polite 'Appreciate it'... and immediately forgot how steering works. Ten out of ten robbery."
+  }
+ ]
+}
