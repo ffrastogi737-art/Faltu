@@ -214,7 +214,7 @@ def _build(p, proj, credits):
     if k == 'proof':
         im, src = _load(proj, p['img'], credits); ch = 960; big, d = _canvas(ch); mk, md = _canvas(ch); card = (90, 120, 990, 900)
         _shadow(big, card, 40); _rr(d, card, 40, fill=WHT); slot = (130, 190, 820, 440)
-        tag = p.get('tag', 'FAN THEORY').upper(); _pill(big, d, 300, 72, 150, tag, YEL, (0, 0, 0), 44)
+        tag = p.get('tag', 'FAN THEORY').upper(); _pill(big, d, 300, 72, 150, tag, YEL, (0, 0, 0), _fit(tag, 380, 44))
         sc = f'SOURCE: {src}'.upper()[:26]; _pill(big, d, 760, 72, 150, sc, INK, WHT, 36)
         cap = p.get('text', '').upper(); sz = 58
         for i, ln in enumerate(_wrap(cap, 820, sz)[:2]): _text(d, (540, 706 + i * 72), ln, sz, (10, 10, 10))
@@ -287,12 +287,14 @@ def dim_png(path):
 # ---------------- captions (ASS, karaoke) ----------------
 def ass_time(t): return f'{int(t // 3600)}:{int(t % 3600 // 60):02d}:{t % 60:05.2f}'
 
+NEG = {'not', 'no', 'never', 'cant', 'dont', 'didnt', 'wont', 'isnt', 'hasnt', 'wasnt'}
+
 def make_ass(words, total):
     """2-3 heavy white words at a time, lower-centre (MarginV 600 = clear of the Shorts/Reels buttons); only the spoken word is #FFE600 at 112 %."""
     ch, cur = [], []
     for w in words:
         cur.append(w)
-        if len(cur) >= 3 or re.search(r'[.?!]$', w['w']) or (len(cur) >= 2 and w['w'].endswith(',')): ch.append(cur); cur = []
+        if (len(cur) >= 3 and norm(w['w']) not in NEG) or re.search(r'[.?!]$', w['w']) or (len(cur) >= 2 and w['w'].endswith(',')): ch.append(cur); cur = []   # never cut right after a negation
     if cur: ch.append(cur)
     hdr = (f'[Script Info]\nScriptType: v4.00+\nPlayResX: {W}\nPlayResY: {H}\n\n[V4+ Styles]\n'
            'Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding\n'
@@ -448,6 +450,8 @@ def _test():
     pt = popup_times([{'at': 0, 'kind': 'hook'}, {'at': 'leak', 'kind': 'image'}, {'at': 'huge', 'kind': 'poll'}], ws, 5.0)
     assert pt[0]['t'] == 0.0 and pt[1]['t'] == 1.6 and pt[2]['t'] == 4.4 and pt[1]['d'] <= 2.9 and pt[2]['d'] >= 1.0, pt
     ass = make_ass(ws, 5.0); assert 'fscx112' in ass and '&H0000E6FF&' in ass and ',2,40,40,600,1' in ass and 'ROCKSTAR' in ass, 'karaoke: yellow 112 % word, MarginV 600'
+    ng = [{'w': w, 's': i * 0.4, 'e': i * 0.4 + 0.3} for i, w in enumerate('Rockstar has not confirmed a thing.'.split())]
+    assert 'NOT' in [l for l in make_ass(ng, 3.0).splitlines() if 'CONFIRMED' in l][0].replace('{\\c&H0000E6FF&\\fscx112\\fscy112}', '').replace('{\\r}', ''), 'a negation stays in the same caption as the word it negates'
     for bad, why in (([{'at': 0, 'kind': 'text', 'text': 'x'}], 'text-only card'), ([{'at': 'leak', 'kind': 'hook'}, {'at': 'huge', 'kind': 'poll'}], 'hook not at 0.0 s'), ([{'at': 0, 'kind': 'hook'}, {'at': 'huge', 'kind': 'image'}], 'no poll last')):
         try: check_popups(popup_times(bad, ws, 5.0)); raise AssertionError(why + ' must be refused')
         except SystemExit: pass
