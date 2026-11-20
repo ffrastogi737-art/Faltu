@@ -61,6 +61,6 @@ collaborations that are not spam, and ways to build the whole pipeline cheaper o
 - **Log every one** in `shorts-out/discovery-log.txt`: `<date> | idea | why I think it helps | cost (tokens/time) | result | keep/drop`.
   Judge it like any experiment (BRAIN loop step 2). A kept idea becomes a rule in FACTORY.md; a dropped one is not retried
   without a new reason.
-- **Boundaries stay:** CLAUDE.md hard limits (no bought growth, no spam, no copyrighted material, no fake facts, never
+- **Boundaries stay:** CLAUDE.md hard limits (no bought growth, no spam, no stolen full videos or copyrighted music (credited Fair Use stills are OK), no fake facts, never
   delete, nothing public at upload time). Anything that costs money, needs a login/OTP, or a new account the owner must make
   goes into OWNER-TODO.md as one line and I carry on without it. Stay inside the weekly usage budget.

@@ -17,8 +17,16 @@ views in 90 days, or the 500-subscriber tier first). Do whatever grows them, on 
 - Owner's to-dos live in `shorts-out/OWNER-TODO.md`. The jewellery shop page is **on hold** until the owner says otherwise.
 
 Hard limits (platform rules, or the channels get banned): no bought views/subs/followers, no sub4sub, no spam comments
-or DMs on other accounts, no misleading titles, no copyrighted footage/music/art, no fake facts (2+ sources), never
-delete a video or post, never make a YouTube upload public immediately (private + schedule).
+or DMs on other accounts, no misleading titles, no stolen full videos (someone else's video or clip re-uploaded as our
+video), no copyrighted music, no fake facts (2+ sources), never delete a video or post, never make a YouTube upload
+public immediately (private + schedule).
+
+Fair Use visuals (owner, 20 Nov 2026: "without real images/screenshots viewers won't understand GTA 6 commentary"):
+real game screenshots, news images and editorial visuals ARE allowed inside commentary videos. Rules of thumb that
+keep it Fair Use: stills only, shown briefly (about 3 s) while our own commentary explains them; always credit the
+source on the card; never a whole gallery from one outlet; never as the whole video; never fabricate or edit a
+screenshot (a fake Reddit post is a fake fact); on a claim or takedown, drop that image and keep going. Background
+footage comes only from the owner's `bg_pool/` on Google Drive. Fair Use is a legal defence, not a guarantee.
 
 YouTube API quota (learned 15 Nov 2026): the YouTube Data API has a daily quota and an upload costs far more than a
 read, so roughly 5-6 uploads per day fit across both channels. If a call returns `quotaExceeded`: do not retry, still
