@@ -1,0 +1,30 @@
+{
+ "duration": 15.584,
+ "estimated": true,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Your friend borrows your charger and never gives it back.",
+   "start": 0.3,
+   "end": 3.871
+  },
+  {
+   "i": 1,
+   "text": "You ask for it, and he says, I lost it.",
+   "start": 4.121,
+   "end": 8.013
+  },
+  {
+   "i": 2,
+   "text": "Then his phone dies in the middle of the party.",
+   "start": 8.263,
+   "end": 11.834
+  },
+  {
+   "i": 3,
+   "text": "And that is the exact reason why",
+   "start": 12.084,
+   "end": 14.584
+  }
+ ]
+}

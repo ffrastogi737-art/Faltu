@@ -150,3 +150,64 @@ Sources: Scientific American, Popular Science, UTMB Medical Discovery News.
 ```
 **Tags:** why do fingers wrinkle in water, pruney fingers, wrinkly fingers explained, why fingers prune, autonomic nervous system, human body facts, biology facts, science shorts, body facts, did you know
 **Experiment:** best formula (second-person body science), chalk-talk 2nd time; slot 19:30 IST (new slot test for solo hype)
+
+## 14 · `14-foot-asleep.mp4` · inside-out + hype sound/impacts · PUBLIC 19 Nov 2026 13:45 IST (late switch) (https://www.youtube.com/watch?v=sZczrHnr_NM)
+**Title:** Why Your Foot Falls Asleep
+**Description:**
+```
+A foot "falls asleep" mostly because you are pressing on a nerve, not mainly because the blood is cut off: squashed nerves stop carrying messages, so the foot goes numb. When the pressure comes off, the nerve fires a messy burst of signals your brain reads as pins and needles (paresthesia), which is usually harmless.
+
+Sources: NBC News, ScienceAlert, Big Think, NINDS (via The Healthy), Wonderopolis.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #pinsandneedles
+```
+**Tags:** why does my foot fall asleep, foot falls asleep, pins and needles, paresthesia, numb foot, nerve compression, human body facts, biology facts, science shorts, body facts
+**Experiment:** best formula topic (second-person body science) + NEW: Chatterbox expressive voice, hype music/SFX, impact shake/confetti (owner: voice was flat)
+
+## 15 · `15-ears-pop.mp4` · comic-pop auto-vertical (NEW style for solo hype) · PUBLIC 19 Nov 2026 13:44 IST (late, read-back confirmed) (https://www.youtube.com/watch?v=Am7tbU67ZnA) · IG https://www.instagram.com/reel/Df6oNlym3gG/
+**Title:** Why Your Ears Pop On A Plane
+**Description:**
+```
+Behind each eardrum is a small pocket of air linked to your throat by the eustachian tube. When the cabin pressure drops on a climb, that trapped air pushes on the eardrum until a swallow or yawn opens the tube and the pressure evens out with a pop, which is why chewing gum helps.
+
+Sources: Mayo Clinic (Airplane ear), Merck / MSD Manual (Barotrauma of the ear), Altru Health.
+
+#shorts #science #humanbody #didyouknow #airplane #funfacts #travel #biology
+```
+**Tags:** why do ears pop on a plane, ear popping, airplane ear, eustachian tube, ear pressure flight, chewing gum on plane, human body facts, science shorts, body facts, travel tips
+**Experiment:** NEW STYLE for solo hype: bright comic-pop (auto engine) instead of inside-out/chalk-talk; Chatterbox voice, 27 s
+
+## 16 · `16-sun-sneeze.mp4` · comic-pop auto-vertical (2nd time) · PUBLIC 20 Nov 2026 13:35 IST (late: quota) (https://www.youtube.com/watch?v=7Bib1_OprFw)
+**Title:** Why You Sneeze In Bright Sunlight
+**Description:**
+```
+Up to about 1 in 3 people sneeze when they step into bright light, a quirk called the photic sneeze reflex or ACHOO syndrome. A leading theory is that light signals cross with the nerve that senses an itchy nose, but scientists have not proven exactly how it works.
+
+Sources: PBS NewsHour, Cleveland Clinic, ScienceBlog / PubMed 27568353.
+
+#shorts #science #humanbody #didyouknow #biology #funfacts #whyisthat #sunsneeze
+```
+**Tags:** why does sunlight make me sneeze, photic sneeze reflex, ACHOO syndrome, sneezing in sunlight, bright light sneeze, human body facts, biology facts, science shorts, body facts, did you know
+**Experiment:** best formula topic (second-person body science) + comic-pop auto engine 2nd time, 31 s, Chatterbox; slot 20 Nov 09:00 IST
+
+## 17 · `17-leech-collector.mp4` · chalk-talk (4th use? first for weird-jobs; chalk-talk med 922) · WAITING UPLOAD (quota) · IG ig-leech 17:00 IST
+**Title:** The Job Where Your Leg Was The Bait
+**Description:**
+```
+In the 1800s, leech collectors waded into ponds and let leeches bite their bare legs, then picked them off to sell to doctors. The job faded as bloodletting fell out of favour.
+Sources: Wikipedia "Leech collector"; Science History Institute, Distillations (medicinal leeches); Wikipedia "Resolution and Independence" (Wordsworth, 1800 encounter).
+#shorts #history #weirdjobs #didyouknow #leeches #wordsworth #facts #oddjobs
+```
+**Tags:** leech collector, weird old jobs, 1800s jobs, medicinal leeches, bloodletting history, Wordsworth, history facts, weird history, did you know, forgotten jobs
+**Experiment:** kind weird-jobs (med 592) after 5 body-science in a row; chalk-talk (n=2, med 922); 25 s, Chatterbox; slot 20 Nov 17:00 IST or next free
+
+## 18 · `18-boss-karma.mp4` · tall-tale 3D skit (NEW format, owner brief 20 Nov) · QUEUED: private now, public 20 Nov 2026 17:00 IST (https://www.youtube.com/watch?v=8CktQ-CA_6w) · IG ig-boss-karma 17:15 IST
+**Title:** Your Boss Got Instant Karma (Skit)
+**Description:**
+```
+A fictional office skit: the boss takes credit for an idea, then the karma hits. Invented characters and events, no facts claimed.
+
+#shorts #skit #funny #karma #office #comedy #animation
+```
+**Tags:** instant karma, office skit, boss gets karma, funny animation, cartoon skit, office comedy, skit shorts, karma shorts
+**Experiment:** new format (chaos skit, owner brief + suggestion), tall-tale 3D look with an original cast; 25.7 s, Chatterbox x1.12; slot 17:00 IST (first free solo slot on 20 Nov). Compare after 24 h and 48 h against chalk-talk (median 922) and comic-pop (median 1,001). Build source: `shorts-out/formats/office-karma/`.

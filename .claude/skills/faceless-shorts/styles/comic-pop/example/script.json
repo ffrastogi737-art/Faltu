@@ -1,0 +1,61 @@
+{
+  "title": "GTA 6 Just Tied The Highest Score Ever",
+  "voice": "am_michael",
+  "lang": "en-us",
+  "speed": 1.05,
+  "lead": 0.35,
+  "outro": 1.0,
+  "gap": 0.24,
+  "music": "hype",
+  "sources": [
+    "Insider Gaming: GTA 6 gets a 99 in early Metacritic review scores https://insider-gaming.com/gta-6-gets-a-99-in-early-metacritic-review-scores/",
+    "Notebookcheck: GTA 6 reviews award 99 Metacritic score, tying Ocarina of Time as highest rated game ever, topping GTA 4 (98) https://www.notebookcheck.net/GTA-6-reviews-award-99-Metacritic-score-topping-GTA-4-to-become-Rockstar-s-top-rated.1453363.0.html",
+    "Dexerto: GTA 6 is the joint best-reviewed game of all time https://www.dexerto.com/gta/gta-6-is-the-joint-best-reviewed-game-of-the-all-time-3429300/",
+    "Make Tech Easier: embargo lifted 11:00 GMT 18 Nov, Metacritic opened at 99 from 109 critic reviews https://maketecheasier.com/gta-6-reviews-metacritic-score/",
+    "Yahoo News UK / Variety: 99 Metacritic, tying for highest-rated game of all time https://uk.news.yahoo.com/gta-6-earns-rave-reviews-142349034.html",
+    "GTA 5 97 / GTA 4 98 on Metacritic: Notebookcheck, ARY News",
+    "Unlock at midnight local time (reported, store listings): Prima Games, Business Today (see GTA 08 sources)"
+  ],
+  "lines": [
+    {
+      "text": "GTA 6 just got a ninety-nine on Metacritic!",
+      "caps": "GTA 6 | just got | a *99.",
+      "emo": 0.9
+    },
+    {
+      "text": "That ties the highest score any game has EVER had there.",
+      "caps": "That *ties | the *highest score | *ever.",
+      "emo": 0.85
+    },
+    {
+      "text": "The only other game up there? Zelda: Ocarina of Time, from nineteen ninety-eight!",
+      "caps": "The only *other one: | *Ocarina of Time, | from *1998."
+    },
+    {
+      "text": "It even beats Rockstar's own records, because GTA 4 sits at ninety-eight, and GTA 5 at ninety-seven.",
+      "caps": "It even *beats | *Rockstar's | own *records: | GTA 4, *98. | GTA 5, *97."
+    },
+    {
+      "text": "And this is not one lucky review. More than a hundred critics went into that number!",
+      "caps": "Not *one review. | More than | *100 critics.",
+      "emo": 0.85
+    },
+    {
+      "text": "The score can still move a little as more reviews come in, so keep an eye on it tonight.",
+      "caps": "It can *still move | as more *reviews | come in.",
+      "emo": 0.55
+    },
+    {
+      "text": "If you pre-loaded, the wait is almost over, because it reportedly unlocks at midnight on PS5 and Xbox Series.",
+      "caps": "*Pre-loaded? | It *reportedly unlocks | at *midnight, | *PS5 and *Xbox."
+    },
+    {
+      "text": "Part two is your call. A: what reviewers loved most. Or B: what they did not like?",
+      "caps": "*Part 2 | is *your call: | *A, what they *loved, | or *B, | what they *didn't."
+    },
+    {
+      "text": "Comment A or B!",
+      "caps": "*Comment | *A or B."
+    }
+  ]
+}

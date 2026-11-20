@@ -93,23 +93,9 @@ def heartbeat(**_):
     one = lambda d, f: np.sin(2 * np.pi * f * tt(d)) * env(int(d * SR), 0.004, 7)
     x = np.concatenate([one(0.16, 58), np.zeros(int(0.09 * SR)), one(0.2, 52) * 0.75]); return lp(x, 300) * 1.0
 
-def ding(**_):
-    t = tt(1.4); x = sum(np.sin(2 * np.pi * f * t) * g for f, g in [(1318, 1), (2637, 0.35), (3951, 0.12)]) * env(len(t), 0.002, 4); return x * 0.5
-def chirp(d=1.0, **_):
-    x = np.zeros(int(d * SR))
-    for k, st in enumerate(np.arange(0, d - 0.12, 0.17)):
-        i = int(st * SR); c = sweep(3200 + (k % 3) * 300, 4400, 0.08) * env(int(0.08 * SR), 0.004, 6); x[i:i + len(c)] += c[:len(x) - i] * (0.6 + 0.4 * rng.random())
-    return x * 0.4
-def chug(d=2.0, **_):
-    x = np.zeros(int(d * SR)); one = bp(noise(0.14), 200, 1600) * env(int(0.14 * SR), 0.005, 6)
-    for k, st in enumerate(np.arange(0, d - 0.15, 0.22)): i = int(st * SR); x[i:i + len(one)] += one * (1 if k % 2 == 0 else 0.6)
-    return x * 0.7
-def stampit(**_):
-    t = tt(0.18); x = np.sin(2 * np.pi * 95 * t) * env(len(t), 0.001, 10) + bp(noise(0.18), 1500, 5000) * env(len(t), 0.001, 14) * 0.6; return x * 0.9
-
-FX = dict(ding=ding, chirp=chirp, chug=chug, stamp=stampit, inhale=inhale, heartbeat=heartbeat, whoosh=whoosh, slide=slide, pop=pop, plop=plop, gulp=gulp, boing=boing, bubbles=bubbles, sizzle=sizzle,
+FX = dict(inhale=inhale, heartbeat=heartbeat, whoosh=whoosh, slide=slide, pop=pop, plop=plop, gulp=gulp, boing=boing, bubbles=bubbles, sizzle=sizzle,
           sparkle=sparkle, thud=thud, slam=slam, tock=tock, zip=zip_, alarm=alarm)
-LEVEL = dict(ding=-17, chirp=-19, chug=-20, stamp=-12, inhale=-15, heartbeat=-8, whoosh=-17, slide=-19, pop=-14, plop=-15, gulp=-11, boing=-15, bubbles=-21, sizzle=-18, sparkle=-17,
+LEVEL = dict(inhale=-15, heartbeat=-8, whoosh=-17, slide=-19, pop=-14, plop=-15, gulp=-11, boing=-15, bubbles=-21, sizzle=-18, sparkle=-17,
              thud=-11, slam=-9, tock=-18, zip=-14, alarm=-17)
 
 
@@ -134,22 +120,28 @@ def music_bed():
     fade = np.ones(N); fo = int(1.2 * SR); fade[-fo:] = np.linspace(1, 0, fo)
     return x / (np.abs(x).max() + 1e-9) * fade
 
-def music_bounce():
-    """light comedy: oom-pah bass + staccato plucked melody, 118 BPM, major (script.json "music": "bounce")"""
-    bpm = 118; beat = 60 / bpm; x = np.zeros(N)
-    prog = [(130.8, [261.6, 329.6, 392.0]), (174.6, [261.6, 349.2, 440.0]), (196.0, [246.9, 293.7, 392.0]), (130.8, [261.6, 329.6, 392.0])]
-    mel = [0, 2, 1, 2, 0, 1, 2, 1]
-    pl = lambda f, d, g: (np.sin(2 * np.pi * f * tt(d)) + 0.4 * np.sin(4 * np.pi * f * tt(d)) + 0.15 * np.sin(6 * np.pi * f * tt(d))) * env(int(d * SR), 0.003, 9) * g
-    for k in range(int(DUR / beat) + 1):
-        bass, ch = prog[(k // 8) % 4]; i = int(k * beat * SR)
-        b = pl(bass if k % 2 == 0 else bass * 1.5, 0.3, 0.35) if k % 2 == 0 else pl(ch[0] / 2 * 1.5, 0.22, 0.18)
-        if i + len(b) < N: x[i:i + len(b)] += b
-        if k % 2 == 1:
-            c = sum(pl(f, 0.16, 0.07) for f in ch)
-            if i + len(c) < N: x[i:i + len(c)] += c
-        f = ch[mel[k % 8]] * 2; m = pl(f, 0.18, 0.09); j = i + int(beat / 2 * SR) if k % 4 == 3 else i
-        if j + len(m) < N and k % 8 not in (3, 7): x[j:j + len(m)] += m
-    x = lp(x, 4200); fade = np.ones(N); fo = int(1.2 * SR); fade[-fo:] = np.linspace(1, 0, fo)
+def music_neon():
+    """synthwave bed: four-on-the-floor kick, pulsing eighth-note bass, minor pad, 108 BPM (script.json "music": "neon")"""
+    bpm = 108; beat = 60 / bpm; bar = beat * 4
+    roots = [110.0, 87.31, 130.81, 98.0]                       # A2, F2, C3, G2
+    x = np.zeros(N); nb = int(np.ceil(DUR / bar)) + 1
+    for b in range(nb):
+        st = int(b * bar * SR); r = roots[b % 4]
+        if st >= N: break
+        t = tt(bar); e = np.minimum(1, t / 0.3) * np.minimum(1, (bar - t) / 0.3)
+        pad = sum(signal.sawtooth(2 * np.pi * f * t) for f in (r * 2, r * 2.378, r * 3)) * e * 0.035
+        n = min(len(pad), N - st); x[st:st + n] += lp(pad, 1400)[:n]
+        for k in range(8):
+            ps = st + int(k * beat / 2 * SR); pn = int(beat / 2 * SR)
+            if ps + pn >= N: continue
+            bt = tt(beat / 2); x[ps:ps + pn] += lp(signal.sawtooth(2 * np.pi * r * bt) * env(pn, 0.004, 3) * 0.16, 700)
+        for k in range(4):
+            ks = st + int(k * beat * SR); kn = int(0.25 * SR)
+            if ks + kn >= N: continue
+            x[ks:ks + kn] += sweep(140, 45, 0.25) * env(kn, 0.002, 6) * 0.5
+            hs = ks + int(beat / 2 * SR); hn = int(0.05 * SR)
+            if hs + hn < N: x[hs:hs + hn] += hp(noise(0.05), 6000) * env(hn, 0.001, 8) * 0.12
+    fade = np.ones(N); fo = int(1.2 * SR); fade[-fo:] = np.linspace(1, 0, fo)
     return x / (np.abs(x).max() + 1e-9) * fade
 
 def music_tension():
@@ -163,6 +155,73 @@ def music_tension():
         i = int(k * beat * 2 * SR); pg = ping(seq[(k // 2) % 4]) * 0.35
         if i + len(pg) < N: x[i:i + len(pg)] += pg
     x = lp(x, 2200); fade = np.ones(N); fo = int(1.5 * SR); fade[-fo:] = np.linspace(1, 0, fo); fi = int(0.8 * SR); fade[:fi] *= np.linspace(0, 1, fi)
+    return x / (np.abs(x).max() + 1e-9) * fade
+
+# ---------- punchy "hype" effects (comic-pop, 18 Nov 2026): brighter and louder than the soft set ----------
+def reverb(x, d=1.2, mix=0.35):
+    ir = noise(d) * np.exp(-np.linspace(0, 7, int(d * SR))); ir = lp(ir, 6000); w = signal.fftconvolve(x, ir)[:len(x) + int(d * SR)]
+    y = np.zeros(len(w)); y[:len(x)] = x; return y + w / (np.abs(w).max() + 1e-9) * np.abs(x).max() * mix
+def boom(**_):
+    d = 1.6; t = tt(d); sub = np.sin(2 * np.pi * (38 + 90 * np.exp(-t * 9)) * t) * np.exp(-t * 2.6)
+    crack = hp(noise(d), 1500) * np.exp(-t * 28) * 0.7 + lp(noise(d), 400) * np.exp(-t * 6) * 0.5
+    return reverb(np.tanh(2.2 * (sub + crack)), 1.4, 0.3)
+def riser(d=1.0, **_):
+    t = tt(d); k = t / d; n = noise(d); x = np.zeros(len(n))
+    for f0 in (400, 1200, 3500): x += bp(n, f0 * (0.5 + 1.5 * k.mean()), min(f0 * 3, 15000)) * 0.4
+    x = hp(n, 300) * (k ** 2) * 0.6 + sweep(180, 1400, d) * (k ** 3) * 0.35
+    return x * np.minimum(1, (1 - k) * 40)
+def ding(**_):
+    d = 1.4; t = tt(d); x = sum(np.sin(2 * np.pi * f * t) * g * np.exp(-t * dec) for f, g, dec in [(1568, 0.6, 3.5), (2349, 0.3, 5), (3136, 0.25, 7), (4699, 0.12, 9)])
+    return x * env(len(t), 0.001, 0.1)
+def hit(**_):
+    d = 0.45; t = tt(d); body = np.sin(2 * np.pi * (180 + 120 * np.exp(-t * 40)) * t) * np.exp(-t * 14); sn = bp(noise(d), 1500, 9000) * np.exp(-t * 16)
+    return reverb(np.tanh(2 * (body * 0.8 + sn * 0.9)), 0.6, 0.25)
+def swoosh(d=0.45, **_):
+    n = noise(d); k = np.linspace(0, 1, len(n)); x = np.zeros(len(n)); seg_ = 12
+    for j in range(seg_):
+        a, b = j * len(n) // seg_, (j + 1) * len(n) // seg_; fc = 600 * (12 ** np.sin(np.pi * j / seg_)); x[a:b] = bp(n, fc * 0.6, min(fc * 1.6, 16000))[a:b]
+    return x * np.sin(np.pi * k) ** 2
+def applause(d=2.0, **_):
+    x = np.zeros(int(d * SR) + SR)
+    for _ in range(int(d * 180)):
+        st = int(rng.uniform(0, d) * SR); c = bp(noise(0.03), rng.uniform(800, 2500), 9000) * env(int(0.03 * SR), 0.0005, 9)
+        x[st:st + len(c)] += c * rng.uniform(0.2, 1)
+    k = np.linspace(0, 1, len(x)); return x * np.minimum(1, k * 8) * np.minimum(1, (1 - k) * 2.5)
+def tickclock(d=1.0, **_):
+    x = np.zeros(int(d * SR) + SR // 4); one = hp(noise(0.02), 2500) * env(int(0.02 * SR), 0.0005, 10)
+    for k, st in enumerate(np.arange(0, d, 0.25)): i = int(st * SR); x[i:i + len(one)] += one * (1 if k % 2 == 0 else 0.6)
+    return x
+def scratch(**_):
+    d = 0.5; t = tt(d); f = 300 + 900 * np.abs(np.sin(2 * np.pi * 3 * t)); x = bp(noise(d), 300, 4000) * 0.6 + np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.4
+    return x * env(len(t), 0.005, 2)
+def coin(**_):
+    a = np.sin(2 * np.pi * 1976 * tt(0.08)) * env(int(0.08 * SR), 0.001, 2); b = np.sin(2 * np.pi * 2637 * tt(0.5)) * env(int(0.5 * SR), 0.001, 6)
+    return np.concatenate([a, b]) * 0.6
+HYPE = dict(boom=(boom, -6), riser=(riser, -13), ding=(ding, -14), hit=(hit, -9), swoosh=(swoosh, -14), applause=(applause, -15),
+            tickclock=(tickclock, -16), scratch=(scratch, -14), coin=(coin, -15))
+
+def music_hype():
+    """energetic trap / pop bed, 140 BPM half-time: punchy kick, clap, rolling hats, 808 bass, bright stabs (script.json "music": "hype")"""
+    x = np.zeros(N); beat = 60 / 140; t16 = beat / 4
+    kick = lambda: np.sin(2 * np.pi * (50 + 120 * np.exp(-tt(0.35) * 30)) * tt(0.35)) * np.exp(-tt(0.35) * 9)
+    clap = lambda: bp(noise(0.18), 900, 6000) * np.exp(-tt(0.18) * 22)
+    hat = lambda: hp(noise(0.04), 7000) * np.exp(-tt(0.04) * 80)
+    prog = [55.0, 55.0, 43.65, 49.0]; stab = [(440, 523.3, 659.3), (440, 523.3, 659.3), (349.2, 440, 523.3), (392, 493.9, 587.3)]
+    bar = beat * 4; K = int(DUR / t16) + 1
+    def put(sig, tsec, g):
+        i = int(tsec * SR); n = min(len(sig), N - i)
+        if n > 0: x[i:i + n] += sig[:n] * g
+    for s in range(K):
+        tsec = s * t16; pos = s % 16; ch = (s // 16) % 4
+        if pos in (0, 7, 10): put(kick(), tsec, 1.0)
+        if pos in (4, 12): put(clap(), tsec, 0.55)
+        put(hat(), tsec, 0.18 if pos % 2 else 0.28)
+        if pos in (14, 15) and (s // 16) % 2: put(hat(), tsec + t16 / 2, 0.15)
+        if pos == 0:
+            d = bar; tt_ = tt(d); f = prog[ch]; bass = np.tanh(2.5 * np.sin(2 * np.pi * f * tt_)) * np.exp(-tt_ * 0.9); put(lp(bass, 400), tsec, 0.55)
+        if pos in (0, 3, 6, 10):
+            ch3 = stab[ch]; d = 0.22; tt_ = tt(d); st = sum(signal.sawtooth(2 * np.pi * f * tt_) for f in ch3) / 3 * np.exp(-tt_ * 14); put(lp(st, 3500), tsec, 0.16)
+    fade = np.ones(N); fo = int(1.2 * SR); fade[-fo:] = np.linspace(1, 0, fo); fi = int(0.3 * SR); fade[:fi] *= np.linspace(0, 1, fi)
     return x / (np.abs(x).max() + 1e-9) * fade
 
 def load_audio(f):
@@ -181,20 +240,23 @@ if vf.exists():
 # music
 mus = script.get('music', 'bed')
 if mus and mus != 'none':
-    m = music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_bounce() if mus == 'bounce' else None
+    m = music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_neon() if mus == 'neon' else music_hype() if mus == 'hype' else None
     if m is None:
         a = load_audio(P / mus)[:N]; m = np.zeros(N); m[:len(a)] = a.mean(1); m /= np.abs(m).max() + 1e-9
-    m = np.stack([m, m], 1) * db(-24 if voice is not None else -20)
+    m = np.stack([m, m], 1) * db((-21 if mus == 'hype' else -24) if voice is not None else -20)
     if voice is not None:                                                        # duck under the voice
         lev = np.abs(voice.mean(1)); lev = signal.lfilter([1 - 0.9995], [1, -0.9995], lev); lev /= lev.max() + 1e-9
         m *= (1 - 0.55 * np.clip(lev * 3, 0, 1))[:, None]
     mix += m
 # effects
 for c in cj['cues']:
-    fn = FX.get(c['type'])
-    if not fn: print('unknown cue type, skipped:', c['type']); continue
-    x = fn(**({'d': c['dur']} if c.get('dur') else {}))
-    x = lp(x, 5000) * db(LEVEL[c['type']]) * c.get('gain', 1.0) / (np.abs(x).max() + 1e-9) * 0.9
+    kw = {'d': c['dur']} if c.get('dur') else {}
+    if c['type'] in HYPE:
+        fn, lvl = HYPE[c['type']]; x = fn(**kw); x = x * db(lvl) * c.get('gain', 1.0) / (np.abs(x).max() + 1e-9) * 0.9
+    else:
+        fn = FX.get(c['type'])
+        if not fn: print('unknown cue type, skipped:', c['type']); continue
+        x = fn(**kw); x = lp(x, 5000) * db(LEVEL[c['type']]) * c.get('gain', 1.0) / (np.abs(x).max() + 1e-9) * 0.9
     i = int(c['t'] * SR); n = min(len(x), N - i)
     if n > 0 and i >= 0: pan = c.get('pan', 0.0); mix[i:i + n, 0] += x[:n] * (1 - max(0, pan)); mix[i:i + n, 1] += x[:n] * (1 + min(0, pan))
 # master: gentle soft-clip, peak -1 dBFS

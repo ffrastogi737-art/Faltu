@@ -1,0 +1,170 @@
+{
+ "duration": 33.162,
+ "cues": [
+  {
+   "t": 0.02,
+   "type": "slam",
+   "gain": 0.5
+  },
+  {
+   "t": 0.3,
+   "type": "riser",
+   "dur": 1.56
+  },
+  {
+   "t": 1.86,
+   "type": "boom"
+  },
+  {
+   "t": 1.9,
+   "type": "pop"
+  },
+  {
+   "t": 2.755,
+   "type": "swoosh"
+  },
+  {
+   "t": 2.9,
+   "type": "hit"
+  },
+  {
+   "t": 4.16,
+   "type": "ding"
+  },
+  {
+   "t": 4.26,
+   "type": "sparkle",
+   "dur": 0.6
+  },
+  {
+   "t": 5.492,
+   "type": "swoosh"
+  },
+  {
+   "t": 5.542,
+   "type": "pop"
+  },
+  {
+   "t": 7.56,
+   "type": "hit"
+  },
+  {
+   "t": 8.6,
+   "type": "ding"
+  },
+  {
+   "t": 9.764,
+   "type": "swoosh"
+  },
+  {
+   "t": 10.1,
+   "type": "pop"
+  },
+  {
+   "t": 12.13,
+   "type": "slide",
+   "dur": 0.5
+  },
+  {
+   "t": 13.59,
+   "type": "slide",
+   "dur": 0.5
+  },
+  {
+   "t": 14.04,
+   "type": "hit"
+  },
+  {
+   "t": 14.09,
+   "type": "coin"
+  },
+  {
+   "t": 14.569,
+   "type": "swoosh"
+  },
+  {
+   "t": 14.88,
+   "type": "pop"
+  },
+  {
+   "t": 15.648,
+   "type": "riser",
+   "dur": 0.9
+  },
+  {
+   "t": 16.548,
+   "type": "boom"
+  },
+  {
+   "t": 16.598,
+   "type": "applause",
+   "dur": 2
+  },
+  {
+   "t": 18.313,
+   "type": "swoosh"
+  },
+  {
+   "t": 18.86,
+   "type": "pop"
+  },
+  {
+   "t": 20.96,
+   "type": "ding"
+  },
+  {
+   "t": 21.687,
+   "type": "swoosh"
+  },
+  {
+   "t": 21.76,
+   "type": "riser",
+   "dur": 0.8
+  },
+  {
+   "t": 22.087,
+   "type": "tickclock",
+   "dur": 2.252999999999998
+  },
+  {
+   "t": 24.44,
+   "type": "boom"
+  },
+  {
+   "t": 24.92,
+   "type": "pop"
+  },
+  {
+   "t": 25.48,
+   "type": "pop"
+  },
+  {
+   "t": 26.437,
+   "type": "swoosh"
+  },
+  {
+   "t": 26.487,
+   "type": "hit"
+  },
+  {
+   "t": 27.26,
+   "type": "ding"
+  },
+  {
+   "t": 29.34,
+   "type": "ding"
+  },
+  {
+   "t": 30.848,
+   "type": "swoosh"
+  },
+  {
+   "t": 30.898,
+   "type": "pop"
+  },
+  {
+   "t": 31.148,
+   "type": "pop"
+  }
+ ]
+}

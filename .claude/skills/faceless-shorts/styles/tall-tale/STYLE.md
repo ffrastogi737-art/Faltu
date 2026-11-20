@@ -49,3 +49,20 @@ renders with depth of field), `blit()`, then any 2D overlay (a RETURN TO SENDER 
 - People inside furniture: check feet heights (boardwalk 0.18, counter top 1.18 + scale 0.08).
 - Shadows only fall inside the sun's shadow box: move `sun.key.target` near the action when you build a new set.
 - Rendering speed: same as Deep Dive (`SOFTWARE_GL=1 QS='&res=0.6&aa=0&shadow=1024' FPS=24` without a GPU, ≈2-3 s/frame).
+
+## 5. GTA crew + sunny coast (owner, 18 Nov 2026: "character types, hat/beard/hair, backgrounds like the reference clips")
+Reference look = the owner's screenshots: round white heads, stick legs, thick ink outline, hat/beard/hair variety, sunny
+saturated 3D train-yard / desert backgrounds. We stay original (own characters, own sets).
+- `src/cast.js` exports **CREW**: 12 original characters (Rookie Raj, Officer Dan, Big Tony, Lucy, Cowboy Hank, Grandpa Gus,
+  Biker Rex, Diva Dee, Mohawk Max, Parka Pete, Mayor Moe, Newbie Nia). Open `cast.html` for the sheet. Never use real
+  GTA character art; these are generic "fan" archetypes.
+- Toon look additions (toon.js): `hair: short|spiky|afro|long|bob|ponytail|slick|fringe|curly|mohawk|sides|bun2` + `hairCol`;
+  `beard: full|goatee|stubble|long|chops` + `beardCol`; `hat: baseball|backcap|police|cowboy|fedora|bandana|hood` (+ old ones);
+  `neck: chain`; `extra: sunglasses|headset|earring|scar|snout|bignose` (+ old ones), `headsetCol`.
+- `WD.coast(E)` (world.js): sunny pastel beach street: ocean, sand, palms, umbrellas, surfboards, pastel shops with awnings,
+  pink convertible (`WD.convertible`), billboard. Returns `{scene, sun, people, cars, buildings, faceAll}` like mainStreet.
+- Example video: `shorts-out/gta6-channel/crew-src/` (shots.js, main.js impacts, script.json) = "5 Types Of GTA 6 Players".
+  Comic stickers (badge, sticker, bigText, bar) are drawn over the 3D frame; wide group shots use fov 52 (`WIDE`).
+- Render: `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/x.mp4` (~1.5 s/frame, 35 s = ~20 min).
+  Park unused cut-outs far away each shot (parkAll) and reset moving props (car) per shot: frames are drawn in order but state persists.
+- Voice: Chatterbox (see comic-pop STYLE.md); sound: hype cues in tools/mix.py; main.js adds shake/flash/confetti on boom/hit cues.

@@ -1,0 +1,36 @@
+{
+ "duration": 24.146,
+ "estimated": true,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Think you know the truth? Let's test three claims!",
+   "start": 0.3,
+   "end": 3.834
+  },
+  {
+   "i": 1,
+   "text": "Lightning never strikes the same place twice. Myth! Tall buildings get hit many times a year.",
+   "start": 4.084,
+   "end": 10.439
+  },
+  {
+   "i": 2,
+   "text": "Honey never goes bad. Fact! Sealed honey can last for years.",
+   "start": 10.689,
+   "end": 15.257
+  },
+  {
+   "i": 3,
+   "text": "Goldfish remember for only three seconds. Myth! They can remember for weeks.",
+   "start": 15.507,
+   "end": 20.433
+  },
+  {
+   "i": 4,
+   "text": "Which one surprised you? Comment below!",
+   "start": 20.683,
+   "end": 23.146
+  }
+ ]
+}

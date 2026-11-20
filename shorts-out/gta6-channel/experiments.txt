@@ -13,3 +13,26 @@ IDEA BANK (from owner's notes on small GTA channels that blew up, player-centric
 GTA 6: 3 Days Left, Do These 4 Things Tonight | 16 Nov 09:00 | PLAYBOOK: promise+deadline checklist title, English | | 
 GTA 5 vs GTA 6: 4 Things That Change on Day One | 16 Nov 19:30 | PLAYBOOK: start from GTA 5 audience, 39 s short | | 
 GTA 6 Unlocks Tonight: Do These 4 Things First | 18 Nov 19:30 | launch-night checklist, 50 s, English | | 
+GTA 6 Just Tied The Highest Review Score Ever | 19 Nov 00:30 | NEW STYLE comic-pop (owner: neon tiring, make it colourful/high-CTR) + same-day review news | | 
+GTA 6 Reviews Warn You About These 3 Things | 19 Nov | warnings list from reviews, comic-pop + Chatterbox, 30 s | | 
+GTA 5 Players: GTA 6 Is NOT What You Think | 19 Nov 16:30 | GTA-5-player angle (playbook) + split-screen look | | 
+GTA 6 Police Remember Your Car And Clothes | 20 Nov 16:30 | first DECIDE-system run: comic-pop (n=3 med 1,180), gaming-versus kind (med 406), GTA 5-player angle, 30 s, Chatterbox | | 
+
+IDEA from owner (19 Nov 2026 night, a SUGGESTION, not an order; decide in the DECIDE step, drop it if data says no):
+- "GTA Evolution, 2002 to 2026": 4 shots, ~22 s, one era per shot (Vice City 2002, San Andreas 2004, GTA 5 2013, GTA 6 2026),
+  on-screen year + install size, nostalgia hook at 0:00, ends "Favorite kaunsa? Comment karo!". Hinglish line per shot was in their sample.
+- Fits kinds gaming-list / gaming-versus (timeline). Candidate styles: timeline-rail (library, needs port), paper-atlas, chalk-talk, comic-pop (NOT: last 2 rule).
+- DO NOT reuse the sample's numbers: 2.4 GB / 3.2 GB / 12.7 GB / 210 GB are unverified (the 212 GB GTA 6 pre-load is sourced; the old games'
+  sizes are not, and PC vs console installs differ). Every size and year needs 2+ sources or is dropped. Their sample art is another tool's
+  illustration: use only as a mood reference, draw our own, no real game screenshots/logos/character art.
+- Tomorrow's run may build it if research confirms the numbers; log as an experiment either way.
+
+IDEA from owner (20 Nov 2026, brief + suggestion, tried the same day): CHAOS SKIT / "instant karma" Shorts, 20-28 s. A fresh invented story each video
+(relatable office/school/friend disaster or an absurd "what if"), a hook of conflict in line 1, a new cut every 2-3 s, a karma twist, and a last sentence
+that is left open and loops into the hook. New original characters every video (head, hat/hair, body, expressions), minimal bright set, Chatterbox x1.1,
+SFX on beats, one-word captions. Reference clips the owner showed are another creator's look: we copy the PATTERN only, never their cast or art.
+- Built as format `shorts-out/formats/office-karma/` (style tall-tale, 3D office). Video 18 "Your Boss Got Instant Karma (Skit)", solo hype, test slot 17:00 IST.
+- Compare against the solo hype channel median (perf.csv, style tall-tale, kind skit-karma) after 24 h and 48 h. Owner idea: if it wins twice, move solo hype
+  (or a new channel, which needs an owner account) onto skit content; log the verdict in style-verdicts.txt and discovery-log.txt.
+- An earlier owner remark: a past stickman video with different characters reached ~1,400-1,500 views (not found in perf.csv: the closest is "Paid $19,000
+  To Stay In Bed", stick-story, 1,182). Treat that number as unverified.

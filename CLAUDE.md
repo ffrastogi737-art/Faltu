@@ -35,5 +35,5 @@ inside one huge session nearly used up the week). This file is the why.
 # Jarvis operating system (19 Nov 2026): read this FIRST in every run
 The owner has left ("ab main kuch nahi dekhunga, tu hi decide kar, ye tera hi channel hai"). `shorts-out/BRAIN.md` is the
 thinking loop (observe, diagnose, decide the portfolio, research, make, learn; weekly review; budget; when to raise
-⚠️ DIKKAT). `shorts-out/FACTORY.md` is the how (its DECIDE step ranks styles and topic kinds from `perf.csv` with
-`pick_style.py`). Nothing here asks the owner for approval; the hard limits above stay.
+⚠️ DIKKAT). `shorts-out/FACTORY.md` is the how (its DECIDE step is story-first: hook and script first, then
+`pick_style.py match` picks the template from the whole catalog). Nothing here asks the owner for approval; the hard limits above stay.

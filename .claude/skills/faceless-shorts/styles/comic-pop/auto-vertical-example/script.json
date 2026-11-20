@@ -1,0 +1,118 @@
+{
+ "title": "Why Your Ears Pop On A Plane",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.3,
+ "music": "hype",
+ "sources": [
+  "Mayo Clinic: Airplane ear (ear barotrauma): cabin pressure changes on climb/descent, eustachian tube, swallowing, yawning, chewing gum",
+  "Merck / MSD Manual: Barotrauma of the ear (eustachian tube equalizes middle-ear pressure)",
+  "Altru Health / Frommer's: airplane ear, open the tube by yawning, swallowing, chewing gum"
+ ],
+ "lines": [
+  {
+   "text": "Why do your ears pop on a plane?",
+   "vis": {
+    "k": "Q",
+    "icon": "plane",
+    "head": "EARS POP?!"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Behind each eardrum, there's a tiny pocket of air,",
+   "vis": {
+    "k": "I",
+    "icon": "ear",
+    "head": "AIR POCKET",
+    "sub": "BEHIND THE EARDRUM"
+   }
+  },
+  {
+   "text": "connected to your throat by a thin tube.",
+   "vis": {
+    "k": "I",
+    "icon": "tube",
+    "head": "TINY TUBE",
+    "sub": "EAR TO THROAT"
+   }
+  },
+  {
+   "text": "When the plane climbs, the air in the cabin gets thinner,",
+   "vis": {
+    "k": "I",
+    "icon": "plane",
+    "head": "CLIMBING",
+    "sub": "THINNER AIR"
+   }
+  },
+  {
+   "text": "so the air trapped in your ear pushes your eardrum outward!",
+   "vis": {
+    "k": "I",
+    "icon": "ear",
+    "head": "PUSHED OUT!",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "That's the full, muffled feeling.",
+   "vis": {
+    "k": "I",
+    "icon": "ear",
+    "head": "MUFFLED..."
+   }
+  },
+  {
+   "text": "Then you swallow or yawn, and the tube opens for a split second,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "person",
+      "SWALLOW"
+     ],
+     [
+      "tube",
+      "TUBE OPENS"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "the pressure evens out, and... pop!",
+   "vis": {
+    "k": "S",
+    "big": "POP!",
+    "label": "PRESSURE EVENED OUT",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "That's why chewing gum helps on a flight:",
+   "vis": {
+    "k": "I",
+    "icon": "gum",
+    "head": "CHEW GUM"
+   }
+  },
+  {
+   "text": "every swallow opens the tube again.",
+   "vis": {
+    "k": "I",
+    "icon": "tube",
+    "head": "OPEN AGAIN!"
+   }
+  },
+  {
+   "text": "Try it right now: swallow, and listen!",
+   "vis": {
+    "k": "Q",
+    "icon": "ear",
+    "head": "TRY IT NOW"
+   },
+   "emo": 0.85
+  }
+ ]
+}

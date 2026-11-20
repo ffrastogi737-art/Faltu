@@ -1,0 +1,116 @@
+{
+ "title": "GTA 6 Police Remember Your Car And Clothes",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.3,
+ "music": "hype",
+ "sources": [
+  "Shacknews: GTA 6 goes back to a six-star Wanted Level system",
+  "GamesRadar / Games.gg: wanted levels and the Heat system explained (Heat tracks what police know)",
+  "Beebom, Gfinity, Dexerto: wanted system explainers (police work from clothing, vehicle, description; CCTV)",
+  "IBTimes UK: GTA 6 police system, erase evidence and hide vehicles instead of waiting out a timer",
+  "All preview-based; whole-map search at max wanted is reported, sources differ"
+ ],
+ "lines": [
+  {
+   "text": "GTA 5 players: your old trick to lose the cops won't work in GTA 6!",
+   "vis": {
+    "k": "Q",
+    "icon": "star",
+    "head": "COPS CHANGED!"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "In GTA 5, you could just hide and wait out the stars.",
+   "vis": {
+    "k": "I",
+    "icon": "clock",
+    "head": "GTA 5: HIDE & WAIT",
+    "sub": "THE OLD TRICK"
+   }
+  },
+  {
+   "text": "But previews say GTA 6 police remember what they actually saw:",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "POLICE REMEMBER",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "your car and your clothes,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "car",
+      "YOUR CAR"
+     ],
+     [
+      "shirt",
+      "CLOTHES"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "even security camera footage.",
+   "vis": {
+    "k": "I",
+    "icon": "camera",
+    "head": "CCTV FOOTAGE",
+    "sub": "ALSO TRACKED",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "The stars show the chase, but a separate Heat level tracks what police know about you.",
+   "vis": {
+    "k": "I",
+    "icon": "star",
+    "head": "STARS = CHASE",
+    "sub": "HEAT = WHAT THEY KNOW"
+   }
+  },
+  {
+   "text": "So changing your clothes or your car can cool the Heat, even while the stars stay on!",
+   "vis": {
+    "k": "I",
+    "icon": "shirt",
+    "head": "CHANGE CLOTHES!",
+    "sub": "REDUCES WHAT THEY KNOW",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "And at six stars, reports say police search the whole map.",
+   "vis": {
+    "k": "S",
+    "big": "6 STARS",
+    "label": "REPORTEDLY: WHOLE-MAP SEARCH",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "All of this comes from previews, so reviews will tell us more.",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "FROM PREVIEWS",
+    "sub": "NOT FINAL"
+   }
+  },
+  {
+   "text": "Which GTA 5 trick will you miss most? Comment it!",
+   "vis": {
+    "k": "Q",
+    "icon": "car",
+    "head": "YOUR TRICK?"
+   },
+   "emo": 0.85
+  }
+ ]
+}
