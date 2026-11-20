@@ -1,0 +1,17 @@
+{
+  "title": "Your Boss Got Instant Karma (Skit)",
+  "speed": 1.0, "lead": 0.3, "outro": 1.0, "gap": 0.2, "music": "hype",
+  "sources": ["Fiction skit: invented characters and events, no facts claimed"],
+  "lines": [
+    { "text": "Your boss just stole your idea and called it his own!", "emo": 0.9 },
+    { "text": "He strutted into the big meeting, chest out, smiling at everyone." },
+    { "text": "You sat in the back, stared at him, and said nothing." },
+    { "text": "He clicked the remote to take all the credit." },
+    { "text": "But the very first slide said, created by you!", "emo": 0.9 },
+    { "text": "Then the speakers played his secret voicemail: I have no idea what I'm doing!", "emo": 0.85 },
+    { "text": "Everyone turned and stared. He tried to run, but slipped on the carpet." },
+    { "text": "Ten seconds later, he was still dizzy, staring at the ceiling." },
+    { "text": "Everyone in the room started clapping for you." },
+    { "text": "And that's the exact reason why", "emo": 0.8 }
+  ]
+}

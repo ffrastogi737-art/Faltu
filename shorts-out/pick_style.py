@@ -26,6 +26,7 @@ FITS = {  # topic kind -> styles that suit it (agent may still choose outside th
  'places': 'parchment-map globe-arcs low-poly-atlas paper-atlas',
  'psychology-myth': 'myth-or-fact chat-story marker-board comic-pop',
  'tech-invention': 'blueprint exploded-view isotype timeline-rail sticker-pop',
+ 'skit-karma': 'tall-tale comic-pop stick-story chat-story comic-panels rubber-hose-reel',
  'gaming-news': 'comic-pop breaking-desk tall-tale',
  'gaming-versus': 'versus-split comic-pop tier-list neon-versus',
  'gaming-list': 'top-5-countdown tier-list quiz-countdown pixel-quest comic-pop'}

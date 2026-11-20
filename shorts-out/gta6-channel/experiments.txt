@@ -26,3 +26,13 @@ IDEA from owner (19 Nov 2026 night, a SUGGESTION, not an order; decide in the DE
   sizes are not, and PC vs console installs differ). Every size and year needs 2+ sources or is dropped. Their sample art is another tool's
   illustration: use only as a mood reference, draw our own, no real game screenshots/logos/character art.
 - Tomorrow's run may build it if research confirms the numbers; log as an experiment either way.
+
+IDEA from owner (20 Nov 2026, brief + suggestion, tried the same day): CHAOS SKIT / "instant karma" Shorts, 20-28 s. A fresh invented story each video
+(relatable office/school/friend disaster or an absurd "what if"), a hook of conflict in line 1, a new cut every 2-3 s, a karma twist, and a last sentence
+that is left open and loops into the hook. New original characters every video (head, hat/hair, body, expressions), minimal bright set, Chatterbox x1.1,
+SFX on beats, one-word captions. Reference clips the owner showed are another creator's look: we copy the PATTERN only, never their cast or art.
+- Built as format `shorts-out/formats/office-karma/` (style tall-tale, 3D office). Video 18 "Your Boss Got Instant Karma (Skit)", solo hype, test slot 17:00 IST.
+- Compare against the solo hype channel median (perf.csv, style tall-tale, kind skit-karma) after 24 h and 48 h. Owner idea: if it wins twice, move solo hype
+  (or a new channel, which needs an owner account) onto skit content; log the verdict in style-verdicts.txt and discovery-log.txt.
+- An earlier owner remark: a past stickman video with different characters reached ~1,400-1,500 views (not found in perf.csv: the closest is "Paid $19,000
+  To Stay In Bed", stick-story, 1,182). Treat that number as unverified.
