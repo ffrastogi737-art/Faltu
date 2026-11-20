@@ -14,8 +14,10 @@ clip not downloadable) the run is a STANDARD one and commentary stays due for th
    FETCH ROUTE (works, checked 20 Nov): the Drive MCP connector refuses files over 10 MB, so use Composio's googledrive account `googledrive_keened-heap`
    (neerajjewellers88): in COMPOSIO_REMOTE_WORKBENCH `run_composio_tool('GOOGLEDRIVE_DOWNLOAD_FILE', {'fileId': id}, account='googledrive_keened-heap')` ->
    `downloaded_file_content.s3url` (valid 1 h) -> `curl -o <proj>/bg/<name> '<s3url>'` in the container (size matched Drive exactly). Never commit a clip or an s3url.
-   Pool today: 6 clips, 30-41 s, 1080x1920 60 fps with their own audio (the render drops it). Each clip fits ONE non-overlapping segment, so the pool
-   serves about 6 videos; add more clips to Bg_pool (then `pool add`) before it runs out. `next` falls back to STANDARD on its own when the pool is used up.
+   Pool today: 6 clips, 30-41 s, 1080x1920 60 fps with their own audio (the render drops it). The pool LOOPS FOREVER: each clip serves one non-overlapping
+   segment per lap; when all clips are used the history recycles (`_cycle` + 1 in used.json) and the next lap starts at a different offset (at least 2 s from
+   the previous lap's start where the clip has room; the 30 s clip has only ~2.5 s of room, so it repeats closely). `pick` never runs out and never causes a
+   STANDARD fallback. More clips = more variety: download the new Bg_pool clip, `pool add <drive_id> <file>`, and it joins the lap in progress at once.
 3. Images: `render_commentary.py asset <proj> <name> --src "IGN" --page <article-url> | --url <image-url> | --file <path>`; every card shows `SOURCE: ...`
    (CLAUDE.md Fair Use rules: stills, about 3 s, credited, never edited).
 4. `render_commentary.py render <proj>` -> `renders/out.mp4` (ffmpeg only: crop 105% zoom 1080x1920, 1.1x, popups, ASS captions). Beat: mix.py's procedural

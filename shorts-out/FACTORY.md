@@ -174,7 +174,7 @@ The script chooses the template; a template never forces the script.
 5b. **gta only: 50/50 with the commentary track** (owner 20 Nov 2026; solo never does this, pick_style.py is not involved).
    Run `python3 .claude/skills/faceless-shorts/styles/gta-commentary/render_commentary.py next` right after the topic is chosen. STANDARD = steps 1-6 here as always.
    COMMENTARY = skip `match`, follow `.claude/skills/faceless-shorts/styles/gta-commentary/STYLE.md` (own script, Drive footage, image cards), then the SAME
-   BUILD-QA (contact sheet), DELIVER, UPLOAD, INSTAGRAM, perf.csv steps. Fallback: Drive folder `Bg_pool` (Composio account googledrive_keened-heap, route in STYLE.md) missing, empty,
+   BUILD-QA (contact sheet), DELIVER, UPLOAD, INSTAGRAM, perf.csv steps. The clip pool loops forever (used segments recycle), so running out of clips is never a reason to fall back. Fallback: Drive folder `Bg_pool` (Composio account googledrive_keened-heap, route in STYLE.md) missing, empty,
    unreachable or the clip not downloadable = do a STANDARD run on that same script instead; never fail an upload for it.
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.

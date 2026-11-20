@@ -3,7 +3,7 @@
   python3 render_commentary.py next                        STANDARD or COMMENTARY for the next gta video (strict alternation, see due())
   python3 render_commentary.py pool add <drive_file_id> <local_file> [name]   register a downloaded Bg_pool clip with its exact ffprobe duration
   python3 render_commentary.py pool list
-  python3 render_commentary.py pick <seconds>                 random non-repeating segment of the pool for a voiceover of that length (reserves it in used.json)
+  python3 render_commentary.py pick <seconds>                 random segment of the pool for a voiceover of that length, no repeats inside a lap, then recycles forever (reserves it in used.json)
   python3 render_commentary.py asset <proj> <name> --src "IGN" (--url U | --page ARTICLE_URL | --file F)   add a credited image to <proj>/assets/
   python3 render_commentary.py render <proj>                  <proj>/renders/out.mp4 from script.json + data/words.json + data/narration.wav + bg/<file>
   python3 render_commentary.py sheet <proj>                contact sheet of the render -> <proj>/review/sheet.png (read it for QA)
@@ -27,23 +27,53 @@ SEG_MIN, SEG_MAX, MARGIN = 27.5, 38.5, 1.0            # source seconds: 25-35 s 
 BOLD = '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf'
 norm = lambda w: re.sub(r'[^a-z0-9]+', '', w.lower())
 
-# ---------------- pool slicer ----------------
-def pick(dur, pool=None, used=None, rng=random, reserve=True):
-    """Segment of a pool clip that covers `dur` output seconds at 1.1x, never overlapping a used range (+1 s margin)."""
+# ---------------- pool slicer (infinite loop over the registered clips) ----------------
+VARY = 2.0        # a new lap should not start within this many seconds of where the previous lap used the same clip
+
+def _free(dur, L, ranges):
+    """Allowed start offsets [lo, hi] for an L-second segment of a dur-second clip that keep MARGIN away from every used range."""
+    iv = [(0.0, dur - L)]
+    for a, b in ranges:
+        iv = [x for lo, hi in iv for x in ((lo, min(hi, a - L - MARGIN)), (max(lo, b + MARGIN), hi))]
+    return [x for x in iv if x[1] - x[0] >= 0.05] if ranges else iv
+
+def _draw(iv, rng):
+    t = rng.uniform(0, sum(hi - lo for lo, hi in iv))
+    for lo, hi in iv:
+        if t <= hi - lo: return round(lo + t, 2)
+        t -= hi - lo
+    return round(iv[-1][1], 2)
+
+def pick(dur, pool=None, used=None, rng=random, reserve=True, used_file=None):
+    """Segment of a pool clip covering `dur` output seconds at 1.1x, never overlapping a range used in the current lap (1 s margin).
+    When every clip is used up the history is recycled (a new lap, `_cycle` + 1) and picking starts again, preferring a start offset
+    at least VARY s away from the previous lap's. New clips added with `pool add` are free at once and join the current lap.
+    used.json = {clip_id: [[start, end], ...], "_cycle": laps_done, "_prev": {clip_id: last start}}."""
+    uf = used_file or USED
     pool = json.loads(POOL.read_text()) if pool is None else pool
-    used = (json.loads(USED.read_text()) if USED.exists() else {}) if used is None else used
-    if not pool: raise SystemExit(f'{POOL} is empty: list the Drive bg_pool/ folder and add {{"id","name","dur"}} per clip')
+    used = (json.loads(uf.read_text()) if uf.exists() else {}) if used is None else used
+    if not pool: raise SystemExit(f'{POOL} is empty: add clips with `render_commentary.py pool add <drive_id> <file>`')
     L = round(min(SEG_MAX, max(SEG_MIN, dur * SPEED + 0.4)), 2)
     if dur * SPEED > SEG_MAX: raise SystemExit(f'voiceover {dur:.1f}s needs a {dur*SPEED:.1f}s source, max segment is {SEG_MAX}s: shorten the script')
-    for _ in range(500):
-        c = rng.choice(pool)
-        if c['dur'] < L: continue
-        s = round(rng.uniform(0, c['dur'] - L), 2)
-        if all(s + L + MARGIN <= a or s >= b + MARGIN for a, b in used.get(c['id'], [])):
-            if reserve:
-                used.setdefault(c['id'], []).append([s, round(s + L, 2)]); USED.parent.mkdir(parents=True, exist_ok=True); USED.write_text(json.dumps(used, indent=1))
-            return {'file_id': c['id'], 'name': c['name'], 'start': s, 'len': L}
-    raise SystemExit('no unused segment left in the pool: add clips to bg_pool/ and pool.json')
+    clips = [c for c in pool if c['dur'] >= L]
+    if not clips: raise SystemExit(f'no pool clip is {L}s or longer: shorten the script or add a longer clip')
+    for lap in (0, 1):
+        opts = []
+        for c in clips:
+            iv = _free(c['dur'], L, used.get(c['id'], [])); p = used.get('_prev', {}).get(c['id'])
+            if p is not None and iv:
+                far = [x for lo, hi in iv for x in ((lo, min(hi, p - VARY)), (max(lo, p + VARY), hi)) if x[1] - x[0] >= 0.05]
+                iv = far or iv
+            if iv: opts.append((c, iv))
+        if opts: break
+        last = {i: v[-1][0] for i, v in used.items() if not i.startswith('_') and v}   # every clip used: start a new lap
+        for i in [i for i in used if not i.startswith('_')]: del used[i]
+        used['_prev'] = {**used.get('_prev', {}), **last}; used['_cycle'] = used.get('_cycle', 0) + 1
+    c, iv = rng.choices(opts, weights=[max(0.01, sum(hi - lo for lo, hi in i)) for _, i in opts])[0]
+    s = _draw(iv, rng)
+    if reserve:
+        used.setdefault(c['id'], []).append([s, round(s + L, 2)]); uf.parent.mkdir(parents=True, exist_ok=True); uf.write_text(json.dumps(used, indent=1))
+    return {'file_id': c['id'], 'name': c['name'], 'start': s, 'len': L, 'lap': used.get('_cycle', 0) + 1}
 
 # ---------------- assets (credited stills) ----------------
 def fetch(url, out):
@@ -213,13 +243,14 @@ def due(rows):
     gta = [r for r in rows if r['channel'] == 'gta']
     return 'STANDARD' if not gta or gta[-1]['style'] == 'gta-commentary' else 'COMMENTARY'
 
-def next_track():
+def next_track(rows=None, pool=None):
     import csv
-    want = due(list(csv.DictReader(PERF.open())))
+    rows = list(csv.DictReader(PERF.open())) if rows is None else rows
+    pool = (json.loads(POOL.read_text()) if POOL.exists() else []) if pool is None else pool
+    want = due(rows)
     if want == 'COMMENTARY':
-        try: pick(30.0, reserve=False)                         # pool.json has an unused segment?
-        except SystemExit as e: return 'STANDARD', f'commentary is due but the pool cannot serve it ({str(e).splitlines()[0]}): fallback'
-        return 'COMMENTARY', 'due (the last gta video was a standard one). Next: reach Drive Bg_pool and download the clip; any failure there = STANDARD'
+        if not [c for c in pool if c['dur'] >= SEG_MIN]: return 'STANDARD', 'commentary is due but pool.json has no usable clip: fallback'
+        return 'COMMENTARY', f'due (the last gta video was a standard one); the pool loops forever, {len(pool)} clip(s). Next: reach Drive Bg_pool and download the clip; any failure there = STANDARD'
     return 'STANDARD', 'due (first video, or the last gta video was a commentary one)'
 
 def sheet(proj, every=2.5):
@@ -238,6 +269,19 @@ def _test():
         used.setdefault(s['file_id'], []).append([s0, s0 + L]); seen.append(dict(s, r=(s0, s0 + L)))
     try: pick(36.0, pool, {}, reserve=False); raise AssertionError('over-long voiceover must be refused')
     except SystemExit: pass
+    import random as R2
+    uf = Path(tempfile.mkdtemp()) / 'used.json'; P2 = [{'id': 'a', 'name': 'a.mp4', 'dur': 40.0}, {'id': 'b', 'name': 'b.mp4', 'dur': 38.2}]   # one segment per clip
+    laps = {}; starts = {}
+    for n in range(12):                                                  # 12 picks from 2 clips: must never raise, must recycle
+        r = pick(26.0, P2, None, R2.Random(n), used_file=uf); laps.setdefault(r['lap'], []).append(r['file_id']); starts.setdefault(r['file_id'], []).append(r['start'])
+    assert len(laps) == 6 and all(sorted(v) == ['a', 'b'] for v in laps.values()), laps          # each lap uses every clip exactly once
+    assert json.loads(uf.read_text())['_cycle'] == 5
+    for i, v in starts.items(): assert all(abs(x - y) >= VARY - 0.01 for x, y in zip(v, v[1:])), (i, v)    # a new lap starts elsewhere in the clip
+    u3 = {}; [pick(26.0, P2, u3, R2.Random(n), used_file=uf) for n in range(2)]
+    fresh = {'id': 'c', 'name': 'c.mp4', 'dur': 40.0}                    # a clip added later joins the lap in progress, no recycle yet
+    r = pick(26.0, P2 + [fresh], u3, R2.Random(9), used_file=uf); assert r['file_id'] == 'c' and u3.get('_cycle', 0) == 0, (r, u3)
+    assert next_track([{'channel': 'gta', 'style': 'comic-pop'}], P2)[0] == 'COMMENTARY' and next_track([{'channel': 'gta', 'style': 'comic-pop'}], [])[0] == 'STANDARD'
+    assert next_track([{'channel': 'gta', 'style': 'gta-commentary'}], P2)[0] == 'STANDARD', 'strict alternation, the pool never changes it'
     ws = [{'w': w, 's': i * 0.4, 'e': i * 0.4 + 0.3} for i, w in enumerate('Rockstar just dropped a leak about Vice City and it is huge'.split())]
     pt = popup_times([{'at': 'leak', 'kind': 'text', 'text': 'x'}, {'at': 'huge', 'kind': 'text', 'text': 'y'}], ws, 5.0)
     assert pt[0]['t'] == 1.6 and pt[1]['t'] == 4.4 and pt[0]['d'] <= 2.7, pt
