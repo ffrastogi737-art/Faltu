@@ -1,0 +1,158 @@
+{
+ "title": "A GTA Online Painting Might Hide The GTA 6 Map",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "TechRadar 4 Aug 2026: fans spotted the painting in GTA Online Kortz Center Heist (fan speculation, no Rockstar confirmation)",
+  "Destructoid: GTA 6 fans think they found an easter egg in GTA Online, zoom crop and rotate an abstract painting",
+  "OpenCritic summary of TheGamer 4 Aug 2026: another painting spotted by the same Redditor; ARY News / Digital Citizen: Vice City / Keys claims, Rockstar has not commented"
+ ],
+ "lines": [
+  {
+   "text": "A painting in GTA Online might secretly be the GTA 6 map."
+  },
+  {
+   "text": "Fans spotted it in the Kortz Center Heist update."
+  },
+  {
+   "text": "They zoomed in, cropped it, rotated it, and flipped it."
+  },
+  {
+   "text": "And the shape looked a lot like Leonida."
+  },
+  {
+   "text": "Some even claimed they could find Vice City and the Keys."
+  },
+  {
+   "text": "Rockstar has not confirmed a thing."
+  },
+  {
+   "text": "So is it a hidden clue, or pure coincidence?"
+  },
+  {
+   "text": "What do you think? Tell us below."
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/techradar.jpg",
+   "badge": "FAN THEORY",
+   "banner": "HIDDEN GTA 6 MAP?",
+   "sub": "IN A GTA ONLINE PAINTING",
+   "stamp": "UNCONFIRMED",
+   "mark": {
+    "circle": [
+     0.42,
+     0.6,
+     0.15
+    ]
+   }
+  },
+  {
+   "at": "Fans",
+   "kind": "image",
+   "img": "assets/consolepulse.jpg",
+   "label": "KORTZ CENTER HEIST"
+  },
+  {
+   "at": "zoomed",
+   "kind": "proof",
+   "img": "assets/opencritic.jpg",
+   "tag": "FAN THEORY",
+   "text": "ZOOM. CROP. ROTATE. FLIP.",
+   "hl": [
+    [
+     0.2,
+     0.62,
+     0.6,
+     0.09
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.45
+    ]
+   ]
+  },
+  {
+   "at": "shape",
+   "kind": "compare",
+   "title": "PAINTING VS LEONIDA",
+   "left": {
+    "img": "assets/opencritic.jpg",
+    "label": "Fan-flagged painting",
+    "circle": [
+     0.5,
+     0.5,
+     0.25
+    ]
+   },
+   "right": {
+    "img": "assets/techradar.jpg",
+    "label": "GTA 6 art",
+    "circle": [
+     0.42,
+     0.6,
+     0.15
+    ]
+   }
+  },
+  {
+   "at": "Vice",
+   "kind": "image",
+   "img": "assets/giga.jpg",
+   "label": "VICE CITY? THE KEYS?"
+  },
+  {
+   "at": "Rockstar",
+   "kind": "image",
+   "img": "assets/gamesradar.jpg",
+   "label": "NO CONFIRMATION YET"
+  },
+  {
+   "at": "hidden",
+   "kind": "proof",
+   "img": "assets/opencritic.jpg",
+   "tag": "CLUE OR COINCIDENCE?",
+   "text": "YOU DECIDE",
+   "crop": [
+    0.2,
+    0.1,
+    0.8,
+    0.9
+   ],
+   "hl": [
+    [
+     0.1,
+     0.55,
+     0.8,
+     0.12
+    ]
+   ],
+   "arrows": [
+    [
+     0.3,
+     0.3
+    ]
+   ]
+  },
+  {
+   "at": "think",
+   "kind": "poll",
+   "question": "DOES IT MATCH?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "bg": {
+  "file_id": "1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8",
+  "name": "lv_0_20261120213720.mp4",
+  "start": 1.47,
+  "len": 27.5
+ }
+}
