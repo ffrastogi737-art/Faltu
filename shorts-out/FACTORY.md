@@ -2,6 +2,12 @@
 
 > Thinking loop and weekly review: shorts-out/BRAIN.md (read it before this file). Style/topic choice: DECIDE section below.
 
+> HOW THE RUNS START (fixed 20 Nov 2026): the old "Shorts factory" routine started sessions WITHOUT the repo (git 403, nothing ran).
+> It is OFF. The trigger "Shorts factory tick (this session)" (08:55 + 16:55 IST) wakes the long-lived Jarvis chat, which calls
+> create_session with source_url Faltu + outcome_branch ccr-8c1babe8-9jk0db, so every factory run has the repo and push works. A Haiku "Shorts
+> scheduler" session cannot do this (auto-mode denies create_session there): do not rebuild that. Quota: YouTube uploads/switches fail after the
+> daily quota (resets 13:30 IST); a timed retry via send_later at 13:35 IST handles a missed public switch.
+
 ## RUN ORDER (owner, 19 Nov 2026: check first, then research, then comments, then new videos)
 Every factory run does these in this order. Stop a step if the tokens or the time are tight; never skip CHECK.
 1. CHECK (Haiku, light): today's live count per channel (IST day): Kratos Playz target 3, solo hype target 2, plus the
