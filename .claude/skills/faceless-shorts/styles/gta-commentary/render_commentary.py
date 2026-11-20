@@ -32,7 +32,9 @@ POOL, USED = REPO / 'shorts-out/gta-commentary/pool.json', REPO / 'shorts-out/gt
 MIXPY = REPO / '.claude/skills/faceless-shorts/styles/comic-pop/example/tools/mix.py'
 SPEED, ZOOM, W, H, FPS = 1.1, 1.05, 1080, 1920, 30
 SEG_MIN, SEG_MAX, MARGIN = 27.5, 38.5, 1.0            # source seconds: 25-35 s on screen at 1.1x
-BOLD = '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf'
+BOLD = '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf'      # contact-sheet labels only
+FONTS = HERE / 'fonts'
+HEAD, BODY = FONTS / 'Anton-Regular.ttf', FONTS / 'Montserrat-ExtraBold.ttf'   # Anton: headlines, captions, stamps; Montserrat ExtraBold: small labels and source lines
 norm = lambda w: re.sub(r'[^a-z0-9]+', '', w.lower())
 
 # ---------------- pool slicer (infinite loop over the registered clips) ----------------
@@ -142,26 +144,26 @@ YEL, RED, WHT, INK = (255, 230, 0), (230, 30, 30), (255, 255, 255), (14, 14, 24)
 POP_T, POP_FROM, KB_TO = 0.12, 0.82, 1.08         # pop-in seconds, start scale, Ken Burns end zoom
 Y0 = {'hook': 150, 'compare': 230, 'proof': 150, 'image': 190, 'poll': 270}    # top of each card on the 1080x1920 frame: above the caption zone, clear of the Shorts UI
 
-def font(n): return ImageFont.truetype(BOLD, int(n))
+def font(n, body=False): return ImageFont.truetype(str(BODY if body else HEAD), int(n))
 def _canvas(h): big = Image.new('RGBA', (CW * S, h * S), (0, 0, 0, 0)); return big, ImageDraw.Draw(big)
 def _rr(d, box, r, fill=None, outline=None, width=0): d.rounded_rectangle([v * S for v in box], r * S, fill=fill, outline=outline, width=width * S)
-def _text(d, xy, t, size, fill=WHT, stroke=0): d.text((xy[0] * S, xy[1] * S), t, font=font(size * S), fill=fill, anchor='mm', stroke_width=stroke * S, stroke_fill=(0, 0, 0))
+def _text(d, xy, t, size, fill=WHT, stroke=0, body=False): d.text((xy[0] * S, xy[1] * S), t, font=font(size * S, body), fill=fill, anchor='mm', stroke_width=stroke * S, stroke_fill=(0, 0, 0))
 _M = ImageDraw.Draw(Image.new('L', (1, 1)))
-def _fit(t, maxw, size, lo=30):
-    while size > lo and _M.textlength(t, font=font(size)) > maxw: size -= 4
+def _fit(t, maxw, size, lo=30, body=False):
+    while size > lo and _M.textlength(t, font=font(size, body)) > maxw: size -= 4
     return size
-def _wrap(t, maxw, size):
+def _wrap(t, maxw, size, body=False):
     lines, cur = [], ''
     for w in t.split():
-        if cur and _M.textlength(f'{cur} {w}', font=font(size)) > maxw: lines.append(cur); cur = w
+        if cur and _M.textlength(f'{cur} {w}', font=font(size, body)) > maxw: lines.append(cur); cur = w
         else: cur = f'{cur} {w}'.strip()
     return lines + [cur] if cur else lines
 def _shadow(big, box, r, blur=22, off=16, a=170):
     sh = Image.new('RGBA', big.size, (0, 0, 0, 0)); ImageDraw.Draw(sh).rounded_rectangle([box[0] * S, (box[1] + off) * S, box[2] * S, (box[3] + off) * S], r * S, fill=(0, 0, 0, a))
     big.alpha_composite(sh.filter(ImageFilter.GaussianBlur(blur * S)))
-def _pill(big, d, cx, y0, y1, text, fill, tcol, size):
-    w = _M.textlength(text, font=font(size)) + 70; box = (cx - w / 2, y0, cx + w / 2, y1)
-    _shadow(big, box, (y1 - y0) / 2, 10, 6, 140); _rr(d, box, (y1 - y0) / 2, fill=fill); _text(d, (cx, (y0 + y1) / 2 - 2), text, size, tcol)
+def _pill(big, d, cx, y0, y1, text, fill, tcol, size, body=False):
+    w = _M.textlength(text, font=font(size, body)) + 70; box = (cx - w / 2, y0, cx + w / 2, y1)
+    _shadow(big, box, (y1 - y0) / 2, 10, 6, 140); _rr(d, box, (y1 - y0) / 2, fill=fill); _text(d, (cx, (y0 + y1) / 2 - 2), text, size, tcol, 0, body)
 def _arrow(d, a, b, wd=15, bend=0):
     pts = [a, b] if not bend else [((1 - t) ** 2 * a[0] + 2 * (1 - t) * t * (a[0] + b[0]) / 2 + t * t * b[0], (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * ((a[1] + b[1]) / 2 - bend) + t * t * b[1]) for t in [i / 24 for i in range(25)]]
     d.line([(x * S, y * S) for x, y in pts], fill=RED, width=wd * S, joint='curve')
@@ -188,12 +190,12 @@ def _build(p, proj, credits):
     k = p['kind']
     if k == 'hook':
         im, src = _load(proj, p['img'], credits); ch = 960; big, d = _canvas(ch); mk, md = _canvas(ch)
-        fr = (70, 330, 1010, 930); _shadow(big, fr, 34); _rr(d, fr, 34, fill=WHT); _text(d, (540, 893), f'SOURCE: {src}'.upper()[:60], 30, (70, 70, 70))
-        bn = p.get('banner', '').upper(); b = (50, 60, 1030, 215); _shadow(big, b, 30); _rr(d, b, 30, fill=YEL, outline=(0, 0, 0), width=5); _text(d, (540, 138), bn, _fit(bn, 920, 128), (0, 0, 0))
-        if p.get('sub'): sb = (110, 205, 970, 295); _shadow(big, sb, 24, 12, 8); _rr(d, sb, 24, fill=(8, 8, 8)); _text(d, (540, 252), p['sub'].upper(), _fit(p['sub'].upper(), 800, 58))
-        if p.get('badge'): _pill(big, d, 540, 14, 74, p['badge'].upper(), RED, WHT, 38)
+        fr = (70, 330, 1010, 930); _shadow(big, fr, 34); _rr(d, fr, 34, fill=WHT); _text(d, (540, 893), f'SOURCE: {src}'.upper()[:60], 28, (70, 70, 70), 0, True)
+        bn = p.get('banner', '').upper(); b = (50, 60, 1030, 215); _shadow(big, b, 30); _rr(d, b, 30, fill=YEL, outline=(0, 0, 0), width=5); _text(d, (540, 138), bn, _fit(bn, 920, 158), (0, 0, 0))
+        if p.get('sub'): sb = (110, 205, 970, 295); _shadow(big, sb, 24, 12, 8); _rr(d, sb, 24, fill=(8, 8, 8)); _text(d, (540, 254), p['sub'].upper(), _fit(p['sub'].upper(), 800, 68))
+        if p.get('badge'): _pill(big, d, 540, 14, 74, p['badge'].upper(), RED, WHT, 44)
         if p.get('stamp'):
-            sz = _fit(p['stamp'].upper(), 860, 124); st = Image.new('RGBA', (900 * S, 230 * S), (0, 0, 0, 0))
+            sz = _fit(p['stamp'].upper(), 860, 150); st = Image.new('RGBA', (900 * S, 230 * S), (0, 0, 0, 0))
             ImageDraw.Draw(st).text((450 * S, 115 * S), p['stamp'].upper(), font=font(sz * S), fill=RED, anchor='mm', stroke_width=7 * S, stroke_fill=WHT)
             mk.alpha_composite(st.rotate(7, expand=True, resample=Image.BICUBIC), (70 * S, 590 * S))
         slot = (90, 350, 900, 500); _marks(md, slot, p.get('mark') or {})
@@ -204,9 +206,9 @@ def _build(p, proj, credits):
         _shadow(big, box, 40); _rr(d, box, 40, fill=INK + (245,), outline=WHT, width=4)
         sl, sr = (80, 150, 420, 420), (580, 150, 420, 420)
         for s in (sl, sr): _rr(d, (s[0] - 6, s[1] - 6, s[0] + s[2] + 6, s[1] + s[3] + 6), 28, fill=WHT)
-        for s, q in ((sl, L), (sr, R)): lb = q.get('label', '').upper(); _text(d, (s[0] + s[2] / 2, 608), lb, _fit(lb, 400, 44))
-        _text(d, (540, 700), ('SOURCES: ' + ' / '.join(dict.fromkeys([ls, rs]))).upper()[:70], 26, (160, 160, 170))
-        tt = p.get('title', '').upper(); _pill(big, d, 540, 28, 112, tt, YEL, (0, 0, 0), _fit(tt, 780, 50))
+        for s, q in ((sl, L), (sr, R)): lb = q.get('label', '').upper(); _text(d, (s[0] + s[2] / 2, 608), lb, _fit(lb, 400, 54))
+        _text(d, (540, 700), ('SOURCES: ' + ' / '.join(dict.fromkeys([ls, rs]))).upper()[:70], 24, (160, 160, 170), 0, True)
+        tt = p.get('title', '').upper(); _pill(big, d, 540, 28, 112, tt, YEL, (0, 0, 0), _fit(tt, 780, 60))
         for s, q in ((sl, L), (sr, R)): _marks(md, s, {'circle': q['circle']} if 'circle' in q else {})
         a = (sl[0] + L['circle'][0] * sl[2] + L['circle'][2] * sl[2], sl[1] + L['circle'][1] * sl[3]) if 'circle' in L else (sl[0] + sl[2] * 0.8, sl[1] + sl[3] * 0.5)
         b = (sr[0] + R['circle'][0] * sr[2] - R['circle'][2] * sr[2], sr[1] + R['circle'][1] * sr[3]) if 'circle' in R else (sr[0] - 12, sr[1] + sr[3] * 0.5)
@@ -215,24 +217,24 @@ def _build(p, proj, credits):
     if k == 'proof':
         im, src = _load(proj, p['img'], credits); ch = 960; big, d = _canvas(ch); mk, md = _canvas(ch); card = (90, 120, 990, 900)
         _shadow(big, card, 40); _rr(d, card, 40, fill=WHT); slot = (130, 190, 820, 440)
-        tag = p.get('tag', 'FAN THEORY').upper(); _pill(big, d, 300, 72, 150, tag, YEL, (0, 0, 0), _fit(tag, 380, 44))
-        sc = f'SOURCE: {src}'.upper()[:26]; _pill(big, d, 760, 72, 150, sc, INK, WHT, 36)
-        cap = p.get('text', '').upper(); sz = 58
-        for i, ln in enumerate(_wrap(cap, 820, sz)[:2]): _text(d, (540, 706 + i * 72), ln, sz, (10, 10, 10))
+        tag = p.get('tag', 'FAN THEORY').upper(); _pill(big, d, 300, 72, 150, tag, YEL, (0, 0, 0), _fit(tag, 380, 52))
+        sc = f'SOURCE: {src}'.upper()[:26]; _pill(big, d, 760, 72, 150, sc, INK, WHT, 28, True)
+        cap = p.get('text', '').upper(); sz = 72
+        for i, ln in enumerate(_wrap(cap, 820, sz)[:2]): _text(d, (540, 702 + i * 84), ln, sz, (10, 10, 10))
         for ar in p.get('arrows', []): _marks(md, slot, {'arrow': ar})
         hl = [(slot[0] + fx * slot[2], slot[1] + fy * slot[3], fw * slot[2], fh * slot[3]) for fx, fy, fw, fh in p.get('hl', [])]
         return _card(big, mk, [_slot(im, slot, 24, p.get('crop'))], -3.5, hl)
     if k == 'image':
         im, src = _load(proj, p['img'], credits); lab = bool(p.get('label')); ch = 860; big, d = _canvas(ch); mk, md = _canvas(ch); box = (60, 60, 1020, 800)
         _shadow(big, box, 34); _rr(d, box, 34, fill=WHT)
-        if lab: _rr(d, (60, 60, 1020, 150), 34, fill=RED); d.rectangle([60 * S, 110 * S, 1020 * S - 1, 150 * S], fill=RED); _text(d, (540, 104), p['label'].upper(), _fit(p['label'].upper(), 860, 50))
-        slot = (90, 170 if lab else 90, 900, 520); _text(d, (540, slot[1] + 560), f'SOURCE: {src}'.upper()[:60], 32, (60, 60, 60)); _marks(md, slot, p.get('mark') or {})
+        if lab: _rr(d, (60, 60, 1020, 150), 34, fill=RED); d.rectangle([60 * S, 110 * S, 1020 * S - 1, 150 * S], fill=RED); _text(d, (540, 104), p['label'].upper(), _fit(p['label'].upper(), 860, 62))
+        slot = (90, 170 if lab else 90, 900, 520); _text(d, (540, slot[1] + 560), f'SOURCE: {src}'.upper()[:60], 28, (60, 60, 60), 0, True); _marks(md, slot, p.get('mark') or {})
         return _card(big, mk, [_slot(im, slot, 22, p.get('crop'))])
     ch = 840; big, d = _canvas(ch); mk, md = _canvas(ch); box = (60, 40, 1020, 340)             # poll
     _shadow(big, box, 38); _rr(d, box, 38, fill=INK + (240,), outline=RED, width=8)
-    q = p['question'].upper(); sz = _fit(q, 860, 112); ls = _wrap(q, 860, sz)[:2]
+    q = p['question'].upper(); sz = _fit(q, 860, 140); ls = _wrap(q, 860, sz)[:2]
     for i, ln in enumerate(ls): _text(d, (540, 130 + i * (sz + 8) - (sz // 2 if len(ls) > 1 else 0)), ln, sz, YEL, 4)
-    if p.get('sub'): _text(d, (540, 290), p['sub'].upper(), 56)
+    if p.get('sub'): _text(d, (540, 292), p['sub'].upper(), 66)
     for cx, yes in ((340, True), (740, False)):
         col = (46, 200, 90) if yes else (230, 40, 40); bx = (cx - 140, 500, cx + 140, 770)
         _shadow(big, (cx - 80, 405, cx + 80, 560), 18, 8, 6, 120); _rr(d, (cx - 80, 405, cx + 80, 560), 18, fill=WHT)           # ballot paper
@@ -240,7 +242,7 @@ def _build(p, proj, credits):
         if yes: d.line([(x * S, y * S) for x, y in pts], fill=col, width=16 * S, joint='curve')
         else: d.line([(cx - 38) * S, 428 * S, (cx + 38) * S, 510 * S], fill=col, width=16 * S); d.line([(cx + 38) * S, 428 * S, (cx - 38) * S, 510 * S], fill=col, width=16 * S)
         _shadow(big, bx, 26); _rr(d, bx, 26, fill=(196, 210, 232), outline=(60, 70, 95), width=6); _rr(d, (cx - 95, 525, cx + 95, 552), 12, fill=(40, 45, 60))
-        _text(d, (cx, 668), 'YES' if yes else 'NO', 118, col, 6)
+        _text(d, (cx, 668), 'YES' if yes else 'NO', 134, col, 6)
     for a, b in (((40, 380), (120, 450)), ((1040, 380), (960, 450)), ((60, 800), (140, 740)), ((1020, 800), (940, 740))):
         d.line([a[0] * S, a[1] * S, b[0] * S, b[1] * S], fill=WHT, width=12 * S); ang = math.atan2(b[1] - a[1], b[0] - a[0])
         d.polygon([(b[0] * S, b[1] * S)] + [((b[0] - 46 * math.cos(ang + s)) * S, (b[1] - 46 * math.sin(ang + s)) * S) for s in (-0.5, 0.5)], fill=WHT)
@@ -299,7 +301,7 @@ def make_ass(words, total):
     if cur: ch.append(cur)
     hdr = (f'[Script Info]\nScriptType: v4.00+\nPlayResX: {W}\nPlayResY: {H}\n\n[V4+ Styles]\n'
            'Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,MarginV,Encoding\n'
-           'Style: C,Liberation Sans,100,&H00FFFFFF,&H00FFFFFF,&H00000000,&H99000000,1,0,0,0,100,100,0,0,1,10,5,2,40,40,600,1\n\n'
+           'Style: C,Anton,124,&H00FFFFFF,&H00FFFFFF,&H00000000,&H99000000,0,0,0,0,100,100,1,0,1,9,5,2,40,40,600,1\n\n'
            '[Events]\nFormat: Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text\n')
     ev = []
     for k, c in enumerate(ch):
@@ -316,6 +318,13 @@ def run(cmd, **kw):
     r = subprocess.run(cmd, capture_output=True, text=True, **kw)
     if r.returncode: raise SystemExit(f'{cmd[0]} failed:\n{r.stderr[-1500:]}')
     return r
+
+def lufs(path):
+    """Integrated loudness (LUFS) of an audio file. Used for a static gain instead of loudnorm, whose look-ahead swallowed the last ~3 s of every track."""
+    r = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', str(path), '-af', 'ebur128', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    m = re.findall(r'I:\s+(-?[\d.]+) LUFS', r)
+    if not m: raise SystemExit(f'could not measure the loudness of {path}')
+    return float(m[-1])
 
 def _mix(P, sub, script, cues, total):
     """Run the UNMODIFIED shared mix.py in a scratch folder (no voice): returns its data/mix.wav (peak -1 dBFS)."""
@@ -392,12 +401,14 @@ def render(proj, out='renders/out.mp4', pool=None):
     inputs += ['-loop', '1', '-framerate', str(FPS), '-t', str(total), '-i', 'data/bar.png']; bi = n + len(pops); sx, sy = shake_expr([pops[0]['t'], pops[-1]['t']])
     f.append(f"[vd{len(pops)}]scale=1086:1932,crop=1080:1920:x='{sx}':y='{sy}'[vs]")                         # micro-shake on the hook and poll entrances (whole frame)
     f.append(f"[{bi}:v]format=rgba[bar]"); f.append(f"[vs][bar]overlay=x='-W+W*t/{total}':y=0:eof_action=pass[vb]")      # top progress bar, steady (after the shake)
-    f.append("[vb]ass=data/caps.ass[vout]")
-    f.append(f"[1:a]{'adelay=' + str(round(pad * 1000)) + '|' + str(round(pad * 1000)) + ',' if pad else ''}apad,atrim=duration={total},loudnorm=I=-16:TP=-1.5:LRA=11[vo]")
+    f.append(f"[vb]ass=data/caps.ass:fontsdir={FONTS}[vout]")
+    gv = -16.0 - lufs(P / 'data/narration.wav')                                    # voice -16 LUFS (static gain: nothing is cut off at the end)
+    f.append(f"[1:a]{'adelay=' + str(round(pad * 1000)) + '|' + str(round(pad * 1000)) + ',' if pad else ''}volume={gv:.2f}dB,alimiter=limit=0.95,apad,atrim=duration={total}[vo]")
     mix_in = ['[vo]']
-    if bgm: f.append(f"[{ai}:a]aloop=loop=-1:size=2147483647,atrim=duration={total},loudnorm=I=-28:TP=-3:LRA=7[bm]"); mix_in.append('[bm]')   # beat -28 LUFS: 12 dB under the voice
-    f.append(f"[{si}:a]atrim=duration={total},volume=-18dB[sx]"); mix_in.append('[sx]')                                                   # mix.py peaks at -1 dBFS: SFX at about -19 dBFS
-    f.append(f"{''.join(mix_in)}amix=inputs={len(mix_in)}:normalize=0:duration=first[aout]")
+    if bgm:                                                                          # beat -28 LUFS: 12 dB under the voice; plays to the very last frame, 0.3 s fade-out
+        gb = -28.0 - lufs(bgm); f.append(f"[{ai}:a]aloop=loop=-1:size=2147483647,atrim=duration={total},volume={gb:.2f}dB,afade=t=out:st={round(total - 0.3, 2)}:d=0.3[bm]"); mix_in.append('[bm]')
+    f.append(f"[{si}:a]apad,atrim=duration={total},volume=-18dB[sx]"); mix_in.append('[sx]')                  # mix.py peaks at -1 dBFS: SFX at about -19 dBFS
+    f.append(f"{''.join(mix_in)}amix=inputs={len(mix_in)}:normalize=0:duration=longest[aout]")
     (P / 'data/graph.txt').write_text(';\n'.join(f))
     run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex_script', 'data/graph.txt', '-map', '[vout]', '-map', '[aout]', '-t', str(total),
          '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], cwd=P)
@@ -435,9 +446,9 @@ def next_track(rows=None, pool=None):
         return 'COMMENTARY', f'due (the last gta video was a standard one); the pool loops forever, {len(pool)} clip(s). Next: reach Drive Bg_pool and download the clip; any failure there = STANDARD'
     return 'STANDARD', 'due (first video, or the last gta video was a commentary one)'
 
-def sheet(proj, every=2.5):
+def sheet(proj, every=2.5, video='renders/out.mp4'):
     """Contact sheet for QA: one frame per card (shown at its fullest) when data/beats.json exists, otherwise every `every` seconds."""
-    P = Path(proj).resolve(); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'; mp4 = P / 'renders/out.mp4'; bf = P / 'data/beats.json'
+    P = Path(proj).resolve(); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'; mp4 = P / video; bf = P / 'data/beats.json'
     if not bf.exists():
         run(['ffmpeg', '-v', 'error', '-y', '-i', str(mp4), '-vf', f'fps=1/{every},scale=216:384,tile=5x3:padding=4:color=black', '-frames:v', '1', str(o)]); print(o); return o
     beats = json.loads(bf.read_text()); tw, th = 324, 576; cols = min(5, len(beats)); rows = -(-len(beats) // cols); T = Path(tempfile.mkdtemp())
@@ -508,6 +519,11 @@ def _test():
     d = json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height,codec_type:format=duration', '-of', 'json', str(o)]).stdout)
     assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 6.8) < 0.1, d      # poll card at 4.55 s (150 ms lead-in) + 2.0 s hold + 0.25 s tail
     assert sheet(T).exists()
+    ad = float(run(['ffprobe', '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=duration', '-of', 'csv=p=0', str(o)]).stdout)
+    assert abs(ad - 6.8) < 0.15, f'audio must last as long as the video, got {ad}s'            # the loudnorm look-ahead used to cut the last ~3 s
+    tail = run(['ffmpeg', '-hide_banner', '-nostats', '-ss', '6.0', '-t', '0.7', '-i', str(o), '-vn', '-af', 'volumedetect', '-f', 'null', '-']).stderr
+    assert float(re.search(r'mean_volume: (-?[\d.]+) dB', tail).group(1)) > -40, 'the last second keeps the beat (never silent)'
+    assert HEAD.exists() and BODY.exists() and 'Anton' in make_ass(ws, 5.0)
     clip = T / 'bg/long.mp4'; pf = T / 'pool.json'
     run(['ffmpeg', '-v', 'error', '-f', 'lavfi', '-i', 'testsrc2=s=320x180:r=10:d=30', '-pix_fmt', 'yuv420p', str(clip)])
     e = pool_add('tid', clip, pool_file=pf); assert abs(e['dur'] - 30.0) < 0.2 and e['size'] == '320x180', e     # exact ffprobe duration, not an estimate

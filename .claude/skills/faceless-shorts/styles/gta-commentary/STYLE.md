@@ -27,6 +27,9 @@ clip not downloadable) the run is a STANDARD one and commentary stays due for th
    **poll** (last card: question banner + YES / NO ballot boxes). Plus the generic **image** card for in-between beats. Cards pop 0.82x -> 1.0x in 120 ms with a drop shadow, images
    Ken-Burns 1.0x -> 1.08x, background dimmed 17 % + vignette, karaoke captions at MarginV 600. Audio: voice -16 LUFS, beat -28 LUFS (mix.py unmodified makes the beat), whoosh/pop/thud
    from mix.py on every card at about -19 dBFS.
+   Fonts (owner 20 Nov): Anton for headlines, stamps and the karaoke captions (124 px, outline 9), Montserrat ExtraBold for small labels and `SOURCE:` lines; both OFL, kept in
+   `gta-commentary/fonts/` (the ASS filter gets `fontsdir`). Audio runs to the very last frame: voice and beat are set with a static gain from their measured LUFS (the old `loudnorm`
+   swallowed the last ~3 s of every track and `amix` stopped with it), the beat fades out only in the last 0.3 s, so the end is never silent.
    Retention polish: a 5 px glowing #FFE600 progress bar on the very top edge fills 0-100 % over the whole video; a 2-frame 3 px micro-shake pulses on the hook (0.0 s) and
    poll entrances; the closing poll card is held at least 2.0 s (`POLL_HOLD`; if the voice ends earlier the video tail is extended, which needs a `pick` segment of the longer length).
 5. QA: `render_commentary.py sheet <proj>` -> `review/sheet.png` (one frame per card, labelled); read it, then check the facts once more.
