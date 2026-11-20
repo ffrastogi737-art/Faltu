@@ -171,6 +171,11 @@ The script chooses the template; a template never forces the script.
    myth-or-fact or comic-panels for fast facts and stories; inside-out / chalk-talk for body science; ...). gta: the topic stays GTA 6, the template is matched
    per video from the script's angle (comic-pop; myth-or-fact for rumour checks; comic-panels for player situations; a ported library id when it fits better;
    neon-versus only if its LOSE is lifted or demanded).
+5b. **gta only: 50/50 with the commentary track** (owner 21 Nov 2026; solo never does this, pick_style.py is not involved).
+   Run `python3 .claude/skills/faceless-shorts/styles/gta-commentary/render_commentary.py next` right after the topic is chosen. STANDARD = steps 1-6 here as always.
+   COMMENTARY = skip `match`, follow `.claude/skills/faceless-shorts/styles/gta-commentary/STYLE.md` (own script, Drive footage, image cards), then the SAME
+   BUILD-QA (contact sheet), DELIVER, UPLOAD, INSTAGRAM, perf.csv steps. Fallback: Drive folder `Bg_pool` (neerajjewellers88 Drive connector) missing, empty,
+   unreachable or the clip not downloadable = do a STANDARD run on that same script instead; never fail an upload for it.
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
 

@@ -14,7 +14,7 @@ import re, sys, pathlib, csv, json, collections, statistics as st, datetime as d
 D = pathlib.Path(__file__).parent
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
-         'myth-or-fact', 'comic-panels', 'gta-commentary'}
+         'myth-or-fact', 'comic-panels'}
 PORTED = {'myth-or-fact', 'comic-panels'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
 KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
          'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list']
@@ -31,7 +31,6 @@ stick-story: steps whatif story funny
 tall-tale: story skit funny dialogue 3d
 myth-or-fact: myth question quiz fast science gaming news
 comic-panels: skit funny story dialogue steps fast
-gta-commentary: gaming news list fast dark
 clay-diorama: story animals places 3d
 bio-glow: body science animals 3d
 cosmic-scale: space stat science 3d
@@ -94,13 +93,6 @@ def library_ids():
 
 def catalog():
     return LOCAL | library_ids()
-
-CHANNEL_ONLY = {'gta-commentary': 'gta'}   # style -> the one channel allowed to use it
-PILOT_CAP = {'gta-commentary': 3}          # videos allowed before a WIN verdict is required (owner 20 Nov 2026: 3-video pilot)
-
-def made_count(style, ch):
-    """Videos of a style already made for a channel: every perf.csv row counts, measured or not (the row is added at upload)."""
-    return sum(1 for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == ch and r['style'] == style)
 
 def now_ist():
     return dt.datetime.now(IST).replace(tzinfo=None)
@@ -213,7 +205,7 @@ def features(texts, channel):
     if channel == 'gta': f['gaming'] += 2   # the GTA channel is a gaming channel: gaming-tagged templates get the home advantage
     return f, {'avg_words': round(avg, 1), 'lines': len(texts)}
 
-def rank(f, channel, hist, ok, E, demand=None, made=None):
+def rank(f, channel, hist, ok, E, demand=None):
     """Pure ranking of the whole catalog for features f. Returns dicts sorted best first."""
     med = st.median([r['views'] for r in ok]) if ok else 0
     by = {}
@@ -222,8 +214,6 @@ def rank(f, channel, hist, ok, E, demand=None, made=None):
     out = []
     for s in sorted(catalog()):
         if current(s, channel, hist) == 'LOSE' and s != demand: continue          # the only hard block
-        if CHANNEL_ONLY.get(s, channel) != channel: continue                      # channel-only styles stay off the other channel
-        if s in PILOT_CAP and current(s, channel, hist) != 'WIN' and (made if made is not None else made_count(s, channel)) >= PILOT_CAP[s]: continue   # pilot used up: needs a WIN
         tags = TAGS.get(s, set()); hit = sorted(t for t in tags if f.get(t))
         sc = sum(f[t] for t in hit); why = list(hit)
         unported = s not in LOCAL and s not in PORTED
@@ -256,7 +246,6 @@ def cmd_match(channel, path):
         tag = 'UNPORTED' if r['unported'] else ('slow 3D' if r['slow'] else 'ready')
         print(f"{r['score']:>5}  {r['style']:<17} {tag:<9} {'; '.join(r['why'])[:110]}")
     top = res[0]
-    if top['style'] == 'gta-commentary': print('BUILD: gta-commentary needs bg_pool footage and credited image cards: read .claude/skills/faceless-shorts/styles/gta-commentary/STYLE.md (pilot: %d of %d made).' % (made_count('gta-commentary', channel), PILOT_CAP['gta-commentary']))
     if len(res) > 1 and top['score'] - res[1]['score'] < 1: print(f"CLOSE CALL: {top['style']} vs {res[1]['style']}: decide on the hook and mood, not on the score.")
     if top['repeat']: print('SAMENESS RISK: the best match repeats a recent style. Allowed because it fits best: change the hook shape, the structure, the characters and the colours.')
     if top['unported']: print(f"PORT NEEDED: build it now, do not settle: bash .claude/skills/faceless-shorts/scripts/port_style.sh {top['style']} {'comic-pop' if not top['slow'] else '<3D base: see STYLE-LIBRARY.md, render_html.mjs>'}  (then edit shots.js, estimate.py + capture.mjs check, add to LOCAL and PORTED here).")
@@ -304,10 +293,6 @@ def _test():
     assert any(x['unported'] for x in rank(g, 'solo', [], [], [], None)), 'unported library ids must stay in the ranking'
     good = [{'style': 'x', 'views': 900}, {'style': 'x', 'views': 950}, {'style': 'y', 'views': 100}]           # x would be WIN
     assert auto_verdicts('solo', good, [('x', 'LOSE')], '2026-11-20') and not auto_verdicts('solo', good, [('x@solo', 'LOSE')], '2026-11-20', {'x@solo'})   # owner-pinned lines never flip
-    assert 'gta-commentary' not in [x['style'] for x in rank(g, 'solo', [], [], [], None)], 'gta-commentary is gta-only'
-    assert 'gta-commentary' in [x['style'] for x in rank(g, 'gta', [], [], [], None, made=2)]
-    assert 'gta-commentary' not in [x['style'] for x in rank(g, 'gta', [], [], [], None, made=3)]                 # pilot cap reached ...
-    assert 'gta-commentary' in [x['style'] for x in rank(g, 'gta', [('gta-commentary', 'WIN')], [], [], None, made=3)]   # ... until it WINs
     assert hook_flags('Why do you sneeze in bright sunlight?') == ['question', 'second-person', 'short']
     assert len(library_ids() - LOCAL) >= 40 and 'tier-list' in library_ids(), len(library_ids())
     assert all(s in TAGS for s in catalog()), [s for s in catalog() if s not in TAGS]

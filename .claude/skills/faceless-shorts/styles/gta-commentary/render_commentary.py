@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """gta-commentary (Kratos Playz only): gameplay background from the Drive bg_pool + Fair Use image cards + word-synced captions, one ffmpeg pass.
-  python3 gta_commentary.py pick <seconds>                 random non-repeating segment of the pool for a voiceover of that length (reserves it in used.json)
-  python3 gta_commentary.py asset <proj> <name> --src "IGN" (--url U | --page ARTICLE_URL | --file F)   add a credited image to <proj>/assets/
-  python3 gta_commentary.py render <proj>                  <proj>/renders/out.mp4 from script.json + data/words.json + data/narration.wav + bg/<file>
-  python3 gta_commentary.py --test                         self-check (synthetic video, voice and image; no network)
+  python3 render_commentary.py next                        STANDARD or COMMENTARY for the next gta video (strict alternation, see due())
+  python3 render_commentary.py pick <seconds>                 random non-repeating segment of the pool for a voiceover of that length (reserves it in used.json)
+  python3 render_commentary.py asset <proj> <name> --src "IGN" (--url U | --page ARTICLE_URL | --file F)   add a credited image to <proj>/assets/
+  python3 render_commentary.py render <proj>                  <proj>/renders/out.mp4 from script.json + data/words.json + data/narration.wav + bg/<file>
+  python3 render_commentary.py sheet <proj>                contact sheet of the render -> <proj>/review/sheet.png (read it for QA)
+  python3 render_commentary.py --test                         self-check (synthetic video, voice and image; no network)
 script.json: {"lines":[{"text":..}], "bg":{"name":"clip.mp4","start":12.5,"len":31.0,"cx":0.5,"file_id":".."}, "music":"hype"|"audio/x.mp3"|"none",
   "popups":[{"at":"word","kind":"image","img":"assets/a.jpg","label":"LEAKED?","mark":{"circle":[0.5,0.4,0.12],"arrow":[0.7,0.3]},"dur":2.6},
             {"at":"word","kind":"text","text":"110 MILLION","sub":"PRE-ORDERS"}]}    (marks are fractions of the image; the credit comes from assets/credits.json)
@@ -184,6 +186,28 @@ def render(proj, out='renders/out.mp4'):
          '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], cwd=P)
     print(f'{P / out} ({total:.1f}s, {len(pops)} popups)'); return P / out
 
+# ---------------- alternation (gta only, parallel to pick_style.py which is untouched) ----------------
+PERF = REPO / 'shorts-out/perf.csv'
+
+def due(rows):
+    """STANDARD, COMMENTARY, STANDARD, ... by the style of the last gta perf row (a row is added at every upload). No history: STANDARD first."""
+    gta = [r for r in rows if r['channel'] == 'gta']
+    return 'STANDARD' if not gta or gta[-1]['style'] == 'gta-commentary' else 'COMMENTARY'
+
+def next_track():
+    import csv
+    want = due(list(csv.DictReader(PERF.open())))
+    if want == 'COMMENTARY':
+        try: pick(30.0, reserve=False)                         # pool.json has an unused segment?
+        except SystemExit as e: return 'STANDARD', f'commentary is due but the pool cannot serve it ({str(e).splitlines()[0]}): fallback'
+        return 'COMMENTARY', 'due (the last gta video was a standard one). Next: reach Drive Bg_pool and download the clip; any failure there = STANDARD'
+    return 'STANDARD', 'due (first video, or the last gta video was a commentary one)'
+
+def sheet(proj, every=2.5):
+    P = Path(proj); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'
+    run(['ffmpeg', '-v', 'error', '-y', '-i', str(P / 'renders/out.mp4'), '-vf', f'fps=1/{every},scale=216:384,tile=5x3:padding=4:color=black', '-frames:v', '1', str(o)])
+    print(o); return o
+
 # ---------------- self-check ----------------
 def _test():
     import random as R, tempfile, shutil
@@ -209,11 +233,17 @@ def _test():
     o = render(T)
     d = json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height,codec_type:format=duration', '-of', 'json', str(o)]).stdout)
     assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 5.0) < 0.2, d
-    shutil.rmtree(T); print('gta_commentary.py: self-check OK')
+    assert sheet(T).exists()
+    mk = lambda *st: [{'channel': 'gta', 'style': x} for x in st]
+    assert due([]) == 'STANDARD' and due(mk('comic-pop')) == 'COMMENTARY' and due(mk('comic-pop', 'gta-commentary')) == 'STANDARD' and due(mk('gta-commentary', 'neon-versus')) == 'COMMENTARY'
+    assert due([{'channel': 'solo', 'style': 'gta-commentary'}] + mk('comic-pop')) == 'COMMENTARY', 'solo rows never count'
+    shutil.rmtree(T); print('render_commentary.py: self-check OK')
 
 if __name__ == '__main__':
     a = sys.argv[1:]
     if a[:1] == ['--test']: _test()
+    elif a[:1] == ['next']: t, why = next_track(); print(f'{t}\n{why}')
+    elif a[:1] == ['sheet']: sheet(a[1])
     elif a[:1] == ['pick']: print(json.dumps(pick(float(a[1]))))
     elif a[:1] == ['render']: render(a[1])
     elif a[:1] == ['asset']:
