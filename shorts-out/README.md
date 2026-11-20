@@ -189,3 +189,14 @@ Sources: PBS NewsHour, Cleveland Clinic, ScienceBlog / PubMed 27568353.
 ```
 **Tags:** why does sunlight make me sneeze, photic sneeze reflex, ACHOO syndrome, sneezing in sunlight, bright light sneeze, human body facts, biology facts, science shorts, body facts, did you know
 **Experiment:** best formula topic (second-person body science) + comic-pop auto engine 2nd time, 31 s, Chatterbox; slot 20 Nov 09:00 IST
+
+## 17 · `17-leech-collector.mp4` · chalk-talk (4th use? first for weird-jobs; chalk-talk med 922) · WAITING UPLOAD (quota) · IG ig-leech 17:00 IST
+**Title:** The Job Where Your Leg Was The Bait
+**Description:**
+```
+In the 1800s, leech collectors waded into ponds and let leeches bite their bare legs, then picked them off to sell to doctors. The job faded as bloodletting fell out of favour.
+Sources: Wikipedia "Leech collector"; Science History Institute, Distillations (medicinal leeches); Wikipedia "Resolution and Independence" (Wordsworth, 1800 encounter).
+#shorts #history #weirdjobs #didyouknow #leeches #wordsworth #facts #oddjobs
+```
+**Tags:** leech collector, weird old jobs, 1800s jobs, medicinal leeches, bloodletting history, Wordsworth, history facts, weird history, did you know, forgotten jobs
+**Experiment:** kind weird-jobs (med 592) after 5 body-science in a row; chalk-talk (n=2, med 922); 25 s, Chatterbox; slot 20 Nov 17:00 IST or next free
