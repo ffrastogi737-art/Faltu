@@ -1,7 +1,7 @@
 # gta-commentary videos (Kratos Playz). Own log so gta6-channel/README.md (and the Standard sameness check) stays untouched.
 Format per video: `## NN · file · gta-commentary · status` then Title / Hook / bg segment (file_id, start, len) / image sources. perf.csv style = `gta-commentary`.
 
-## 15 · `15-gta-online-painting-map.mp4` · gta-commentary · SCHEDULED 21 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=N7w7hBdAm98) · first commentary run
+## 15 · `15-gta-online-painting-map.mp4` · gta-commentary · SCHEDULED 21 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=ytOn4rV-bbg) · first commentary run, v2 (Anton fonts, audio to the last frame, progress bar, shake, poll held 2 s)
 **Title:** GTA Online Painting Might Hide The GTA 6 Map? 🤔 (Fan Theory) #shorts
 **Hook:** A painting in GTA Online might secretly be the GTA 6 map.
 **Facts (fan theory, Rockstar no confirmation):** TechRadar 4 Aug 2026, Destructoid, TheGamer via OpenCritic (Kortz Center Heist painting, Reddit user JaneBunnFan).
@@ -15,3 +15,4 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Clip:** ref_npc_crash.mp4 (Drive Bg_pool, 1_yMEuqLeM9pdz2L_rYMmI8RAI0kbsF27), third-party clip by "Goofy Oblivion" (credited in the pill and the description; NOT in pool.json). Owner approved scheduling after being told: the clip's own title + purple captions (some profanity) stay visible, claim risk exists.
 **Settings:** zoom 1.18, cy 0.0 (bottom crop hides the source's black bars), neon synthwave bed -28 LUFS, narrator emo 0.9-1.0 / cfg 0.3, 3 beats, punch zoom + red circle at 17.8 s.
 **Slot:** 21 Nov 09:00 IST is taken by Kratos 15 (N7w7hBdAm98), so slot.py's best free slot: 22 Nov 09:00 IST. Instagram: ig-gta16-react queued 22 Nov 04:00Z (09:30 IST; 03:45Z is taken by solo ig-name-in-crowd), caption credits Goofy Oblivion. Judge at 48 h vs gta median 283.
+**v2 note (20 Nov late night IST):** the first upload N7w7hBdAm98 had no audio in its last ~3 s (old loudnorm bug), so on the owner's go-ahead the fixed render `15-gta-online-painting-map-v2.mp4` was uploaded as ytOn4rV-bbg and took the 21 Nov 09:00 IST slot. N7w7hBdAm98 stays PRIVATE with no publishAt (never deleted, never public). Instagram not queued for this one.
