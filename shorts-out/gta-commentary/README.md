@@ -14,4 +14,4 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Hook:** Bro pulled up acting like the final boss of Vice City, screaming and waving guns just to steal a bike.
 **Clip:** ref_npc_crash.mp4 (Drive Bg_pool, 1_yMEuqLeM9pdz2L_rYMmI8RAI0kbsF27), third-party clip by "Goofy Oblivion" (credited in the pill and the description; NOT in pool.json). Owner approved scheduling after being told: the clip's own title + purple captions (some profanity) stay visible, claim risk exists.
 **Settings:** zoom 1.18, cy 0.0 (bottom crop hides the source's black bars), neon synthwave bed -28 LUFS, narrator emo 0.9-1.0 / cfg 0.3, 3 beats, punch zoom + red circle at 17.8 s.
-**Slot:** 21 Nov 09:00 IST is taken by Kratos 15 (N7w7hBdAm98), so slot.py's best free slot: 22 Nov 09:00 IST. Instagram NOT queued (not asked). Judge at 48 h vs gta median 283.
+**Slot:** 21 Nov 09:00 IST is taken by Kratos 15 (N7w7hBdAm98), so slot.py's best free slot: 22 Nov 09:00 IST. Instagram: ig-gta16-react queued 22 Nov 04:00Z (09:30 IST; 03:45Z is taken by solo ig-name-in-crowd), caption credits Goofy Oblivion. Judge at 48 h vs gta median 283.
