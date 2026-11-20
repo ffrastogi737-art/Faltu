@@ -1,0 +1,62 @@
+{
+ "title": "Myth Or Fact (demo)",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.25,
+ "music": "hype",
+ "sources": [
+  "DEMO ONLY, engine test; claims are common examples, check 2 sources before publishing any real claim"
+ ],
+ "lines": [
+  {
+   "text": "Think you know the truth? Let's test three claims!",
+   "vis": {
+    "k": "Q",
+    "icon": "brain",
+    "head": "TRUE OR FALSE?"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Lightning never strikes the same place twice. Myth! Tall buildings get hit many times a year.",
+   "vis": {
+    "k": "M",
+    "head": "LIGHTNING NEVER STRIKES TWICE",
+    "verdict": "MYTH",
+    "at": "Myth",
+    "sub": "TALL BUILDINGS GET HIT OFTEN"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Honey never goes bad. Fact! Sealed honey can last for years.",
+   "vis": {
+    "k": "M",
+    "head": "HONEY NEVER GOES BAD",
+    "verdict": "FACT",
+    "at": "Fact",
+    "sub": "SEALED HONEY LASTS YEARS"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Goldfish remember for only three seconds. Myth! They can remember for weeks.",
+   "vis": {
+    "k": "M",
+    "head": "GOLDFISH: 3-SECOND MEMORY",
+    "verdict": "MYTH",
+    "at": "Myth",
+    "sub": "THEY REMEMBER FOR WEEKS"
+   }
+  },
+  {
+   "text": "Which one surprised you? Comment below!",
+   "vis": {
+    "k": "Q",
+    "icon": "eye",
+    "head": "WHICH SURPRISED YOU?"
+   },
+   "emo": 0.85
+  }
+ ]
+}

@@ -5,3 +5,5 @@ inside-out@solo WIN 2026-11-20 auto: n=4 median 751 vs channel median 178
 paper-atlas@solo LOSE 2026-11-20 auto: n=3 median 26 vs channel median 178
 stick-story@solo LOSE 2026-11-20 auto: n=4 median 14 vs channel median 178
 comic-pop@gta WIN 2026-11-20 auto: n=3 median 1180 vs channel median 260
+stick-story@solo LOSE 2026-11-20 owner-pinned: owner asked to keep LOSE (3 of 4 videos flopped); automatic verdicts never change this line
+paper-atlas@solo LOSE 2026-11-20 owner-pinned: owner asked to keep LOSE (n=3, median 26); automatic verdicts never change this line

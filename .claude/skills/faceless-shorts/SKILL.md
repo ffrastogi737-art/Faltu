@@ -21,6 +21,8 @@ local Whisper word timing, numpy sound. No AI images or video, no API keys, no c
 | **Neon Versus** `neon-versus` | gaming / tech "X vs Y", top-5 lists and launch countdowns in a synthwave Vice City look: glowing panels, neon text, generic skylines and silhouettes (never real game art), Hindi voice with Hinglish captions, optional "vote for Part 2" ending | 40-58 s · 9:16 |
 | **Chalk Talk** `chalk-talk` | "why does your body do that?" explainers drawn on a green chalkboard: chalk lines that draw themselves on, stick people, cross-section diagrams with labels and arrows, chalk-white captions with one yellow word | 35-50 s · 9:16 |
 | **Comic Pop** `comic-pop` | bright, colourful thumbnail-style explainers, lists, launch news and versus: saturated sunburst backgrounds that change every shot, white sticker cards with thick ink outlines, count-up numbers on comic bursts, big outlined captions. Kratos Playz GTA default since 18 Nov 2026 (replaced the dark neon look) | 35-55 s · 9:16 |
+| **Myth Or Fact** `myth-or-fact` | quick "is this true?" claims: a big claim card, a MYTH / FACT stamp slams on a word, one chip explains why (comic-pop engine, kind `M`) | 20-40 s · 9:16 |
+| **Comic Panels** `comic-panels` | skits and stories as 1-3 stacked comic panels with icon actors and speech bubbles, BAM bursts (comic-pop engine, kind `P`) | 15-45 s · 9:16 |
 
 Which style: body / health / science "what happens if" → **Deep Dive 3D** (or **Inside Out** for a lighter, faster 2D
 look) · creepy, unexplained, true crime, "this happened in 1971" → **Night File 3D** · survival, life hacks, "here's what

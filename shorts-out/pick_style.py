@@ -1,43 +1,104 @@
 #!/usr/bin/env python3
-"""Style + topic-kind advisor (after research, before BUILD). It ranks; the agent decides.
-   python3 shorts-out/pick_style.py solo|gta [topic-kind]   ranking and performance summary
-   python3 shorts-out/pick_style.py solo|gta --verdicts     append automatic WIN/LOSE lines to style-verdicts.txt
-A perf.csv row counts when it has a real view count and video id, is public by now (IST), and its views were
-measured after it went public. Rows that do not count are printed with the reason, never dropped silently."""
-import re, sys, pathlib, csv, statistics as st, datetime as dt
+"""Story-first template matching (owner 20 Nov 2026) and the performance memory. Script first, template second; the tool ranks, the agent decides.
+  python3 shorts-out/pick_style.py solo|gta kinds [kind]       topic planning BEFORE the script: saturated / unused topic kinds
+  python3 shorts-out/pick_style.py solo|gta match script.json  rank ALL templates (local styles + every vertical id in STYLE-LIBRARY.md) for a finished script
+  python3 shorts-out/pick_style.py solo|gta hooks [N]          titles and opening hooks of the best and worst counted videos
+  python3 shorts-out/pick_style.py solo|gta postmortem         videos under 0.5x the channel median that still need a post-mortem line
+  python3 shorts-out/pick_style.py solo|gta --verdicts         append automatic WIN/LOSE lines to style-verdicts.txt
+  python3 shorts-out/pick_style.py --test                      self-check
+Left as rules: a LOSE verdict blocks a style unless script.json names it ("demand": "<style>"). Repeating one of the last two styles
+is only a soft penalty plus a SAMENESS RISK note. A perf.csv row counts when it has a real view count and video id, is public by now
+(IST) and its views were measured after it went public; skipped rows are printed with the reason.
+shortcut: script features are keyword counts, not a language model; the agent reads the ranking and overrides it when the story says so."""
+import re, sys, pathlib, csv, json, collections, statistics as st, datetime as dt
 D = pathlib.Path(__file__).parent
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
-LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale'}
-PORTED = set()  # library ids whose render_html port is built and tested (none yet)
-SLOW3D = {'deep-dive', 'night-file', 'tall-tale'}
-# library ids (STYLE-LIBRARY.md, vertical): listed only once in PORTED
-LIB = set('''size-lineup cosmic-scale bio-glow iso-cutaway exploded-view myth-or-fact comic-panels storybook marker-board blueprint
-evidence-board isotype timeline-rail parchment-map chat-story shadow-puppets woodcut-tale rubber-hose-reel versus-split tier-list
-top-5-countdown quiz-countdown breaking-desk pixel-quest glitch-pack neon-line synth-grid zine-collage globe-arcs low-poly-atlas
-market-tape swiss-grid data-city doc-cinema vhs-camcorder sticker-pop punch-captions'''.split())
-FITS = {  # topic kind -> styles that suit it (agent may still choose outside this list, with a reason)
- 'body-science': 'inside-out chalk-talk comic-pop deep-dive bio-glow iso-cutaway exploded-view myth-or-fact',
- 'history': 'paper-atlas parchment-map timeline-rail woodcut-tale storybook tall-tale doc-cinema',
- 'weird-jobs': 'paper-atlas stick-story comic-panels rubber-hose-reel tall-tale chat-story',
- 'mystery': 'night-file evidence-board shadow-puppets doc-cinema vhs-camcorder',
- 'survival': 'stick-story chat-story comic-panels',
- 'funny-story': 'tall-tale rubber-hose-reel comic-panels chat-story storybook',
- 'space-scale': 'cosmic-scale size-lineup blueprint isotype deep-dive',
- 'money-stats': 'isotype top-5-countdown tier-list market-tape swiss-grid comic-pop data-city',
- 'animals-nature': 'storybook marker-board bio-glow zine-collage',
- 'places': 'parchment-map globe-arcs low-poly-atlas paper-atlas',
- 'psychology-myth': 'myth-or-fact chat-story marker-board comic-pop',
- 'tech-invention': 'blueprint exploded-view isotype timeline-rail sticker-pop',
- 'skit-karma': 'tall-tale comic-pop stick-story chat-story comic-panels rubber-hose-reel',
- 'gaming-news': 'comic-pop breaking-desk tall-tale',
- 'gaming-versus': 'versus-split comic-pop tier-list neon-versus',
- 'gaming-list': 'top-5-countdown tier-list quiz-countdown pixel-quest comic-pop'}
+LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
+         'myth-or-fact', 'comic-panels'}
+PORTED = {'myth-or-fact', 'comic-panels'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
+KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
+         'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list']
+# Template catalog: what each template is good at, in the same words the script analysis produces ('3d' = slow render, many minutes).
+TAGS = {}
+for _line in '''chalk-talk: body science question calm
+comic-pop: list news versus stat gaming myth quiz fast funny
+deep-dive: body science whatif calm 3d
+inside-out: body science whatif question
+neon-versus: gaming versus news dark
+night-file: mystery dark story calm 3d
+paper-atlas: history places story calm
+stick-story: steps whatif story funny
+tall-tale: story skit funny dialogue 3d
+myth-or-fact: myth question quiz fast science gaming news
+comic-panels: skit funny story dialogue steps fast
+clay-diorama: story animals places 3d
+bio-glow: body science animals 3d
+cosmic-scale: space stat science 3d
+exploded-view: tech science steps 3d
+low-poly-atlas: places history stat 3d
+size-lineup: stat versus list 3d
+data-city: stat data 3d
+glass-icons: tech list 3d
+iso-cutaway: body science tech 3d
+globe-arcs: places stat news 3d
+physics-toybox: science whatif funny 3d
+deep-layers: science whatif 3d
+synth-grid: gaming dark tech 3d
+product-turntable: tech list 3d
+paper-craft: story history calm
+marker-board: science steps animals question calm
+blueprint: tech science steps calm
+zine-collage: funny story list animals
+parchment-map: history places story
+timeline-rail: history list stat steps
+isotype: stat data list
+evidence-board: mystery story question
+storybook: story history animals calm
+pixel-quest: gaming list funny story
+terminal: tech list dark
+swiss-grid: stat data news calm
+math-canvas: science stat steps
+tactics-board: gaming versus steps
+market-tape: stat news data
+quiz-countdown: quiz list question gaming fast
+top-5-countdown: list gaming fast stat
+tier-list: list versus gaming fast
+chat-story: story skit funny dialogue
+versus-split: versus gaming list stat
+recipe-steps: steps list
+quote-cinema: quote story calm
+breaking-desk: news gaming fast
+podcast-clip: quote dialogue calm
+punch-captions: fast funny quote
+karaoke-subs: quote fast
+callout-kit: tech steps list
+lower-thirds: news quote
+headline-backdrop: news story
+stack-split: versus list
+sticker-pop: funny list fast
+glitch-pack: gaming dark fast tech
+doc-cinema: history mystery story calm
+vhs-camcorder: mystery story dark funny
+shadow-puppets: mystery story history dark
+visual-novel: story dialogue skit
+rubber-hose-reel: skit funny story fast
+woodcut-tale: history story dark calm
+neon-line: gaming dark list'''.splitlines():
+    _k, _v = _line.split(':', 1); TAGS[_k.strip()] = set(_v.split())
+
+def library_ids():
+    """Every vertical id listed in STYLE-LIBRARY.md ('All 62 ids', 720x1280 block); the 16:9 ones are not for Shorts."""
+    m = re.search(r'720x1280:(.*?)\n\s*\n', (D / 'STYLE-LIBRARY.md').read_text(), re.S)
+    return set(re.findall(r'\b[a-z][a-z0-9]*(?:-[a-z0-9]+)*\b', m.group(1))) if m else set()
+
+def catalog():
+    return LOCAL | library_ids()
 
 def now_ist():
     return dt.datetime.now(IST).replace(tzinfo=None)
 
 def perf_rows(ch, now=None):
-    """(counted rows, skipped reasons) for one channel. No calendar cap: the clock decides what is public."""
+    """(counted rows, skipped reasons) for one channel. The clock decides what is public, no calendar cap."""
     now_s = (now or now_ist()).strftime('%Y-%m-%d %H:%M')
     ok, skipped = [], []
     for r in csv.DictReader((D / 'perf.csv').open()):
@@ -49,14 +110,15 @@ def perf_rows(ch, now=None):
                'views measured before it went public, refresh it' if pub and chk and chk < pub[:10] else None)
         if why:
             skipped.append(f"{r['file']} ({why})"); continue
-        ok.append({'style': r['style'], 'hour': pub[11:13], 'views': int(v), 'kind': r['kind'], 'file': r['file']})
+        ok.append({'style': r['style'], 'hour': pub[11:13], 'pub': pub, 'views': int(v), 'kind': r['kind'], 'file': r['file'],
+                   'title': (r.get('title') or '').strip(), 'hook': (r.get('hook') or '').strip()})
     return ok, skipped
 
 def entries(readme):
     out, cur = [], None
     for line in (D / readme).read_text().splitlines():
         m = re.match(r'## \S+ · `[^`]*` · (.*)', line)
-        if m: cur = {'styles': {s for s in LOCAL | LIB if re.search(r'(?<![\w-])%s(?![\w-])' % s, m.group(1).lower())}, 'title': ''}; out.append(cur)
+        if m: cur = {'styles': {s for s in catalog() if re.search(r'(?<![\w-])%s(?![\w-])' % s, m.group(1).lower())}, 'title': ''}; out.append(cur)
         elif cur is not None and line.startswith('**Title:**') and not cur['title']: cur['title'] = line[10:].strip()
     return out
 
@@ -68,20 +130,24 @@ def verdict_hist():
         if not l.startswith('#') and len(p) >= 2 and p[1] in ('WIN', 'OK', 'LOSE'): h.append((p[0], p[1]))
     return h
 
+def pinned_keys():
+    """Keys the owner pinned ('owner-pinned' in the line): automatic verdicts never change these."""
+    return {l.split()[0] for l in (D / 'style-verdicts.txt').read_text().splitlines() if 'owner-pinned' in l and not l.startswith('#')}
+
 def current(style, ch, hist):
     v = None
     for key, verdict in hist:
         if key in (style, f'{style}@{ch}'): v = verdict  # the last applicable line wins
     return v
 
-def auto_verdicts(ch, ok, hist, today):
+def auto_verdicts(ch, ok, hist, today, pinned=()):
     """WIN if a style's median >= 1.5 x channel median, LOSE if < 0.3 x, with 2+ counted videos. Writes changes only."""
     med = st.median([r['views'] for r in ok]) if ok else 0
     by = {}
     for r in ok: by.setdefault(r['style'], []).append(r['views'])
     lines = []
     for style, vs in sorted(by.items()):
-        if len(vs) < 2 or med == 0: continue
+        if len(vs) < 2 or med == 0 or style in pinned or f'{style}@{ch}' in pinned: continue
         m = st.median(vs)
         v = 'WIN' if m >= 1.5 * med else 'LOSE' if m < 0.3 * med else 'OK'
         cur = current(style, ch, hist)
@@ -89,66 +155,161 @@ def auto_verdicts(ch, ok, hist, today):
         lines.append(f'{style}@{ch} {v} {today} auto: n={len(vs)} median {m:.0f} vs channel median {med:.0f}')
     return lines
 
+# ---------- script analysis (mood, pacing, hook) ----------
+PAT = {  # tag -> regex counted over the whole script; weight = hits capped at 3
+    'myth': r'\bmyths?\b|\bfacts?\b|true or false|\bnot true\b|debunk|\bactually\b',
+    'list': r'\b(number|tips?|habits?|types?|things|reasons|ways|first|second|third|fourth|fifth)\b|\b[1-9]\)',
+    'steps': r'\bstep (one|two|three|four|1|2|3|4)\b|\bhow to\b|\bdo this\b',
+    'versus': r'\bvs\.?\b|\bversus\b|\bcompared\b|better than|worse than|\bthan\b',
+    'stat': r'\d|percent|million|billion|thousand|\b(twice|double)\b',
+    'news': r'\b(reportedly|reports?|announced|confirmed|launch(ed)?|released?|reviews?|trailer|leaks?|patch)\b',
+    'gaming': r'\b(gta|games?|rockstar|playstation|ps5|xbox|players?|console|fps|missions?|leonida)\b',
+    'body': r'\b(body|brain|heart|blood|nerves?|skin|stomach|sneez\w*|muscles?|bones?|sleep|eyes?|ears?|fingers?|foot)\b',
+    'science': r'\b(scientists?|stud(y|ies)|research|experiment|cells?|pressure|temperature|theory|nerve)\b',
+    'whatif': r'\bwhat (if|happens|would)\b|\bimagine\b|\bwould you\b',
+    'history': r'\b(1[0-9]{3}|century|ancient|war|emperor|king|empire|history|centuries)\b',
+    'places': r'\b(country|city|island|border|capital|continent|town)\b',
+    'mystery': r'\b(mystery|unsolved|disappeared|vanished|strange|nobody knows|never found|case)\b',
+    'funny': r'\b(boss|friend|karma|prank|funny|slipped|clapping|dramatic|stole|fake|lol|awkward)\b',
+    'dialogue': r'\b(said|says|asked|replied|shouted)\b|["“”]',
+    'quote': r'["“][^"”]{12,}["”]',
+    'tech': r'\b(phone|app|computer|ai|robot|machine|engine|battery|internet|software|charger)\b',
+    'space': r'\b(space|planets?|galaxy|moon|universe|nasa)\b',
+    'animals': r'\b(animals?|dog|cat|bird|fish|shark|bees?|ants?|snake|whale|lion|goldfish)\b',
+}
+PAST = r'\b\w+ed\b|\b(was|were|had|went|got|took|saw|came|made|ran|fell|stole|said)\b'
+
+def hook_flags(t):
+    t = t.lower().strip(); fl = []
+    if '?' in t or re.match(r'(why|what|how|can|could|do|does|did|is|are|would|will|should)\b', t): fl.append('question')
+    if re.search(r'\d', t): fl.append('number')
+    if re.search(r"\b(you|your|you're)\b", t): fl.append('second-person')
+    if re.search(r'\b(stole|never|just|worst|dramatic|killed|banned|hidden|secret|shock|lost|warn\w*|not)\b', t): fl.append('conflict-word')
+    if len(t.split()) <= 10: fl.append('short')
+    return fl
+
+def features(texts, channel):
+    """(tag weights, notes). Weights come from keyword hits, pacing from words per line, narration from past tense."""
+    low = [t.lower() for t in texts]; allt = ' '.join(low); f = collections.Counter()
+    for tag, pat in PAT.items():
+        h = len(re.findall(pat, allt))
+        if h: f[tag] = min(3, h if tag in ('myth', 'steps', 'whatif', 'mystery') else (h + 1) // 2)
+    if 'question' in hook_flags(texts[0]): f['question'] += 2
+    if allt.count('?') >= 2 or ('comment' in allt and '?' in allt): f['quiz'] += 1
+    past = len(re.findall(PAST, allt)); f['story'] = min(3, past // 4)
+    if f['story'] >= 2 and (f['funny'] or f['dialogue']): f['skit'] = 2 + (f['funny'] >= 2)
+    if f['body']: f['science'] += 1
+    avg = sum(len(t.split()) for t in texts) / len(texts)
+    if avg <= 9.5 or (len(texts) >= 9 and avg <= 11): f['fast'] = 2
+    elif avg >= 13: f['calm'] = 2
+    if channel == 'gta': f['gaming'] += 2   # the GTA channel is a gaming channel: gaming-tagged templates get the home advantage
+    return f, {'avg_words': round(avg, 1), 'lines': len(texts)}
+
+def rank(f, channel, hist, ok, E, demand=None):
+    """Pure ranking of the whole catalog for features f. Returns dicts sorted best first."""
+    med = st.median([r['views'] for r in ok]) if ok else 0
+    by = {}
+    for r in ok: by.setdefault(r['style'], []).append(r['views'])
+    used = collections.Counter(s for e in E for s in e['styles']); last2 = [e['styles'] for e in E[-2:]]
+    out = []
+    for s in sorted(catalog()):
+        if current(s, channel, hist) == 'LOSE' and s != demand: continue          # the only hard block
+        tags = TAGS.get(s, set()); hit = sorted(t for t in tags if f.get(t))
+        sc = sum(f[t] for t in hit); why = list(hit)
+        unported = s not in LOCAL and s not in PORTED
+        if '3d' in tags: sc -= 1; why.append('3D slow render (-1)')
+        if unported: sc -= 1.5; why.append('needs a port (-1.5)')
+        vs = by.get(s, []); n, m = len(vs), (st.median(vs) if vs else 0)
+        if n >= 2 and m >= 1.5 * med: sc += 2; why.append(f'proven n={n} med={m:.0f} (+2)')
+        elif n == 1 and m >= 1.5 * med: sc += 1; why.append(f'one hit {m:.0f} (+1)')
+        rep = sum(1 for x in last2 if s in x)
+        if rep: sc -= rep; why.append(f'used in {rep} of the last 2 (-{rep}, soft)')
+        if not used.get(s): sc += 0.3
+        if s == demand: sc += 5; why.append('demanded by the script')
+        out.append({'style': s, 'score': round(sc, 1), 'why': why, 'unported': unported, 'slow': '3d' in tags, 'repeat': bool(rep), 'n': n, 'med': m})
+    return sorted(out, key=lambda r: (-r['score'], r['style']))
+
+def cmd_match(channel, path):
+    script = json.load(open(path)); lines = script['lines']
+    texts = [l['text'] if isinstance(l, dict) else str(l) for l in lines]
+    f, info = features(texts, channel)
+    ok, skipped = perf_rows(channel); hist = verdict_hist()
+    E = entries('README.md' if channel == 'solo' else 'gta6-channel/README.md')
+    if channel == 'solo': E = [e for e in E if 'gta' not in e['title'].lower()]
+    res = rank(f, channel, hist, ok, E, script.get('demand'))
+    print(f"SCRIPT: {info['lines']} lines, {info['avg_words']} words/line ({'fast' if f['fast'] else 'calm' if f['calm'] else 'medium'} pacing)")
+    print(f"HOOK: \"{texts[0]}\"  flags: {', '.join(hook_flags(texts[0])) or 'none'}")
+    print('MOOD tags:', ', '.join(f'{t}={w}' for t, w in f.most_common() if w) or 'none')
+    if channel == 'gta' and not re.search(PAT['gaming'], ' '.join(texts).lower()): print('!! gta channel: this script has no GTA / gaming content (topic focus is GTA 6 news, leaks, details, comparisons).')
+    print(f"CATALOG: {len(res)} templates ranked ({len(LOCAL)} local styles + the library ids; LOSE-blocked ones are left out)")
+    for r in res[:8]:
+        tag = 'UNPORTED' if r['unported'] else ('slow 3D' if r['slow'] else 'ready')
+        print(f"{r['score']:>5}  {r['style']:<17} {tag:<9} {'; '.join(r['why'])[:110]}")
+    top = res[0]
+    if len(res) > 1 and top['score'] - res[1]['score'] < 1: print(f"CLOSE CALL: {top['style']} vs {res[1]['style']}: decide on the hook and mood, not on the score.")
+    if top['repeat']: print('SAMENESS RISK: the best match repeats a recent style. Allowed because it fits best: change the hook shape, the structure, the characters and the colours.')
+    if top['unported']: print(f"PORT NEEDED: build it now, do not settle: bash .claude/skills/faceless-shorts/scripts/port_style.sh {top['style']} {'comic-pop' if not top['slow'] else '<3D base: see STYLE-LIBRARY.md, render_html.mjs>'}  (then edit shots.js, estimate.py + capture.mjs check, add to LOCAL and PORTED here).")
+    if skipped: print('perf rows not counted:', '; '.join(skipped[:6]))
+    print('blocked (LOSE):', ', '.join(sorted(s for s in catalog() if current(s, channel, hist) == 'LOSE')) or '-')
+
+def cmd_kinds(channel, want):
+    kinds = [r['kind'] for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == channel][-5:]
+    print(f'channel={channel} last kinds={kinds}')
+    if want and kinds.count(want) >= 3: print(f'!! TOPIC SATURATED: "{want}" is {kinds.count(want)} of the last {len(kinds)}. Pick another kind.')
+    print('kinds not in the last 5:', ', '.join(k for k in KINDS if k not in kinds and k.startswith('gaming') == (channel == 'gta')))
+
+def cmd_hooks(channel, n):
+    ok, _ = perf_rows(channel); ok = [r for r in ok if r['title'] or r['hook']]
+    ok.sort(key=lambda r: -r['views']); top, bot = ok[:n], ok[-3:] if len(ok) > n else []
+    def show(tag, rs):
+        for r in rs:
+            print(f"{tag} {r['views']:>5}  {r['file']:<26} {r['style']:<12} h{r['hour'] or '--'}  title: {r['title'][:60]}  hook: {r['hook'][:70] or '(not stored)'}  [{', '.join(hook_flags(r['hook'])) if r['hook'] else ''}]")
+    show('TOP', top); show('LOW', bot)
+    def pat(rs):
+        t = [r['title'].replace('#shorts', '').strip() for r in rs if r['title']]
+        if not t: return 'no titles'
+        q, num, wh = sum(x.endswith('?') for x in t), sum(bool(re.search(r'[0-9]', x)) for x in t), sum(x.lower().startswith(('why', 'how')) for x in t)
+        return f'avg title len {sum(map(len, t)) / len(t):.0f}, question {q}/{len(t)}, number {num}/{len(t)}, starts Why/How {wh}/{len(t)}'
+    print('title pattern TOP:', pat(top)); print('title pattern LOW:', pat(bot))
+
+def cmd_postmortem(channel):
+    ok, _ = perf_rows(channel); med = st.median([r['views'] for r in ok]) if ok else 0
+    log = (D / 'discovery-log.txt').read_text(); cut = (now_ist() - dt.timedelta(hours=24)).strftime('%Y-%m-%d %H:%M')
+    todo = [r for r in ok if r['views'] < 0.5 * med and f"POSTMORTEM {r['file']}" not in log and (not r['pub'] or r['pub'] <= cut)]
+    todo.sort(key=lambda r: r['pub'], reverse=True)
+    print(f'channel median {med:.0f}; below 0.5x = under {0.5 * med:.0f} views; {len(todo)} without a post-mortem (newest 5 shown)')
+    for r in todo[:5]:
+        print(f"{dt.date.today()} | POSTMORTEM {r['file']} | {r['views']} views vs median {med:.0f} | cause: weak-hook|pacing|topic-saturation|voiceover|style-look|slot|other | evidence (hook \"{r['hook'][:40]}\", style {r['style']}, hour {r['hour'] or '?'}) | fix for next time")
+
+def _test():
+    f, _ = features(['Think you know the truth? Lets test three claims.', 'Lightning never strikes twice. Myth! Tall buildings get hit.', 'Honey never goes bad. Fact! Sealed honey lasts.', 'Goldfish remember for three seconds. Myth! Weeks.', 'Which one surprised you? Comment!'], 'solo')
+    assert f['myth'] >= 2 and f['question'] >= 2, f
+    r = rank(f, 'solo', [], [], [], None); assert r[0]['style'] == 'myth-or-fact', r[0]
+    g, _ = features(['Your boss just stole your idea and called it his own!', 'He said, chill, you are so dramatic.', 'You stared at him.', 'He slipped on the carpet.', 'Everyone clapped for you.', 'And that is why'], 'solo')
+    top = [x['style'] for x in rank(g, 'solo', [], [], [], None)[:3]]; assert 'comic-panels' in top or 'tall-tale' in top, top
+    blocked = [x['style'] for x in rank(g, 'solo', [('comic-panels', 'LOSE'), ('tall-tale', 'LOSE')], [], [], None)]
+    assert 'comic-panels' not in blocked and 'tall-tale' not in blocked                       # LOSE is a hard block ...
+    assert rank(g, 'solo', [('comic-panels', 'LOSE')], [], [], 'comic-panels')[0]['style'] == 'comic-panels'   # ... unless the script demands it
+    assert any(x['unported'] for x in rank(g, 'solo', [], [], [], None)), 'unported library ids must stay in the ranking'
+    good = [{'style': 'x', 'views': 900}, {'style': 'x', 'views': 950}, {'style': 'y', 'views': 100}]           # x would be WIN
+    assert auto_verdicts('solo', good, [('x', 'LOSE')], '2026-11-20') and not auto_verdicts('solo', good, [('x@solo', 'LOSE')], '2026-11-20', {'x@solo'})   # owner-pinned lines never flip
+    assert hook_flags('Why do you sneeze in bright sunlight?') == ['question', 'second-person', 'short']
+    assert len(library_ids() - LOCAL) >= 40 and 'tier-list' in library_ids(), len(library_ids())
+    assert all(s in TAGS for s in catalog()), [s for s in catalog() if s not in TAGS]
+    print('pick_style.py: self-check OK')
+
 def main():
-    channel = sys.argv[1]
-    want = sys.argv[2] if len(sys.argv) > 2 else ''
-    ok, skipped = perf_rows(channel)
-    hist = verdict_hist()
-    if want == '--verdicts':
-        lines = auto_verdicts(channel, ok, hist, dt.date.today().isoformat())
+    if sys.argv[1:2] == ['--test']: return _test()
+    channel, mode = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else 'kinds')
+    if mode == '--verdicts':
+        ok, _ = perf_rows(channel); lines = auto_verdicts(channel, ok, verdict_hist(), dt.date.today().isoformat(), pinned_keys())
         if lines:
             with (D / 'style-verdicts.txt').open('a') as f: f.write('\n'.join(lines) + '\n')
-        print('\n'.join(lines) or 'verdicts: no change'); return
-
-    E = entries('README.md' if channel == 'solo' else 'gta6-channel/README.md')
-    if channel == 'solo': E = [e for e in E if 'gta' not in e['title'].lower()]  # README 04 is a GTA video on solo hype
-    used = {}
-    for e in E:
-        for s in e['styles']: used[s] = used.get(s, 0) + 1
-    last = E[-1]['styles'] if E else set()
-    last2 = set().union(*[e['styles'] for e in E[-2:]]) if E else set()
-    med = st.median([r['views'] for r in ok]) if ok else 0
-    def by(key):
-        d = {}
-        for r in ok: d.setdefault(r[key], []).append(r['views'])
-        return {k: (len(v), st.median(v)) for k, v in d.items()}
-    SM, TM, KM = by('style'), by('hour'), by('kind')
-    blocked = {s for s in LOCAL | LIB if current(s, channel, hist) == 'LOSE'}
-    first = {}
-    for i, e in enumerate(E):
-        for sty in e['styles']: first.setdefault(sty, i)
-    explore = not any(i >= len(E) - 3 for i in first.values())
-    kinds = [r['kind'] for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == channel][-5:]
-    print(f'channel={channel}  videos={len(E)}  last kinds={kinds}')
-    if want and kinds.count(want) >= 3: print(f'!! TOPIC SATURATED: "{want}" is {kinds.count(want)} of the last {len(kinds)}. Pick another kind.')
-    print('kinds not in the last 5:', ', '.join(k for k in FITS if k not in kinds and k.startswith('gaming') == (channel == 'gta')))
-    print('EXPLORE MODE: no first-time style in the last 3 videos; next one must be never-used (2D first, 3D only if no 2D is left).' if explore
-          else 'explore quota met; best-scoring style may repeat (not the last one).')
-    fit = set(FITS.get(want, '').split())
-    cands = []
-    for s in sorted(LOCAL | LIB):
-        if s in blocked or s in last2: continue  # HARD: never the last two styles on this channel
-        if s in LIB and s not in PORTED: continue
-        if fit and s not in fit: continue
-        cands.append(s)
-    if explore:
-        unused = [s for s in cands if not used.get(s)]
-        cands = [s for s in unused if s not in SLOW3D] or unused or cands
-        if not unused: print('EXPLORE NOTE: no never-used style fits this kind; the best-scoring fit below is used.')
-    rows = []
-    for s in cands:
-        sc = 3 * (s in fit) + 3 * (not used.get(s)) + (used.get(s, 0) == 1) - 2 * (s in last2) + (s in LOCAL) - (s in SLOW3D) - (s in LIB)
-        n, m = SM.get(s, (0, 0))
-        sc += (2 if m >= 1.5 * med else -2 if m < 0.3 * med else 0) * (n >= 2) + (1 if m >= 1.5 * med else 0) * (n == 1)
-        rows.append((sc, s))
-    for sc, s in sorted(rows, reverse=True)[:6]:
-        print(f'{sc:>3}  {s:<18} used {used.get(s, 0)}x  {"fits " + want if s in fit else "no fit":<14} {"ready" if s in LOCAL else "library: port via render_html"}{" (slow 3D)" if s in SLOW3D else ""}')
-    print(f'\nPERFORMANCE (counted public videos: {len(ok)}, channel median {med:.0f} views)')
-    if skipped: print(' not counted:', '; '.join(skipped[:8]) + (' ...' if len(skipped) > 8 else ''))
-    print(' styles:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(SM.items(), key=lambda x: -x[1][1])))
-    print(' hours IST:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(TM.items(), key=lambda x: -x[1][1]) if k))
-    print(' kinds:', '  '.join(f'{k} n={n} med={m:.0f}' for k, (n, m) in sorted(KM.items(), key=lambda x: -x[1][1])))
-    print('blocked (LOSE):', ', '.join(sorted(blocked)) or '-')
+        print('\n'.join(lines) or 'verdicts: no change')
+    elif mode == 'match': cmd_match(channel, sys.argv[3])
+    elif mode == 'hooks': cmd_hooks(channel, int(sys.argv[3]) if len(sys.argv) > 3 else 5)
+    elif mode == 'postmortem': cmd_postmortem(channel)
+    else: cmd_kinds(channel, (sys.argv[3] if len(sys.argv) > 3 else '') if mode == 'kinds' else mode)   # old form still works: pick_style.py solo <kind>
 
 if __name__ == '__main__':
     main()

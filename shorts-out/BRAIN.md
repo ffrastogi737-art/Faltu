@@ -11,15 +11,17 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
    views.** Track subs per 1,000 views; a video that brings subs beats one that brings views.
 2. **DIAGNOSE** (like an owner, not a robot): for every video 48 h+ old compare views with the channel median and ask WHY
    in this order: topic demand -> hook (first 2 s) -> title -> slot -> style -> luck/news timing. Name the one most likely
-   cause and what would prove it. Write it in experiments.txt with a prediction, not a hunch. Confounded sample (n<3)
+   cause and what would prove it. Look at the opening 3-second hook and the title of the winners and the losers first (`pick_style.py <ch> hooks`).
+   Any counted video under 0.5x the channel median (24 h+ old) gets a ONE-LINE post-mortem in discovery-log.txt (`pick_style.py <ch> postmortem` lists them): cause = weak hook,
+   pacing, topic saturation, voiceover, style/look or slot, with evidence and the fix. Read the latest ones before writing a script. Write it in experiments.txt with a prediction, not a hunch. Confounded sample (n<3)
    means "not proven", never "learned".
-3. **DECIDE the portfolio**: about 70% exploit what the data says wins, 20% explore (new topic kind or new style, via
-   pick_style.py explore mode), 10% moonshot (a format nobody on our channels tried: long-form, series, quiz, a trend
+3. **DECIDE the portfolio**: about 70% exploit what the data says wins, 20% explore (a new topic kind, or a template nobody used for this kind of story), 10% moonshot (a format nobody on our channels tried: long-form, series, quiz, a trend
    response). A kind/style/slot with n>=2 under 0.3x median is dropped; n>=2 over 1.5x gets a sequel with a NEW angle.
-   Never repeat a topic kind 3 times in 5 (pick_style.py enforces it).
+   Never repeat a topic kind 3 times in 5 (`pick_style.py <ch> kinds` flags it).
 4. **RESEARCH before making** (fresh, never from memory): what are people asking for (comments, search, what small
    channels in the niche are winning THIS week, with a new topic, never a copy), and 2 reliable sources for every fact.
-5. **MAKE** via FACTORY.md DECIDE -> BUILD -> QA -> UPLOAD. Before shipping ask: would I watch this to the end? is the
+5. **MAKE** story-first (FACTORY DECIDE): topic -> hook -> script -> template match (`pick_style.py <ch> match script.json` ranks every local style and every
+   STYLE-LIBRARY id; build the winner if it is unported) -> BUILD -> QA -> UPLOAD. Before shipping ask: would I watch this to the end? is the
    hook inside 2 s? is the title honest? is it a repeat in topic, structure or opening?
 6. **LEARN**: add the perf.csv row, log result vs prediction, update CURRENT BEST FORMULA only when a change won twice.
    **Weekly (Sunday run)**: write a block at the top of growth-log.txt: what won, what lost, what I stop, what I start,

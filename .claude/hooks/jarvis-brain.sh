@@ -7,6 +7,6 @@ if [ -f "$D/BRAIN.md" ]; then cat "$D/BRAIN.md"; else echo "⚠️ shorts-out/BR
 echo
 echo "== FACTORY.md: run-critical sections (other sections: read when you reach that step) =="
 if [ -f "$D/FACTORY.md" ]; then
-  awk '/^## P\. /{p=1} /^## 0\. /{p=0} /^## DECIDE/{p=1} /^## BUILD/{p=0} /^## REPORT/{p=1} p' "$D/FACTORY.md"
+  awk '/^## 00\. /{p=1} /^## P\. /{p=1} /^## 0\. /{p=0} /^## DECIDE/{p=1} /^## BUILD/{p=0} /^## REPORT/{p=1} p' "$D/FACTORY.md"
 else echo "⚠️ shorts-out/FACTORY.md missing"; fi
 exit 0

@@ -33,5 +33,7 @@ shadow-puppets, visual-novel, rubber-hose-reel, woodcut-tale, neon-line.
 - Tried: none yet. Log each one in experiments.txt as "NEW STYLE (library): <id>".
 - First library video needs `tools/render_html.mjs` (our own, commit it to the skill): seek-per-frame capture at
   720x1280 upscaled to 1080x1920, plus the SFX render mixed under narration. Build it once, then reuse.
-- Port queue (20 Nov 2026, not started): myth-or-fact and comic-panels first (fast 2D). Each port needs one verified test render
-  and then PORTED in pick_style.py. Source rule stays: rebuild in our engine, never commit their source.
+- Ported (20 Nov 2026): `myth-or-fact` and `comic-panels` as local styles on the comic-pop engine (`styles/<id>/`: STYLE.md + a working example, checked with
+  estimate.py + capture.mjs check + a contact sheet; our own look, no library source copied). Both are in LOCAL and PORTED in pick_style.py.
+- Any other id: `bash .claude/skills/faceless-shorts/scripts/port_style.sh <id> comic-pop` scaffolds it in minutes, and FACTORY DECIDE step 4 builds the
+  winner on the fly whenever `pick_style.py match` ranks an unported id first. `pick_style.py` reads this file's `720x1280` block as the library catalog.
