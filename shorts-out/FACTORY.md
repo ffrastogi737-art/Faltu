@@ -240,7 +240,7 @@ few videos on that channel. Never reuse an old script with names swapped.
   "YOUTUBE_MULTIPART_UPLOAD_VIDEO", {title, description, tags, categoryId "27" (GTA "20"), privacyStatus "private",
   videoFile {name, mimetype "video/mp4", s3key}}, account=...)`. Check snippet.channelId. Upload exactly once: on an
   error list the channel's uploads before retrying.
-- Slot (shorts-out/slots.txt, best first; UTC: 09:00=03:30Z, 11:30=06:00Z, 16:30=11:00Z, 17:00=11:30Z, 19:30=14:00Z):
+- Slot: run `python3 shorts-out/slot.py` (prints the next FREE solo slot from publish-queue.txt, 1 h+ ahead; never a taken one). Owner 20 Nov: "jo bhi khali pada slot, usme daal do". Background (shorts-out/slots.txt, best first; UTC: 09:00=03:30Z, 11:30=06:00Z, 16:30=11:00Z, 17:00=11:30Z, 19:30=14:00Z):
   earliest day with a free slot 1 h+ from now, best free slot that day; one video per slot.
 - Kratos Playz: workbench `proxy_execute` uses the DEFAULT YouTube account. GET channels?part=id&mine=true; if it is
   UCO8lnJFO1TLtHPkn9cCNPng, PUT videos?part=status {"id", "status": {"privacyStatus": "private", "publishAt": <UTC ISO>,

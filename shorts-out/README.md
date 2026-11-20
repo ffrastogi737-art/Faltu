@@ -201,7 +201,7 @@ Sources: Wikipedia "Leech collector"; Science History Institute, Distillations (
 **Tags:** leech collector, weird old jobs, 1800s jobs, medicinal leeches, bloodletting history, Wordsworth, history facts, weird history, did you know, forgotten jobs
 **Experiment:** kind weird-jobs (med 592) after 5 body-science in a row; chalk-talk (n=2, med 922); 25 s, Chatterbox; slot 20 Nov 17:00 IST or next free
 
-## 18 · `18-boss-karma.mp4` · tall-tale 3D skit (NEW format, owner brief 20 Nov) · UPLOADING (private, then 17:00 IST public switch)
+## 18 · `18-boss-karma.mp4` · tall-tale 3D skit (NEW format, owner brief 20 Nov) · QUEUED: private now, public 20 Nov 2026 17:00 IST (https://www.youtube.com/watch?v=8CktQ-CA_6w) · IG ig-boss-karma 17:15 IST
 **Title:** Your Boss Got Instant Karma (Skit)
 **Description:**
 ```
