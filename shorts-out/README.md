@@ -200,3 +200,14 @@ Sources: Wikipedia "Leech collector"; Science History Institute, Distillations (
 ```
 **Tags:** leech collector, weird old jobs, 1800s jobs, medicinal leeches, bloodletting history, Wordsworth, history facts, weird history, did you know, forgotten jobs
 **Experiment:** kind weird-jobs (med 592) after 5 body-science in a row; chalk-talk (n=2, med 922); 25 s, Chatterbox; slot 20 Nov 17:00 IST or next free
+
+## 18 · `18-boss-karma.mp4` · tall-tale 3D skit (NEW format, owner brief 20 Nov) · UPLOADING (private, then 17:00 IST public switch)
+**Title:** Your Boss Got Instant Karma (Skit)
+**Description:**
+```
+A fictional office skit: the boss takes credit for an idea, then the karma hits. Invented characters and events, no facts claimed.
+
+#shorts #skit #funny #karma #office #comedy #animation
+```
+**Tags:** instant karma, office skit, boss gets karma, funny animation, cartoon skit, office comedy, skit shorts, karma shorts
+**Experiment:** new format (chaos skit, owner brief + suggestion), tall-tale 3D look with an original cast; 25.7 s, Chatterbox x1.12; slot 17:00 IST (first free solo slot on 20 Nov). Compare after 24 h and 48 h against chalk-talk (median 922) and comic-pop (median 1,001). Build source: `shorts-out/formats/office-karma/`.
