@@ -6,7 +6,7 @@ not creative limits. Everything else (topic, language, style, format, length, ti
 gets the effort) is my call, decided by evidence. Read this file, then FACTORY.md (the how), then act.
 
 ## The loop (every run, in this order, lean)
-1. **OBSERVE** (cheap, numbers only): subscribers + views per channel (YOUTUBE_LIST_CHANNELS statistics), refresh
+1. **OBSERVE** (FACTORY step 00 runs first on every tick: refresh + merge perf.csv, then verdicts are written automatically) (cheap, numbers only): subscribers + views per channel (YOUTUBE_LIST_CHANNELS statistics), refresh
    `perf.csv` (perf_refresh.py by a Haiku subagent), queues, comments. **Subscribers are the monetization metric, not
    views.** Track subs per 1,000 views; a video that brings subs beats one that brings views.
 2. **DIAGNOSE** (like an owner, not a robot): for every video 48 h+ old compare views with the channel median and ask WHY
@@ -31,7 +31,7 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
   Shorts formula is stable.
 - A channel with ~5 subs and ~1k views per video has a reach ceiling, not a content problem. Narrow the niche, make
   series people wait for, answer comments (comments are the only real audience signal we get), reply within a day.
-- Time slots: test 3 per channel with n>=3 each before concluding. Early morning IST currently leads.
+- Time slots: no fixed list. `slot.py` scores each IST hour by its median views; untested hours next to a proven peak are tested.
 - Kratos Playz: GTA 6 launched 19 Nov. News windows are short: same-day topics first, the evergreen backlog after.
 - If a channel median stays under ~300 views for 2 weeks after 3 formula changes: re-position it (narrower niche, other
   language, other audience) or shift most effort to the channel that works. Decide, log why, do not drift.

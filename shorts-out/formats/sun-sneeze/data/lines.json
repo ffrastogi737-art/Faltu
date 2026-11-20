@@ -1,0 +1,65 @@
+{
+ "duration": 30.744,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Why do you sneeze when you walk into bright sunlight?",
+   "start": 0.3,
+   "end": 2.052
+  },
+  {
+   "i": 1,
+   "text": "If you do, you're not weird. Studies say up to one in three people do it!",
+   "start": 2.352,
+   "end": 5.933
+  },
+  {
+   "i": 2,
+   "text": "It even has a name: the photic sneeze reflex.",
+   "start": 6.233,
+   "end": 8.509
+  },
+  {
+   "i": 3,
+   "text": "Here's the weird part. Your eyes and your nose share nerve neighbours.",
+   "start": 8.809,
+   "end": 12.001
+  },
+  {
+   "i": 4,
+   "text": "One leading theory is crossed wires: a flash of light sets off the nerve that senses an itchy nose,",
+   "start": 12.301,
+   "end": 16.318
+  },
+  {
+   "i": 5,
+   "text": "so your brain thinks something is tickling your nose,",
+   "start": 16.618,
+   "end": 19.425
+  },
+  {
+   "i": 6,
+   "text": "and fires a sneeze. Achoo!",
+   "start": 19.725,
+   "end": 21.638
+  },
+  {
+   "i": 7,
+   "text": "And the twist? Scientists still haven't proven exactly how it works.",
+   "start": 21.938,
+   "end": 25.027
+  },
+  {
+   "i": 8,
+   "text": "It often runs in families, and it's harmless.",
+   "start": 25.327,
+   "end": 27.183
+  },
+  {
+   "i": 9,
+   "text": "Next time you step into the sun, count your sneezes!",
+   "start": 27.483,
+   "end": 29.744
+  }
+ ]
+}

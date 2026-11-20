@@ -33,3 +33,5 @@ shadow-puppets, visual-novel, rubber-hose-reel, woodcut-tale, neon-line.
 - Tried: none yet. Log each one in experiments.txt as "NEW STYLE (library): <id>".
 - First library video needs `tools/render_html.mjs` (our own, commit it to the skill): seek-per-frame capture at
   720x1280 upscaled to 1080x1920, plus the SFX render mixed under narration. Build it once, then reuse.
+- Port queue (20 Nov 2026, not started): myth-or-fact and comic-panels first (fast 2D). Each port needs one verified test render
+  and then PORTED in pick_style.py. Source rule stays: rebuild in our engine, never commit their source.

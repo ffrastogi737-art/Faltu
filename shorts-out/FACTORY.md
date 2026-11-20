@@ -103,6 +103,16 @@ Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own 
 Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). Never the default branch, no PRs.
 Commit lines end with the session attribution the system gives you.
 
+## 00. FEEDBACK (every factory tick, FIRST, before P and DECIDE; the system learns from its own numbers)
+1. Refresh views: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH (both YouTube channels)
+   and saves the printed lines to a file, then `python3 shorts-out/perf_merge.py < that-file` (updates views, likes and the
+   checked date; prints any video id that has no perf row: add that row by hand). Quota blocked: skip, use last numbers, say so.
+2. Verdicts, automatic: `python3 shorts-out/pick_style.py solo --verdicts` and `... gta --verdicts` append WIN/LOSE lines to
+   `style-verdicts.txt` (style@channel, 2+ counted videos, median vs channel median: >= 1.5x WIN, < 0.3x LOSE). Owner's
+   manual lines are kept and read in file order; a LOSE blocks that style for that channel in DECIDE.
+3. Commit `perf.csv` and `style-verdicts.txt` with the run.
+Honest limit: the tick is an agent session, so step 00 is its first instruction; no OS job runs it without the agent.
+
 ## P. PUBLISH DUE (every run, factory and publisher; first)
 FIRST check you can push: `git push --dry-run origin ccr-8c1babe8-9jk0db`. If it fails (routine sessions start without the
 repo attached), call the claude-code-remote tool `add_repo` {owner: "ffrastogi737-art", repo: "Faltu", access: "push"},
@@ -145,7 +155,7 @@ Order of every video: research (what is wanted/trending, 2 sources) -> topic kin
    The channel is a discovery channel, not a body channel. Test demand for the new kind with 1 WebSearch, not a hunch.
 2. Style: `python3 shorts-out/pick_style.py solo|gta <kind>` ranks styles (local 9 + the 62 library ids in
    STYLE-LIBRARY.md) by fit to the kind, never used, not the last two, not blocked. YOU decide from its list.
-   EXPLORE MODE (printed when none of the last 3 videos used a first-time style): the pick must be a never-used style.
+   EXPLORE MODE (printed when none of the last 3 videos used a first-time style): the pick must be a never-used style, 2D first (3D deep-dive / night-file only when no 2D never-used style is left).
    A library style needs the render_html port (STYLE-LIBRARY.md "Status"); if that is too costly for this run, take the
    best ready never-used local style and say why in experiments.txt. The explore quota carries over, it is not dropped.
 3. Record: the README header names the style id exactly as in the script (it reads that); first use -> experiments.txt
@@ -228,6 +238,9 @@ few videos on that channel. Never reuse an old script with names swapped.
 
 ## DELIVER
 - Videos over 20 MB: re-encode `-crf 23 -preset slow`. Commit video + README + logs, push.
+- Back up the source of every finished build: `bash shorts-out/backup_project.sh <proj>` copies script.json, make_script.py,
+  src/shots.js, src/main.js, data/words.json, data/lines.json from /root/faceless-shorts/<proj> into shorts-out/formats/<proj>/
+  (renders and audio are not copied). Commit it, so a container reset never loses the work.
 - SendUserFile the MP4 (caption = title).
 
 ## UPLOAD (YouTube Data API quota: ~5 uploads per Pacific day, resets 08:00 UTC = 13:30 IST)
@@ -240,7 +253,12 @@ few videos on that channel. Never reuse an old script with names swapped.
   "YOUTUBE_MULTIPART_UPLOAD_VIDEO", {title, description, tags, categoryId "27" (GTA "20"), privacyStatus "private",
   videoFile {name, mimetype "video/mp4", s3key}}, account=...)`. Check snippet.channelId. Upload exactly once: on an
   error list the channel's uploads before retrying.
-- Slot: run `python3 shorts-out/slot.py` (prints the next FREE solo slot from publish-queue.txt, 1 h+ ahead; never a taken one). Owner 20 Nov: "jo bhi khali pada slot, usme daal do". Background (shorts-out/slots.txt, best first; UTC: 09:00=03:30Z, 11:30=06:00Z, 16:30=11:00Z, 17:00=11:30Z, 19:30=14:00Z):
+- Slot (performance-based, owner 20 Nov: no fixed times): `python3 shorts-out/slot.py solo` (Kratos: `slot.py gta`) prints the
+  best-scoring free publish time: the IST hour with the highest median views in perf.csv (2+ counted videos), an untested
+  hour next to a proven peak is tested, nothing within 30 min of a publish-queue line, 60 min ahead, 3 days max. Solo:
+  the public switch is a send_later at that IST time (privacy switch, read-back, DONE). Kratos: publishAt at that time;
+  its times are NOT in a queue yet, so check the Kratos list by hand before booking. Instagram: ig-queue `at` = slot + 15 min
+  (no metrics stored in ig-queue.json yet, so IG does not score the slot).
   earliest day with a free slot 1 h+ from now, best free slot that day; one video per slot.
 - Kratos Playz: workbench `proxy_execute` uses the DEFAULT YouTube account. GET channels?part=id&mine=true; if it is
   UCO8lnJFO1TLtHPkn9cCNPng, PUT videos?part=status {"id", "status": {"privacyStatus": "private", "publishAt": <UTC ISO>,

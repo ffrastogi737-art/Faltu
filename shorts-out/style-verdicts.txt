@@ -1,2 +1,7 @@
 # <style> WIN|OK|LOSE <date> <why>. A LOSE blocks the style for pick_style.py until a later line says OK/WIN. One line per verdict.
 neon-versus LOSE 2026-11-18 owner and numbers rejected the dark look for GTA (Instagram only OK)
+chalk-talk@solo WIN 2026-11-20 auto: n=2 median 922 vs channel median 178
+inside-out@solo WIN 2026-11-20 auto: n=4 median 751 vs channel median 178
+paper-atlas@solo LOSE 2026-11-20 auto: n=3 median 26 vs channel median 178
+stick-story@solo LOSE 2026-11-20 auto: n=4 median 14 vs channel median 178
+comic-pop@gta WIN 2026-11-20 auto: n=3 median 1180 vs channel median 260

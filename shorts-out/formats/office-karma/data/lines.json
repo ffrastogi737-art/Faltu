@@ -1,0 +1,65 @@
+{
+ "duration": 25.734,
+ "lines": [
+  {
+   "i": 0,
+   "text": "Your boss just stole your idea and called it his own!",
+   "start": 0.3,
+   "end": 2.474
+  },
+  {
+   "i": 1,
+   "text": "He strutted into the big meeting, chest out, smiling at everyone.",
+   "start": 2.675,
+   "end": 5.634
+  },
+  {
+   "i": 2,
+   "text": "You sat in the back, stared at him, and said nothing.",
+   "start": 5.834,
+   "end": 7.902
+  },
+  {
+   "i": 3,
+   "text": "He clicked the remote to take all the credit.",
+   "start": 8.102,
+   "end": 9.659
+  },
+  {
+   "i": 4,
+   "text": "But the very first slide said, created by you!",
+   "start": 9.859,
+   "end": 12.52
+  },
+  {
+   "i": 5,
+   "text": "Then the speakers played his secret voicemail: I have no idea what I'm doing!",
+   "start": 12.72,
+   "end": 15.589
+  },
+  {
+   "i": 6,
+   "text": "Everyone turned and stared. He tried to run, but slipped on the carpet.",
+   "start": 15.789,
+   "end": 18.582
+  },
+  {
+   "i": 7,
+   "text": "Ten seconds later, he was still dizzy, staring at the ceiling.",
+   "start": 18.782,
+   "end": 21.061
+  },
+  {
+   "i": 8,
+   "text": "Everyone in the room started clapping for you.",
+   "start": 21.261,
+   "end": 23.135
+  },
+  {
+   "i": 9,
+   "text": "And that's the exact reason why",
+   "start": 23.335,
+   "end": 24.734
+  }
+ ]
+}
