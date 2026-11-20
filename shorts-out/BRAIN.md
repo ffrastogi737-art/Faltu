@@ -44,6 +44,8 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
   question, no recap of files already read. Owner report: 5-8 lines of Hindi, numbers first. Never paste big JSON or logs back.
 - Owner's Claude weekly limit: stay at or under day/7 + 5% used. Over pace -> care-only run (observe + comments), no build.
   Haiku subagent: uploads, queue edits, log lines, stats pulls. Sonnet: research, build, QA. Opus: weekly review only.
+- Model choice (owner 21 Nov 2026: "model select bhi"): the session model builds, researches and does QA; a Haiku subagent only for pure fact-reading (WebFetch pages, queue edits). Never hand a Haiku subagent
+  a job that is only "start a process and wait": it returned early after ~85k tokens (20 Nov); run long jobs yourself with `run_in_background` and wait for the notification. A web page costs ~15-25k tokens through a subagent.
 - Keep tool output small (workbench prints, `tail`, `grep`). One subagent at a time.
 - Every run ends with git push to ccr-8c1babe8-9jk0db and a short Hindi report; ⚠️ DIKKAT at the top only for: a connector
   disconnected, a strike / claim / ban warning, quota that blocks everything, or something only the owner can give
