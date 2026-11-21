@@ -46,11 +46,17 @@ if not RAW.exists() or meta.get('sha') != sha(MIX):      # a new mix.py output: 
 m = measure(RAW)                                          # pass 1: measure
 af = (f'loudnorm=I={target}:TP={TP}:LRA=11:measured_I={m["input_i"]}:measured_TP={m["input_tp"]}:'
       f'measured_LRA={m["input_lra"]}:measured_thresh={m["input_thresh"]}:offset={m["target_offset"]}:linear=true')
-ff(['-y', '-i', str(RAW), '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', str(TMP)])   # pass 2: apply
+ff(['-y', '-i', str(RAW), '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', str(TMP)])   # pass 2: apply (linear gain)
+out = measure(TMP)
+if abs(float(out['input_i']) - target) > 0.5 or float(out['input_tp']) > TP + 0.2:   # linear gain could not reach the target under the peak ceiling (a peaky mix)
+    gain = target - float(m['input_i'])                     # fallback: plain gain into a peak limiter (0.6 dB under the ceiling), corrected up to 4 times
+    for _ in range(4):
+        ff(['-y', '-i', str(RAW), '-af', f'aresample=192000,volume={gain:.2f}dB,alimiter=limit={10 ** ((TP - 0.6) / 20):.4f}:level=false:attack=1:release=60,aresample=48000',
+            '-c:a', 'pcm_s16le', str(TMP)])
+        out = measure(TMP); gain += target - float(out['input_i'])
 if abs(duration(TMP) - duration(RAW)) > 0.05:             # the loudnorm look-ahead once cut the tail of a track
     os.remove(TMP); raise SystemExit('normalised mix lost audio at the end: data/mix.wav left unchanged')
-os.replace(TMP, MIX)
-out = measure(MIX)                                        # verify what the file now measures
+os.replace(TMP, MIX)                                      # out = what the file now measures
 META.write_text(json.dumps({'sha': sha(MIX), 'target': target, 'raw_lufs': float(m['input_i']),
                             'raw_true_peak': float(m['input_tp']), 'out_lufs': float(out['input_i']),
                             'out_true_peak': float(out['input_tp'])}, indent=1))
