@@ -1,0 +1,331 @@
+{
+ "setting": "office",
+ "track": "TALL-TALE",
+ "cast_keys": [
+  "gus",
+  "lucy",
+  "moe",
+  "nia"
+ ],
+ "shots": [
+  {
+   "line": 0,
+   "theme": "office",
+   "cam": "medium",
+   "focus": "moe",
+   "cast": [
+    {
+     "who": "moe",
+     "pos": "left",
+     "mood": "smug",
+     "talk": true
+    }
+   ],
+   "cues": [
+    {
+     "word": "stole",
+     "type": "boom",
+     "gain": 0.9
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": "office",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "moe",
+     "pos": [
+      -1.6,
+      -5.6
+     ],
+     "to": [
+      0.6,
+      -5.4
+     ],
+     "action": "walk",
+     "mood": "smug"
+    },
+    {
+     "who": "nia",
+     "pos": [
+      0.2,
+      -5.0
+     ],
+     "mood": "neutral"
+    },
+    {
+     "who": "lucy",
+     "pos": [
+      1.6,
+      -4.8
+     ],
+     "mood": "neutral"
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": "office",
+   "cam": "reaction-push",
+   "focus": "nia",
+   "cast": [
+    {
+     "who": "nia",
+     "pos": "centre",
+     "mood": "neutral",
+     "look": [
+      -0.6,
+      0
+     ]
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": "office",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "moe",
+     "pos": [
+      -1.2,
+      -5.4
+     ],
+     "action": "point",
+     "mood": "smug"
+    },
+    {
+     "who": "gus",
+     "pos": [
+      1.2,
+      -4.8
+     ],
+     "mood": "tired"
+    }
+   ],
+   "cues": [
+    {
+     "word": "clicked",
+     "type": "tock"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "office"
+   },
+   "cam": "two-shot",
+   "props": [
+    {
+     "kind": "poster",
+     "pos": "back",
+     "lines": [
+      "!CREATED BY",
+      "YOU"
+     ],
+     "w": 2.2,
+     "h": 1.3
+    }
+   ],
+   "cast": [
+    {
+     "who": "moe",
+     "pos": [
+      -1.2,
+      -5.4
+     ],
+     "mood": "shock"
+    },
+    {
+     "who": "nia",
+     "pos": [
+      1.2,
+      -4.8
+     ],
+     "mood": "smug"
+    }
+   ],
+   "cues": [
+    {
+     "word": "very",
+     "type": "ding",
+     "gain": 0.9
+    }
+   ]
+  },
+  {
+   "line": 5,
+   "theme": "office",
+   "cam": "medium",
+   "focus": "moe",
+   "props": [
+    {
+     "kind": "poster",
+     "pos": "back",
+     "lines": [
+      "!VOICEMAIL",
+      "I HAVE NO IDEA"
+     ],
+     "w": 2.2,
+     "h": 1.3
+    }
+   ],
+   "cast": [
+    {
+     "who": "moe",
+     "pos": [
+      -1.0,
+      -5.4
+     ],
+     "action": "worry",
+     "mood": "worried",
+     "talk": false
+    },
+    {
+     "who": "gus",
+     "pos": [
+      1.0,
+      -4.8
+     ],
+     "action": "shock",
+     "mood": "shock"
+    }
+   ],
+   "cues": [
+    {
+     "word": "voicemail",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": "office",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "moe",
+     "pos": [
+      -1.6,
+      -5.6
+     ],
+     "action": "slip",
+     "dir": "right",
+     "mood": "shock"
+    },
+    {
+     "who": "nia",
+     "pos": [
+      0.4,
+      -5.0
+     ],
+     "mood": "shock"
+    },
+    {
+     "who": "lucy",
+     "pos": [
+      1.8,
+      -4.8
+     ],
+     "mood": "shock"
+    }
+   ],
+   "cues": [
+    {
+     "word": "carpet",
+     "type": "boing",
+     "gain": 0.8
+    },
+    {
+     "word": "carpet",
+     "type": "slam",
+     "gain": 0.7
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": "office",
+   "cam": "payoff",
+   "focus": "moe",
+   "cast": [
+    {
+     "who": "moe",
+     "pos": "left",
+     "action": "lie",
+     "dir": "right",
+     "mood": "dizzy"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": "office",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "nia",
+     "pos": [
+      -1.6,
+      -5.4
+     ],
+     "action": "clap",
+     "mood": "happy"
+    },
+    {
+     "who": "lucy",
+     "pos": [
+      0.0,
+      -5.0
+     ],
+     "action": "clap",
+     "mood": "happy"
+    },
+    {
+     "who": "gus",
+     "pos": [
+      1.6,
+      -4.8
+     ],
+     "action": "clap",
+     "mood": "happy"
+    }
+   ],
+   "cues": [
+    {
+     "word": "clapping",
+     "type": "applause",
+     "dur": 2.2,
+     "gain": 0.8
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": "office",
+   "cam": "reaction-push",
+   "focus": "nia",
+   "cast": [
+    {
+     "who": "nia",
+     "pos": "centre",
+     "mood": "smug",
+     "talk": true,
+     "look": [
+      0,
+      0
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "at": "start",
+     "type": "pop"
+    }
+   ]
+  }
+ ]
+}

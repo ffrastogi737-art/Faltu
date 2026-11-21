@@ -6,6 +6,7 @@ import { T, loadTiming } from './core/timing.js';
 import { buildCaptions, drawCaption, captionList } from './core/captions.js';
 import { makeEngine, RES, AA } from './core/engine.js';
 import { buildShots } from './shots.js';
+import { buildPlanShots } from './plan.js';
 
 const cv = document.getElementById('cv'), GL = document.getElementById('gl');
 setCtx(cv.getContext('2d'));
@@ -32,7 +33,10 @@ function draw(t) {
     buildCaptions(script);
     GL.width = Math.round(1080 * RES); GL.height = Math.round(1920 * RES);
     const E = makeEngine(GL, { w: GL.width, h: GL.height, samples: AA });
-    const { shots, cues } = buildShots(E);
+    // shot_plan.json (declarative, plan.js) when the project has one; otherwise the hand-coded shots.js of the example
+    const planRes = await fetch('shot_plan.json', { cache: 'no-store' });
+    const built = planRes.ok ? buildPlanShots(E, await planRes.json()) : buildShots(E);
+    const { shots, cues } = built; OP.report = built.report || [];
     shots.sort((a, b) => a.at - b.at);
     OP._shots = shots; OP.script = script;
     OP.duration = () => T.dur;
@@ -41,6 +45,7 @@ function draw(t) {
     OP.shots = () => shots.map((s, i) => ({ id: s.id, at: +s.at.toFixed(3), end: +(i < shots.length - 1 ? shots[i + 1].at : T.dur).toFixed(3), note: s.note || '' }));
     OP.captions = () => captionList().map((c) => ({ s: +c.s.toFixed(3), e: +c.e.toFixed(3), text: c.words.map((w) => (w.hi ? '*' : '') + w.txt).join(' ') }));
     OP.cues = () => cues.slice().sort((a, b) => a.t - b.t);
+    OP.plan = () => OP.report || [];
     OP.ready = true;
     const q = new URLSearchParams(location.search);
     if (!q.has('capture')) {

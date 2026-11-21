@@ -1,68 +1,90 @@
-# Tall Tale 3D: funny true stories, 9:16
+# Tall Tale 3D: funny true stories and fictional skits, 9:16
 
 Playful, clever, a little cheeky. Flat 2D cartoon people (thick ink outlines, big round white heads, bean bodies, stick
-limbs) acting inside a sunny, saturated 3D world: small-town streets, wallpapered shops, meadows, trains. The camera moves
-in every shot, faces react on every beat, captions come one word at a time.
-Example: `example/` = **THE GIRL WHO WAS MAILED TO GRANDMA** (1914; 52 s, 21 shots). Sheet: `style-sheet.png`.
+limbs) acting inside a sunny, saturated 3D world: offices, gyms, school corridors, streets, a friend's flat. The camera
+moves, faces react on every beat, captions come 2-3 words at a time with the spoken word lit in yellow.
+Reference: `example/` = **THE GIRL WHO WAS MAILED TO GRANDMA** (hand-coded shots, the old way; 52 s). Sheet: `style-sheet.png`.
+New videos are built from a **shot plan** (section 3), not from hand-coded shot functions.
 
 ## 1. Rules
+- **Two kinds of story, both 25-35 s, 9:16.**
+  - *True story*: punchy and sourced. 2+ reliable sources (museums, encyclopaedias, major outlets) listed in `script.json`
+    "sources". If sources disagree on a number, use the one most give and keep the wording simple.
+  - *Fictional skit*: a made-up comedy sketch. No real person named, no claim that it happened, and the first line must not
+    say it is true.
+  - Settings rotate (one new setting per video, never the same as the last two): `office`, `gym`, `school` (school or
+    college), `street`, `friends` (a friend group in a flat). Map: `THEMES` in `src/plan.js`.
 - **People are 2D, the world is 3D.** Every person is a `Toon` cut-out that turns to face the camera and casts a real
   shadow. Never build people in 3D; never draw sets flat.
+- **Every shot needs a character.** No text-only shots, no full-screen text slides. Posters are props on a 3D wall, never more
+  than 45 % of the frame. The build refuses a shot without a character.
 - **Faces do the acting.** Change the mood on the beat: `smug` when someone's clever, `shock` on the reveal, `laugh` /
-  `happy` for the payoff, `worried` + `sweat` for trouble. Blink with `blink(t)`, talk with `talk(t)`.
-- One hat + one neck thing per character; same look all video. Kids: `kid: true` (short legs) and `height: 1.4`.
-- Camera always moving: push-ins, pans, crane-downs, a punch-in on the reveal word. New shot every 1.5-3 s.
+  `happy` for the payoff, `worried` + `sweat` for trouble. Blink and talk are automatic.
+- **Safe zone.** Every character stays inside x 70..1010, y 170..1300 of the 1080x1920 frame in every frame of the shot,
+  falls and slips included. The framing solver dollies out or widens the lens to make that true; if the cast cannot fit at
+  70 deg, the build stops with a message: move the cast closer together or use fewer people.
+- **No size jumps.** The head size changes by at most 1.6x from one shot to the next (measured, not requested). Cameras
+  blend from the previous shot over 0.4 s.
+- **Captions**: 2-3 words per chunk, white Inter Black with a black edge, in the lower safe zone (y 1400, size 92). The spoken
+  word turns **#FFE600** and grows to 112 %. Words keep their punctuation and spelling.
 - Bright midday sun outside, warm bulbs inside, pink sunset for endings or flashbacks.
-- Captions: one word at a time (short words pair up: "a single"), white Inter Black with a black edge and soft shadow,
-  centre screen (y 1340). No colour highlight. Words keep their punctuation.
-- Story shape: open on the most surprising fact ("they mailed their daughter"), then "See, ..." rewind and explain the
-  trick step by step, one picture per clause, short reaction beats, end on a punchline that flips the start.
-- Narration: upbeat storyteller, `am_michael` x1.05. Music `"bounce"` (light comedy). Lots of small sounds: `pop`,
-  `plop`, `boing`, `stamp`, `ding`, `chirp`, `chug`, `whoosh` on cuts.
-- True stories only, checked against good sources (museums, encyclopaedias, major outlets) and listed in `script.json`
-  "sources". If sources disagree on a number, use the one most of them give and keep the wording simple.
+- Story shape: open on the most surprising line (inside 2 s), then the setup, one picture per clause, short reaction beats,
+  and a punchline that flips the opening.
+- Narration: upbeat storyteller (`cbx_voice.py`, Chatterbox, tempo 1.12). Lots of small sounds on the words that call for them
+  (`pop`, `boing`, `stamp`, `ding`, `whoosh`, `thud`, `slide`). Music `"bounce"` (light comedy).
+- **Loudness**: the final mix is -15.5 LUFS (integrated), true peak -1.5 dBTP (`tools/loudness.py`, section 4).
 
 ## 2. Engine map (`example/src/`)
 | file | gives you |
 |---|---|
-| `core/engine.js` | `makeEngine` (neutral tone curve, soft shadows, bloom, depth of field, saturation grade), `camera(fov)` |
-| `core/toon.js` | `drawToon(g, look, st)` (2D drawing), `new Toon(look, { height, res })` (3D cut-out: `.at(x,y,z)`, `.set(st)`, `.face(cam)`, `.tint(col)`, `.restyle(patch)`), `PROPS` held in hands |
-| `core/world.js` | sets: `mainStreet(E, { shops, dusk })` (returns `buildings` with each shop's position), `interior(E, { wall, motif, floor, ceiling, view, signText, counterOn })`, `meadow(E, { sunset, fenceOn })`; pieces: `sky, clouds, sunlight, hills, tree, pole, wire, lamp, barrel, crate, car, fence, bunting, signBoard, facade, extras`; painted textures `T.planks/wallpaper/brick/siding/dirt/grass/felt`; `snapshot(E, scene, cam)` renders a set into a texture (window views) |
-| `core/props.js` | `house()` (`.door` opens), `signpost`, `platformScale()` (`.set(lbs)`), `train()` (`.update(t)`), `rails`, `cubbies`, `mailSack`, `parcel`, `desk`, `poster(lines)`, `chickCrate()` |
-| `core/captions.js` | one-word captions, `captionText(text, x, y)` |
+| `plan.js` | `buildPlanShots(E, plan)`: turns `shot_plan.json` into shots, cues and a report; `validatePlan`; `THEMES` (sets), `CAMS` (camera presets), `SAFE` (the safe zone) |
+| `core/engine.js` | `makeEngine` (tone curve, soft shadows, bloom, depth of field, saturation grade), `camera(fov)` |
+| `core/toon.js` | `new Toon(look, { height })` (cut-out: `.at(x,y,z)`, `.set(st)`, `.face(cam)`), `drawToon` (2D drawing) |
+| `core/world.js` | sets: `interior(E, o)` (room: `w`, `depth`, `wall`, `motif`, `floor`, `ceiling`, `signText`), `mainStreet`, `coast`, `meadow`; `snapshot(E, scene, cam)` |
+| `core/props.js` | `poster(lines, {w,h,bg,fg,accent})`, `lockers(n, col)`, `barbell()`, `desk(w)`, `house()`, `train()`, and more |
+| `core/captions.js` | `buildCaptions(script)` (2-3 word chunks with word timings), `drawCaption(t)` (active word #FFE600) |
+| `cast.js` | `CREW`: 12 original characters (`rookie`, `cop`, `tony`, `lucy`, `hank`, `gus`, `rex`, `dee`, `max`, `pete`, `moe`, `nia`); `cast.html` is the sheet. Never real GTA character art |
 
-**Toon look**: `{ body, pattern: plain│check│stripes│overalls│vest│apron│stamps, patCol, hat: none│cap│bowler│boater│beanie│visor│tophat│bun│flower│bow│mailcap, hatCol, band, neck: none│bowtie│tie│scarf│collar, neckCol, dots, extra: [mustache, glasses, freckles, blush, pencil, monocle], kid, stamps }`.
-**Toon state**: `{ mood: neutral│smug│happy│laugh│shock│worried│angry│sad│sly│proud│tired│dizzy, look: [dx, dy], blink, talk,
-sweat, tears, armL / armR: [shoulder°, elbow°] (0 = down, 150 = up), legs: stand│walk│run│sit│jump, phase, lean, bob,
-holdL / holdR: PROPS.x, flip }`. A prop made with arguments (`PROPS.book('RULES', 1)`) needs a `v: 'something'` in the
-state that changes when the prop changes, so the cut-out redraws.
-Positions: people stand at y 0 (boardwalks y 0.18, on a counter y 1.26). Interior counter: x 2.2..3.2, clerk at x 3.55.
+**Toon look**: `{ body, pattern, patCol, hat, hatCol, neck, neckCol, hair, hairCol, beard, beardCol, extra: [sunglasses, glasses, headset, earring, scar, snout, bignose, mustache, freckles, blush, pencil, monocle], kid }`.
+**Toon state**: `{ mood: neutral│smug│happy│laugh│shock│worried│angry│sad│sly│proud│tired│dizzy, look, blink, talk, sweat, armL / armR, legs: stand│walk│run│sit│jump, lean, bob, holdL / holdR }`.
 
-## 3. Shot anatomy (see `example/src/shots.js`)
-Build every set once at the top, give each set its own cut-outs, then per shot: place people, `set()` their state from
-`t`, `shoot(scene, people, camFrom, camTo, lookFrom, lookTo, k, LOOK)` (moves the camera, turns everyone to face it,
-renders with depth of field), `blit()`, then any 2D overlay (a RETURN TO SENDER stamp). Cues go on the word
-(`cue(Wd('banned', 17), 'stamp')`).
+## 3. Shot plan (`shot_plan.json`, one shot per script line)
+Copy `example/shot_plan.example.json` into the project and edit it. Its shots are the 10-shot office skit (`lines` must match
+`script.json`; `line` is the index of the script line the shot starts on).
+```json
+{ "setting": "office", "track": "TALL-TALE", "cast_keys": ["moe", "nia"],
+  "shots": [ { "line": 0, "theme": "office", "cam": "medium", "focus": "moe", "yaw": 0,
+               "cast": [ { "who": "moe", "pos": "left", "mood": "smug", "action": "walk", "to": [-1.2, -2.8], "dir": "left",
+                           "talk": true, "look": [0, 0] } ],
+               "props": [ { "kind": "poster", "pos": "back", "lines": ["THE BIG IDEA"], "w": 2.2, "h": 1.3 } ],
+               "cues": [ { "word": "stole", "type": "boom", "gain": 0.9 }, { "at": "start", "type": "whoosh" } ] } ] }
+```
+- `cam`: `wide` (fov 60, heads about 0.10-0.15 of the frame), `two-shot` (2 characters, 0.17), `medium` (0.24), `reaction-push`
+  (0.17 → 0.23 on the beat), `payoff` (low camera, 0.20).
+- `cast[]`: `who` (a `CREW` key), `pos` (`left centre right far-left far-right back front`, or `[x, z]` in metres: keep multi-person
+  shots 2-3 m apart), `mood`, `action` (`stand walk run sit jump clap point shock worry fall slip lie dizzy`), `to` (walk to
+  `[x, z]`), `dir` (`left` / `right` for falls and slips), `kid`, `talk`, `look`.
+  A fall leans at most 40 deg, a slip at most 30 deg (the cut-out goes edge-on beyond that); `lie` is a slumped sit.
+- `props[]`: `poster` (`lines`, `w`, `h`, `pos`), `lockers`, `barbell`, `desk`. Posters are the on-screen text: short, big.
+- `cues[]`: `{ "word": "...", "type": ..., "gain": ... }` (sound on a word; the word must be in the line) or `{ "at": "start" | seconds, "type": ... }`.
+  Types: the ones `tools/mix.py` plays (`whoosh`, `pop`, `boom`, `thud`, `ding`, `boing`, `slide`, ...), listed in `plan.js` `CUE_TYPES`.
+- Themes are `office`, `gym`, `school`, `street`, `friends`, `coast`, `meadow` (interior themes take `lockers` and `poster` props on walls).
 
-## 4. QA pitfalls
-- A cut-out seen from the side becomes a sliver: keep the camera within ~60° of facing people (`.face(cam)` handles the rest).
-- People inside furniture: check feet heights (boardwalk 0.18, counter top 1.18 + scale 0.08).
+## 4. Pipeline (project = `~/faceless-shorts/<name>`, made by `scripts/new_video.sh tall-tale <name>`)
+1. `script.json` (lines, `sources`, `lead` 0.15, `gap` 0.12, `outro` 0.7), `cbx_voice.py`, `words.py`.
+2. `shot_plan.json` from the example; one shot per line.
+3. `node tools/capture.mjs check` → `CHECK OK` (every shot in the safe zone, head sizes within 1.6x). A failure names the shot and the rule.
+4. `node tools/capture.mjs cues`, `python3 tools/mix.py .` (raw mix, `data/mix.wav`).
+5. `python3 tools/loudness.py .` → `data/mix.wav` at -15.5 LUFS, true peak -1.5 dBTP; the raw mix is kept as `data/mix_raw.wav`.
+   It detects a fresh mix.py run by hash, so running it twice is safe. It refuses to write if the duration changes.
+6. `node tools/capture.mjs sheet review/all.jpg 1 9`: look at it (captions correct and in the lower zone, no empty frames over 1 s,
+   characters readable, no cut-outs cut by the frame edge, posters legible).
+7. `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/out.mp4` (muxes `data/mix.wav`).
+   Render speed ≈ 1.5-3 s per frame without a GPU.
+
+## 5. QA pitfalls
+- A cut-out seen from the side becomes a sliver: the camera stays within ~60° of facing people (`.face(cam)` handles the rest).
+- People inside furniture: check the feet heights (boardwalk 0.18, counter top 1.18 + scale 0.08).
 - Shadows only fall inside the sun's shadow box: move `sun.key.target` near the action when you build a new set.
-- Rendering speed: same as Deep Dive (`SOFTWARE_GL=1 QS='&res=0.6&aa=0&shadow=1024' FPS=24` without a GPU, ≈2-3 s/frame).
-
-## 5. GTA crew + sunny coast (owner, 18 Nov 2026: "character types, hat/beard/hair, backgrounds like the reference clips")
-Reference look = the owner's screenshots: round white heads, stick legs, thick ink outline, hat/beard/hair variety, sunny
-saturated 3D train-yard / desert backgrounds. We stay original (own characters, own sets).
-- `src/cast.js` exports **CREW**: 12 original characters (Rookie Raj, Officer Dan, Big Tony, Lucy, Cowboy Hank, Grandpa Gus,
-  Biker Rex, Diva Dee, Mohawk Max, Parka Pete, Mayor Moe, Newbie Nia). Open `cast.html` for the sheet. Never use real
-  GTA character art; these are generic "fan" archetypes.
-- Toon look additions (toon.js): `hair: short|spiky|afro|long|bob|ponytail|slick|fringe|curly|mohawk|sides|bun2` + `hairCol`;
-  `beard: full|goatee|stubble|long|chops` + `beardCol`; `hat: baseball|backcap|police|cowboy|fedora|bandana|hood` (+ old ones);
-  `neck: chain`; `extra: sunglasses|headset|earring|scar|snout|bignose` (+ old ones), `headsetCol`.
-- `WD.coast(E)` (world.js): sunny pastel beach street: ocean, sand, palms, umbrellas, surfboards, pastel shops with awnings,
-  pink convertible (`WD.convertible`), billboard. Returns `{scene, sun, people, cars, buildings, faceAll}` like mainStreet.
-- Example video: `shorts-out/gta6-channel/crew-src/` (shots.js, main.js impacts, script.json) = "5 Types Of GTA 6 Players".
-  Comic stickers (badge, sticker, bigText, bar) are drawn over the 3D frame; wide group shots use fov 52 (`WIDE`).
-- Render: `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/x.mp4` (~1.5 s/frame, 35 s = ~20 min).
-  Park unused cut-outs far away each shot (parkAll) and reset moving props (car) per shot: frames are drawn in order but state persists.
-- Voice: Chatterbox (see comic-pop STYLE.md); sound: hype cues in tools/mix.py; main.js adds shake/flash/confetti on boom/hit cues.
+- Cut-outs keep their state from shot to shot: move unused people out of frame and reset moving props each shot.
+- The room is small: a medium shot inside a room needs the camera at z ≤ 1.6 (the solver widens the lens instead of getting closer).

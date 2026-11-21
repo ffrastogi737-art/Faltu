@@ -2,7 +2,7 @@
 // animates, an update function on the group (group.update(...)).
 //   house({ wall, roof, trim }) .door (hinge group)   ·  signpost([['LEWISTON', 'r'], ...])   ·  platformScale() .set(lbs)
 //   train() .update(t)  (locomotive + mail car + smoke)   ·  rails(len)   ·  cubbies(w, h)   ·  mailSack()   ·  parcel(w, h, d)
-//   desk()   ·  poster(lines, opts)   ·  chickCrate() .update(t)
+//   desk()   ·  poster(lines, opts)   ·  chickCrate() .update(t)   ·  lockers(n)   ·  barbell()
 import * as THREE from 'three';
 import { T, mat, canvasTex, signBoard } from './world.js';
 
@@ -163,4 +163,21 @@ export function chickCrate(n = 6) {
   for (let i = 0; i < n; i++) { const s = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.22), new THREE.MeshBasicMaterial({ map: ct, transparent: true, alphaTest: 0.1 })); s.position.set(-0.38 + i * 0.76 / (n - 1), 0.4, -0.05 + (i % 2) * 0.1); g.add(s); chicks.push(s); }
   g.update = (t) => chicks.forEach((c, i) => { c.position.y = 0.38 + Math.max(0, Math.sin(t * 7 + i * 1.7)) * 0.07; c.rotation.z = Math.sin(t * 5 + i) * 0.15; });
   g.chicks = chicks; return g;
+}
+
+/** a row of school lockers, fronts facing +z (blue, red or teal doors with vents). */
+export function lockers(n = 4, col = '#3C6FB6') {
+  const g = new THREE.Group(), m = mat({ color: col, roughness: 0.5 }), vent = mat({ color: '#1F2A44' }), gold = mat({ color: '#C9A13B', metalness: 0.5, roughness: 0.3 });
+  for (let i = 0; i < n; i++) {
+    const x = i * 0.55 - (n - 1) * 0.275;
+    box(0.52, 1.95, 0.45, m, x, 0.98, 0, g); box(0.4, 0.05, 0.04, vent, x, 1.6, 0.235, g); box(0.4, 0.05, 0.04, vent, x, 1.45, 0.235, g); box(0.1, 0.1, 0.04, gold, x + 0.15, 1.2, 0.235, g);
+  }
+  return g;
+}
+/** a barbell on the floor (bar along x, plates both ends), for the gym theme. */
+export function barbell() {
+  const g = new THREE.Group(), bar = mat({ color: '#B8BCC6', metalness: 0.8, roughness: 0.3 }), plate = mat({ color: '#1F1F26', roughness: 0.6 });
+  cyl(0.025, 0.025, 1.8, bar, 0, 0.3, 0, g, 12).rotation.z = Math.PI / 2;
+  [-0.85, 0.85].forEach((x) => { cyl(0.3, 0.3, 0.12, plate, x, 0.3, 0, g, 24).rotation.z = Math.PI / 2; cyl(0.2, 0.2, 0.14, plate, x * 0.8, 0.3, 0, g, 24).rotation.z = Math.PI / 2; });
+  return g;
 }

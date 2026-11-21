@@ -187,6 +187,16 @@ The script chooses the template; a template never forces the script.
    open question that the poll card shows, written so its last words flow into the first line (loop-ready). Script target 95-115 words (24-28 s); poll card held >= 2 s.
    Voice -16 LUFS, beat -28 LUFS, SFX about -19 dBFS (mix.py itself is never changed). Top progress bar + 2-frame micro-shake are built into the renderer; fonts are Anton + Montserrat ExtraBold (in the style folder), audio plays to the last frame.
    Reaction mode (`render_commentary.py --react-clip`, STYLE.md, rules in CLAUDE.md) is an extra gta format only when the owner asks for it: perf style `gta-react`, creator credit mandatory, not part of the 50/50.
+5c. **solo only: 50/50 TALL-TALE <-> STANDARD** (owner 21 Nov 2026; gta keeps its own 5b and pick_style.py's gta rules are untouched).
+   The track of the next solo video is the OPPOSITE of the track of the last solo upload in perf.csv (rows with a real video id; planned rows do not count). No history: TALL-TALE.
+   `python3 shorts-out/pick_style.py solo match script.json` prints `TRACK (solo 50/50): TALL-TALE|STANDARD`. `--track tall|standard` is a dry run only (prints "simulated").
+   - TALL-TALE turn: match keeps only tall-tale. Build from a shot plan (`styles/tall-tale/STYLE.md`: section 4 pipeline). The tool suggests a setting
+     (not used by the last 2 tall-tale videos: office, gym, school, street, friends) and 3 characters (not in the last 6 cast slots); use them unless the story needs another.
+     Story: a true story (2+ sources) or a fictional skit, 25-35 s, both allowed.
+   - STANDARD turn: tall-tale is removed from the ranking, and the last 3 STANDARD solo styles cannot win (COOLDOWN), unless fewer than 2 would remain. The rest of step 5 as before.
+   - This choice replaces the solo routing in step 5 for the track only; the template inside the track is still picked by the match.
+   - Backup: `backup_project.sh` copies `shot_plan.json` and writes `track.txt` (TALL-TALE) into formats/<project>/.
+   - Record: perf.csv style `tall-tale` on a TALL-TALE upload, the matched id on a STANDARD one. The next run reads it from there.
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title`, `hook` and `slot_mode`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
    EVERY gta build: one line in its gta6-channel/README.md entry, copied from the match output: `Top-3 (match): <style score> | <style score> | <style score>`

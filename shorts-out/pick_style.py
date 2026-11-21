@@ -252,6 +252,51 @@ def rank(f, channel, hist, ok, E, demand=None):
         out.append({'style': s, 'score': round(sc, 1), 'why': why, 'unported': unported, 'slow': '3d' in tags, 'repeat': bool(rep), 'n': n, 'med': m})
     return sorted(out, key=lambda r: (-r['score'], r['style']))
 
+# ---------- solo 50/50: TALL-TALE <-> STANDARD (owner 21 Nov 2026). gta has its own rule (render_commentary.due); nothing here touches gta. ----------
+TALL = 'tall-tale'
+SOLO_STD_COOLDOWN = 3                                   # a STANDARD solo style used in the last 3 STANDARD uploads cannot win (if 2+ remain)
+SOLO_SETTINGS = ['office', 'gym', 'school', 'street', 'friends']        # tall-tale settings, rotated
+SOLO_CASTS = ['tony', 'lucy', 'hank', 'gus', 'rex', 'dee', 'max', 'pete', 'moe', 'nia', 'rookie', 'cop']   # the 12 characters of cast.js
+TRACK_OVERRIDE = None                                   # --track standard|tall: dry-run only, prints "simulated"
+
+def solo_uploads(rows):
+    """solo rows that have a real video id (planned, not-yet-uploaded rows do not count)."""
+    return [r for r in rows if r['channel'] == 'solo' and r['video_id'].strip() not in ('', 'TBD')]
+
+def solo_track_next(rows):
+    """The track of the next solo upload = the opposite of the track of the last solo upload. No history: TALL-TALE first."""
+    ups = solo_uploads(rows)
+    if not ups: return 'TALL-TALE'
+    return 'STANDARD' if ups[-1]['style'] == TALL else 'TALL-TALE'
+
+def solo_filter(res, track, rows):
+    """(ranking, notes) for the solo track. TALL-TALE turn: only tall-tale. STANDARD turn: never tall-tale, and the last 3 STANDARD styles blocked."""
+    if track == 'TALL-TALE':
+        keep = [r for r in res if r['style'] == TALL]
+        return (keep or res), ([] if keep else ['tall-tale is not in the ranking (LOSE or missing): the TALL-TALE turn cannot run; decide with the owner'])
+    std = [r['style'] for r in solo_uploads(rows) if r['style'] != TALL]
+    recent = set(std[-SOLO_STD_COOLDOWN:])
+    alt = [r for r in res if r['style'] != TALL and r['style'] not in recent]
+    if len(alt) >= 2: return alt, [f"COOLDOWN (solo STANDARD, last {SOLO_STD_COOLDOWN} uploads cannot win): {', '.join(sorted(recent))}"]
+    return [r for r in res if r['style'] != TALL], ['cooldown skipped: fewer than 2 alternatives']
+
+def tall_history():
+    """settings and casts of the tall-tale videos already made: formats/*/shot_plan.json, plus #18 (office, built before shot plans)."""
+    settings, casts = ['office'], []
+    for f in sorted((D / 'formats').glob('*/shot_plan.json')):
+        try:
+            d = json.loads(f.read_text()); settings.append(d.get('setting', '')); casts += d.get('cast_keys', [])
+        except Exception: pass
+    return settings, casts
+
+def tall_suggestion():
+    """A fresh setting and cast for a TALL-TALE turn: not used by the last 2 tall-tale videos (rotation, no repeats)."""
+    settings, casts = tall_history()
+    setting = next((x for x in SOLO_SETTINGS if x not in settings[-2:]), SOLO_SETTINGS[0])
+    recent = set(casts[-6:])
+    cast = [c for c in SOLO_CASTS if c not in recent][:3] or SOLO_CASTS[:3]
+    return setting, cast
+
 def cmd_match(channel, path):
     script = json.load(open(path)); lines = script['lines']
     texts = [l['text'] if isinstance(l, dict) else str(l) for l in lines]
@@ -262,8 +307,19 @@ def cmd_match(channel, path):
     res = rank(f, channel, hist, ok, E, script.get('demand'))
     std = gta_standard_styles(channel); recent = set()
     if channel == 'gta': res, recent = apply_cooldown(res, std)
+    track = None
+    if channel == 'solo':
+        rows = list(csv.DictReader((D / 'perf.csv').open()))
+        track = TRACK_OVERRIDE or solo_track_next(rows)
+        res, solo_notes = solo_filter(res, track, rows)
     print(f"SCRIPT: {info['lines']} lines, {info['avg_words']} words/line ({'fast' if f['fast'] else 'calm' if f['calm'] else 'medium'} pacing)")
     print(f"HOOK: \"{texts[0]}\"  flags: {', '.join(hook_flags(texts[0])) or 'none'}")
+    if channel == 'solo':
+        print(f"TRACK (solo 50/50): {track}{'  (simulated with --track)' if TRACK_OVERRIDE else ''}")
+        if track == 'TALL-TALE':
+            setting, cast = tall_suggestion()
+            print(f"  TALL-TALE turn: use the upgraded tall-tale template. Setting: {setting}. Cast: {', '.join(cast)} (not used by the last 2 tall-tale videos). Write shot_plan.json by hand.")
+        for n in solo_notes: print('  ' + n)
     print('MOOD tags:', ', '.join(f'{t}={w}' for t, w in f.most_common() if w) or 'none')
     if channel == 'gta' and not re.search(PAT['gaming'], ' '.join(texts).lower()): print('!! gta channel: this script has no GTA / gaming content (topic focus is GTA 6 news, leaks, details, comparisons).')
     print(f"CATALOG: {len(res)} templates ranked ({len(LOCAL)} local styles + the library ids; LOSE-blocked ones are left out)")
@@ -335,9 +391,24 @@ def _test():
     assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}, {'style': 'b'}], ['comic-pop'])[1] == {'comic-pop'}
     assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}], ['comic-pop'])[1] == set(), 'fewer than 2 alternatives: no cooldown'
     assert gta_standard_styles('solo') == []
+    assert solo_track_next([]) == 'TALL-TALE'
+    tl = {'channel': 'solo', 'video_id': 'a', 'style': TALL}; sd = {'channel': 'solo', 'video_id': 'b', 'style': 'comic-panels'}
+    assert solo_track_next([tl]) == 'STANDARD' and solo_track_next([tl, sd]) == 'TALL-TALE', 'strict alternation, last upload decides'
+    assert solo_track_next([tl, {'channel': 'solo', 'video_id': 'TBD', 'style': 'chalk-talk'}]) == 'STANDARD', 'planned rows do not count'
+    assert solo_track_next([tl, {'channel': 'gta', 'video_id': 'g', 'style': 'comic-pop'}]) == 'STANDARD', 'gta rows never count for solo'
+    ranked = [{'style': TALL, 'score': 1}, {'style': 'comic-pop', 'score': 2}, {'style': 'chalk-talk', 'score': 1.5}, {'style': 'myth-or-fact', 'score': 1}, {'style': 'inside-out', 'score': 0.5}]
+    rows_std = [{'channel': 'solo', 'video_id': str(i), 'style': x} for i, x in enumerate(['inside-out', 'chalk-talk', 'comic-panels'])]
+    keep, notes = solo_filter(ranked, 'STANDARD', rows_std)
+    assert [r['style'] for r in keep] == ['comic-pop', 'myth-or-fact'], keep     # the last 3 STANDARD styles blocked, tall-tale never
+    keep, _ = solo_filter(ranked, 'TALL-TALE', rows_std); assert [r['style'] for r in keep] == [TALL]
+    setting, cast = tall_suggestion(); assert setting in SOLO_SETTINGS and len(cast) == 3 and all(c in SOLO_CASTS for c in cast)
     print('pick_style.py: self-check OK')
 
 def main():
+    global TRACK_OVERRIDE
+    if '--track' in sys.argv:
+        i = sys.argv.index('--track'); TRACK_OVERRIDE = {'tall': 'TALL-TALE', 'standard': 'STANDARD'}[sys.argv[i + 1].lower()]
+        del sys.argv[i:i + 2]
     if sys.argv[1:2] == ['--test']: return _test()
     channel, mode = sys.argv[1], (sys.argv[2] if len(sys.argv) > 2 else 'kinds')
     if mode == '--verdicts':
