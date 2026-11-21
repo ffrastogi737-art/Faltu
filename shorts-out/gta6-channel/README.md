@@ -258,3 +258,18 @@ Sources: Shacknews (six-star system), GamesRadar and Games.gg (Heat explained), 
 ```
 **Tags:** gta 6 police, gta 6 wanted level, gta 6 heat system, gta 5 vs gta 6, gta 6 six stars, gta 6 tips, gta 6 preview, gta 5 players, rockstar games, gta 6
 **Experiment:** first run of the DECIDE system (pick_style: comic-pop kept, only style with data, median 1,180); kind gaming-versus (best GTA kind, median 406); player-centric GTA 5 angle; slot 20 Nov 16:30 IST
+
+## 17 · `17-gta6-plane-fog.mp4` · comic-pop auto-vertical (GTA) · Phase 2 launch · ENGLISH · Chatterbox · WAITING UPLOAD (quota, 21 Nov 2026)
+**Title:** Don't Use A Military Jet To Reveal The GTA 6 Map ✈️ #shorts
+**Description:**
+```
+Fog hides most of the GTA 6 map at the start. Guides say flying a plane over unexplored areas clears it, and a civilian crop duster is the safer pick than stealing a military jet near a base, which can bring a wanted level and fighter jets. Details are early guide info, so check in game.
+
+Comment: safe plane or steal the jet anyway?
+
+Sources: Engadget (plane trick to reveal the map), Beebom (remove map fog, crop duster), xboxplay.games and games.gg guides (military base, jets). Star counts differ between guides, so none is stated.
+
+#shorts #gta6 #gtavi #gta6tips #rockstargames #gaming #gta6map
+```
+**Tags:** gta 6 map, gta 6 map fog, gta 6 plane, gta 6 crop duster, gta 6 tips, gta 6 guide, gta 6 wanted level, gta vi, rockstar games
+**Language:** English · 28 s · player-tip warning (gaming-guide) · Experiment: DON'T-do-this hook + guide kind (new: guide), slot TBD after quota reset
