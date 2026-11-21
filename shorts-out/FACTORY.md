@@ -160,10 +160,16 @@ The script chooses the template; a template never forces the script.
    openings for the first 3 seconds, keep the strongest, then write the whole script as script.json (optional key "demand": "<style>", see 3).
 3. Template match. `python3 shorts-out/pick_style.py <ch> match <script.json>` reads the FINISHED script (mood tags, pacing, hook) and ranks the whole
    catalog: every style in `.claude/skills/faceless-shorts/styles/` plus all 55 vertical ids of STYLE-LIBRARY.md. Read the top 3 and choose by hook and
-   mood, not by habit. No "not the last style" lock, no explore lock. If the best match repeats a recent style the tool prints SAMENESS RISK: still
+   mood, not by habit. No "not the last style" lock; the only explore rule is the gta one in step 4. If the best match repeats a recent style the tool prints SAMENESS RISK: still
    allowed, but the hook shape, structure, characters and colours must differ (AUTHENTIC CONTENT). The one hard block is a LOSE verdict (a proven dead
    format); a script that truly needs a blocked or untested format names it with "demand".
-4. Port on the fly. If the winner is UNPORTED (a library id), build it now, do not settle for a weaker local style:
+   gta STANDARD runs only (owner 21 Nov 2026; solo is untouched): a style used in the last 3 STANDARD runs cannot win (the tool prints COOLDOWN), and the
+   match prints the Top-3 line you copy into the README entry (step 6).
+4. gta STANDARD EXPLORE (mandatory, owner 21 Nov 2026): when `pick_style.py gta match` prints `EXPLORE RUN`, the run MUST build the template it names
+   (the highest-scoring UNPORTED library id that fits the script's angle), even if a local style ranks higher. The next gta STANDARD run is one, then every
+   3rd one. If the tool says no library id fits, invent and build a NEW custom visual template on the comic-pop base (port_style.sh), and log it as NEW STYLE.
+   Solo never explores this way (its own rules above).
+   Port on the fly. If the winner is UNPORTED (a library id), build it now, do not settle for a weaker local style:
    `bash .claude/skills/faceless-shorts/scripts/port_style.sh <id> comic-pop`, edit its shots.js and make_script.py, write STYLE.md, check with `estimate.py`
    + `capture.mjs check` + one contact sheet, add the id to LOCAL and PORTED in pick_style.py, note it in STYLE-LIBRARY.md. Rebuild in our own engine,
    never commit a library source file. 3D ids render slowly (render_html.mjs route): only when no 2D template fits the story.
@@ -183,6 +189,8 @@ The script chooses the template; a template never forces the script.
    Reaction mode (`render_commentary.py --react-clip`, STYLE.md, rules in CLAUDE.md) is an extra gta format only when the owner asks for it: perf style `gta-react`, creator credit mandatory, not part of the 50/50.
 6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
+   EVERY gta build: one line in its gta6-channel/README.md entry, copied from the match output: `Top-3 (match): <style score> | <style score> | <style score>`
+   (for a commentary or react build, the line goes into gta-commentary/README.md). This is the audit trail for why a template was chosen.
 
 ## BUILD (skill `.claude/skills/faceless-shorts`; follow its build + QA sections, skip its ask/confirm steps)
 - `export CHROME=/opt/pw-browsers/chromium`; the environment's setup script already ran setup.sh. New project:

@@ -7,7 +7,10 @@
   python3 shorts-out/pick_style.py solo|gta --verdicts         append automatic WIN/LOSE lines to style-verdicts.txt
   python3 shorts-out/pick_style.py --test                      self-check
 Left as rules: a LOSE verdict blocks a style unless script.json names it ("demand": "<style>"). Repeating one of the last two styles
-is only a soft penalty plus a SAMENESS RISK note. A perf.csv row counts when it has a real view count and video id, is public by now
+is only a soft penalty plus a SAMENESS RISK note.
+gta STANDARD runs only (owner 21 Nov 2026; solo is untouched): a style used in the last 3 STANDARD runs cannot win (while 2+ alternatives are left);
+every 3rd STANDARD run is an EXPLORE run (the highest-scoring UNPORTED template is built, or a new custom one if no library id fits); a style with 5+ counted
+videos gets +1 instead of +2 for being proven. Commentary and react rows are other tracks, so they never count as STANDARD runs. A perf.csv row counts when it has a real view count and video id, is public by now
 (IST) and its views were measured after it went public; skipped rows are printed with the reason.
 shortcut: script features are keyword counts, not a language model; the agent reads the ranking and overrides it when the story says so."""
 import re, sys, pathlib, csv, json, collections, statistics as st, datetime as dt
@@ -17,7 +20,7 @@ LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'n
          'myth-or-fact', 'comic-panels'}
 PORTED = {'myth-or-fact', 'comic-panels'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
 KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
-         'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list']
+         'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list', 'gaming-guide', 'gaming-reaction']
 # Template catalog: what each template is good at, in the same words the script analysis produces ('3d' = slow render, many minutes).
 TAGS = {}
 for _line in '''chalk-talk: body science question calm
@@ -205,6 +208,24 @@ def features(texts, channel):
     if channel == 'gta': f['gaming'] += 2   # the GTA channel is a gaming channel: gaming-tagged templates get the home advantage
     return f, {'avg_words': round(avg, 1), 'lines': len(texts)}
 
+GTA_NOT_STANDARD = {'gta-commentary', 'gta-react'}   # the 50/50 commentary track and the react format are not STANDARD runs
+COOLDOWN = 3       # gta STANDARD: a style used in the last 3 STANDARD runs cannot win (only while 2+ alternatives are left)
+EXPLORE_EVERY = 3  # gta STANDARD: the next run explores, then every 3rd one (15 done -> run 16, then 19, 22...)
+
+def gta_standard_styles(channel):
+    """Styles of the gta STANDARD runs in perf.csv, oldest first (empty for solo)."""
+    if channel != 'gta': return []
+    return [r['style'] for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == 'gta' and r['style'] not in GTA_NOT_STANDARD]
+
+def explore_due(std):
+    """True when the next gta STANDARD run must explore: the count of STANDARD runs so far is a multiple of EXPLORE_EVERY."""
+    return len(std) % EXPLORE_EVERY == 0
+
+def apply_cooldown(res, std):
+    """(ranking, recent set): styles of the last COOLDOWN STANDARD runs are dropped, unless fewer than 2 alternatives would remain."""
+    recent = set(std[-COOLDOWN:]); alt = [r for r in res if r['style'] not in recent]
+    return (alt, recent) if len(alt) >= 2 else (res, set())
+
 def rank(f, channel, hist, ok, E, demand=None):
     """Pure ranking of the whole catalog for features f. Returns dicts sorted best first."""
     med = st.median([r['views'] for r in ok]) if ok else 0
@@ -220,7 +241,9 @@ def rank(f, channel, hist, ok, E, demand=None):
         if '3d' in tags: sc -= 1; why.append('3D slow render (-1)')
         if unported: sc -= 1.5; why.append('needs a port (-1.5)')
         vs = by.get(s, []); n, m = len(vs), (st.median(vs) if vs else 0)
-        if n >= 2 and m >= 1.5 * med: sc += 2; why.append(f'proven n={n} med={m:.0f} (+2)')
+        if n >= 2 and m >= 1.5 * med:
+            bonus = 1 if channel == 'gta' and n >= 5 else 2     # gta decay (21 Nov): 5+ videos -> +1, so old hits stop monopolising
+            sc += bonus; why.append(f'proven n={n} med={m:.0f} (+{bonus})')
         elif n == 1 and m >= 1.5 * med: sc += 1; why.append(f'one hit {m:.0f} (+1)')
         rep = sum(1 for x in last2 if s in x)
         if rep: sc -= rep; why.append(f'used in {rep} of the last 2 (-{rep}, soft)')
@@ -237,6 +260,8 @@ def cmd_match(channel, path):
     E = entries('README.md' if channel == 'solo' else 'gta6-channel/README.md')
     if channel == 'solo': E = [e for e in E if 'gta' not in e['title'].lower()]
     res = rank(f, channel, hist, ok, E, script.get('demand'))
+    std = gta_standard_styles(channel); recent = set()
+    if channel == 'gta': res, recent = apply_cooldown(res, std)
     print(f"SCRIPT: {info['lines']} lines, {info['avg_words']} words/line ({'fast' if f['fast'] else 'calm' if f['calm'] else 'medium'} pacing)")
     print(f"HOOK: \"{texts[0]}\"  flags: {', '.join(hook_flags(texts[0])) or 'none'}")
     print('MOOD tags:', ', '.join(f'{t}={w}' for t, w in f.most_common() if w) or 'none')
@@ -249,6 +274,12 @@ def cmd_match(channel, path):
     if len(res) > 1 and top['score'] - res[1]['score'] < 1: print(f"CLOSE CALL: {top['style']} vs {res[1]['style']}: decide on the hook and mood, not on the score.")
     if top['repeat']: print('SAMENESS RISK: the best match repeats a recent style. Allowed because it fits best: change the hook shape, the structure, the characters and the colours.')
     if top['unported']: print(f"PORT NEEDED: build it now, do not settle: bash .claude/skills/faceless-shorts/scripts/port_style.sh {top['style']} {'comic-pop' if not top['slow'] else '<3D base: see STYLE-LIBRARY.md, render_html.mjs>'}  (then edit shots.js, estimate.py + capture.mjs check, add to LOCAL and PORTED here).")
+    if channel == 'gta':
+        if recent: print(f"COOLDOWN (gta, last {COOLDOWN} STANDARD runs cannot win): {', '.join(sorted(recent))}")
+        if explore_due(std):
+            ex = [r for r in res if r['unported'] and r['score'] > 0]
+            print('EXPLORE RUN (mandatory, gta STANDARD): ' + (f"build {ex[0]['style']} now (highest-scoring unported template that fits): bash .claude/skills/faceless-shorts/scripts/port_style.sh {ex[0]['style']} comic-pop, then add it to LOCAL and PORTED here." if ex else 'no library id fits: invent and build a NEW custom template on the comic-pop base (port_style.sh), log it as NEW STYLE.'))
+        print('TOP3 for the README line: ' + ' | '.join(f"{r['style']} {r['score']}" for r in res[:3]))
     if skipped: print('perf rows not counted:', '; '.join(skipped[:6]))
     print('blocked (LOSE):', ', '.join(sorted(s for s in catalog() if current(s, channel, hist) == 'LOSE')) or '-')
 
@@ -296,6 +327,14 @@ def _test():
     assert hook_flags('Why do you sneeze in bright sunlight?') == ['question', 'second-person', 'short']
     assert len(library_ids() - LOCAL) >= 40 and 'tier-list' in library_ids(), len(library_ids())
     assert all(s in TAGS for s in catalog()), [s for s in catalog() if s not in TAGS]
+    assert {'gaming-guide', 'gaming-reaction'} <= set(KINDS)
+    ok6 = [{'style': 'comic-pop', 'views': 900}] * 6 + [{'style': 'chalk-talk', 'views': 100}] * 6          # median 500: comic-pop 900 is proven
+    sg = {x['style']: x['score'] for x in rank({'gaming': 2}, 'gta', [], ok6, [], None)}; ss = {x['style']: x['score'] for x in rank({'gaming': 2}, 'solo', [], ok6, [], None)}
+    assert sg['comic-pop'] == ss['comic-pop'] - 1 and sg['chalk-talk'] == ss['chalk-talk'], 'gta: 5+ videos -> +1 (decay); solo keeps +2'
+    assert explore_due(['a'] * 15) and not explore_due(['a'] * 16) and not explore_due(['a'] * 17) and explore_due(['a'] * 18)
+    assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}, {'style': 'b'}], ['comic-pop'])[1] == {'comic-pop'}
+    assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}], ['comic-pop'])[1] == set(), 'fewer than 2 alternatives: no cooldown'
+    assert gta_standard_styles('solo') == []
     print('pick_style.py: self-check OK')
 
 def main():
