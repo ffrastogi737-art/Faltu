@@ -17,9 +17,11 @@ Every factory run does these in this order. Stop a step if the tokens or the tim
    THEN the template match (DECIDE 3). Never the other way round.
 3. COMMENTS (Haiku): read new comments on the last 4 days of videos on both channels; reply to at most 3 per channel.
 4. BUILD + UPLOAD (Sonnet for build and QA, Haiku for upload, Instagram posts and logs).
-- Target shortfall: if today's live count is below target, switch an already-uploaded, already-scheduled video to public
-  now (timed privacy switch, read back). Do NOT schedule today's new builds for tomorrow to fill today: the next run builds
-  tomorrow's videos itself. If the target is met, do nothing extra.
+- Target shortfall (SAME-DAY QUOTA GUARANTEE, 21 Nov 2026): `slot.py <ch>` checks today's count first (videos public or scheduled
+  for today's IST date, catch-up rows included) against DAILY (solo 2, gta 3). While today is short it returns `mode=catchup`: the earliest
+  open IST slot today (>= now + 20 min, rounded to 5 min, 30 min clear of every taken time, before 23:30 IST). Tomorrow's explore/exploit
+  bins are used only when today is full, or after 23:30 IST (then the note `catchup: none ...` is printed; the shortfall stays visible).
+  Record a catch-up upload with slot_mode = catchup. Do not switch a tomorrow video to public just to fill today unless slot.py says catch-up.
 - Tokens: Haiku for every mechanical step, Sonnet only for research, scripting, build and QA. One sub-agent at a time.
 
 ## CURRENT PLAN (owner, 18 Nov 2026 evening: "video bana band kar do", then this quota)
@@ -294,6 +296,9 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
   (Kratos: `slot.py gta`) prints the time, `mode=explore|exploit` and the bin. Rules, all inside slot.py: hours 09-21 IST on the hour, 60 min
   ahead, within 3 days, 30 min clear of every taken time (solo: publish-queue.txt; both channels: every scheduled time in perf.csv).
   Time bins (IST): morning 09-10, midday 11-13, afternoon 14-16, evening 17-19, night 20-21.
+  - slot_mode = catchup (21 Nov 2026): a same-day catch-up upload. It counts toward today's quota and blocks its time (taken_utc, 30 min), but it is
+    EXCLUDED from the timing experiment: clean() drops it, so it never enters the bin counts, fair medians, the explore cadence (explore_due) or the
+    exploit proof. The explore/exploit test stays clean; a catch-up never counts as an explore or exploit sample.
   - EXPLORE: every 3rd upload per channel, starting with the next one. The least-tested bin, and the hour in it with the fewest samples.
     Never 13:00-13:59 (quota-reset publishes land there). Copy the printed HYPOTHESIS line to experiments.txt before uploading.
   - EXPLOIT (the other uploads): the best bin with 3+ fair rows and a median >= 1.5x the reference. It replaces the current winner only if it
