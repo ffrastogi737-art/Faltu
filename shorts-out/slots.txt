@@ -1,3 +1,5 @@
+# RETIRED 21 Nov 2026: no tool and no run reads this file any more. slot.py (bins, explore, exploit) is the only scheduler.
+# Kept as history below.
 # Posting slots (IST), best first. The factory may re-order or swap one from view data; note why below.
 # Since 15 Nov 2026 (usage saver) solo hype goes public only when a run is awake: 08:55 / 16:55 factory, 11:25 / 19:25 publisher.
 # 20 Nov 2026: no fixed slots. `python3 shorts-out/slot.py solo|gta` picks the best-scoring free hour from perf.csv.

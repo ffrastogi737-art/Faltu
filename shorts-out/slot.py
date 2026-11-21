@@ -1,73 +1,170 @@
 #!/usr/bin/env python3
-"""Next publish time from performance (owner 20 Nov: no fixed slots). Solo by default, `gta` for Kratos Playz.
-   python3 shorts-out/slot.py [solo|gta]   -> e.g. '2026-11-20T14:00:00Z 19:00 IST (n=2 median 950)'
+"""Publish time for both channels (owner 21 Nov 2026): slot.py is the single source of truth; the fixed-hour lists are retired.
+   python3 shorts-out/slot.py [solo|gta]   -> '<UTC> <HH>:00 IST  mode=explore|exploit  bin=<name>  (why)' + a HYPOTHESIS line for explore
    python3 shorts-out/slot.py --test       -> self-check (asserts)
-Score per IST hour = median views of the counted rows public at that hour (n>=2). An untested hour next to a proven
-peak is tested (scored 0.9 x the best peak); other untested hours score the channel median. The best score wins.
-Slot: on the hour, 09:00-21:00 IST, at least 60 min ahead, within 3 days, no publish-queue line within 30 min.
-shortcut: scores use views at the last check, not view velocity (perf.csv keeps one snapshot), upgrade when snapshots repeat."""
-import sys, pathlib, re, collections, datetime as dt, statistics as st
-sys.path.insert(0, str(pathlib.Path(__file__).parent))
-from pick_style import perf_rows, D
+Slot: hours 09-21 IST on the hour, >= 60 min ahead, within 3 days, >= 30 min from every taken time. Taken = solo: publish-queue.txt;
+gta and solo: every scheduled or public time in perf.csv (so the Kratos bookings count).
+Time bins (IST): morning 09-10, midday 11-13, afternoon 14-16, evening 17-19, night 20-21. Hour 13 is never picked automatically.
+Clean rows (the only rows used for timing): a real video id, a public time, public by now, views not measured before their public day,
+not a same-day 0-view snapshot, slot_mode not quota-forced. Rows with no public time (legacy) are never used for timing.
+Fair views = views_72h (age-normalised). Legacy rows (no views_72h) count for the sample size n only, never for a median.
+EXPLORE (every 3rd upload per channel, starting with the next one): the least-tested bin (lowest n), and in it the hour with the lowest n.
+EXPLOIT: the best bin with >= 3 fair rows and a median >= 1.5x the reference; it replaces the incumbent (the bin of the last exploit row) only
+if it beats the incumbent's median by 1.5x. If no bin is proven yet: the best bin by fair median, else by the legacy median (ordering only).
+shortcut: the reference is the legacy median until 3 fair rows exist; upgrade when the 72 h snapshots pile up."""
+import sys, pathlib, csv, re, collections, datetime as dt, statistics as st
 
-HOURS = range(9, 22)  # IST, on the hour
+D = pathlib.Path(__file__).parent
+HOURS = range(9, 22)                                             # IST, on the hour
+BINS = {'morning': (9, 10), 'midday': (11, 12, 13), 'afternoon': (14, 15, 16), 'evening': (17, 18, 19), 'night': (20, 21)}
+ORDER = list(BINS)
+AUTO_AVOID = {13}                                                # 13:00-13:59: quota-reset publishes land there; never picked automatically
+EXPLORE_EVERY, PROVEN_N, PROMOTE = 3, 3, 1.5
 IST_OFF = dt.timedelta(hours=5, minutes=30)
 
-def scores(rows):
-    by = collections.defaultdict(list)
-    for r in rows:
-        if r['hour']: by[int(r['hour'])].append(r['views'])
-    overall = st.median([r['views'] for r in rows]) if rows else 0
-    proven = {h: st.median(v) for h, v in by.items() if len(v) >= 2}
-    best = max(proven.values(), default=overall)
-    out = {}
-    for h in HOURS:
-        if h in proven:
-            out[h] = (proven[h], f'n={len(by[h])} median {proven[h]:.0f}')
-        elif any(proven.get(x, 0) >= 1.5 * overall for x in (h - 1, h + 1)):
-            out[h] = (0.9 * best, 'untested, next to a proven peak')
-        else:
-            out[h] = (overall, 'untested, channel median')
+def bin_of(h): return next(b for b, hs in BINS.items() if h in hs)
+def ist_to_utc(s): return dt.datetime.strptime(s, '%Y-%m-%d %H:%M') - IST_OFF
+def _int(s):
+    s = (s or '').strip(); return int(s) if s.isdigit() else None
+
+def load_rows(ch):
+    """perf.csv rows of one channel, in upload order."""
+    return [r for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == ch]
+
+def clean(raw, now_ist):
+    """Rows usable for timing. Each: {file, pub (IST datetime), hour, views, v72 (fair views or None), mode}."""
+    out = []
+    for r in raw:
+        vid = (r['video_id'] or '').strip(); views = _int(r['views']); v72 = _int(r.get('views_72h'))
+        mode = (r.get('slot_mode') or '').strip() or 'legacy'
+        pubs = (r['public_ist'] or '').strip()
+        if vid in ('', 'TBD') or views is None or not pubs or mode == 'quota-forced': continue
+        pub = dt.datetime.strptime(pubs, '%Y-%m-%d %H:%M')
+        if pub > now_ist: continue                                                       # not public yet
+        chk = (r['checked'] or '').strip()[:10]; day = pub.date().isoformat()
+        if chk < day: continue                                                           # measured before it went public
+        if views == 0 and chk == day: continue                                           # same-day zero: not a result
+        out.append({'file': r['file'], 'pub': pub, 'hour': pub.hour, 'views': views, 'v72': v72, 'mode': mode})
     return out
 
-def pick(now_utc, rows, taken):
-    sc = scores(rows)
-    cands = []
+def taken_utc(ch, raw):
+    """Every time that holds a slot: solo's publish queue (PENDING and DONE) and every scheduled or public time in perf.csv."""
+    t = []
+    if ch == 'solo':
+        t += [dt.datetime.strptime(m.group(1), '%Y-%m-%dT%H:%M:%SZ') for l in (D / 'publish-queue.txt').read_text().splitlines()
+              for m in [re.match(r'(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)\s', l)] if m]
+    t += [ist_to_utc((r['public_ist'] or '').strip()) for r in raw if (r['public_ist'] or '').strip()]
+    return t
+
+def free_slots(now_utc, taken, hours):
+    """(utc, hour) candidates: the given hours, 60 min ahead, within 3 days, 30 min clear of every taken time."""
+    out = []; today = (now_utc + IST_OFF).date()
     for d in range(3):
-        for h in HOURS:
-            ist = dt.datetime.combine((now_utc + IST_OFF).date() + dt.timedelta(days=d), dt.time(h))
-            utc = ist - IST_OFF
+        for h in hours:
+            utc = dt.datetime.combine(today + dt.timedelta(days=d), dt.time(h)) - IST_OFF
             if utc < now_utc + dt.timedelta(minutes=60): continue
             if any(abs((utc - t).total_seconds()) < 1800 for t in taken): continue
-            cands.append((sc[h][0], -(utc - dt.datetime(1970, 1, 1)).total_seconds(), utc, h, sc[h][1]))
-    if not cands: return None
-    _, _, utc, h, why = max(cands, key=lambda c: (c[0], c[1]))
-    return utc, h, why
+            out.append((utc, h))
+    return out
 
-def taken_utc(channel='solo'):
-    # publish-queue.txt is the solo queue; the Kratos publishAt times are not in it (checked by hand)
-    if channel != 'solo': return []
-    return [dt.datetime.strptime(m.group(1), '%Y-%m-%dT%H:%M:%SZ') for l in (D / 'publish-queue.txt').read_text().splitlines()
-            for m in [re.match(r'(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z)\s', l)] if m]
+def explore_due(raw):
+    """Explore on the next upload if the channel has never explored; afterwards every 3rd upload (two exploit uploads in between)."""
+    ups = [r for r in raw if (r['video_id'] or '').strip() not in ('', 'TBD')]
+    last = max((i for i, r in enumerate(ups) if (r.get('slot_mode') or '').strip() == 'explore'), default=None)
+    return last is None or len(ups) - 1 - last >= EXPLORE_EVERY - 1
+
+def decide(now_utc, raw, ch):
+    """The next slot for a channel. Pure: takes the perf.csv rows of the channel and the current UTC time."""
+    rows = clean(raw, now_utc + IST_OFF); taken = taken_utc(ch, raw)
+    fair_all = [r['v72'] for r in rows if r['v72'] is not None]
+    ref_kind = 'fair' if len(fair_all) >= PROVEN_N else 'legacy'
+    ref_vals = fair_all if ref_kind == 'fair' else [r['views'] for r in rows]
+    ref = st.median(ref_vals) if ref_vals else 0
+    n_bin = {b: 0 for b in BINS}; n_hour = collections.Counter(); fair_bin = collections.defaultdict(list)
+    fair_hour = collections.defaultdict(list); legacy_bin = collections.defaultdict(list)
+    for r in rows:
+        if r['hour'] not in HOURS: continue
+        b = bin_of(r['hour']); n_bin[b] += 1; n_hour[r['hour']] += 1; legacy_bin[b].append(r['views'])
+        if r['v72'] is not None: fair_bin[b].append(r['v72']); fair_hour[r['hour']].append(r['v72'])
+    med_fair = {b: st.median(v) for b, v in fair_bin.items()}
+    proven = {b: m for b, m in med_fair.items() if len(fair_bin[b]) >= PROVEN_N and ref and m >= PROMOTE * ref}
+    info = {'ref': ref, 'ref_kind': ref_kind, 'n_clean': len(rows), 'n_bin': dict(n_bin)}
+    if explore_due(raw):
+        b = min(BINS, key=lambda x: (n_bin[x], ORDER.index(x)))              # least-tested bin
+        cands = free_slots(now_utc, taken, [h for h in BINS[b] if h not in AUTO_AVOID])
+        if cands:
+            utc, h = min(cands, key=lambda c: (n_hour[c[1]], c[0]))              # least-tested hour in it, then earliest
+            why = f"explore: least-tested bin {b} (n={n_bin[b]}), hour with n={n_hour[h]}"
+            return dict(utc=utc, hour=h, mode='explore', bin=b, why=why,
+                        hypothesis=f"Testing {b} bin {h:02d}:00 IST, n={n_hour[h]} -> target >= 1.2x channel {ref_kind} median ({ref:.0f})", **info)
+    # exploit: keep the incumbent unless a challenger proves 1.5x its median
+    inc = None
+    for r in reversed(raw):
+        if (r.get('slot_mode') or '').strip() == 'exploit' and (r['public_ist'] or '').strip():
+            inc = bin_of(int((r['public_ist'] or '')[11:13])); break
+    if proven:
+        best = max(proven, key=proven.get)
+        win = best if inc not in proven or best == inc or proven[best] >= PROMOTE * proven[inc] else inc
+        why = f"proven: n={len(fair_bin[win])} fair, median {med_fair[win]:.0f} >= {PROMOTE}x ref {ref:.0f}"
+    else:
+        scored = [b for b in BINS if fair_bin[b]]
+        if scored:
+            win = max(scored, key=lambda b: (med_fair[b], -ORDER.index(b))); why = f"fallback: best fair median {med_fair[win]:.0f} (no bin proven yet)"
+        else:
+            win = max(BINS, key=lambda b: (st.median(legacy_bin[b]) if legacy_bin[b] else -1, -ORDER.index(b)))
+            why = 'fallback: no fair data yet, legacy median used only to order the bins'
+    cands = free_slots(now_utc, taken, [h for h in BINS[win] if h not in AUTO_AVOID]) or free_slots(now_utc, taken, [h for h in HOURS if h not in AUTO_AVOID])
+    if not cands: return None
+    def hour_key(c):
+        f = fair_hour.get(c[1]); return (0, -st.median(f)) if f else (1, 0)
+    utc, h = min(cands, key=lambda c: (hour_key(c), c[0]))
+    return dict(utc=utc, hour=h, mode='exploit', bin=bin_of(h), why=why, **info)
 
 def _test():
-    now = dt.datetime(2026, 11, 20, 8, 53)                       # 14:23 IST
-    rows = [dict(hour='13', views=v) for v in (1000, 900)] + [dict(hour='19', views=v) for v in (100, 120)]
-    utc, h, _ = pick(now, rows, [])                              # proven 13:00 IST is the best score
-    assert h == 13 and utc == dt.datetime(2026, 11, 21, 7, 30), (utc, h)
-    block = [dt.datetime(2026, 11, 20, 7, 30) + dt.timedelta(days=d) for d in range(3)]   # every 13:00 IST taken
-    utc, h, _ = pick(now, rows, block)                           # then a tested neighbour (12 or 14) takes it
-    assert h in (12, 14), h
-    utc, h, _ = pick(now, [], [])                                # no data: still a free slot, never a taken one
-    assert utc >= now + dt.timedelta(minutes=60)
+    now = dt.datetime(2026, 11, 20, 8, 53)                                  # 14:23 IST
+    row = lambda file, pub, views, v72='', mode='legacy', vid='x1', chk='2026-11-25': {'channel': 'solo', 'file': file, 'video_id': vid,
+              'public_ist': pub, 'views': str(views), 'views_72h': str(v72) if v72 != '' else '', 'slot_mode': mode, 'checked': chk}
+    # 1. clean rows: no id, no public time, same-day zero, quota-forced, measured before public: all out; a legacy row with a time: in
+    raw = [row('a', '', 9), row('b', '2026-11-19 10:00', 0, chk='2026-11-19'), row('c', '2026-11-19 10:00', 5, mode='quota-forced'),
+           row('d', '2026-11-19 10:00', 500, chk='2026-11-18'), row('e', '2026-11-19 10:00', 500), row('f', '2026-11-19 10:00', 9, vid='TBD')]
+    got = [r['file'] for r in clean(raw, dt.datetime(2026, 11, 22))]
+    assert got == ['e'], got
+    # 2. explore cadence: first explore at once, then 2 exploit uploads, then explore again
+    assert explore_due([row('a', '', 1, vid='')]) and explore_due([row('a', '2026-11-19 10:00', 1)])
+    assert explore_due([row('a', '2026-11-19 10:00', 1, mode='explore')] + [row('b', '2026-11-19 10:00', 1, vid=f'v{i}') for i in range(2)])
+    assert not explore_due([row('a', '2026-11-19 10:00', 1, mode='explore'), row('b', '2026-11-19 10:00', 1, vid='y')])
+    # 3. explore: least-tested bin (midday here: n=0), hour 11 or 12 (never 13)
+    rows = [row(f'r{i}', '2026-11-19 09:00', 100 + i, vid=f'q{i}') for i in range(4)] + [row('e1', '2026-11-19 14:00', 9, vid='e1'), row('e2', '2026-11-19 17:00', 9, vid='e2')]
+    d = decide(now, rows, 'solo')
+    assert d['mode'] == 'explore' and d['bin'] == 'midday' and d['hour'] in (11, 12), d
+    assert d['hypothesis'].startswith('Testing midday bin ') and 'n=0' in d['hypothesis'], d['hypothesis']
+    # 4. exploit: a bin needs 3 fair rows and 1.5x the reference; a challenger must beat the incumbent (the last exploit row's bin) by 1.5x
+    fair = [row(f'm{i}', '2026-11-19 09:00', 100, v72=100, vid=f'm{i}', mode='exploit') for i in range(7)]
+    fair += [row(f'v{i}', '2026-11-19 17:00', 200, v72=200, vid=f'v{i}', mode='exploit') for i in range(3)]
+    fair += [row(f'g{i}', '2026-11-19 20:00', 1100, v72=1100, vid=f'g{i}', mode='exploit') for i in range(3)]
+    fair += [row(f'a{i}', '2026-11-19 14:00', 1000, v72=1000, vid=f'a{i}', mode='exploit') for i in range(4)]
+    e0 = row('e0', '2026-11-19 10:00', 5, vid='e0', mode='explore')
+    d = decide(now, fair + [e0, row('z', '2026-11-19 14:00', 1000, v72=1000, vid='z', mode='exploit')], 'solo')
+    assert d['mode'] == 'exploit' and d['bin'] == 'afternoon', d                       # incumbent afternoon; night (1100) is not 1.5x 1000
+    d = decide(now, fair + [row('z2', '2026-11-19 17:00', 200, v72=200, vid='z2', mode='exploit'), e0], 'solo')
+    assert d['mode'] == 'exploit' and d['bin'] == 'night', d                           # evening incumbent is not proven: the best proven bin takes over
+    d = decide(now, [row(f'x{i}', '2026-11-19 14:00', 300, v72=300, vid=f'x{i}', mode='exploit') for i in range(3)] + [row('w', '2026-11-19 09:00', 300, vid='w', mode='exploit'), row('e9', '2026-11-19 10:00', 5, vid='e9', mode='explore')], 'solo')
+    assert d['mode'] == 'exploit' and d['bin'] == 'afternoon' and d['ref_kind'] == 'fair', d
+    # 5. taken: a future gta booking blocks its 30 min; solo queue lines block too
+    tk = taken_utc('gta', [{'public_ist': '2026-11-22 09:00', 'video_id': 'g', 'views': '0', 'checked': '', 'file': 'g', 'channel': 'gta', 'slot_mode': '', 'views_72h': ''}])
+    assert dt.datetime(2026, 11, 22, 3, 30) in tk, tk
+    cands = free_slots(dt.datetime(2026, 11, 21, 4, 0), tk, [9])
+    assert all(abs((u - dt.datetime(2026, 11, 22, 3, 30)).total_seconds()) >= 1800 for u, _ in cands), cands
+    # 6. lead time and window
+    for u, _ in free_slots(now, [], HOURS): assert u >= now + dt.timedelta(minutes=60) and u <= now + dt.timedelta(days=3)
     print('slot.py: self-check OK')
 
 if __name__ == '__main__':
     if '--test' in sys.argv:
         _test(); sys.exit()
     ch = sys.argv[1] if len(sys.argv) > 1 else 'solo'
-    ok, skipped = perf_rows(ch)
-    res = pick(dt.datetime.now(dt.timezone.utc).replace(tzinfo=None), ok, taken_utc(ch))
-    if res is None: sys.exit('no free slot in 3 days: check publish-queue.txt')
-    utc, h, why = res
-    print(f"{utc:%Y-%m-%dT%H:%M:%SZ} {h:02d}:00 IST  ({why}; counted rows {len(ok)})")
+    raw = load_rows(ch)
+    res = decide(dt.datetime.now(dt.timezone.utc).replace(tzinfo=None), raw, ch)
+    if res is None: sys.exit('no free slot in 3 days: check publish-queue.txt and perf.csv')
+    print(f"{res['utc']:%Y-%m-%dT%H:%M:%SZ} {res['hour']:02d}:00 IST  mode={res['mode']}  bin={res['bin']}  ({res['why']}; clean timed rows {res['n_clean']}; bins n {res['n_bin']})")
+    if res['mode'] == 'explore': print('HYPOTHESIS (copy to experiments.txt): ' + res['hypothesis'])

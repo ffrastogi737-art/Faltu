@@ -39,7 +39,7 @@ push works) by a small scheduler session. In such a session:
   slot time) and each Instagram reel at its `at` time, with the messages described in step P (include the entry id and
   tell the woken turn to git pull, post, mark DONE, commit, push). Also still write the PENDING lines/entries so a later
   run can recover them.
-- Solo hype slots may be any time then (09:00, 11:30, 17:00, 19:30 IST).
+- Slots: `slot.py` is the only scheduler for both channels (section SLOT below). No fixed hours anywhere.
 - The session ends after its report; wake-ups from its send_later calls keep it alive just long enough to post.
 
 The scheduled tasks "Shorts factory" (08:55 and 16:55 IST) and "Shorts publisher" (11:25 and 19:25 IST) each start a
@@ -187,7 +187,7 @@ The script chooses the template; a template never forces the script.
    open question that the poll card shows, written so its last words flow into the first line (loop-ready). Script target 95-115 words (24-28 s); poll card held >= 2 s.
    Voice -16 LUFS, beat -28 LUFS, SFX about -19 dBFS (mix.py itself is never changed). Top progress bar + 2-frame micro-shake are built into the renderer; fonts are Anton + Montserrat ExtraBold (in the style folder), audio plays to the last frame.
    Reaction mode (`render_commentary.py --react-clip`, STYLE.md, rules in CLAUDE.md) is an extra gta format only when the owner asks for it: perf style `gta-react`, creator credit mandatory, not part of the 50/50.
-6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title` and `hook`
+6. Record. README header names the style id exactly (pick_style reads it); on delivery add the perf.csv row with `style`, `kind`, `title`, `hook` and `slot_mode`
    (the first spoken line); first use of a template -> experiments.txt `NEW STYLE`. Verdicts are written automatically in step 00.
    EVERY gta build: one line in its gta6-channel/README.md entry, copied from the match output: `Top-3 (match): <style score> | <style score> | <style score>`
    (for a commentary or react build, the line goes into gta-commentary/README.md). This is the audit trail for why a template was chosen.
@@ -280,20 +280,28 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
   "YOUTUBE_MULTIPART_UPLOAD_VIDEO", {title, description, tags, categoryId "27" (GTA "20"), privacyStatus "private",
   videoFile {name, mimetype "video/mp4", s3key}}, account=...)`. Check snippet.channelId. Upload exactly once: on an
   error list the channel's uploads before retrying.
-- Slot (performance-based, owner 20 Nov: no fixed times): `python3 shorts-out/slot.py solo` (Kratos: `slot.py gta`) prints the
-  best-scoring free publish time: the IST hour with the highest median views in perf.csv (2+ counted videos), an untested
-  hour next to a proven peak is tested, nothing within 30 min of a publish-queue line, 60 min ahead, 3 days max. Solo:
-  the public switch is a send_later at that IST time (privacy switch, read-back, DONE). Kratos: publishAt at that time;
-  its times are NOT in a queue yet, so check the Kratos list by hand before booking. Instagram: ig-queue `at` = slot + 15 min
-  (no metrics stored in ig-queue.json yet, so IG does not score the slot).
-  earliest day with a free slot 1 h+ from now, best free slot that day; one video per slot.
+- SLOT (owner 21 Nov 2026: slot.py is the single source of truth; the fixed-hour lists were removed). `python3 shorts-out/slot.py solo`
+  (Kratos: `slot.py gta`) prints the time, `mode=explore|exploit` and the bin. Rules, all inside slot.py: hours 09-21 IST on the hour, 60 min
+  ahead, within 3 days, 30 min clear of every taken time (solo: publish-queue.txt; both channels: every scheduled time in perf.csv).
+  Time bins (IST): morning 09-10, midday 11-13, afternoon 14-16, evening 17-19, night 20-21.
+  - EXPLORE: every 3rd upload per channel, starting with the next one. The least-tested bin, and the hour in it with the fewest samples.
+    Never 13:00-13:59 (quota-reset publishes land there). Copy the printed HYPOTHESIS line to experiments.txt before uploading.
+  - EXPLOIT (the other uploads): the best bin with 3+ fair rows and a median >= 1.5x the reference. It replaces the current winner only if it
+    beats the winner's median by 1.5x. If no bin is proven yet, the best bin so far.
+  - Write the perf.csv row with `slot_mode` = `explore` or `exploit` (the mode slot.py printed). A publish forced by the YouTube quota reset is
+    `quota-forced` (never counted for timing). Hand-chosen times are `manual`.
+  - Kratos: publishAt at the slot time (PUT, read back), and the perf row carries the scheduled `public_ist`, so slot.py sees the booking.
+  - Solo hype: the publish-queue line is the booking (step P makes it public; its slot is slot.py's time, not a fixed one).
+  - Instagram: ig-queue `at` = slot + 15 min (ig-queue.json stores no metrics, so IG does not score the slot).
+  - Not-yet-uploaded rows: video_id `TBD`, views and likes blank, never 0 (a 0 placeholder once dragged gta's median from 283 to 114).
+  - views_24h and views_72h are filled by perf_merge.py at the first refresh 1-2 days and 3+ days after the public day. slot.py reads only views_72h.
 - Kratos Playz: workbench `proxy_execute` uses the DEFAULT YouTube account. GET channels?part=id&mine=true; if it is
   UCO8lnJFO1TLtHPkn9cCNPng, PUT videos?part=status {"id", "status": {"privacyStatus": "private", "publishAt": <UTC ISO>,
   "selfDeclaredMadeForKids": False, "embeddable": True, "license": "youtube", "publicStatsViewable": True}}; confirm with
   YOUTUBE_GET_VIDEO_DETAILS_BATCH (account youtube_volt-equal). Status `SCHEDULED <date> <time> IST (<url>)`. Else use the
   solo hype method.
 - Solo hype: stays private; append `<slot UTC>  <videoId>  <title>  PENDING` to publish-queue.txt (a later run's step P
-  makes it public; slot must be 09:00, 11:30, 17:00 or 19:30 IST). Status `QUEUED: goes public <date> <time> IST (<url>)`.
+  makes it public; its slot is slot.py's time). Status `QUEUED: goes public <date> <time> IST (<url>)`.
   Do NOT create send_later reminders.
 - Push the status changes.
 
@@ -301,7 +309,7 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
 Add to shorts-out/ig-queue.json `{"id": "ig-<slug>", "at": <its YouTube slot UTC; +15 min if taken>, "file": <repo
 path>, "status": "PENDING", "caption": ...}`. Caption: 1-2 sentence hook, key facts, GTA: "Comment for Part 2: A = ...,
 B = ... 👇", normal: "Follow for a weird true fact every day 🧠", 6-8 plain # hashtags ending #reels #explore.
-Step P of a later run posts it. No send_later. Backfill: max 1 older video a day into 19:30 IST when a run has spare time.
+Step P of a later run posts it. No send_later. Backfill: max 1 older video a day, at a slot.py slot, when a run has spare time.
 
 ## CHANNEL CARE (16:55 IST run only; short)
 - Refresh `shorts-out/perf.csv`: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH, saves the printed
@@ -312,7 +320,7 @@ Step P of a later run posts it. No send_later. Backfill: max 1 older video a day
 - Title refresh: a public video 2-3 days old with views under half the channel median gets ONE better title
   (YOUTUBE_UPDATE_VIDEO title, only after the day's uploads are done: it costs quota); log old -> new title and the
   result in experiments.txt. A good title cannot save a topic nobody wants: if it still loses, drop the topic kind.
-- Slots: if 2+ videos clearly show another hour beating a slot, swap ONE slot in slots.txt with a reason.
+- Timing: read the bins in `slot.py <ch>` (the bin counts are in its output). Promotions are automatic; nothing to swap by hand.
 - Votes: public GTA videos from the last 4 days: count A/B in YouTube (YOUTUBE_LIST_COMMENT_THREADS2, account
   youtube_volt-equal) and Instagram comments; write counts into the gta6 README entry. If the channel has not commented
   on a video yet, post ONE comment (YOUTUBE_POST_COMMENT channelId UCO8lnJFO1TLtHPkn9cCNPng): "You decide Part 2 👇\nA =

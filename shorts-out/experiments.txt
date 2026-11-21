@@ -36,3 +36,11 @@ LONG L01 10 Weird Things Your Body Does | 19 Nov 17:00 | FIRST LONG 16:9 video, 
 Why You Sneeze In Bright Sunlight | 20 Nov 9:00 | best formula topic, comic-pop 2nd time, 31 s, Chatterbox (judge vs Ears Pop 1,001 views) | | 
 The Job Where Your Leg Was The Bait | 20 Nov 17:00 | KIND weird-jobs (5 body-science before) + chalk-talk, 25 s | | 
 Why You Hear Your Name In A Noisy Room | next free solo slot | KIND psychology-myth (new) + comic-panels first real use, hook = someone says your name at a party, 29 s | | 
+
+## 21 Nov 2026: timing experiment starts (slot.py bins, explore every 3rd upload per channel)
+Planned at the dry run (21 Nov ~11:00 IST); the real pick is made again when the upload happens (slot.py prints it then):
+solo | next upload | Testing midday bin 12:00 IST, n=0 -> target >= 1.2x channel legacy median (193) | slot_mode=explore | result: pending (72 h snapshot)
+gta | next upload (17 gta6-plane-fog, 13:35 job) | Testing midday bin 12:00 IST, n=0 -> target >= 1.2x channel legacy median (284) | slot_mode=explore | result: pending (72 h snapshot)
+Rule for reading results: a bin counts only with views_72h (age-normalised). Legacy rows (13-20 Nov, fixed hours) are sample size only.
+Promotion: a bin becomes the default winner at 3+ fair rows and 1.5x the current winner's median.
+Legacy caveat: 13:xx solo rows (quota-reset switches, 13:35-13:46) are marked quota-forced and never counted; that assumption comes from growth-log.txt.

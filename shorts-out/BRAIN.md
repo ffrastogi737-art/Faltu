@@ -33,7 +33,7 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
   Shorts formula is stable.
 - A channel with ~5 subs and ~1k views per video has a reach ceiling, not a content problem. Narrow the niche, make
   series people wait for, answer comments (comments are the only real audience signal we get), reply within a day.
-- Time slots: no fixed list. `slot.py` scores each IST hour by its median views; untested hours next to a proven peak are tested.
+- Time slots: `slot.py` is the only scheduler. Five IST bins (morning 09-10, midday 11-13, afternoon 14-16, evening 17-19, night 20-21). Every 3rd upload per channel explores the least-tested bin (never 13:xx); the others exploit a bin only after 3 fair samples and 1.5x the reference. Details in FACTORY SLOT.
 - Kratos Playz: GTA 6 launched 19 Nov. News windows are short: same-day topics first, the evergreen backlog after.
 - If a channel median stays under ~300 views for 2 weeks after 3 formula changes: re-position it (narrower niche, other
   language, other audience) or shift most effort to the channel that works. Decide, log why, do not drift.
