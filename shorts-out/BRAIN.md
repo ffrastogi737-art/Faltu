@@ -39,6 +39,13 @@ gets the effort) is my call, decided by evidence. Read this file, then FACTORY.m
   language, other audience) or shift most effort to the channel that works. Decide, log why, do not drift.
 - Never chase a trend nobody can verify. Never mass-produce the same template (YouTube "inauthentic content").
 
+## Kratos Playz retention rules (owner, 21 Nov 2026, from the channel's Studio numbers; the numbers are the owner's, I cannot see Studio)
+- Shorts are the engine (~1.3k views, 70 %+ average viewed); the weak spot is the swipe-away: only ~53-59 % "stayed to watch", so ~40-45 % leave in the first 2 s. The first spoken line (it starts at 0.15 s) and the 0.0 s hook card
+  must be a bold claim, a tension or a curiosity gap: no greeting, no "today we", no context setup. Write 3 openings, keep the one that creates the biggest open question, and store it in the perf.csv `hook` column.
+- No duplicates: before scripting grep `perf.csv` and `gta-commentary/README.md` for the topic's key words (`grep -i "<word>" shorts-out/perf.csv`); the same story needs a NEW angle (new fact, new question, new visual) and a different title.
+  Never upload a second copy of a video as a fix without unscheduling the first (done once with the painting video; the old copy N7w7hBdAm98 stays private).
+- Long-form (Kratos has none yet in our records; the owner says the long ones have ~0 % CTR and ~8 % average viewed): 3 title variants + a thumbnail concept (one focal point, <= 4 words of text) in the README before building;
+  a fast 30 s setup, a payoff checkpoint every ~45-60 s, and the answer to the title's question is promised in the first 10 s. Tone: energetic, direct, gaming-centric.
 ## Budget and health
 - Output discipline (20 Nov 2026, replaces the Caveman idea; zero per-turn overhead): tool/work replies are short facts, no restating the
   question, no recap of files already read. Owner report: 5-8 lines of Hindi, numbers first. Never paste big JSON or logs back.
