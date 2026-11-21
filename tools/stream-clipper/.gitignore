@@ -1,0 +1,7 @@
+.test_tmp/
+models/*
+!models/.keep
+input/*
+!input/.keep
+output/*
+!output/.keep
