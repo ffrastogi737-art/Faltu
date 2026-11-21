@@ -44,3 +44,4 @@ gta | next upload (17 gta6-plane-fog, 13:35 job) | Testing midday bin 11:00 IST,
 Rule for reading results: a bin counts only with views_72h (age-normalised). Legacy rows (13-20 Nov, fixed hours) are sample size only.
 Promotion: a bin becomes the default winner at 3+ fair rows and 1.5x the current winner's median.
 Legacy caveat: 13:xx solo rows (quota-reset switches, 13:35-13:46) are marked quota-forced and never counted; that assumption comes from growth-log.txt.
+20-hanoi-rat-tails | 2026-11-22 12:00 IST | Testing midday bin 12:00 IST, n=0 -> target >= 1.2x channel legacy median (193); also history kind + tall-tale mini-movie on a perverse-incentive story | slot_mode=explore | result: pending

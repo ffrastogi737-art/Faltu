@@ -1,0 +1,2323 @@
+{
+ "setting": {
+  "name": "street"
+ },
+ "track": "TALL-TALE",
+ "music": "suspense",
+ "characters": {
+  "official": {
+   "role": "French colonial health official, Hanoi 1902",
+   "look": {
+    "body": "#E8E0CC",
+    "pattern": "coat",
+    "patCol": "#B9AE90",
+    "hat": "helmet",
+    "hatCol": "#EFE7D2",
+    "neck": "bowtie",
+    "neckCol": "#7A1F2B",
+    "extra": [
+     "mustache",
+     "monocle"
+    ]
+   }
+  },
+  "inspector": {
+   "role": "sewer inspector",
+   "look": {
+    "body": "#4F6B4A",
+    "pattern": "overalls",
+    "patCol": "#33472F",
+    "hat": "bowler",
+    "hatCol": "#2B2B2B",
+    "neck": "scarf",
+    "neckCol": "#D8A43C",
+    "extra": [
+     "glasses"
+    ]
+   }
+  },
+  "hunter": {
+   "role": "Hanoi rat hunter with a bucket",
+   "look": {
+    "body": "#C9A24A",
+    "pattern": "vest",
+    "patCol": "#6B4B22",
+    "hat": "hood",
+    "hatCol": "#8B7A4A",
+    "hair": "short",
+    "hairCol": "#1F1A16",
+    "extra": [
+     "freckles"
+    ]
+   }
+  },
+  "gardener": {
+   "role": "gardener (the analogy)",
+   "look": {
+    "body": "#5FA84A",
+    "pattern": "stripes",
+    "patCol": "#3E7A33",
+    "hat": "boater",
+    "hatCol": "#E8D27A",
+    "beard": "full",
+    "beardCol": "#7A5A3A",
+    "extra": [
+     "glasses"
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "line": 0,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "alarm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "inspector",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "focus": "inspector",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.35200000000000004
+       ],
+       "pos": [
+        0,
+        0.4,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.192,
+        0.48
+       ],
+       "pos": [
+        0.44800000000000006,
+        0.4,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.064
+       ],
+       "pos": [
+        0.672,
+        0.43200000000000005,
+        0
+       ],
+       "col": "#E05A6A"
+      }
+     ],
+     "motion": {
+      "slide": [
+       -0.4,
+       0.3
+      ]
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.45,
+      -5.4
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.264
+       ],
+       "pos": [
+        0,
+        0.3,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.144,
+        0.36
+       ],
+       "pos": [
+        0.336,
+        0.3,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.048
+       ],
+       "pos": [
+        0.504,
+        0.324,
+        0
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        0.6
+       ],
+       "pos": [
+        -0.48,
+        0.24,
+        0
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ],
+     "ry": 180
+    }
+   ],
+   "cues": [
+    {
+     "word": "tails",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "street"
+   },
+   "light": "day",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "proud",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "hunter",
+     "pos": [
+      0.5,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "walk",
+     "bg": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -3.6
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.5,
+        3.0
+       ],
+       "pos": [
+        0,
+        0.7,
+        0
+       ],
+       "col": "#6A6F6A",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.308
+       ],
+       "pos": [
+        0.6,
+        0.35,
+        0.4
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.16799999999999998,
+        0.42
+       ],
+       "pos": [
+        0.992,
+        0.35,
+        0.4
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.055999999999999994
+       ],
+       "pos": [
+        1.188,
+        0.378,
+        0.4
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.034999999999999996,
+        0.7
+       ],
+       "pos": [
+        0.040000000000000036,
+        0.27999999999999997,
+        0.4
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "thousands",
+     "type": "riser"
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#C9B98A",
+     "motif": "#B5A574",
+     "floor": "#6B4A2E",
+     "ceiling": "#EFE6CC",
+     "signText": "HANOI HEALTH BUREAU"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.3,
+      -5.2
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "focus": "official",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.25,
+      -5.2
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.1,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        -0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.2,
+        0.95,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "slams",
+     "type": "slam"
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#C9B98A",
+     "motif": "#B5A574",
+     "floor": "#6B4A2E",
+     "ceiling": "#EFE6CC",
+     "signText": "HANOI HEALTH BUREAU"
+    }
+   },
+   "light": "warm",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.4,
+      -5.2
+     ],
+     "mood": "smug",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "hunter",
+     "pos": [
+      0.45,
+      -5.2
+     ],
+     "mood": "happy",
+     "action": "stand"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -4.3
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.3,
+        0.05
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ],
+     "motion": {
+      "spin": 360
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "cent",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "street"
+   },
+   "light": "day",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "hunter",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "proud",
+     "action": "stand"
+    },
+    {
+     "who": "hunter",
+     "pos": [
+      0.5,
+      -3.0
+     ],
+     "mood": "laugh",
+     "action": "clap",
+     "bg": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -2.6
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.28,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#6B7A8A",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.2,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        70
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.14,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        76
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.08000000000000002,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        82
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.020000000000000018,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        88
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.03999999999999998,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        94
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.09999999999999998,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        100
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.15999999999999998,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        106
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.21999999999999997,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        112
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.27999999999999997,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        118
+       ]
+      }
+     ],
+     "motion": {
+      "grow": 0.4
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "buckets",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 5,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#C9B98A",
+     "motif": "#B5A574",
+     "floor": "#6B4A2E",
+     "ceiling": "#EFE6CC",
+     "signText": "HANOI HEALTH BUREAU"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "laugh",
+     "action": "clap",
+     "talk": true
+    }
+   ],
+   "focus": "official",
+   "move": "pull",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.35,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.28,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#6B7A8A",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.2,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        70
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.14,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        76
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.08000000000000002,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        82
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.020000000000000018,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        88
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.03999999999999998,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        94
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.09999999999999998,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        100
+       ]
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "working",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "inspector",
+     "pos": [
+      -0.2,
+      -4.8
+     ],
+     "mood": "worried",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.15,
+      -4.6
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.28600000000000003
+       ],
+       "pos": [
+        0,
+        0.325,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.156,
+        0.39
+       ],
+       "pos": [
+        0.36400000000000005,
+        0.325,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.052000000000000005
+       ],
+       "pos": [
+        0.546,
+        0.35100000000000003,
+        0
+       ],
+       "col": "#E05A6A"
+      }
+     ],
+     "motion": {
+      "slide": [
+       -0.4,
+       0.0
+      ]
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.25,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.5,
+        3.0
+       ],
+       "pos": [
+        0,
+        0.7,
+        0
+       ],
+       "col": "#6A6F6A",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "sprints",
+     "type": "swoosh"
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "spot",
+   "cam": "reaction-push",
+   "cast": [
+    {
+     "who": "inspector",
+     "pos": [
+      0.0,
+      -5.2
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "focus": "inspector",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.35,
+      -5.6
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.35200000000000004
+       ],
+       "pos": [
+        0,
+        0.4,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.192,
+        0.48
+       ],
+       "pos": [
+        0.44800000000000006,
+        0.4,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.064
+       ],
+       "pos": [
+        0.672,
+        0.43200000000000005,
+        0
+       ],
+       "col": "#E05A6A"
+      }
+     ],
+     "ry": -20
+    }
+   ],
+   "cues": [
+    {
+     "word": "tail",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "night",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "hunter",
+     "pos": [
+      -0.5,
+      -5.2
+     ],
+     "mood": "sly",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "inspector",
+     "pos": [
+      0.5,
+      -5.2
+     ],
+     "mood": "shock",
+     "action": "shock"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -4.4
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.264
+       ],
+       "pos": [
+        -0.6,
+        0.3,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.144,
+        0.36
+       ],
+       "pos": [
+        -0.26399999999999996,
+        0.3,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.048
+       ],
+       "pos": [
+        -0.09599999999999997,
+        0.324,
+        0
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        0.6
+       ],
+       "pos": [
+        -1.08,
+        0.24,
+        0
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.264
+       ],
+       "pos": [
+        0.6,
+        0.3,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.144,
+        0.36
+       ],
+       "pos": [
+        0.9359999999999999,
+        0.3,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.048
+       ],
+       "pos": [
+        1.104,
+        0.324,
+        0
+       ],
+       "col": "#E05A6A"
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "free",
+     "type": "swoosh"
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "alarm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "inspector",
+     "pos": [
+      -0.3,
+      -5.2
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "focus": "inspector",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.4
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.33
+       ],
+       "pos": [
+        0,
+        0.375,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.18,
+        0.44999999999999996
+       ],
+       "pos": [
+        0.42000000000000004,
+        0.375,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.63,
+        0.405,
+        0
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.037500000000000006,
+        0.75
+       ],
+       "pos": [
+        -0.6000000000000001,
+        0.30000000000000004,
+        0
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.1,
+        0.9,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ],
+     "motion": {
+      "bob": 0.15
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "paycheck",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 10,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "day",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "gardener",
+     "pos": [
+      -0.3,
+      -3.0
+     ],
+     "mood": "happy",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.1,
+      -3.4
+     ],
+     "parts": [
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.07,
+        0.35
+       ],
+       "pos": [
+        0.12,
+        0.175,
+        0
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.5
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        0.1
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.07,
+        0.35
+       ],
+       "pos": [
+        0.52,
+        0.175,
+        0.1
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        1.4
+       ],
+       "pos": [
+        0.2,
+        0.7,
+        0
+       ],
+       "col": "#8A5A32"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.2,
+        1.45,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "weed",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 11,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "gardener",
+     "pos": [
+      -0.3,
+      -3.0
+     ],
+     "mood": "sly",
+     "action": "walk",
+     "talk": true
+    }
+   ],
+   "focus": "gardener",
+   "move": "orbit-left",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.15,
+      -3.2
+     ],
+     "parts": [
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        1.0
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.07,
+        0.7
+       ],
+       "pos": [
+        0.12,
+        0.35,
+        0
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        1.2
+       ],
+       "pos": [
+        0.3,
+        0.6,
+        0.2
+       ],
+       "col": "#4C9A3A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.07,
+        0.84
+       ],
+       "pos": [
+        0.42,
+        0.42,
+        0.2
+       ],
+       "col": "#4C9A3A"
+      }
+     ],
+     "motion": {
+      "grow": 0.2
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.3,
+      -3.4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.18,
+        0.4
+       ],
+       "pos": [
+        0,
+        0.2,
+        0
+       ],
+       "col": "#8A5A32"
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "planting",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 12,
+   "theme": {
+    "name": "street"
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "hunter",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "sly",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "hunter",
+     "pos": [
+      0.5,
+      -3.0
+     ],
+     "mood": "happy",
+     "action": "stand",
+     "bg": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.4,
+      -3.2
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        0.5,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#9A7A4A"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.17600000000000002
+       ],
+       "pos": [
+        0,
+        0.2,
+        0.5
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.096,
+        0.24
+       ],
+       "pos": [
+        0.22400000000000003,
+        0.2,
+        0.5
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.032
+       ],
+       "pos": [
+        0.336,
+        0.21600000000000003,
+        0.5
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.020000000000000004,
+        0.4
+       ],
+       "pos": [
+        -0.32000000000000006,
+        0.16000000000000003,
+        0.5
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.17600000000000002
+       ],
+       "pos": [
+        0.1,
+        0.2,
+        -0.3
+       ],
+       "col": "#5A5550"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.096,
+        0.24
+       ],
+       "pos": [
+        0.32400000000000007,
+        0.2,
+        -0.3
+       ],
+       "col": "#5A5550",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.032
+       ],
+       "pos": [
+        0.43600000000000005,
+        0.21600000000000003,
+        -0.3
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.020000000000000004,
+        0.4
+       ],
+       "pos": [
+        -0.22000000000000006,
+        0.16000000000000003,
+        -0.3
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "breeding",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 13,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#C9B98A",
+     "motif": "#B5A574",
+     "floor": "#6B4A2E",
+     "ceiling": "#EFE6CC",
+     "signText": "HANOI HEALTH BUREAU"
+    }
+   },
+   "light": "warm",
+   "cam": "reaction-push",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "focus": "official",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.28,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#6B7A8A",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.2,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        70
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.14,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        76
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.08000000000000002,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        82
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        -0.020000000000000018,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        88
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.03999999999999998,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        94
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.09999999999999998,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        100
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.15999999999999998,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        106
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.21999999999999997,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        112
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.27999999999999997,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        118
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.34,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        124
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.39999999999999997,
+        0.65,
+        -0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        130
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.02,
+        0.35
+       ],
+       "pos": [
+        0.4599999999999999,
+        0.65,
+        0.04
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        136
+       ]
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "more",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 14,
+   "theme": {
+    "name": "street"
+   },
+   "light": "night",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "official",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "tired",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "inspector",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "tired",
+     "action": "stand"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -2.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.33
+       ],
+       "pos": [
+        0,
+        0.375,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.18,
+        0.44999999999999996
+       ],
+       "pos": [
+        0.42000000000000004,
+        0.375,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.63,
+        0.405,
+        0
+       ],
+       "col": "#E05A6A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.037500000000000006,
+        0.75
+       ],
+       "pos": [
+        -0.6000000000000001,
+        0.30000000000000004,
+        0
+       ],
+       "col": "#D9A0A0",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ],
+     "motion": {
+      "slide": [
+       0.5,
+       0.0
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "winning",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 15,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3F4A44",
+     "motif": "#34403A",
+     "floor": "#2B3330",
+     "ceiling": "#252B28",
+     "signText": "EGOUT 1902"
+    }
+   },
+   "light": "spot",
+   "cam": "payoff",
+   "cast": [
+    {
+     "who": "inspector",
+     "pos": [
+      0.0,
+      -5.2
+     ],
+     "mood": "sly",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "focus": "inspector",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.35,
+      -5.4
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.374
+       ],
+       "pos": [
+        0,
+        0.425,
+        0
+       ],
+       "col": "#7B7570"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.204,
+        0.51
+       ],
+       "pos": [
+        0.47600000000000003,
+        0.425,
+        0
+       ],
+       "col": "#7B7570",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.068
+       ],
+       "pos": [
+        0.714,
+        0.459,
+        0
+       ],
+       "col": "#E05A6A"
+      }
+     ],
+     "motion": {
+      "bob": 0.12
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "find",
+     "type": "riser"
+    }
+   ]
+  }
+ ]
+}

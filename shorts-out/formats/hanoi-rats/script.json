@@ -1,0 +1,28 @@
+{
+ "title": "The City That Paid For More Rats",
+ "tempo": 1.03, "exaggeration": 0.75, "speed": 1.0, "lead": 0.15, "outro": 0.15, "gap": 0.3, "music": "suspense",
+ "sources": [
+  "Wikipedia, 'Great Hanoi Rat Massacre' (1902 bounty: one cent per rat, proof by tail; rats seen without tails)",
+  "Atlas Obscura, 'Hanoi Rat Massacre 1902' (new sewers = rat paradise; bounty scrapped)",
+  "Saigoneer, Michael Vann on Hanoi's colonial rat hunt (hunters cutting tails and releasing rats; archive tallies)",
+  "Culture Trip, 'The Story Behind Hanoi's Rat Massacre of 1902' (rat farming reported)"
+ ],
+ "lines": [
+  {"text": "the rats have no tails, and the city is paying for it.", "emo": 0.9},
+  {"text": "Hanoi, nineteen oh two. A fancy new sewer opens, and rats move in by the thousands."},
+  {"text": "An official slams the desk. \"Pay everyone for every dead rat!\"", "emo": 0.95},
+  {"text": "\"One cent each. Bring the tail as proof.\"", "emo": 0.85},
+  {"text": "By morning, hunters line up with buckets full of tails."},
+  {"text": "\"Thousands of rats, gone!\" he cheers. \"The plan is working!\"", "emo": 0.9},
+  {"text": "Then an inspector climbs down into the sewer, and a rat sprints past him."},
+  {"text": "\"Wait. Why does that rat have no tail?\"", "emo": 0.9, "pause": 0.6},
+  {"text": "Hunters were cutting off the tails, and letting the rats run free.", "pause": 0.4},
+  {"text": "\"Why kill the rat that lays your paycheck?\"", "emo": 0.85},
+  {"text": "Picture paying a gardener for every weed he pulls."},
+  {"text": "Very soon, that gardener is planting weeds.", "pause": 0.4},
+  {"text": "Reports say some people even started breeding rats, just to cash in."},
+  {"text": "The official stares at the bucket. \"We paid them to make more rats.\"", "emo": 0.9, "pause": 0.5},
+  {"text": "The bounty failed, and the rats kept winning."},
+  {"text": "So pay people to kill a problem, and you might find that", "emo": 0.85}
+ ]
+}

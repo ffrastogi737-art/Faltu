@@ -222,3 +222,14 @@ Sources: Moray 1959 (Q J Exp Psychol); Wood & Cowan 1995 (JEP:LMC); Conway, Cowa
 ```
 **Tags:** cocktail party effect, hear your name, psychology facts, brain facts, selective attention, why you hear your name, attention psychology, did you know, science facts, human brain
 **Experiment:** kind psychology-myth (new, after 3 body-science); story-first hook "someone says your name across a loud party" in comic-panels dialogue panels; 28.6 s, Chatterbox 0.7x1.08. Compare vs chalk-talk 922 / comic-pop 1,001.
+
+## 20 · `20-hanoi-rat-tails.mp4` · tall-tale 3D (TALL-TALE track turn; match #1 and only tall-tale; hook shape: odd-detail statement "the rats have no tails", structure: bounty -> cheat -> analogy -> loop) · status: BUILT (upload pending)
+**Title:** The City That Paid For More Rats
+**Description:**
+```
+Hanoi, 1902: French colonial officials paid a bounty per rat tail to fight a sewer rat boom. Reports say hunters cut off the tails and released the rats, and some people bred rats for the money. A dramatized retelling of a real episode.
+Sources: Wikipedia "Great Hanoi Rat Massacre"; Atlas Obscura "Hanoi Rat Massacre 1902"; Saigoneer (Michael Vann interview); Culture Trip.
+#shorts #history #historyfacts #hanoi #ratmassacre #perverseincentive #didyouknow #storytime
+```
+**Tags:** hanoi rat massacre, rat tail bounty, 1902 hanoi, cobra effect, perverse incentive, weird history, history facts, true story, did you know, colonial history
+**Experiment:** kind history (not in last 5); cinematic mini-movie tall-tale (@aiwithcb formula), 46 s, Chatterbox 1.03; slot explore midday 12:00 IST 22 Nov (target >= 1.2x legacy median 193).
