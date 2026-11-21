@@ -1,25 +1,15 @@
-// Tall Tale shot plans (owner 21 Nov 2026). A shot_plan.json, one shot per script line, drives the whole film: no hand-coded
-// shot functions per video. The look is the @aiwithcb fable look: story-authentic 2D characters inside a matching 3D world.
-// Build-time safety rules (the build stops with a message when one fails):
-//   - every character is dressed for THIS story (plan.characters: role + look with 3+ costume parts); no recurring crew / sitcom archetypes;
-//   - every shot has at least one character (no text-only shots); a poster or diagram never covers more than 45 % of the frame;
-//   - at least every 3rd shot brings something new: a prop, diagram, 3D solid, a costume change ("wear") or a state change ("soot");
-//   - the camera moves in every shot (push, pull or orbit; "none" is refused), eased, and blends from the previous shot over 0.4 s;
-//   - every character stays inside the safe zone (x 70..1010, y 170..1300 of 1080x1920) in every frame of the shot, falls included;
-//   - the head size changes by at most 1.6x from one shot to the next;
-//   - the last script line must not end with . ! ? : it flows into line 1 so the video loops (plan.loop = false opts out).
-// shot_plan.json:
-//   { "setting": "room" | { "name": "room", "o": { "wall": "#..", "signText": "HANGAR 3 · 1943" } }, "music": "tension",
-//     "characters": { "wald": { "role": "1943 mathematician", "look": { "body": "#..", "pattern": "coat", "hat": "fedora", "extra": ["glasses"], "neck": "bowtie" } } },
-//     "shots": [ { "line": 0, "theme": "room", "cam": "medium", "move": "push", "focus": "wald", "yaw": 0,
-//                  "cast": [ { "who": "wald", "pos": "left", "mood": "smug", "action": "walk", "to": [-1.2, -2.8], "dir": "left", "soot": 1,
-//                              "wear": { "hat": "none" }, "kid": false, "talk": true, "look": [0, 0] } ],
-//                  "props": [ { "kind": "diagram", "pos": [1.4, -5], "w": 2, "h": 1.4, "title": "HOLES", "ops": [ { "t": "dot", "x": 0.4, "y": 0.5, "k0": 0.3 } ] },
-//                             { "kind": "solid", "pos": [-1, -4], "parts": [ { "shape": "box", "size": [1, 1, 1], "col": "#.." } ] },
-//                             { "kind": "poster", "pos": "back", "lines": ["!TOP SECRET"], "w": 2.2, "h": 1.3 } ],
-//                  "cues": [ { "word": "stole", "type": "boom", "gain": 0.9 }, { "at": "start", "type": "whoosh" } ] } ] }
-// cam: wide | two-shot | medium | reaction-push | payoff.   move: push | pull | orbit-left | orbit-right (default by cam).
-// action: stand walk run sit jump clap point shock worry fall slip lie dizzy.   pos: left centre right far-left far-right back front, or [x, z] in metres.
+// Tall Tale shot plans (owner 21 Nov 2026): cinematic mini-movies in the @aiwithcb look. A shot_plan.json, one shot per script line, drives
+// the film. Build-time rules (the build stops with a message when one fails; STYLE.md explains each):
+//   format    14-18 shots, 45-60 s, 135-175 words, 3+ lines of quoted dialogue, no textbook definitions, last line flows into line 1 (loop);
+//   cast      characters dressed for THIS story (role + 3 costume parts), no recurring crew looks, every shot has a character;
+//   framing   knee-up / waist-up: primary characters 55-70 % of the frame height by preset, never under 45 % (extras "bg": 30 %);
+//             body inside x 70..1010, head inside y 170..1300; the camera always moves; head size changes <= 1.6x per cut;
+//   sets      no whiteboards / easels / charts / diagrams; posters are small signs in <= 20 % of shots; 3D solids in >= 1/3 of shots,
+//             one 2+ solid comparison, 2+ moving solids, every solid on screen; 2+ set or light changes, never 30 s in one look;
+//             something new at least every 3rd shot.
+// See example/shot_plan.example.json for a full plan.
+// cam: wide | two-shot | medium | reaction-push | payoff.   move: push | pull | orbit-left | orbit-right.   light: day warm dusk night alarm spot.
+// action: stand walk run sit jump clap point shock worry fall slip lie dizzy.   pos: [x, z] metres (or left centre right far-left far-right back front).
 import * as THREE from 'three';
 import { clamp, lerp, eio, eo } from './core/lib.js';
 import { L, Wd, T } from './core/timing.js';
@@ -31,20 +21,25 @@ import { CREW } from './cast.js';
 
 const W = 1080, H = 1920, PERSON = 1.75;
 export const SAFE = { l: 70, r: 1010, t: 170, b: 1300 };
-const HEAD_MIN = 0.07, HEAD_MAX = 0.40, JUMP = 1.6, BLEND = 0.4, POSTER_MAX = 0.45;
+const HEAD_MIN = 0.07, HEAD_MAX = 0.75, JUMP = 1.6, BLEND = 0.4, POSTER_MAX = 0.10, POSTER_SHARE = 0.2;
+const FIG_MIN = 0.45, FIG_BG = 0.30;                 // hard floor: a character smaller than 45 % of the frame height is too far away (background extras: 30 %)
+const SHOTS = [14, 18], WORDS = [135, 175], SECS = [45, 60], ROOM_MAX = 30;   // the mini-movie format; ROOM_MAX = longest stretch (s) in one set + light
 const ROOM_CAM_Z = 1.6;                              // inside a room the camera stays in front of the floor edge (z 2)
-const CAMS = {                                        // head = the figure's height as a fraction of the frame (feet to hat)
-  wide: { fov: 60, head: 0.15, y: 1.6 },
-  'two-shot': { fov: 44, head: 0.22, y: 1.3 },
-  medium: { fov: 40, head: 0.31, y: 1.4 },
-  'reaction-push': { fov: 40, head: 0.24, head2: 0.33, y: 1.4 },
-  payoff: { fov: 40, head: 0.27, y: 0.6 },
+const CAMS = {                                        // head = the figure's height as a share of the 1080x1920 frame: knee-up / waist-up, 55-70 %
+  wide: { fov: 50, head: 0.55, y: 1.5 },               // a group of 2-3, still knee-up (people about 0.7 m apart)
+  'two-shot': { fov: 44, head: 0.58, y: 1.4 },
+  medium: { fov: 40, head: 0.64, y: 1.4 },
+  'reaction-push': { fov: 40, head: 0.58, head2: 0.70, y: 1.4 },
+  payoff: { fov: 40, head: 0.62, y: 0.7 },
 };
 const ACTIONS = new Set(['stand', 'walk', 'run', 'sit', 'jump', 'clap', 'point', 'shock', 'worry', 'fall', 'slip', 'lie', 'dizzy']);
-const PROP_KINDS = new Set(['poster', 'lockers', 'barbell', 'desk', 'diagram', 'solid']);
-export const MUSIC = new Set(['tension', 'bed', 'neon', 'hype', 'none']);
-export const DEFAULT_MUSIC = 'tension';        // the default track of every tall-tale (script.json "music" must match the plan's)
-const MOVES = { push: 1.18, pull: 1 / 1.18, 'orbit-left': 1, 'orbit-right': 1 };      // head growth over the shot; orbits swing the camera +-7 deg
+const PROP_KINDS = new Set(['solid', 'poster', 'lockers', 'barbell', 'desk']);
+const LECTURE = new Set(['diagram', 'whiteboard', 'board', 'easel', 'chart', 'slide', 'blackboard']);   // banned: no character explains in front of a board
+export const LIGHTS = { day: [1, '#FFFFFF'], warm: [0.95, '#FFD9A8'], dusk: [0.85, '#FF9F70'], night: [0.5, '#8FA8FF'], alarm: [0.75, '#FF6B5A'], spot: [0.7, '#FFF2D0'] };
+const DEFINITION = /\b(is defined as|refers to|is a term for|is known as|is called|has a name|according to|wikipedia|in conclusion|in summary|by definition)\b/i;
+export const MUSIC = new Set(['suspense', 'tension', 'bed', 'neon', 'hype', 'none']);
+export const DEFAULT_MUSIC = 'suspense';             // the default track of every tall-tale (script.json "music" must match the plan's)
+const MOVES = { push: 1.1, pull: 1 / 1.1, 'orbit-left': 1, 'orbit-right': 1 };      // head growth over the shot; orbits swing the camera +-7 deg
 const DEFAULT_MOVE = { wide: 'orbit-left', 'two-shot': 'orbit-right', medium: 'push', 'reaction-push': null, payoff: 'pull' };   // reaction-push already pushes in
 const CUE_TYPES = new Set(['inhale', 'heartbeat', 'whoosh', 'slide', 'pop', 'plop', 'gulp', 'boing', 'bubbles', 'sizzle', 'sparkle', 'thud', 'slam', 'tock', 'zip',
   'alarm', 'boom', 'riser', 'ding', 'hit', 'swoosh', 'applause', 'tickclock', 'scratch', 'coin']);   // every type mix.py can play
@@ -89,14 +84,27 @@ export function validatePlan(plan) {
     if (crew.has(crewSig(lk))) throw new Error(`character "${k}" is a recurring crew look from cast.js: design an outfit that belongs to this story`);
   });
   if (plan.music !== undefined && !MUSIC.has(plan.music)) throw new Error(`music "${plan.music}": use ${[...MUSIC].join(', ')} (default ${DEFAULT_MUSIC})`);
+  const n = plan.shots.length;
+  if (n < SHOTS[0] || n > SHOTS[1]) throw new Error(`shot_plan.json: ${n} shots. A tall-tale mini-movie has ${SHOTS[0]}-${SHOTS[1]} cuts (one per script line)`);
+  const lookOf = (sp) => JSON.stringify(sp.theme || plan.setting) + '|' + (sp.light || 'day');
+  const looks = plan.shots.map(lookOf);
+  const shifts = looks.filter((l, i) => i && l !== looks[i - 1]).length;
+  if (shifts < 2) throw new Error(`shot_plan.json: the whole video stays in one look. Change the set ("theme") or the lighting ("light": ${Object.keys(LIGHTS).join(', ')}) at least 2 times`);
+  const posterShots = plan.shots.filter((sp) => (sp.props || []).some((p) => p.kind === 'poster')).length;
+  if (posterShots > Math.floor(n * POSTER_SHARE)) throw new Error(`shot_plan.json: ${posterShots} shots carry a poster (max ${Math.floor(n * POSTER_SHARE)}). Text charts are not the story: show it with 3D objects`);
+  const solids = plan.shots.map((sp) => (sp.props || []).filter((p) => p.kind === 'solid'));
+  if (solids.filter((x) => x.length).length < Math.ceil(n / 3)) throw new Error(`shot_plan.json: only ${solids.filter((x) => x.length).length} shots have a 3D prop ("solid"); at least ${Math.ceil(n / 3)} need one`);
+  if (!solids.some((x) => x.length >= 2)) throw new Error('shot_plan.json: no visual comparison. One shot needs 2+ solids side by side (this vs that, real objects)');
+  if (solids.flat().filter((p) => p.motion).length < 2) throw new Error('shot_plan.json: the props never move. Give at least 2 solids a "motion" (slide, spin, grow, bob)');
   let last = -1;
-  const novel = plan.shots.map((sp) => !!((sp.props || []).length || (sp.cast || []).some((c) => c.soot || c.wear)));
+  const novel = plan.shots.map((sp, i) => !!((sp.props || []).length || (sp.cast || []).some((c) => c.soot || c.wear) || (i && looks[i] !== looks[i - 1])));
   plan.shots.forEach((sp, i) => {
     const id = `shot ${i + 1} (line ${sp.line})`;
     if (!Number.isInteger(sp.line) || sp.line < 0 || sp.line <= last) throw new Error(`${id}: lines must be unique and in increasing order`);
     last = sp.line;
     if (!Array.isArray(sp.cast) || !sp.cast.length) throw new Error(`${id}: no cast. Every shot needs at least one character (text-only shots are banned)`);
     if (!CAMS[sp.cam]) throw new Error(`${id}: cam must be one of ${Object.keys(CAMS).join(', ')}`);
+    if (sp.light !== undefined && !LIGHTS[sp.light]) throw new Error(`${id}: light "${sp.light}" (use ${Object.keys(LIGHTS).join(', ')})`);
     if (sp.move !== undefined && !MOVES[sp.move]) throw new Error(`${id}: move "${sp.move}" is not allowed (the camera always moves: ${Object.keys(MOVES).join(', ')})`);
     const th = sp.theme || plan.setting, name = typeof th === 'string' ? th : th && th.name;
     if (!THEMES[name]) throw new Error(`${id}: unknown theme "${name}" (use ${Object.keys(THEMES).join(', ')})`);
@@ -106,8 +114,9 @@ export function validatePlan(plan) {
     });
     if (sp.cam === 'two-shot' && sp.cast.length < 2) throw new Error(`${id}: two-shot needs 2 characters`);
     (sp.props || []).forEach((p) => {
+      if (LECTURE.has(p.kind)) throw new Error(`${id}: "${p.kind}" is a whiteboard / chart lecture shot, which is banned. Show the idea with real 3D objects ("solid"), a set change or a character's reaction`);
       if (!PROP_KINDS.has(p.kind)) throw new Error(`${id}: unknown prop "${p.kind}" (use ${[...PROP_KINDS].join(', ')})`);
-      if (p.kind === 'diagram' && !(p.ops || []).length) throw new Error(`${id}: a diagram needs "ops" (what is drawn on it)`);
+      if (p.kind === 'poster' && (p.lines || []).length > 2) throw new Error(`${id}: a poster is a sign in the set (2 short lines at most), not a chart`);
       if (p.kind === 'solid' && !(p.parts || []).length) throw new Error(`${id}: a solid needs "parts"`);
     });
     (sp.cues || []).forEach((c) => {
@@ -117,7 +126,7 @@ export function validatePlan(plan) {
   });
   for (let i = 0; i + 2 < plan.shots.length; i++)
     if (!novel[i] && !novel[i + 1] && !novel[i + 2])
-      throw new Error(`shots ${i + 1}-${i + 3} (lines ${plan.shots[i].line}-${plan.shots[i + 2].line}): nothing new for 3 shots in a row. Add a prop, a diagram, a solid, a costume change ("wear") or a state change ("soot")`);
+      throw new Error(`shots ${i + 1}-${i + 3} (lines ${plan.shots[i].line}-${plan.shots[i + 2].line}): nothing new for 3 shots in a row. Add a 3D prop, a set or light change, a costume change ("wear") or a state change ("soot")`);
   return plan;
 }
 
@@ -153,7 +162,8 @@ function poseOf(c, k, t) {
 /** the set (3D world + people + props) for one theme, built once per distinct theme */
 function buildSet(E, th) {
   const def = THEMES[th.name], o = { ...def.o, ...(th.o || {}) };
-  const S = def.build === 'interior' ? WD.interior(E, o) : def.build === 'mainStreet' ? WD.mainStreet(E, {}) : def.build === 'coast' ? WD.coast(E, {}) : WD.meadow(E, {});
+  const S = def.build === 'interior' ? WD.interior(E, o) : def.build === 'mainStreet' ? WD.mainStreet(E, o) : def.build === 'coast' ? WD.coast(E, o) : WD.meadow(E, o);
+  S.lights = []; S.scene.traverse((ob) => { if (ob.isLight) S.lights.push([ob, ob.intensity, ob.color.clone()]); });
   S.kind = SETKIND[def.build]; S.toons = {}; S.shotProps = [];
   (def.props || []).forEach((p) => addProp(S, p, null));
   return S;
@@ -177,7 +187,7 @@ function addProp(S, p, shot) {
   const q = propPos(S, p.kind, p.pos);
   g.position.set(q.x, y, q.z); g.rotation.y = q.ry + toRad(p.ry || 0); S.scene.add(g);
   g.visible = shot == null;                              // theme props stay visible; a shot's props only during that shot
-  if (shot != null) S.shotProps.push({ g, shot });
+  if (shot != null) S.shotProps.push({ g, shot, motion: p.motion || null, base: { x: q.x, y, z: q.z, ry: g.rotation.y } });
   return { g, q, w: p.w || 2.0, h, y, kind: p.kind };
 }
 function toonFor(S, chars, who, kid) {
@@ -192,6 +202,13 @@ function toonFor(S, chars, who, kid) {
 /** builds every shot of the plan. Returns { shots, cues, report }. Call after loadTiming() and buildCaptions(). */
 export function buildPlanShots(E, plan) {
   validatePlan(plan);
+  if (T.dur < SECS[0] || T.dur > SECS[1]) throw new Error(`the narration is ${T.dur.toFixed(1)} s: a tall-tale mini-movie runs ${SECS[0]}-${SECS[1]} s (about ${WORDS[0]}-${WORDS[1]} words; add "pause" before reveals or trim)`);
+  if (T.words.length < WORDS[0] || T.words.length > WORDS[1]) throw new Error(`the script has ${T.words.length} words: write ${WORDS[0]}-${WORDS[1]}`);
+  if (T.lines.length !== plan.shots.length) throw new Error(`the script has ${T.lines.length} lines and the plan ${plan.shots.length} shots: one shot per line`);
+  const said = T.lines.filter((l) => /["\u201C\u201D]/.test(l.text)).length;
+  if (said < 3) throw new Error(`only ${said} lines of dialogue: a mini-movie needs at least 3 lines where a character speaks in quotes ("...") in the moment`);
+  const lecture = T.lines.find((l) => DEFINITION.test(l.text));
+  if (lecture) throw new Error(`line ${lecture.i}: "${lecture.text}" reads like a textbook definition. Show it happening to the characters instead`);
   const lastTxt = String((T.lines[T.lines.length - 1] || {}).text || '').trim();
   if (plan.loop !== false && /[.!?]["')]*$/.test(lastTxt)) throw new Error(`the last script line ends with "${lastTxt.slice(-1)}": write it mid-sentence so it flows into line 1 and the video loops cleanly (or set "loop": false)`);
   const cam = camera(36), sets = new Map(), shots = [], cues = [], report = [];
@@ -234,31 +251,42 @@ export function buildPlanShots(E, plan) {
       cam.updateMatrixWorld(true);
     };
     const toPx = (v) => { const p = v.clone().project(cam); return { x: (p.x + 1) / 2 * W, y: (1 - p.y) / 2 * H, z: p.z }; };
-    const corners = (c, k) => {                          // a box around the cut-out; a fall widens it
-      const p = posAt(c, k), st = poseOf(c, k, 0), h = c.kid ? 1.4 : PERSON, lean = toRad(st.lean);
-      const off = h * Math.abs(Math.sin(lean)), top = Math.max(0.25, h * Math.cos(lean) + 0.15), out = [];
-      const lo = -0.45 - (st.lean < 0 ? off : 0), hi = 0.45 + (st.lean > 0 ? off : 0);      // the box grows only toward the side the body falls to
-      for (const dx of [lo, hi]) for (const y of [0, top]) for (const dz of [-0.25, 0.25]) out.push(new THREE.Vector3(p.x + dx, y, p.z + dz));
-      return out;
+    // framing (owner 21 Nov 2026): knee-up / waist-up. The whole body must stay inside the safe zone left to right, the head (hat to chin)
+    // inside it top to bottom; legs and feet may run into the caption zone or below the frame.
+    const parts = (c, k) => {
+      const p = posAt(c, k), st = poseOf(c, k, 0), h = c.kid ? 1.4 : PERSON, lean = toRad(st.lean), sn = Math.sin(lean), cs = Math.cos(lean);
+      const top = h * cs + 0.15, chin = h * 0.66 * cs, body = [], head = [];
+      const lo = -0.32 - (st.lean < 0 ? h * Math.abs(sn) : 0), hi = 0.32 + (st.lean > 0 ? h * Math.abs(sn) : 0);
+      for (const dx of [lo, hi]) for (const y of [0, top]) for (const dz of [-0.2, 0.2]) body.push(new THREE.Vector3(p.x + dx, y, p.z + dz));
+      for (const y of [top, chin]) for (const dx of [-0.3, 0.3]) head.push(new THREE.Vector3(p.x + h * 0.83 * sn + dx, y, p.z));
+      return { body, head };
     };
     const KS = [0, 0.25, 0.5, 0.75, 1];
     const bbox = (s, sx, sy) => {
-      const b = { l: 1e9, t: 1e9, r: -1e9, b: -1e9, behind: false };
-      for (const k of KS) { apply(state(k, s, sx, sy)); for (const c of cast) for (const v of corners(c, k)) { const q = toPx(v); if (q.z > 1 || q.z < 0) b.behind = true; b.l = Math.min(b.l, q.x); b.r = Math.max(b.r, q.x); b.t = Math.min(b.t, q.y); b.b = Math.max(b.b, q.y); if (S.kind === 'interior' && Math.abs(v.x) > S.w / 2 - 0.2) b.wall = true; } }
+      const b = { l: 1e9, t: 1e9, r: -1e9, chin: -1e9, behind: false };
+      for (const k of KS) {
+        apply(state(k, s, sx, sy));
+        for (const c of cast) {
+          const { body, head } = parts(c, k);
+          for (const v of body) { const q = toPx(v); if (q.z > 1 || q.z < 0) b.behind = true; b.l = Math.min(b.l, q.x); b.r = Math.max(b.r, q.x); if (S.kind === 'interior' && Math.abs(v.x) > S.w / 2 - 0.2) b.wall = true; }
+          for (const v of head) { const q = toPx(v); b.t = Math.min(b.t, q.y); b.chin = Math.max(b.chin, q.y); }
+        }
+      }
       return b;
     };
     let s = 1, sx = 0, sy = 0, b1;
     const solve = () => {
       s = 1; sx = 0; sy = 0;
-      for (let it = 0; it < 16; it++) {                  // dolly out until the whole cast fits in every frame of the shot
-        const b = bbox(s, 0, 0), need = Math.max((b.r - b.l) / (SAFE.r - SAFE.l), (b.b - b.t) / (SAFE.b - SAFE.t));
+      for (let it = 0; it < 16; it++) {                  // dolly out only when the cast is wider than the safe zone (the height check below then decides)
+        const b = bbox(s, 0, 0), need = Math.max((b.r - b.l) / (SAFE.r - SAFE.l), (b.chin - b.t) / (SAFE.b - SAFE.t));
         if (b.behind) s *= 1.15; else if (need > 1) s *= need * 1.03; else break;
       }
-      const b0 = bbox(s, 0, 0);                          // then shift the picture (lens shift: the size stays) to the middle of the safe zone
-      sx = (SAFE.l + SAFE.r) / 2 - (b0.l + b0.r) / 2; sy = (SAFE.t + SAFE.b) / 2 - (b0.t + b0.b) / 2;
+      const b0 = bbox(s, 0, 0);                          // lens shift: centred left-right, the highest hat 50 px under the top of the safe zone
+      sx = (SAFE.l + SAFE.r) / 2 - (b0.l + b0.r) / 2; sy = SAFE.t + 50 - b0.t;
+      if (b0.chin + sy > SAFE.b) sy = SAFE.b - b0.chin;
       return bbox(s, sx, sy);
     };
-    const fits = (b) => !b.behind && !b.wall && b.l >= SAFE.l && b.r <= SAFE.r && b.t >= SAFE.t && b.b <= SAFE.b;
+    const fits = (b) => !b.behind && !b.wall && b.l >= SAFE.l && b.r <= SAFE.r && b.t >= SAFE.t && b.chin <= SAFE.b;
     if (bbox(1, 0, 0).wall) throw new Error(`${id} (line ${sp.line}): a character would walk or fall into the wall of the room. Move the cast or change dir.`);
     const headPx = (k, sx_, sy_) => { apply(state(k, s, sx_, sy_)); const q = posAt(cast[fi], k); const hd = toPx(new THREE.Vector3(q.x, PERSON, q.z)), ft = toPx(new THREE.Vector3(q.x, 0, q.z)); return (ft.y - hd.y) / H; };
     let head0, head1;
@@ -268,7 +296,7 @@ export function buildPlanShots(E, plan) {
         if (fits(b1) || fovV >= 70) break;
       }
       if (!fits(b1))
-        throw new Error(`${id} (line ${sp.line}): the cast does not fit the safe zone even at 70 deg (x ${b1.l | 0}..${b1.r | 0}, y ${b1.t | 0}..${b1.b | 0}). Move the cast closer together or use fewer people.`);
+        throw new Error(`${id} (line ${sp.line}): the cast does not fit the safe zone even at 70 deg (x ${b1.l | 0}..${b1.r | 0}, head y ${b1.t | 0}..${b1.chin | 0}). Move the cast closer together or use fewer people.`);
       head0 = headPx(0, sx, sy); head1 = headPx(1, sx, sy);
       const lo = (prevEnd || 0) / JUMP, hi = (prevEnd || 0) * JUMP;
       if (!prevEnd || pass === 5 || (head0 >= lo && head0 <= hi)) break;
@@ -278,8 +306,21 @@ export function buildPlanShots(E, plan) {
     if (m0.pos.distanceTo(m1.pos) < 0.3 && Math.abs(m0.fov - m1.fov) < 1) throw new Error(`${id} (line ${sp.line}): the camera would not move in this shot (the cast fills the frame, so a push or pull has no room). Use "move": "orbit-left" or "orbit-right"`);
     if (prevEnd && (head0 < prevEnd / JUMP || head0 > prevEnd * JUMP)) console.warn(`${id}: head size ${(head0 / prevEnd).toFixed(2)}x of the shot before (the cast cannot hold 1.6x)`);
     prevEnd = head1;
+    const figH = (c, k) => { apply(state(k, s, sx, sy)); const q = posAt(c, k), hh = c.kid ? 1.4 : PERSON; return (toPx(new THREE.Vector3(q.x, 0, q.z)).y - toPx(new THREE.Vector3(q.x, hh, q.z)).y) / H; };
+    let figMin = 1;
+    cast.forEach((c) => {
+      const m = Math.min(...KS.map((k) => figH(c, k))), need = c.bg ? FIG_BG : FIG_MIN; if (!c.bg) figMin = Math.min(figMin, m);
+      if (m < need) throw new Error(`${id} (line ${sp.line}): ${c.who} is too far away (${(m * 100).toFixed(0)} % of the frame height, min ${need * 100} %${c.bg ? ' for a background extra' : ''}). Waist-up / knee-up framing only: stand the people closer together (two-shot about 0.9 m apart), use fewer people or a closer cam`);
+    });
     // props of this shot + the 45 % poster rule
     const shotProps = (sp.props || []).map((p) => addProp(S, p, i));
+    shotProps.forEach((pr) => {                          // a solid is part of the story: it must be on screen (its centre inside the frame)
+      if (pr.kind !== 'solid') return;
+      apply(state(0.5, s, sx, sy)); S.scene.updateMatrixWorld(true);
+      const q = toPx(new THREE.Box3().setFromObject(pr.g).getCenter(new THREE.Vector3()));
+      if (q.z < 0 || q.z > 1 || q.x < 40 || q.x > W - 40 || q.y < 40 || q.y > H - 40)
+        throw new Error(`${id} (line ${sp.line}): the solid at [${pr.q.x}, ${pr.q.z}] is off screen. Props are part of the story: put them within about 0.7 m of the people (or right behind them)`);
+    });
     shotProps.forEach((pr) => {
       if (pr.kind !== 'poster' && pr.kind !== 'diagram') return;
       const cs = pr.g.rotation.y, pts = [[-pr.w / 2, -pr.h / 2], [pr.w / 2, -pr.h / 2], [pr.w / 2, pr.h / 2], [-pr.w / 2, pr.h / 2]];
@@ -293,7 +334,16 @@ export function buildPlanShots(E, plan) {
       cam: (k) => state(k, s, sx, sy),
       draw(lt, d, t, blit) {
         const k = clamp(lt / d);
-        S.shotProps.forEach((pr) => { pr.g.visible = pr.shot === i; if (pr.shot === i && pr.g.reveal) pr.g.reveal(k); });
+        S.shotProps.forEach((pr) => {
+          pr.g.visible = pr.shot === i; if (pr.shot !== i) return;
+          if (pr.g.reveal) pr.g.reveal(k);
+          const m = pr.motion; if (!m) return;             // active props: slide in, spin, grow, bob over the shot
+          const e = eio(k), [dx, dz] = m.slide || [0, 0];
+          pr.g.position.set(pr.base.x + dx * (e - 1), pr.base.y + (m.bob || 0) * Math.abs(Math.sin(lt * 4)), pr.base.z + dz * (e - 1));
+          pr.g.rotation.y = pr.base.ry + toRad((m.spin || 0) * e); pr.g.scale.setScalar(lerp(m.grow ?? 1, 1, e));
+        });
+        const lt0 = LIGHTS[sp.light || 'day'], tint = new THREE.Color(lt0[1]);
+        S.lights.forEach(([ob, i0, c0]) => { ob.intensity = i0 * lt0[0]; ob.color.copy(c0).multiply(tint); });
         Object.values(S.toons).forEach((tn) => { if (!castSet.has(tn)) tn.group.visible = false; });
         cast.forEach((c) => { const wk = c.wear ? JSON.stringify(c.wear) : ''; if (c.toon.wearKey !== wk) { c.toon.look = { ...c.toon.baseLook, ...(c.wear || {}) }; c.toon.wearKey = wk; c.toon.key = ''; }
           c.toon.group.visible = true; const q = posAt(c, k); c.toon.at(q.x, 0, q.z).set(poseOf(c, k, t)); });
@@ -307,7 +357,7 @@ export function buildPlanShots(E, plan) {
       },
     };
     shots.push(shot);
-    report.push({ id, line: sp.line, set: S.kind, cam: sp.cam, move: mv || 'push (built in)', head0: +head0.toFixed(3), head1: +head1.toFixed(3), box: [b1.l | 0, b1.t | 0, b1.r | 0, b1.b | 0] });
+    report.push({ id, line: sp.line, set: S.kind, cam: sp.cam, move: mv || 'push (built in)', head0: +head0.toFixed(3), head1: +head1.toFixed(3), box: [b1.l | 0, b1.t | 0, b1.r | 0, b1.chin | 0], fig: +figMin.toFixed(3) });
     // sounds: a whoosh on the cut unless the plan turns it off, then the plan's own cues
     const end = i + 1 < plan.shots.length ? L(plan.shots[i + 1].line) - 0.06 : T.dur;
     if (sp.whoosh !== false) cues.push({ t: +at.toFixed(3), type: 'whoosh' });
@@ -315,6 +365,16 @@ export function buildPlanShots(E, plan) {
       const t = c.word !== undefined ? Wd(c.word, sp.line) : c.at === 'start' ? at : c.at === 'end' ? end - 0.05 : at + Number(c.at);
       cues.push({ t: +t.toFixed(3), type: c.type, ...(c.gain !== undefined ? { gain: c.gain } : {}), ...(c.dur !== undefined ? { dur: c.dur } : {}) });
     });
+  });
+  // no single set + light for ROOM_MAX seconds or more
+  let runStart = 0;
+  plan.shots.forEach((sp, i) => {
+    const key = (x) => JSON.stringify(x.theme || plan.setting) + '|' + (x.light || 'day');
+    const nxt = plan.shots[i + 1], end = nxt ? shots[i + 1].at : T.dur;
+    if (!nxt || key(nxt) !== key(sp)) {
+      if (end - shots[runStart].at >= ROOM_MAX) throw new Error(`shots ${runStart + 1}-${i + 1} stay in one set and light for ${(end - shots[runStart].at).toFixed(0)} s (max ${ROOM_MAX} s): change the set or the lighting in between`);
+      runStart = i + 1;
+    }
   });
   return { shots, cues, report };
 }

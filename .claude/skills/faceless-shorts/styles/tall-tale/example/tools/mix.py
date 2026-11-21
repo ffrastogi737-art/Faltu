@@ -4,7 +4,7 @@ No samples, no AI audio, no downloads.
   python3 tools/mix.py [project=.]          → data/mix.wav (48 kHz stereo)
 
 Reads data/cues.json (node tools/capture.mjs cues), data/narration.wav if it exists (voice.py or words.py --audio),
-and script.json "music": "bed" (the procedural score, default) · "none" · "audio/your-track.mp3" (your own royalty-free
+and script.json "music": "suspense" (tall-tale default: cinematic underscore) · "bed" (the procedural score) · "none" · "audio/your-track.mp3" (your own royalty-free
 track, any format ffmpeg reads). The music ducks under the voice.
 
 Sound rules (STYLE.md): every effect is soft and rounded, nothing above ~5 kHz, no ticks / hats / glitches / beeps.
@@ -157,6 +157,35 @@ def music_tension():
     x = lp(x, 2200); fade = np.ones(N); fo = int(1.5 * SR); fade[-fo:] = np.linspace(1, 0, fo); fi = int(0.8 * SR); fade[:fi] *= np.linspace(0, 1, fi)
     return x / (np.abs(x).max() + 1e-9) * fade
 
+def music_suspense():
+    """tall-tale default (owner 21 Nov 2026): a subtle cinematic suspense underscore. Slow minor string pads (Am-F-Dm-E, 4 s each,
+    cross-faded), a soft heartbeat pulse, a faint high shimmer. No fade in or out, so the video loops (script.json "music": "suspense")"""
+    t_all = np.arange(N) / SR; x = np.zeros(N)
+    chords = [[110.0, 130.81, 164.81], [87.31, 110.0, 130.81], [73.42, 87.31, 110.0], [82.41, 103.83, 123.47]]
+    seg, xf = 4.0, 1.0
+    for b in range(int(np.ceil(DUR / seg)) + 1):
+        st = int((b * seg - xf / 2) * SR); n = int((seg + xf) * SR); a0, a1 = max(0, st), min(N, st + n)
+        if a1 <= a0: continue
+        tl = (np.arange(a0, a1) - st) / SR; tg = np.arange(a0, a1) / SR
+        e = np.minimum(np.clip(tl / xf, 0, 1), np.clip((seg + xf - tl) / xf, 0, 1)); e = np.sin(e * np.pi / 2) ** 2
+        y = np.zeros(a1 - a0)
+        for f in chords[b % 4]:
+            for d in (0.997, 1.003):
+                for h in range(1, 6): y += np.sin(2 * np.pi * f * d * h * tg) / h
+        x[a0:a1] += y * e * 0.05
+    x = lp(x, 900)
+    k = 0
+    while True:                                                                   # heartbeat: lub-dub every 1.4 s
+        st = int((0.6 + k * 1.4) * SR)
+        if st >= N: break
+        for off, g in ((0.0, 1.0), (0.22, 0.6)):
+            s0 = st + int(off * SR); th = np.sin(2 * np.pi * 48 * tt(0.18)) * env(int(0.18 * SR), 0.004, 14) * g * 0.6; n = min(len(th), N - s0)
+            if n > 0: x[s0:s0 + n] += th[:n]
+        k += 1
+    x += np.sin(2 * np.pi * 659.3 * t_all) * (0.5 + 0.5 * np.sin(2 * np.pi * t_all / 6)) * 0.015
+    r = int(0.02 * SR); x[:r] *= np.linspace(0, 1, r); x[-r:] *= np.linspace(1, 0, r)   # 20 ms edges only: no audible fade at the loop point
+    return x / (np.abs(x).max() + 1e-9)
+
 # ---------- punchy "hype" effects (comic-pop, 18 Nov 2026): brighter and louder than the soft set ----------
 def reverb(x, d=1.2, mix=0.35):
     ir = noise(d) * np.exp(-np.linspace(0, 7, int(d * SR))); ir = lp(ir, 6000); w = signal.fftconvolve(x, ir)[:len(x) + int(d * SR)]
@@ -240,10 +269,10 @@ if vf.exists():
 # music
 mus = script.get('music', 'bed')
 if mus and mus != 'none':
-    m = music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_neon() if mus == 'neon' else music_hype() if mus == 'hype' else None
+    m = music_suspense() if mus == 'suspense' else music_bed() if mus == 'bed' else music_tension() if mus == 'tension' else music_neon() if mus == 'neon' else music_hype() if mus == 'hype' else None
     if m is None:
         a = load_audio(P / mus)[:N]; m = np.zeros(N); m[:len(a)] = a.mean(1); m /= np.abs(m).max() + 1e-9
-    m = np.stack([m, m], 1) * db((-21 if mus == 'hype' else -24) if voice is not None else -20)
+    m = np.stack([m, m], 1) * db((-21 if mus == 'hype' else -26 if mus == 'suspense' else -24) if voice is not None else -20)
     if voice is not None:                                                        # duck under the voice
         lev = np.abs(voice.mean(1)); lev = signal.lfilter([1 - 0.9995], [1, -0.9995], lev); lev /= lev.max() + 1e-9
         m *= (1 - 0.55 * np.clip(lev * 3, 0, 1))[:, None]

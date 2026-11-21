@@ -1,58 +1,75 @@
 {
  "title": "The Bullet Holes That Fooled The Generals",
+ "tempo": 1.03,
+ "exaggeration": 0.75,
  "speed": 1.0,
  "lead": 0.15,
  "outro": 0.15,
- "gap": 0.18,
- "music": "tension",
+ "gap": 0.3,
+ "music": "suspense",
  "sources": [
-  "EXAMPLE ONLY: re-check with 2 fresh sources before publishing",
+  "EXAMPLE ONLY: dramatized scenes; re-check every fact with 2 fresh sources before publishing",
   "Wikipedia, 'Survivorship bias' (Abraham Wald and the returning WWII bombers)",
   "Mangel & Samaniego, 'Abraham Wald's Work on Aircraft Survivability', Journal of the American Statistical Association 79 (1984)"
  ],
  "lines": [
   {
-   "text": "bombers that came home, riddled with bullet holes!",
+   "text": "the bullet holes are lying.",
    "emo": 0.9
   },
   {
-   "text": "The generals look at the damage and say, armor the holes!"
+   "text": "Nineteen forty-three. Bombers limp back to the runway, wings and tails shredded."
   },
   {
-   "text": "But a mathematician named Abraham Wald stops them."
+   "text": "The general slams the table. \"Bolt armor on every spot that got hit!\"",
+   "emo": 0.95
   },
   {
-   "text": "He asks one strange question: where are the planes that never came back?",
+   "text": "But armor is heavy, and a heavy bomber climbs slowly and burns more fuel."
+  },
+  {
+   "text": "Then a quiet mathematician, Abraham Wald, walks in and stares at the same planes."
+  },
+  {
+   "text": "\"Sir, you are only counting the planes that made it back.\"",
    "emo": 0.85
   },
   {
-   "text": "Every hole on this plane is a hit it survived."
+   "text": "\"So where are the bombers that never landed?\"",
+   "emo": 0.9,
+   "pause": 0.6
   },
   {
-   "text": "The planes hit in the engines crashed, so they are missing from the data."
+   "text": "Nobody in the war room says a word.",
+   "pause": 0.5
   },
   {
-   "text": "Those clean spots are not safe, they are deadly.",
+   "text": "Picture judging a diner only by the people who walk out smiling."
+  },
+  {
+   "text": "You never hear from the guy who went home with food poisoning."
+  },
+  {
+   "text": "Wald points at the engines on the returning planes. Barely a scratch."
+  },
+  {
+   "text": "\"Planes hit here never came home. This is where the armor goes.\"",
+   "emo": 0.9,
+   "pause": 0.5
+  },
+  {
+   "text": "The general hesitates, because one wrong guess costs real crews."
+  },
+  {
+   "text": "Wald's idea flips the whole plan: protect the clean spots.",
+   "pause": 0.4
+  },
+  {
+   "text": "The missing planes were the real evidence all along."
+  },
+  {
+   "text": "So next time you only see the winners, remember that sometimes",
    "emo": 0.85
-  },
-  {
-   "text": "So Wald tells them to armor the engines, where there are no holes at all."
-  },
-  {
-   "text": "The military listens to his math, and the planes get tougher."
-  },
-  {
-   "text": "That mistake has a name: survivorship bias.",
-   "emo": 0.8
-  },
-  {
-   "text": "We only study the winners, and ignore everyone who vanished."
-  },
-  {
-   "text": "So next time you hear a success story, ask who is missing."
-  },
-  {
-   "text": "Because we only ever hear from the"
   }
  ]
 }

@@ -191,8 +191,8 @@ The script chooses the template; a template never forces the script.
    The track of the next solo video is the OPPOSITE of the track of the last solo upload in perf.csv (rows with a real video id; planned rows do not count). No history: TALL-TALE.
    `python3 shorts-out/pick_style.py solo match script.json` prints `TRACK (solo 50/50): TALL-TALE|STANDARD`. `--track tall|standard` is a dry run only (prints "simulated").
    - TALL-TALE turn: match keeps only tall-tale. Build from a shot plan (`styles/tall-tale/STYLE.md`: section 8 pipeline). Content (owner 21 Nov 2026, the @aiwithcb formula): a true historical paradox,
-     bizarre real mystery, mind-bending science idea or "what happens if" story as a visual fable, 30-60 s, 2+ sources, hook inside the action on sentence 1, a new prop/diagram/state every 2-3 lines,
-     a loop-ready last line, characters and props dressed for THIS story (no recurring crew). The setting/cast line that pick_style.py prints is an old rotation hint: ignore it.
+     bizarre real mystery, mind-bending science idea or "what happens if" story as a cinematic mini-movie: 45-60 s, 135-175 words, 14-18 cuts, 2+ sources, in-the-moment dialogue,
+     knee-up framing, real 3D props (no whiteboards), 3+ sets or lights, a loop-ready last line, characters dressed for THIS story (all checked by `capture.mjs check`; STYLE.md). The setting/cast line that pick_style.py prints is an old rotation hint: ignore it.
    - STANDARD turn: tall-tale is removed from the ranking, and the last 3 STANDARD solo styles cannot win (COOLDOWN), unless fewer than 2 would remain. The rest of step 5 as before.
    - This choice replaces the solo routing in step 5 for the track only; the template inside the track is still picked by the match.
    - Backup: `backup_project.sh` copies `shot_plan.json` and writes `track.txt` (TALL-TALE) into formats/<project>/.

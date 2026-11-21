@@ -1,16 +1,13 @@
 {
  "setting": {
-  "name": "room",
+  "name": "meadow",
   "o": {
-   "wall": "#8A8F6A",
-   "motif": "#7B8059",
-   "floor": "#5A5448",
-   "ceiling": "#CFCBB8",
-   "signText": "HANGAR 3 · 1943"
+   "sunset": true,
+   "fenceOn": false
   }
  },
  "track": "TALL-TALE",
- "music": "tension",
+ "music": "suspense",
  "characters": {
   "wald": {
    "role": "Abraham Wald, 1943 mathematician",
@@ -45,7 +42,7 @@
    }
   },
   "mechanic": {
-   "role": "bomber mechanic",
+   "role": "bomber ground mechanic",
    "look": {
     "body": "#3C6FB6",
     "pattern": "overalls",
@@ -58,19 +55,51 @@
      "goggles"
     ]
    }
+  },
+  "diner": {
+   "role": "happy diner customer (the analogy)",
+   "look": {
+    "body": "#D8A43C",
+    "pattern": "stripes",
+    "patCol": "#B5372E",
+    "hat": "boater",
+    "neck": "scarf",
+    "neckCol": "#3C6FB6"
+   }
+  },
+  "sick": {
+   "role": "food-poisoned diner customer (the analogy)",
+   "look": {
+    "body": "#7FAF7A",
+    "pattern": "check",
+    "patCol": "#3E6B3A",
+    "hat": "beanie",
+    "hatCol": "#6B4A7A",
+    "extra": [
+     "glasses"
+    ]
+   }
   }
  },
  "shots": [
   {
    "line": 0,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "dusk",
    "cam": "medium",
    "focus": "mechanic",
    "cast": [
     {
      "who": "mechanic",
      "pos": [
-      -0.8,
-      -5.4
+      -0.4,
+      -3.0
      ],
      "mood": "shock",
      "action": "shock",
@@ -79,570 +108,1073 @@
    ],
    "props": [
     {
-     "kind": "diagram",
+     "kind": "solid",
      "pos": [
-      0.1,
-      -6.3
+      0.4,
+      -6.0
      ],
-     "w": 1.5,
-     "h": 1.1,
-     "title": "RETURNED BOMBER",
-     "ops": [
+     "parts": [
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.25
-        ],
-        [
-         0.52,
-         0.25
-        ]
+       "shape": "cyl",
+       "size": [
+        0.35,
+        3.4
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.95
-        ],
-        [
-         0.52,
-         0.95
-        ]
+       "pos": [
+        0.0,
+        1.0,
+        0.0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
       },
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.42
-        ],
-        [
-         0.12,
-         0.42
-        ]
+       "shape": "cone",
+       "size": [
+        0.35,
+        0.6
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.78
-        ],
-        [
-         0.12,
-         0.78
-        ]
+       "pos": [
+        2.0,
+        1.0,
+        0.0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
       },
       {
-       "t": "ellipse",
-       "x": 0.5,
-       "y": 0.6,
-       "rx": 0.37,
-       "ry": 0.075,
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        1.0,
+        0.08,
+        4.4
+       ],
+       "pos": [
+        0.2,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C"
       },
       {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.4,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        0.6,
+        0.9,
+        0.08
+       ],
+       "pos": [
+        -1.5,
+        1.45,
+        0.0
+       ],
+       "col": "#7C8A5C"
       },
       {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.31,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        1.6
+       ],
+       "pos": [
+        -1.5,
+        1.05,
+        0.0
+       ],
+       "col": "#7C8A5C"
       },
       {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.8,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.89,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "dot",
-       "x": 0.66,
-       "y": 0.3,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.06
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "dot",
-       "x": 0.58,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.14
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "dot",
-       "x": 0.17,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.21
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        -0.6
+       ],
+       "col": "#4A4F55"
       },
       {
-       "t": "dot",
-       "x": 0.15,
-       "y": 0.66,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.28
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        -0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
       },
       {
-       "t": "dot",
-       "x": 0.2,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.36
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        0.6
+       ],
+       "col": "#4A4F55"
       },
       {
-       "t": "dot",
-       "x": 0.35,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.43
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
       },
       {
-       "t": "dot",
-       "x": 0.45,
-       "y": 0.64,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.51
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.1,
+        1.05,
+        1.3
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "dot",
-       "x": 0.28,
-       "y": 0.55,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.58
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.5,
+        1.05,
+        1.9
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "dot",
-       "x": 0.64,
-       "y": 0.9,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.66
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.1,
+        1.05,
+        -1.4
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "dot",
-       "x": 0.6,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.73
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.4,
+        1.05,
+        -2.0
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "dot",
-       "x": 0.5,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.81
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.8,
+        1.15,
+        0.36
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "dot",
-       "x": 0.62,
-       "y": 0.4,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0.89
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.3,
+        0.95,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.5,
+        1.6,
+        0.05
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.6,
+        1.3,
+        0.05
+       ],
+       "col": "#2A1A14"
+      }
+     ],
+     "ry": 30,
+     "motion": {
+      "slide": [
+       3.0,
+       0
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "lying",
+     "type": "boom",
+     "gain": 0.8
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "mechanic",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry"
+    },
+    {
+     "who": "general",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.6,
+      -7.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.35,
+        3.4
+       ],
+       "pos": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.35,
+        0.6
+       ],
+       "pos": [
+        2.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.08,
+        4.4
+       ],
+       "pos": [
+        0.2,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.6,
+        0.9,
+        0.08
+       ],
+       "pos": [
+        -1.5,
+        1.45,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        1.6
+       ],
+       "pos": [
+        -1.5,
+        1.05,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        -0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        -0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.1,
+        1.05,
+        1.3
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.5,
+        1.05,
+        1.9
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.1,
+        1.05,
+        -1.4
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.4,
+        1.05,
+        -2.0
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.8,
+        1.15,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.3,
+        0.95,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.5,
+        1.6,
+        0.05
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.6,
+        1.3,
+        0.05
+       ],
+       "col": "#2A1A14"
+      }
+     ],
+     "ry": -25
+    }
+   ],
+   "cues": [
+    {
+     "word": "shredded",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "motif": "#7B8059",
+     "floor": "#5A5448",
+     "ceiling": "#CFCBB8",
+     "signText": "HANGAR 3 · 1943"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "focus": "general",
+   "cast": [
+    {
+     "who": "general",
+     "pos": [
+      -0.3,
+      -5.2
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.8,
+        0.1
+       ],
+       "pos": [
+        0,
+        1.25,
+        0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.1
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.5,
+        1.4,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.1,
+        1.45,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.4,
+        1.2,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.6,
+        1.5,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.6,
+        1.05,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.25,
+        0.98,
+        0.06
+       ],
+       "col": "#2A1A14"
       }
      ]
     }
    ],
    "cues": [
     {
-     "word": "riddled",
-     "type": "hit"
+     "word": "slams",
+     "type": "slam"
     }
    ]
   },
   {
-   "line": 1,
+   "line": 3,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "motif": "#7B8059",
+     "floor": "#5A5448",
+     "ceiling": "#CFCBB8",
+     "signText": "HANGAR 3 · 1943"
+    }
+   },
+   "light": "warm",
    "cam": "two-shot",
    "cast": [
     {
-     "who": "general",
-     "pos": [
-      -1.1,
-      -5.4
-     ],
-     "mood": "angry",
-     "action": "point",
-     "talk": true
-    },
-    {
      "who": "mechanic",
      "pos": [
-      1.3,
-      -5.4
+      -0.4,
+      -5.2
      ],
      "mood": "worried",
+     "action": "worry"
+    },
+    {
+     "who": "general",
+     "pos": [
+      0.4,
+      -5.2
+     ],
+     "mood": "smug",
      "action": "stand"
     }
    ],
    "props": [
     {
-     "kind": "diagram",
+     "kind": "solid",
      "pos": [
-      0.1,
-      -5.9
+      0.0,
+      -4.5
      ],
-     "w": 1.4,
-     "h": 1.05,
-     "title": "ARMOR HERE!",
-     "ops": [
+     "parts": [
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.25
-        ],
-        [
-         0.52,
-         0.25
-        ]
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.95
-        ],
-        [
-         0.52,
-         0.95
-        ]
+       "pos": [
+        0,
+        0.05,
+        0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#7C838C",
+       "metal": true
       },
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.42
-        ],
-        [
-         0.12,
-         0.42
-        ]
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.78
-        ],
-        [
-         0.12,
-         0.78
-        ]
+       "pos": [
+        0,
+        0.16,
+        0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#8A9199",
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.5,
-       "y": 0.6,
-       "rx": 0.37,
-       "ry": 0.075,
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.27,
+        0
+       ],
+       "col": "#969DA5",
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.4,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.38,
+        0
+       ],
+       "col": "#7C838C",
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.31,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.8,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.89,
-       "rx": 0.035,
-       "ry": 0.05,
-       "col": "#6E7C52",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "dot",
-       "x": 0.66,
-       "y": 0.3,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.58,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.17,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.15,
-       "y": 0.66,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.2,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.35,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.45,
-       "y": 0.64,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.28,
-       "y": 0.55,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.64,
-       "y": 0.9,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.6,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.5,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.62,
-       "y": 0.4,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "arrow",
-       "x": 0.86,
-       "y": 0.5,
-       "x2": 0.68,
-       "y2": 0.32,
-       "col": "#D8343F",
-       "lw": 9
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.49,
+        0
+       ],
+       "col": "#8A9199",
+       "metal": true
       }
-     ]
+     ],
+     "motion": {
+      "grow": 0.2
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "heavy",
+     "type": "thud"
     }
    ]
   },
   {
-   "line": 2,
+   "line": 4,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "motif": "#7B8059",
+     "floor": "#5A5448",
+     "ceiling": "#CFCBB8",
+     "signText": "HANGAR 3 · 1943"
+    }
+   },
+   "light": "warm",
    "cam": "medium",
    "focus": "wald",
    "cast": [
     {
      "who": "wald",
      "pos": [
-      1.4,
+      1.0,
       -5.2
      ],
      "mood": "sly",
      "action": "walk",
      "to": [
-      0.2,
+      0.0,
       -5.2
      ],
-     "dir": "left",
-     "talk": true
+     "dir": "left"
     }
    ]
   },
   {
-   "line": 3,
+   "line": 5,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "motif": "#7B8059",
+     "floor": "#5A5448",
+     "ceiling": "#CFCBB8",
+     "signText": "HANGAR 3 · 1943"
+    }
+   },
+   "light": "warm",
    "cam": "two-shot",
    "cast": [
     {
      "who": "wald",
      "pos": [
-      -1.2,
-      -5.4
+      -0.4,
+      -5.2
      ],
      "mood": "smug",
      "action": "point",
@@ -651,8 +1183,8 @@
     {
      "who": "general",
      "pos": [
-      1.2,
-      -5.4
+      0.4,
+      -5.2
      ],
      "mood": "shock",
      "action": "stand"
@@ -660,73 +1192,215 @@
    ],
    "props": [
     {
-     "kind": "diagram",
+     "kind": "solid",
      "pos": [
-      0.0,
-      -6.2
+      -0.75,
+      -6.0
      ],
-     "w": 1.5,
-     "h": 1.0,
-     "title": "WHERE ARE THEY?",
-     "ops": [
+     "parts": [
       {
-       "t": "ellipse",
-       "x": 0.2,
-       "y": 0.55,
-       "rx": 0.1,
-       "ry": 0.045,
-       "col": "#C9C2B5",
-       "line": "#1F1C33",
-       "k0": 0.1
+       "shape": "box",
+       "size": [
+        1.6,
+        0.8,
+        0.1
+       ],
+       "pos": [
+        0,
+        1.25,
+        0
+       ],
+       "col": "#7C8A5C"
       },
       {
-       "t": "ellipse",
-       "x": 0.5,
-       "y": 0.55,
-       "rx": 0.1,
-       "ry": 0.045,
-       "col": "#C9C2B5",
-       "line": "#1F1C33",
-       "k0": 0.30000000000000004
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.1
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.8,
-       "y": 0.55,
-       "rx": 0.1,
-       "ry": 0.045,
-       "col": "#C9C2B5",
-       "line": "#1F1C33",
-       "k0": 0.5
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.5,
+        1.4,
+        0.06
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "text",
-       "x": 0.2,
-       "y": 0.55,
-       "s": "?",
-       "size": 0.2,
-       "col": "#1F1C33",
-       "k0": 0.1
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        0.06
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "text",
-       "x": 0.5,
-       "y": 0.55,
-       "s": "?",
-       "size": 0.2,
-       "col": "#1F1C33",
-       "k0": 0.30000000000000004
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.1,
+        1.45,
+        0.06
+       ],
+       "col": "#2A1A14"
       },
       {
-       "t": "text",
-       "x": 0.8,
-       "y": 0.55,
-       "s": "?",
-       "size": 0.2,
-       "col": "#1F1C33",
-       "k0": 0.5
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.4,
+        1.2,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.6,
+        1.5,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        -0.6,
+        1.05,
+        0.06
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.05
+       ],
+       "pos": [
+        0.25,
+        0.98,
+        0.06
+       ],
+       "col": "#2A1A14"
       }
      ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.75,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.32,
+        0.7
+       ],
+       "pos": [
+        0,
+        1.2,
+        0
+       ],
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "col": "#2F78C8",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.1
+       ],
+       "pos": [
+        0,
+        1.2,
+        0.4
+       ],
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "col": "#B33A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.1
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "motif": "#7B8059",
+     "floor": "#5A5448",
+     "ceiling": "#CFCBB8",
+     "signText": "HANGAR 3 · 1943"
+    }
+   },
+   "light": "spot",
+   "cam": "reaction-push",
+   "focus": "wald",
+   "cast": [
+    {
+     "who": "wald",
+     "pos": [
+      0.0,
+      -5.2
+     ],
+     "mood": "sly",
+     "action": "stand",
+     "talk": true
     }
    ],
    "cues": [
@@ -737,121 +1411,682 @@
    ]
   },
   {
-   "line": 4,
-   "cam": "reaction-push",
-   "focus": "mechanic",
-   "cast": [
-    {
-     "who": "mechanic",
-     "pos": [
-      0.0,
-      -5.2
-     ],
-     "mood": "neutral",
-     "action": "stand",
-     "talk": true
+   "line": 7,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#2E3B55",
+     "motif": "#3A4A68",
+     "floor": "#4A3A30",
+     "ceiling": "#1E2433",
+     "signText": "WAR ROOM"
     }
-   ]
-  },
-  {
-   "line": 5,
-   "cam": "medium",
-   "move": "pull",
-   "focus": "mechanic",
+   },
+   "light": "night",
+   "cam": "two-shot",
    "cast": [
+    {
+     "who": "general",
+     "pos": [
+      -0.4,
+      -5.0
+     ],
+     "mood": "shock",
+     "action": "shock"
+    },
     {
      "who": "mechanic",
      "pos": [
-      -0.7,
-      -5.2
+      0.4,
+      -5.0
      ],
      "mood": "worried",
-     "action": "worry",
-     "soot": 1,
-     "talk": true
+     "action": "stand"
     }
    ],
    "props": [
     {
      "kind": "solid",
      "pos": [
-      0.3,
-      -4.6
+      0.0,
+      -5.8
      ],
      "parts": [
       {
-       "shape": "cyl",
+       "shape": "box",
        "size": [
-        0.42,
-        0.6
+        1.8,
+        0.08,
+        1.0
        ],
        "pos": [
         0,
-        0.75,
+        0.85,
         0
        ],
+       "col": "#5A3E2A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        -0.8,
+        0.41,
+        -0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        -0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        -0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.105,
+        1.02
+       ],
+       "pos": [
+        0.0,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
        "rot": [
-        90,
         0,
-        0
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.105,
+        0.18
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.3,
+        0.024,
+        1.32
+       ],
+       "pos": [
+        0.06,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.18,
+        0.27,
+        0.024
+       ],
+       "pos": [
+        -0.45,
+        1.335,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.15,
+        0.018,
+        0.48
+       ],
+       "pos": [
+        -0.45,
+        1.215,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        -0.48
        ],
        "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
        "metal": true
       },
       {
        "shape": "cyl",
        "size": [
-        0.22,
-        0.2
+        0.051,
+        0.18
        ],
        "pos": [
-        0,
-        0.75,
-        0.38
+        0.105,
+        1.1760000000000002,
+        -0.27
        ],
+       "col": "#4A4F55",
        "rot": [
-        90,
         0,
-        0
+        0,
+        90
        ],
-       "col": "#B33A2E",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.27
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.48
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
        "metal": true
       },
       {
        "shape": "box",
        "size": [
-        0.9,
-        0.5,
-        0.7
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        -0.18
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        -0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        0.18
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        0.03,
+        1.215,
+        0.39
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        0.15,
+        1.215,
+        0.57
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        -0.03,
+        1.215,
+        -0.42
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.215,
+        -0.6
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        -0.24,
+        1.245,
+        0.108
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        -0.09,
+        1.185,
+        0.108
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        0.18,
+        1.26,
+        0.108
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        -0.45,
+        1.38,
+        0.015
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.018
+       ],
+       "pos": [
+        -0.48,
+        1.29,
+        0.015
+       ],
+       "col": "#2A1A14"
+      }
+     ],
+     "motion": {
+      "spin": 40
+     }
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": "street",
+   "light": "day",
+   "cam": "medium",
+   "focus": "diner",
+   "cast": [
+    {
+     "who": "diner",
+     "pos": [
+      0.6,
+      -2.6
+     ],
+     "mood": "laugh",
+     "action": "walk",
+     "to": [
+      -0.3,
+      -2.6
+     ],
+     "dir": "left"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -3.3
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.3,
+        0.06
        ],
        "pos": [
         0,
-        0.25,
+        0.92,
         0
        ],
-       "col": "#5B3A28"
+       "col": "#E9E2D0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.18,
+        0.08
+       ],
+       "pos": [
+        0,
+        0.99,
+        0
+       ],
+       "col": "#D9A35A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.18,
+        0.05
+       ],
+       "pos": [
+        0,
+        1.05,
+        0
+       ],
+       "col": "#5A3322"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.17
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#E3A857"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.8,
+        0.06,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.86,
+        0
+       ],
+       "col": "#C9603F"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        0.84
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
+      }
+     ],
+     "motion": {
+      "bob": 0.03
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "smiling",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": "street",
+   "light": "day",
+   "cam": "reaction-push",
+   "focus": "sick",
+   "cast": [
+    {
+     "who": "sick",
+     "pos": [
+      0.0,
+      -2.6
+     ],
+     "mood": "sad",
+     "action": "worry",
+     "sweat": 1
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -3.3
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.3,
+        0.06
+       ],
+       "pos": [
+        0,
+        0.92,
+        0
+       ],
+       "col": "#E9E2D0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.16
+       ],
+       "pos": [
+        0,
+        1.0,
+        0
+       ],
+       "col": "#8FBF5A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.8,
+        0.06,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.86,
+        0
+       ],
+       "col": "#C9603F"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        0.84
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
       }
      ]
     }
    ],
    "cues": [
     {
-     "word": "crashed",
-     "type": "boom",
-     "gain": 0.9
+     "word": "poisoning",
+     "type": "gulp"
     }
    ]
   },
   {
-   "line": 6,
-   "cam": "payoff",
+   "line": 10,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#2E3B55",
+     "motif": "#3A4A68",
+     "floor": "#4A3A30",
+     "ceiling": "#1E2433",
+     "signText": "WAR ROOM"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
    "focus": "wald",
    "cast": [
     {
      "who": "wald",
      "pos": [
-      -0.6,
-      -5.2
+      -0.4,
+      -5.0
      ],
      "mood": "smug",
      "action": "point",
@@ -860,309 +2095,421 @@
    ],
    "props": [
     {
-     "kind": "diagram",
+     "kind": "solid",
      "pos": [
       0.3,
-      -6.3
+      -5.8
      ],
-     "w": 1.5,
-     "h": 1.1,
-     "title": "NO HOLES = DEAD",
-     "ops": [
+     "parts": [
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.25
-        ],
-        [
-         0.52,
-         0.25
-        ]
+       "shape": "box",
+       "size": [
+        1.8,
+        0.08,
+        1.0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.4,
-         0.6
-        ],
-        [
-         0.6,
-         0.6
-        ],
-        [
-         0.7,
-         0.95
-        ],
-        [
-         0.52,
-         0.95
-        ]
+       "pos": [
+        0,
+        0.85,
+        0
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#5A3E2A"
       },
       {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.42
-        ],
-        [
-         0.12,
-         0.42
-        ]
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
-      },
-      {
-       "t": "poly",
-       "pts": [
-        [
-         0.14,
-         0.6
-        ],
-        [
-         0.24,
-         0.6
-        ],
-        [
-         0.22,
-         0.78
-        ],
-        [
-         0.12,
-         0.78
-        ]
+       "pos": [
+        -0.8,
+        0.41,
+        -0.4
        ],
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "col": "#3A2A1C"
       },
       {
-       "t": "ellipse",
-       "x": 0.5,
-       "y": 0.6,
-       "rx": 0.37,
-       "ry": 0.075,
-       "col": "#8A9A6B",
-       "line": "#1F1C33"
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        -0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
       },
       {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.4,
-       "rx": 0.035,
-       "ry": 0.05,
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        -0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.105,
+        1.02
+       ],
+       "pos": [
+        0.0,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.105,
+        0.18
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.3,
+        0.024,
+        1.32
+       ],
+       "pos": [
+        0.06,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.18,
+        0.27,
+        0.024
+       ],
+       "pos": [
+        -0.45,
+        1.335,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.15,
+        0.018,
+        0.48
+       ],
+       "pos": [
+        -0.45,
+        1.215,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        -0.48
+       ],
        "col": "#2F78C8",
-       "line": "#1F1C33"
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.31,
-       "rx": 0.035,
-       "ry": 0.05,
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        -0.27
+       ],
        "col": "#2F78C8",
-       "line": "#1F1C33"
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.55,
-       "y": 0.8,
-       "rx": 0.035,
-       "ry": 0.05,
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.27
+       ],
        "col": "#2F78C8",
-       "line": "#1F1C33"
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.89,
-       "rx": 0.035,
-       "ry": 0.05,
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.48
+       ],
        "col": "#2F78C8",
-       "line": "#1F1C33"
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
       },
       {
-       "t": "dot",
-       "x": 0.66,
-       "y": 0.3,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
+       "shape": "box",
+       "size": [
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        -0.18
+       ],
+       "col": "#4A4F55"
       },
       {
-       "t": "dot",
-       "x": 0.58,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        -0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
       },
       {
-       "t": "dot",
-       "x": 0.17,
-       "y": 0.5,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
+       "shape": "box",
+       "size": [
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        0.18
+       ],
+       "col": "#4A4F55"
       },
       {
-       "t": "dot",
-       "x": 0.15,
-       "y": 0.66,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.2,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.35,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.45,
-       "y": 0.64,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.28,
-       "y": 0.55,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.64,
-       "y": 0.9,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.6,
-       "y": 0.72,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.5,
-       "y": 0.58,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "dot",
-       "x": 0.62,
-       "y": 0.4,
-       "r": 0.02,
-       "col": "#D8343F",
-       "k0": 0
-      },
-      {
-       "t": "arrow",
-       "x": 0.86,
-       "y": 0.2,
-       "x2": 0.62,
-       "y2": 0.34,
-       "col": "#2F78C8",
-       "lw": 9
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
       }
-     ]
-    }
-   ],
-   "cues": [
-    {
-     "word": "deadly",
-     "type": "thud"
+     ],
+     "motion": {
+      "spin": 60
+     }
     }
    ]
   },
   {
-   "line": 7,
+   "line": 11,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#2E3B55",
+     "motif": "#3A4A68",
+     "floor": "#4A3A30",
+     "ceiling": "#1E2433",
+     "signText": "WAR ROOM"
+    }
+   },
+   "light": "night",
    "cam": "two-shot",
    "cast": [
     {
      "who": "wald",
      "pos": [
-      -1.1,
-      -5.4
+      -0.4,
+      -5.0
      ],
      "mood": "proud",
      "action": "point",
      "talk": true
     },
     {
-     "who": "mechanic",
+     "who": "general",
      "pos": [
-      1.0,
-      -5.4
+      0.4,
+      -5.0
      ],
-     "mood": "happy",
-     "action": "clap"
+     "mood": "worried",
+     "action": "stand"
     }
    ],
    "props": [
     {
      "kind": "solid",
      "pos": [
-      0.0,
-      -4.6
+      -0.6,
+      -5.8
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.32,
+        0.7
+       ],
+       "pos": [
+        0,
+        1.2,
+        0
+       ],
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "col": "#2F78C8",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.1
+       ],
+       "pos": [
+        0,
+        1.2,
+        0.4
+       ],
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "col": "#B33A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.1
+       ],
+       "pos": [
+        0,
+        0.42,
+        0
+       ],
+       "col": "#4A4F55",
+       "metal": true
+      }
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.6,
+      -5.6
      ],
      "parts": [
       {
        "shape": "box",
        "size": [
-        1.0,
-        0.12,
-        0.7
+        0.9,
+        0.1,
+        0.6
        ],
        "pos": [
         0,
-        0.06,
+        0.05,
         0
        ],
        "col": "#7C838C",
@@ -1172,12 +2519,12 @@
        "shape": "box",
        "size": [
         0.9,
-        0.12,
-        0.65
+        0.1,
+        0.6
        ],
        "pos": [
-        0.03,
-        0.18,
+        0,
+        0.16,
         0
        ],
        "col": "#8A9199",
@@ -1186,19 +2533,52 @@
       {
        "shape": "box",
        "size": [
-        0.8,
-        0.12,
+        0.9,
+        0.1,
         0.6
        ],
        "pos": [
-        -0.02,
-        0.3,
+        0,
+        0.27,
         0
        ],
        "col": "#969DA5",
        "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.38,
+        0
+       ],
+       "col": "#7C838C",
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.49,
+        0
+       ],
+       "col": "#8A9199",
+       "metal": true
       }
-     ]
+     ],
+     "motion": {
+      "grow": 0.1
+     }
     }
    ],
    "cues": [
@@ -1209,109 +2589,400 @@
    ]
   },
   {
-   "line": 8,
-   "cam": "wide",
+   "line": 12,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#2E3B55",
+     "motif": "#3A4A68",
+     "floor": "#4A3A30",
+     "ceiling": "#1E2433",
+     "signText": "WAR ROOM"
+    }
+   },
+   "light": "alarm",
+   "cam": "reaction-push",
+   "focus": "general",
    "cast": [
     {
      "who": "general",
      "pos": [
-      -1.6,
-      -5.4
-     ],
-     "mood": "happy",
-     "action": "clap"
-    },
-    {
-     "who": "wald",
-     "pos": [
       0.0,
-      -5.4
+      -5.0
      ],
-     "mood": "proud",
-     "action": "stand",
-     "talk": true
-    },
-    {
-     "who": "mechanic",
-     "pos": [
-      1.6,
-      -5.4
-     ],
-     "mood": "happy",
-     "action": "clap"
+     "mood": "worried",
+     "action": "worry",
+     "sweat": 1
     }
    ],
    "cues": [
     {
-     "word": "tougher",
-     "type": "ding"
+     "word": "crews",
+     "type": "heartbeat"
     }
    ]
   },
   {
-   "line": 9,
-   "cam": "medium",
-   "focus": "wald",
-   "cast": [
-    {
-     "who": "wald",
-     "pos": [
-      -0.5,
-      -5.2
-     ],
-     "mood": "smug",
-     "action": "point",
-     "talk": true,
-     "wear": {
-      "hat": "none"
-     }
+   "line": 13,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#2E3B55",
+     "motif": "#3A4A68",
+     "floor": "#4A3A30",
+     "ceiling": "#1E2433",
+     "signText": "WAR ROOM"
     }
-   ],
-   "props": [
-    {
-     "kind": "diagram",
-     "pos": [
-      0.4,
-      -6.3
-     ],
-     "w": 1.6,
-     "h": 1.1,
-     "title": "SURVIVORSHIP BIAS",
-     "ops": [
-      {
-       "t": "text",
-       "x": 0.5,
-       "y": 0.52,
-       "s": "WE ONLY SEE",
-       "size": 0.13
-      },
-      {
-       "t": "text",
-       "x": 0.5,
-       "y": 0.72,
-       "s": "THE SURVIVORS",
-       "size": 0.13,
-       "col": "#D8343F"
-      }
-     ]
-    }
-   ],
-   "cues": [
-    {
-     "word": "survivorship",
-     "type": "ding"
-    }
-   ]
-  },
-  {
-   "line": 10,
+   },
+   "light": "night",
    "cam": "two-shot",
    "cast": [
     {
      "who": "general",
      "pos": [
-      -1.2,
-      -5.4
+      -0.4,
+      -5.0
+     ],
+     "mood": "happy",
+     "action": "clap"
+    },
+    {
+     "who": "wald",
+     "pos": [
+      0.4,
+      -5.0
+     ],
+     "mood": "proud",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -5.9
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.8,
+        0.08,
+        1.0
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#5A3E2A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        -0.8,
+        0.41,
+        -0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        -0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        -0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.08,
+        0.82,
+        0.08
+       ],
+       "pos": [
+        0.8,
+        0.41,
+        0.4
+       ],
+       "col": "#3A2A1C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.105,
+        1.02
+       ],
+       "pos": [
+        0.0,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.105,
+        0.18
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.3,
+        0.024,
+        1.32
+       ],
+       "pos": [
+        0.06,
+        1.2,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.18,
+        0.27,
+        0.024
+       ],
+       "pos": [
+        -0.45,
+        1.335,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.15,
+        0.018,
+        0.48
+       ],
+       "pos": [
+        -0.45,
+        1.215,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        -0.48
+       ],
+       "col": "#2F78C8",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        -0.27
+       ],
+       "col": "#2F78C8",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.27
+       ],
+       "col": "#2F78C8",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.051,
+        0.18
+       ],
+       "pos": [
+        0.105,
+        1.1760000000000002,
+        0.48
+       ],
+       "col": "#2F78C8",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        -0.18
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        -0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.018,
+        0.18,
+        0.018
+       ],
+       "pos": [
+        0.12,
+        1.065,
+        0.18
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.066,
+        0.036
+       ],
+       "pos": [
+        0.12,
+        0.975,
+        0.18
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      }
+     ],
+     "motion": {
+      "spin": -50
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "flips",
+     "type": "riser"
+    }
+   ]
+  },
+  {
+   "line": 14,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "mechanic",
+     "pos": [
+      -0.4,
+      -3.0
      ],
      "mood": "sad",
      "action": "stand"
@@ -1319,8 +2990,447 @@
     {
      "who": "wald",
      "pos": [
-      1.2,
-      -5.4
+      0.4,
+      -3.0
+     ],
+     "mood": "smug",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -1.0,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        3.4,
+        0.02,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.01,
+        0
+       ],
+       "col": "#3A3328"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        0.02,
+        4.2
+       ],
+       "pos": [
+        0.2,
+        0.01,
+        0
+       ],
+       "col": "#3A3328"
+      }
+     ],
+     "ry": 20
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      1.6,
+      -7.5
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        3.4,
+        0.02,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.01,
+        0
+       ],
+       "col": "#3A3328"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        0.02,
+        4.2
+       ],
+       "pos": [
+        0.2,
+        0.01,
+        0
+       ],
+       "col": "#3A3328"
+      }
+     ],
+     "ry": -15
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.4,
+      -9.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.35,
+        3.4
+       ],
+       "pos": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.35,
+        0.6
+       ],
+       "pos": [
+        2.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.08,
+        4.4
+       ],
+       "pos": [
+        0.2,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.6,
+        0.9,
+        0.08
+       ],
+       "pos": [
+        -1.5,
+        1.45,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        1.6
+       ],
+       "pos": [
+        -1.5,
+        1.05,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        -0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        -0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.1,
+        1.05,
+        1.3
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.5,
+        1.05,
+        1.9
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.1,
+        1.05,
+        -1.4
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.4,
+        1.05,
+        -2.0
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.8,
+        1.15,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.3,
+        0.95,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.5,
+        1.6,
+        0.05
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.6,
+        1.3,
+        0.05
+       ],
+       "col": "#2A1A14"
+      }
+     ],
+     "ry": 30
+    }
+   ]
+  },
+  {
+   "line": 15,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "focus": "wald",
+   "cast": [
+    {
+     "who": "wald",
+     "pos": [
+      0.0,
+      -3.0
      ],
      "mood": "sly",
      "action": "point",
@@ -1329,223 +3439,346 @@
    ],
    "props": [
     {
-     "kind": "diagram",
+     "kind": "solid",
      "pos": [
-      0.0,
-      -6.2
+      -0.6,
+      -6.5
      ],
-     "w": 1.5,
-     "h": 1.1,
-     "title": "WHO WE STUDY",
-     "ops": [
+     "parts": [
       {
-       "t": "rect",
-       "x": 0.12,
-       "y": 0.25,
-       "w": 0.3,
-       "h": 0.62,
-       "col": "#4FA36B",
-       "line": "#1F1C33"
+       "shape": "cyl",
+       "size": [
+        0.35,
+        3.4
+       ],
+       "pos": [
+        0.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        90
+       ]
       },
       {
-       "t": "text",
-       "x": 0.27,
-       "y": 0.56,
-       "s": "STUDIED",
-       "size": 0.09,
-       "col": "#FFFFFF"
+       "shape": "cone",
+       "size": [
+        0.35,
+        0.6
+       ],
+       "pos": [
+        2.0,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
       },
       {
-       "t": "rect",
-       "x": 0.58,
-       "y": 0.76,
-       "w": 0.3,
-       "h": 0.11,
-       "col": "#C9C2B5",
-       "line": "#1F1C33",
-       "k0": 0.35
+       "shape": "box",
+       "size": [
+        1.0,
+        0.08,
+        4.4
+       ],
+       "pos": [
+        0.2,
+        1.0,
+        0.0
+       ],
+       "col": "#7C8A5C"
       },
       {
-       "t": "text",
-       "x": 0.73,
-       "y": 0.7,
-       "s": "VANISHED",
-       "size": 0.08,
-       "col": "#1F1C33",
-       "k0": 0.35
+       "shape": "box",
+       "size": [
+        0.6,
+        0.9,
+        0.08
+       ],
+       "pos": [
+        -1.5,
+        1.45,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        1.6
+       ],
+       "pos": [
+        -1.5,
+        1.05,
+        0.0
+       ],
+       "col": "#7C8A5C"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        -0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        0.9
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.17,
+        0.6
+       ],
+       "pos": [
+        0.35,
+        0.92,
+        1.6
+       ],
+       "col": "#4A4F55",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        -0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        -0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.06,
+        0.6,
+        0.06
+       ],
+       "pos": [
+        0.4,
+        0.55,
+        0.6
+       ],
+       "col": "#4A4F55"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.12
+       ],
+       "pos": [
+        0.4,
+        0.25,
+        0.6
+       ],
+       "col": "#222222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.1,
+        1.05,
+        1.3
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.5,
+        1.05,
+        1.9
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.1,
+        1.05,
+        -1.4
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.4,
+        1.05,
+        -2.0
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.8,
+        1.15,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -0.3,
+        0.95,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        0.6,
+        1.2,
+        0.36
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.5,
+        1.6,
+        0.05
+       ],
+       "col": "#2A1A14"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.06
+       ],
+       "pos": [
+        -1.6,
+        1.3,
+        0.05
+       ],
+       "col": "#2A1A14"
       }
-     ]
-    }
-   ]
-  },
-  {
-   "line": 11,
-   "cam": "reaction-push",
-   "focus": "wald",
-   "cast": [
-    {
-     "who": "wald",
-     "pos": [
-      0.0,
-      -5.2
      ],
-     "mood": "smug",
-     "action": "point",
-     "talk": true
-    }
-   ],
-   "props": [
-    {
-     "kind": "diagram",
-     "pos": [
-      0.9,
-      -6.3
-     ],
-     "w": 1.5,
-     "h": 1.1,
-     "title": "SUCCESS STORIES",
-     "ops": [
-      {
-       "t": "ellipse",
-       "x": 0.16,
-       "y": 0.38,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.05
-      },
-      {
-       "t": "ellipse",
-       "x": 0.38,
-       "y": 0.38,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.13
-      },
-      {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.38,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.21
-      },
-      {
-       "t": "ellipse",
-       "x": 0.8200000000000001,
-       "y": 0.38,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.29
-      },
-      {
-       "t": "ellipse",
-       "x": 0.16,
-       "y": 0.64,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.37
-      },
-      {
-       "t": "ellipse",
-       "x": 0.38,
-       "y": 0.64,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.45
-      },
-      {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.64,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.53
-      },
-      {
-       "t": "ellipse",
-       "x": 0.8200000000000001,
-       "y": 0.64,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#4FA36B",
-       "line": "#1F1C33",
-       "k0": 0.61
-      },
-      {
-       "t": "ellipse",
-       "x": 0.6,
-       "y": 0.38,
-       "rx": 0.07,
-       "ry": 0.09,
-       "col": "#F4EBD6",
-       "line": "#D8343F",
-       "lw": 8,
-       "k0": 0.75
-      },
-      {
-       "t": "text",
-       "x": 0.6,
-       "y": 0.38,
-       "s": "?",
-       "size": 0.16,
-       "col": "#D8343F",
-       "k0": 0.75
-      }
-     ]
-    }
-   ],
-   "cues": [
-    {
-     "word": "missing",
-     "type": "riser"
-    }
-   ]
-  },
-  {
-   "line": 12,
-   "cam": "wide",
-   "cast": [
-    {
-     "who": "general",
-     "pos": [
-      -1.6,
-      -5.4
-     ],
-     "mood": "worried",
-     "action": "stand"
-    },
-    {
-     "who": "wald",
-     "pos": [
-      0.0,
-      -5.4
-     ],
-     "mood": "smug",
-     "action": "stand",
-     "talk": true
-    },
-    {
-     "who": "mechanic",
-     "pos": [
-      1.6,
-      -5.4
-     ],
-     "mood": "shock",
-     "action": "stand"
+     "ry": -30,
+     "motion": {
+      "slide": [
+       -2.0,
+       0
+      ]
+     }
     }
    ]
   }
