@@ -32,16 +32,25 @@ clip not downloadable) the run is a STANDARD one and commentary stays due for th
    swallowed the last ~3 s of every track and `amix` stopped with it), the beat fades out only in the last 0.3 s, so the end is never silent.
    Retention polish: a 5 px glowing #FFE600 progress bar on the very top edge fills 0-100 % over the whole video; a 2-frame 3 px micro-shake pulses on the hook (0.0 s) and
    poll entrances; the closing poll card is held at least 2.0 s (`POLL_HOLD`; if the voice ends earlier the video tail is extended, which needs a `pick` segment of the longer length).
-5. QA: `render_commentary.py sheet <proj>` -> `review/sheet.png` (one frame per card, labelled); read it, then check the facts once more.
+5. QA: `render_commentary.py sheet <proj>` -> `review/sheet.jpg` (one frame per card AND per callout, labelled); read it, then check the facts once more.
 6. DELIVER as usual: `backup_project.sh <proj>` (copies script.json + words/lines), slot.py gta, YouTube + IG, perf.csv row with style `gta-commentary`.
    Log these videos in `shorts-out/gta-commentary/README.md`, not in gta6-channel/README.md (keeps the Standard sameness check untouched).
+
+## Callouts + the 3-beat curiosity standard (owner 21 Nov 2026; checked at render)
+`script.json` `"callouts":[{"beat":2,"type":"ring"|"arrow"|"spotlight","x":fx,"y":fy,"r":fr | "x2":fx,"y2":fy,"start":0.3,"dur":1.6}]` (fractions of the 1080x1920 frame; `beat` = index in `popups[]`;
+`start`/`dur` = seconds from that card's start, so a callout lands on the reveal word). Put them over the detail you talk about (look at the card in the sheet).
+- **ring**: a pulsing target ring that grows in and pings outward. **arrow**: draws on toward `x2,y2` (the head). **spotlight**: the frame dims 62 % and a bright hole closes in on the target (`r` = hole radius).
+- Every callout also punches the BACKGROUND in (+7 % over 0.55 s, eased back) and fires a `ding` (ring, spotlight) or `hit` (arrow) from the existing mix.py cues. mix.py is never changed.
+- Refused at render: a callout whose `beat` has no card (orphan), a bad type, a missing `r` or arrow head, one that runs past the end of its card (`start + dur` must fit the card), `dur` under 0.5 s.
+- **3 beats**: (1) the 0.0 s hook is a visual question: a `?` in its banner, or a callout on beat 0. (2) Evidence: at least 2 callouts on the middle cards, one of them a spotlight.
+  (3) Twist + loop: the last card is the poll, and the LAST SPOKEN LINE has no `. ! ?`: it stops mid-sentence and flows into line 1 ("...so tell us below, do you think" -> "a painting in GTA Online might secretly be the GTA 6 map."). No fade-out of the picture.
 
 ## Content rules (owner 20 Nov 2026; these are hard)
 - Every beat maps to a real visual asset: `kind: text` (a plain text box) is refused by check_popups. First card = `hook` at 0.0 s, last card = `poll`.
 - Never state or imply a release / availability / confirmation that was not verified with a dated source in the SAME run (no "the game is out now", no "CONFIRMED" stamp). Allowed stamps:
   UNCONFIRMED, FAN THEORY, LEAK?, RUMOUR. Fan claims are worded as claims ("fans say", "reportedly"); numbers and names come from 2+ sources.
 - Never fabricate a post, screenshot or quote. A `text` caption is our own words; a quote appears only if it is verbatim from a cited source.
-- Always close with an open-ended viewer question: the last spoken line asks it, the `poll` card shows it (YES / NO boxes) to drive comments. Make it **loop-ready**: write the
+- Always close with an open-ended viewer question: the `poll` card shows it (YES / NO boxes) and the last spoken line asks it as an unfinished clause (no `. ! ?`, enforced) to drive comments. Make it **loop-ready**: write the
   last line so its final words lead straight into the FIRST line (e.g. last: "...so what if it really is" -> first: "a painting in GTA Online hiding the GTA 6 map?"), the video then replays as one sentence.
 - The layouts follow the owner's reference storyboard; its sample copy ("CONFIRMED?!", "2X BIGGER") is NOT reusable text, it was layout filler.
 

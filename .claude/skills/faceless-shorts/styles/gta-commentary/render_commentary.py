@@ -6,7 +6,7 @@
   python3 render_commentary.py pick <seconds>                 random segment of the pool for a voiceover of that length, no repeats inside a lap, then recycles forever (reserves it in used.json)
   python3 render_commentary.py asset <proj> <name> --src "IGN" (--url U | --page ARTICLE_URL | --file F)   add a credited image to <proj>/assets/
   python3 render_commentary.py render <proj>                  <proj>/renders/out.mp4 from script.json + data/words.json + data/narration.wav + bg/<file>
-  python3 render_commentary.py sheet <proj>                contact sheet (one frame per card) -> <proj>/review/sheet.png (read it for QA)
+  python3 render_commentary.py sheet <proj>                contact sheet (one frame per card) -> <proj>/review/sheet.jpg (read it for QA)
   python3 render_commentary.py react-voice <proj>          (run with /root/cbx/bin/python) one Chatterbox line per timed beat of script.json "react", silent between beats
   python3 render_commentary.py --react-clip <proj>         timed beat-by-beat REACTION short over a cropped third-party gaming clip (see the --react-clip block below)
   python3 render_commentary.py --test                         self-check (synthetic video, voice and images; no network)
@@ -21,6 +21,11 @@ Look: cards pop in 0.82x -> 1.0x in 120 ms with a drop shadow, images Ken-Burns 
 captions are 2-3 white words (lower-centre, MarginV 600) with the spoken word in #FFE600 at 112 %. Audio: voice -16 LUFS (>= 150 ms lead-in), beat -28 LUFS,
 whoosh/pop/thud SFX (mix.py, unmodified) at about -19 dBFS on every card. Retention polish: a 5 px glowing #FFE600 progress bar along the top edge, a 2-frame
 3 px micro-shake on the hook and poll entrances, and the closing poll card held >= 2.0 s (the video tail is extended when the voice ends too early).
+Callouts (owner, 21 Nov 2026): "callouts":[{"beat":2,"type":"ring"|"arrow"|"spotlight","x":fx,"y":fy,"r":fr | "x2":fx,"y2":fy,"start":0.3,"dur":1.6}] (fractions of the 1080x1920 frame;
+ start/dur = seconds from the card's start, so they land on the commentary reveal). ring = pulsing target ring, arrow = draws on and points at a detail, spotlight = the frame dims and a bright hole
+ closes in on the target. Each callout punches the background in (+7 % over 0.55 s, eased) and fires a ding (ring, spotlight) or hit (arrow). A callout without a card, with a bad type or that outlives its card is refused.
+ 3-beat standard (check_beats): (1) the 0.0 s hook is a visual question ('?' in its banner or a callout on it), (2) evidence: >= 2 callouts on the middle cards, one a spotlight,
+ (3) twist + loop: poll last, and the last spoken line has no . ! ? so it flows into line 1.
 Background footage (owner, 20 Nov 2026): ONLY the owner's own non-copyright gameplay clips from the Drive folder Bg_pool, registered in pool.json via `pool add`;
 render refuses any other background. Stolen/ripped videos and copyrighted music stay banned (CLAUDE.md).
 shortcut: the 105% zoom is a fixed crop, not a slow push; card text is not word-synced, only the card start is. Upgrade when the pilot shows it matters."""
@@ -38,6 +43,7 @@ BOLD = '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf'      # con
 FONTS = HERE / 'fonts'
 HEAD, BODY = FONTS / 'Anton-Regular.ttf', FONTS / 'Montserrat-ExtraBold.ttf'   # Anton: headlines, captions, stamps; Montserrat ExtraBold: small labels and source lines
 norm = lambda w: re.sub(r'[^a-z0-9]+', '', w.lower())
+HYPE_CUES = {'whoosh', 'pop', 'thud', 'ding', 'hit', 'boom', 'riser'}      # cue types of the shared mix.py used here
 
 # ---------------- pool slicer (infinite loop over the registered clips) ----------------
 VARY = 2.0        # a new lap should not start within this many seconds of where the previous lap used the same clip
@@ -139,6 +145,96 @@ def check_popups(pops):
     if pops[-1]['kind'] != 'poll': raise SystemExit('the last card must be kind "poll" (open question + YES/NO boxes)')
     for k, (a, b) in enumerate(zip(pops, pops[1:])):
         if not 1.4 <= b['t'] - a['t'] <= 3.0: print(f"warning: beat {k + 1} is {b['t'] - a['t']:.1f} s long (aim for 1.8-2.5 s per card)")
+
+CALLOUT_TYPES = ('ring', 'arrow', 'spotlight')
+CO_CUE = {'ring': 'ding', 'arrow': 'hit', 'spotlight': 'ding'}          # existing mix.py cue types (mix.py is never changed)
+PUNCH_A, PUNCH_D = 0.07, 0.55                  # background punch-in: +7 % at the middle of a 0.55 s sine pulse (ease in, ease out)
+CO_IN, CO_OUT = 0.15, 0.15                     # fade in / out seconds
+
+_frac = lambda v: isinstance(v, (int, float)) and not isinstance(v, bool) and 0 <= v <= 1
+
+def resolve_callouts(S, pops):
+    """script.json "callouts" -> list with absolute start t (the card's start + start). Orphans (no card), bad types and callouts that outlive their card are refused."""
+    out = []
+    for j, c in enumerate(S.get('callouts', [])):
+        b, ty = c.get('beat'), c.get('type')
+        if not isinstance(b, int) or not 0 <= b < len(pops): raise SystemExit(f"callout {j}: beat {b} has no card (orphan callout). Cards are beats 0..{len(pops) - 1}")
+        if ty not in CALLOUT_TYPES: raise SystemExit(f"callout {j}: type '{ty}' is not allowed (use {'/'.join(CALLOUT_TYPES)})")
+        if not all(_frac(c.get(k)) for k in ('x', 'y')): raise SystemExit(f"callout {j} ({ty}): x and y are fractions 0..1 of the frame")
+        if ty in ('ring', 'spotlight') and not (_frac(c.get('r')) and 0.03 <= c['r'] <= 0.5): raise SystemExit(f"callout {j} ({ty}): r is a fraction of the frame width, 0.03..0.5")
+        if ty == 'arrow' and not all(_frac(c.get(k)) for k in ('x2', 'y2')): raise SystemExit(f"callout {j} (arrow): x2 and y2 (the arrow head) are fractions 0..1")
+        st, d = float(c.get('start', 0.25)), float(c.get('dur', 1.6))
+        if st < 0 or d < 0.5: raise SystemExit(f"callout {j} ({ty}): start >= 0 and dur >= 0.5 s")
+        if st + d > pops[b]['d'] + 0.05: raise SystemExit(f"callout {j} ({ty}) runs to {st + d:.2f} s into a {pops[b]['d']:.2f} s card: shorten it so it ends with its card")
+        out.append(dict(c, t=round(pops[b]['t'] + st, 3), d=d))
+    return sorted(out, key=lambda c: c['t'])
+
+def check_beats(S, pops, cos):
+    """The 3-beat curiosity standard: (1) hook = a visual question, (2) evidence shown with callouts and a spotlight, (3) twist + a last line that loops into line 1."""
+    if '?' not in str(pops[0].get('banner', '')) and not any(c['beat'] == 0 for c in cos):
+        raise SystemExit('beat 1 (hook): the 0.0 s card must be a visual question: a "?" in its banner, or a ring/arrow/spotlight callout on beat 0')
+    mid = [c for c in cos if 0 < c['beat'] < len(pops) - 1]
+    if len(mid) < 2 or not any(c['type'] == 'spotlight' for c in mid):
+        raise SystemExit(f'beat 2 (evidence): needs >= 2 callouts on the middle cards, one of them a spotlight (has {len(mid)})')
+    lines = S.get('lines') or []
+    if lines:
+        last = str(lines[-1]['text'] if isinstance(lines[-1], dict) else lines[-1]).strip()
+        if re.search(r'[.!?]["\')]*$', last): raise SystemExit(f'beat 3 (loop): the last spoken line ends with "{last[-1]}". End it mid-sentence so it flows grammatically into line 1 (e.g. "...do you think" -> "a painting in GTA Online might...")')
+
+def zoom_expr(punches, a=PUNCH_A, d=PUNCH_D):
+    """ffmpeg expression for the background scale at time t: 1 + a sine pulse at every punch time (smooth in, smooth back)."""
+    return '1' + ''.join(f'+if(between(t,{t:.3f},{t + d:.3f}),{a}*sin(PI*(t-{t:.3f})/{d}),0)' for t in punches)
+
+def zoom_at(punches, t, a=PUNCH_A, d=PUNCH_D):
+    """The same curve in Python (used by the tests)."""
+    return 1 + sum(a * math.sin(math.pi * (t - p) / d) for p in punches if p <= t <= p + d)
+
+_G = {}
+def _grid():
+    if not _G:
+        import numpy as np
+        _G['y'], _G['x'] = np.mgrid[0:H, 0:W].astype('float32')
+    return _G['x'], _G['y']
+
+def _ease(u): return 1 - (1 - min(1.0, max(0.0, u))) ** 3
+def _fade(u, d): return min(1.0, u / CO_IN) * min(1.0, max(0.0, (d - u) / CO_OUT))
+
+def callout_frame(c, u):
+    """(RGBA image, x, y) of a callout u seconds into it. ring and arrow are drawn in a small box (2x supersampled), the spotlight is a full-frame dim with a bright hole."""
+    import numpy as np
+    d, ty = c['d'], c['type']; a = _fade(u, d)
+    if ty == 'spotlight':
+        X, Y = _grid(); r0 = c['r'] * W; r = r0 * (1 + 0.8 * (1 - _ease(u / 0.25))) * (1 + 0.03 * math.sin(2 * math.pi * 2 * u))      # the hole closes in on the target, then breathes
+        k = np.clip((np.hypot(X - c['x'] * W, Y - c['y'] * H) - r) / (0.45 * r), 0, 1); k = k * k * (3 - 2 * k)
+        arr = np.zeros((H, W, 4), np.uint8); arr[..., 3] = (0.62 * 255 * a * k).astype(np.uint8)
+        return Image.fromarray(arr, 'RGBA'), 0, 0
+    if ty == 'ring':
+        r0 = c['r'] * W; box = int(r0 * 1.9 * 2 + 60); box += box % 2; im = Image.new('RGBA', (box * S, box * S), (0, 0, 0, 0)); dr = ImageDraw.Draw(im); m = box * S / 2
+        r = r0 * (1 + 0.6 * (1 - _ease(u / 0.2))) * (1 + 0.06 * math.sin(2 * math.pi * 2.5 * u)) * S
+        ring = lambda rr, w, col: dr.ellipse([m - rr, m - rr, m + rr, m + rr], outline=col, width=max(1, int(w * S)))
+        ring(r, 28, (255, 255, 255, 60)); ring(r, 12, RED + (255,)); ring(r - 8 * S, 4, (255, 255, 255, 230))
+        f = (u * 1.2) % 1.0; ring(r0 * S * (1 + 0.9 * f), 5, YEL + (int(170 * (1 - f)),))          # a second ring pings outward
+        im = im.resize((box, box), Image.LANCZOS); im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
+        return im, int(c['x'] * W - box / 2), int(c['y'] * H - box / 2)
+    x0, y0, x1, y1 = c['x'] * W, c['y'] * H, c['x2'] * W, c['y2'] * H; pad = 110
+    bx, by = int(min(x0, x1) - pad), int(min(y0, y1) - pad); bw, bh = int(abs(x1 - x0) + 2 * pad), int(abs(y1 - y0) + 2 * pad)
+    im = Image.new('RGBA', (bw * S, bh * S), (0, 0, 0, 0)); dr = ImageDraw.Draw(im); g = _ease(u / 0.25)         # the arrow draws on over 0.25 s
+    hx, hy = x0 + (x1 - x0) * g, y0 + (y1 - y0) * g; ang = math.atan2(y1 - y0, x1 - x0); L = 78; wd = 16 * (1 + 0.08 * math.sin(2 * math.pi * 3 * u))
+    P = lambda x, y: ((x - bx) * S, (y - by) * S)
+    head = [P(hx, hy)] + [P(hx - L * math.cos(ang + e), hy - L * math.sin(ang + e)) for e in (-0.45, 0.45)]
+    for col, w in (((14, 14, 24, 255), wd + 10), (RED + (255,), wd)):
+        dr.line([P(x0, y0), P(hx - 30 * math.cos(ang), hy - 30 * math.sin(ang))], fill=col, width=int(w * S), joint='curve')
+    dr.polygon(head, fill=(14, 14, 24, 255)); dr.polygon([P(hx - 8 * math.cos(ang), hy - 8 * math.sin(ang))] + head[1:], fill=RED + (255,))
+    im = im.resize((bw, bh), Image.LANCZOS); im.putalpha(im.getchannel('A').point(lambda v: int(v * a)))
+    return im, bx, by
+
+def render_callouts(cos, P):
+    """Writes data/callouts/c<j>_%03d.png (RGBA, 30 fps); each callout keeps one fixed overlay position (c['x0'], c['y0'])."""
+    out = P / 'data/callouts'; shutil.rmtree(out, ignore_errors=True); out.mkdir(parents=True)
+    for j, c in enumerate(cos):
+        c['frames'] = max(1, round(c['d'] * FPS))
+        for i in range(c['frames']):
+            im, c['x0'], c['y0'] = callout_frame(c, i / FPS); im.save(out / f'c{j}_{i:03d}.png', compress_level=1)
 
 # ---------------- cards (Pillow): the 4 layouts of the reference storyboard, animated frame by frame ----------------
 CW, S = 1080, 2                                   # card canvas width; static layers are drawn at 2x and shrunk (smooth edges)
@@ -340,12 +436,13 @@ def bgm_path(P, S, total):
     if m not in ('bed', 'hype', 'neon', 'tension'): return P / m              # owner-supplied royalty-free track
     return _mix(P, '_bgm', {'music': m}, [], total)                            # procedural beat from mix.py (numpy, no samples)
 
-def sfx_cues(pops):
-    """whoosh + pop on every card entrance, a thud on the hook (0.0 s) and the poll."""
+def sfx_cues(pops, cos=()):
+    """whoosh + pop on every card entrance, a thud on the hook (0.0 s) and the poll, and a ding (ring, spotlight) or hit (arrow) on every callout."""
     cues = []
     for p in pops:
         cues += [{'t': round(max(0.0, p['t'] - 0.04), 3), 'type': 'whoosh'}, {'t': round(p['t'] + 0.10, 3), 'type': 'pop'}]
         if p['kind'] in ('hook', 'poll'): cues.append({'t': round(p['t'] + 0.02, 3), 'type': 'thud'})
+    cues += [{'t': round(c['t'], 3), 'type': CO_CUE[c['type']]} for c in cos]
     return cues
 
 SHAKE_PX = 3       # micro-shake amplitude (px), 2 frames, on the hook and poll entrances
@@ -382,26 +479,33 @@ def render(proj, out='renders/out.mp4', pool=None):
     pops = popup_times(S.get('popups', []), words, total)
     if pops and pops[-1]['t'] + POLL_HOLD + 0.25 > total:                          # the closing poll stays up >= POLL_HOLD s: extend the tail of the video
         total = round(pops[-1]['t'] + POLL_HOLD + 0.25, 3); pops = popup_times(S.get('popups', []), words, total)
-    check_popups(pops)
+    check_popups(pops); cos = resolve_callouts(S, pops); check_beats(S, pops, cos)
     if bg['len'] < total * SPEED - 0.05: raise SystemExit(f"segment {bg['len']}s is shorter than the video needs ({total*SPEED:.1f}s): run pick again with {total:.2f}")
-    (P / 'renders').mkdir(exist_ok=True); (P / 'data/caps.ass').write_text(make_ass(words, total)); render_cards(pops, P, credits); dim_png(P / 'data/dim.png'); bar_png(P / 'data/bar.png')
-    (P / 'data/beats.json').write_text(json.dumps([{'t': p['t'], 'd': p['d'], 'kind': p['kind']} for p in pops]))
+    (P / 'renders').mkdir(exist_ok=True); (P / 'data/caps.ass').write_text(make_ass(words, total)); render_cards(pops, P, credits); render_callouts(cos, P); dim_png(P / 'data/dim.png'); bar_png(P / 'data/bar.png')
+    (P / 'data/beats.json').write_text(json.dumps([{'t': p['t'], 'd': p['d'], 'kind': p['kind']} for p in pops] + [{'t': c['t'], 'd': c['d'], 'kind': c['type']} for c in cos]))
     t0, t1 = pops[0]['t'], min(total, pops[-1]['t'] + pops[-1]['d'])
     inputs = ['-ss', str(bg['start']), '-t', str(bg['len']), '-i', str(seg), '-i', 'data/narration.wav',
               '-loop', '1', '-framerate', str(FPS), '-t', str(round(t1 - t0, 2)), '-i', 'data/dim.png']
-    n = 3; bgm = bgm_path(P, S, total); sfx = _mix(P, '_sfx', {'music': 'none'}, sfx_cues(pops), total)
+    n = 3; bgm = bgm_path(P, S, total); sfx = _mix(P, '_sfx', {'music': 'none'}, sfx_cues(pops, cos), total)
     ai = si = None
     if bgm: inputs += ['-i', str(bgm)]; ai = n; n += 1
     inputs += ['-i', str(sfx)]; si = n; n += 1
-    cx = bg.get('cx', 0.5); f = [f"[0:v]setpts=PTS/{SPEED},fps={FPS},scale=-2:{round(H * ZOOM)},crop={W}:{H}:(in_w-{W})*{cx}:(in_h-{H})/2,setsar=1[v0]",
-                                 f"[2:v]format=rgba,fade=t=in:st=0:d=0.2:alpha=1,fade=t=out:st={round(t1 - t0 - 0.2, 2)}:d=0.2:alpha=1,setpts=PTS+{t0}/TB[dm]",
+    cx = bg.get('cx', 0.5); z = zoom_expr([c['t'] for c in cos]); pz = z != '1'                  # punch-in: scale up by z(t) and crop around the centre, eased back after every callout
+    f = [f"[0:v]setpts=PTS/{SPEED},fps={FPS},scale=-2:{round(H * ZOOM)},crop={W}:{H}:(in_w-{W})*{cx}:(in_h-{H})/2,setsar=1[v{'00' if pz else '0'}]"]
+    if pz: f.append(f"[v00]scale=w='trunc(iw*({z})/2)*2':h='trunc(ih*({z})/2)*2':eval=frame,crop={W}:{H}:x='({W}*({z})-{W})/2':y='({H}*({z})-{H})/2'[v0]")
+    f += [f"[2:v]format=rgba,fade=t=in:st=0:d=0.2:alpha=1,fade=t=out:st={round(t1 - t0 - 0.2, 2)}:d=0.2:alpha=1,setpts=PTS+{t0}/TB[dm]",
                                  "[v0][dm]overlay=0:0:eof_action=pass[vd0]"]
     for k, p in enumerate(pops):
         inputs += ['-framerate', str(FPS), '-i', f'data/popups/p{k}_%03d.png']; i = n + k
         f.append(f"[{i}:v]format=rgba,setpts=PTS+{p['t']}/TB[c{k}]")
         f.append(f"[vd{k}][c{k}]overlay=x=(W-w)/2:y={p['y']}:enable='between(t,{p['t']},{round(p['t'] + p['d'], 2)})':eof_action=pass[vd{k + 1}]")
-    inputs += ['-loop', '1', '-framerate', str(FPS), '-t', str(total), '-i', 'data/bar.png']; bi = n + len(pops); sx, sy = shake_expr([pops[0]['t'], pops[-1]['t']])
-    f.append(f"[vd{len(pops)}]scale=1086:1932,crop=1080:1920:x='{sx}':y='{sy}'[vs]")                         # micro-shake on the hook and poll entrances (whole frame)
+    last = f'vd{len(pops)}'
+    for j, c in enumerate(cos):                                                      # timed callouts above the cards, only while they play
+        inputs += ['-framerate', str(FPS), '-i', f'data/callouts/c{j}_%03d.png']; i = n + len(pops) + j
+        f.append(f"[{i}:v]format=rgba,setpts=PTS+{c['t']}/TB[co{j}]")
+        f.append(f"[{last}][co{j}]overlay=x={c['x0']}:y={c['y0']}:enable='between(t,{c['t']},{round(c['t'] + c['d'], 2)})':eof_action=pass[vc{j}]"); last = f'vc{j}'
+    inputs += ['-loop', '1', '-framerate', str(FPS), '-t', str(total), '-i', 'data/bar.png']; bi = n + len(pops) + len(cos); sx, sy = shake_expr([pops[0]['t'], pops[-1]['t']])
+    f.append(f"[{last}]scale=1086:1932,crop=1080:1920:x='{sx}':y='{sy}'[vs]")                         # micro-shake on the hook and poll entrances (whole frame)
     f.append(f"[{bi}:v]format=rgba[bar]"); f.append(f"[vs][bar]overlay=x='-W+W*t/{total}':y=0:eof_action=pass[vb]")      # top progress bar, steady (after the shake)
     f.append(f"[vb]ass=data/caps.ass:fontsdir={FONTS}[vout]")
     gv = -16.0 - lufs(P / 'data/narration.wav')                                    # voice -16 LUFS (static gain: nothing is cut off at the end)
@@ -415,7 +519,7 @@ def render(proj, out='renders/out.mp4', pool=None):
     run(['ffmpeg', '-v', 'error', '-y', *inputs, '-filter_complex_script', 'data/graph.txt', '-map', '[vout]', '-map', '[aout]', '-t', str(total),
          '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', '-pix_fmt', 'yuv420p', '-r', str(FPS), '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], cwd=P)
     shutil.rmtree(P / 'data/popups', ignore_errors=True)                           # ~100 MB of card frames, not needed once rendered
-    print(f'{P / out} ({total:.1f}s, {len(pops)} cards)'); return P / out
+    print(f'{P / out} ({total:.1f}s, {len(pops)} cards, {len(cos)} callouts)'); return P / out
 
 # ---------------- pool registration (owner's Bg_pool clips only) ----------------
 def probe_duration(path):
@@ -450,7 +554,7 @@ def next_track(rows=None, pool=None):
 
 def sheet(proj, every=2.5, video='renders/out.mp4'):
     """Contact sheet for QA: one frame per card (shown at its fullest) when data/beats.json exists, otherwise every `every` seconds."""
-    P = Path(proj).resolve(); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.png'; mp4 = P / video; bf = P / 'data/beats.json'
+    P = Path(proj).resolve(); (P / 'review').mkdir(exist_ok=True); o = P / 'review/sheet.jpg'; mp4 = P / video; bf = P / 'data/beats.json'
     if not bf.exists():
         run(['ffmpeg', '-v', 'error', '-y', '-i', str(mp4), '-vf', f'fps=1/{every},scale=216:384,tile=5x3:padding=4:color=black', '-frames:v', '1', str(o)]); print(o); return o
     beats = json.loads(bf.read_text()); tw, th = 324, 576; cols = min(5, len(beats)); rows = -(-len(beats) // cols); T = Path(tempfile.mkdtemp())
@@ -458,7 +562,7 @@ def sheet(proj, every=2.5, video='renders/out.mp4'):
     for i, b in enumerate(beats):
         t = b['t'] + min(0.9, b['d'] * 0.45); run(['ffmpeg', '-v', 'error', '-y', '-ss', f'{t:.2f}', '-i', str(mp4), '-frames:v', '1', '-vf', f'scale={tw}:{th}', str(T / f'{i}.png')])
         x, y = 8 + (i % cols) * (tw + 8), 8 + (i // cols) * (th + 8); im.paste(Image.open(T / f'{i}.png'), (x, y)); dr.text((x + 6, y + 4), f"{t:.1f}s {b['kind']}", font=ImageFont.truetype(BOLD, 22), fill=(255, 255, 0), stroke_width=2, stroke_fill=(0, 0, 0))
-    im.save(o); shutil.rmtree(T); print(o); return o
+    im.convert('RGB').save(o, quality=90); shutil.rmtree(T); print(o); return o
 
 # ---------------- --react-clip: timed beat-by-beat reaction commentary over a cropped third-party gaming clip ----------------
 # script.json: "react": {"clip":"bg/ref.mp4", "zoom":1.15, "cy":0.5, "pill":"MODDED GTA 5 - 10/10 ROBBERY", "credit":"<the clip's creator>", "pill_y":250,
@@ -642,13 +746,18 @@ def _test():
     (T / 'data/words.json').write_text(json.dumps(ws)); (T / 'data/lines.json').write_text(json.dumps({'duration': 5.0}))
     PL = [{'id': 'tid', 'name': 't.mp4', 'dur': 12.0}]
     (T / 'script.json').write_text(json.dumps({'bg': {'file_id': 'tid', 'name': 't.mp4', 'start': 1.0, 'len': 8.0}, 'music': 'hype', 'popups': [
-        K, dict(cards[1], at='dropped'), dict(cards[2], at='about'), dict(cards[4], at='huge')]}))
+        K, dict(cards[1], at='dropped'), dict(cards[2], at='about'), dict(cards[4], at='huge')],
+        'lines': [{'text': 'Rockstar just dropped a leak'}, {'text': 'so what do you think'}],
+        'callouts': [{'beat': 0, 'type': 'ring', 'x': 0.5, 'y': 0.4, 'r': 0.12, 'start': 0.1, 'dur': 0.8}, {'beat': 1, 'type': 'arrow', 'x': 0.8, 'y': 0.5, 'x2': 0.6, 'y2': 0.4, 'start': 0.2, 'dur': 0.8},
+                     {'beat': 2, 'type': 'spotlight', 'x': 0.5, 'y': 0.4, 'r': 0.15, 'start': 0.2, 'dur': 1.0}]}))
     try: render(T, pool=[{'id': 'other'}]); raise AssertionError('an unregistered background must be refused')
     except SystemExit as e: assert 'not a registered' in str(e)
     o = render(T, pool=PL)
     d = json.loads(run(['ffprobe', '-v', 'error', '-show_entries', 'stream=width,height,codec_type:format=duration', '-of', 'json', str(o)]).stdout)
     assert [s['codec_type'] for s in d['streams']] == ['video', 'audio'] and (d['streams'][0]['width'], d['streams'][0]['height']) == (W, H) and abs(float(d['format']['duration']) - 6.8) < 0.1, d      # poll card at 4.55 s (150 ms lead-in) + 2.0 s hold + 0.25 s tail
-    assert sheet(T).exists()
+    assert sheet(T).exists() and sheet(T).name == 'sheet.jpg'
+    cb = json.loads((T / 'data/beats.json').read_text()); assert [b['kind'] for b in cb][-3:] == ['ring', 'arrow', 'spotlight'], cb      # callouts show in the contact sheet
+    assert len(list((T / 'data/callouts').glob('c*_*.png'))) >= 3 * 24, 'callout frames written'
     ad = float(run(['ffprobe', '-v', 'error', '-select_streams', 'a:0', '-show_entries', 'stream=duration', '-of', 'csv=p=0', str(o)]).stdout)
     assert abs(ad - 6.8) < 0.15, f'audio must last as long as the video, got {ad}s'            # the loudnorm look-ahead used to cut the last ~3 s
     tail = run(['ffmpeg', '-hide_banner', '-nostats', '-ss', '6.0', '-t', '0.7', '-i', str(o), '-vn', '-af', 'volumedetect', '-f', 'null', '-']).stderr
@@ -699,6 +808,30 @@ def _test():
     run(['ffmpeg', '-v', 'error', '-y', '-ss', '3', '-i', str(ro), '-frames:v', '1', str(R / 'f.png')]); fr = Image.open(R / 'f.png').convert('RGB')
     assert fr.size == (W, H) and all(min(fr.getpixel((540, y))) < 200 for y in (30, 40, 1880, 1900)), 'the 1.15x crop removed the burned-in bands at the top and bottom edges'
     assert fr.getpixel((100, 1))[0] > 200 and fr.getpixel((100, 1))[2] < 120 and fr.getpixel((1070, 1))[2] > 150, 'progress bar at t=3 s: yellow up to 30 % of the width, not beyond'
+    # ---- callouts: timing validation, sfx sync, spotlight / zoom generation, 3-beat + loop validators ----
+    pp = popup_times([{'at': 0, 'kind': 'hook', 'banner': 'WHAT IS THIS'}, {'at': 'leak', 'kind': 'proof'}, {'at': 'huge', 'kind': 'poll'}], ws, 5.0)      # cards at 0.0, 1.6, 4.4 s
+    ok = [{'beat': 0, 'type': 'ring', 'x': .5, 'y': .4, 'r': .12, 'start': .25, 'dur': 1.0}, {'beat': 1, 'type': 'spotlight', 'x': .5, 'y': .4, 'r': .15, 'start': .2, 'dur': 1.0},
+          {'beat': 1, 'type': 'arrow', 'x': .8, 'y': .6, 'x2': .6, 'y2': .45, 'start': .2, 'dur': 1.0}]
+    cs = resolve_callouts({'callouts': ok}, pp); assert [c['t'] for c in cs] == [0.25, 1.8, 1.8] and cs[0]['type'] == 'ring', cs
+    for bad, why in (([dict(ok[0], beat=7)], 'orphan callout (no card)'), ([dict(ok[1], start=2.5, dur=1.6)], 'callout that outlives its card'), ([dict(ok[0], type='star')], 'unknown type'),
+                     ([{'beat': 0, 'type': 'ring', 'x': .5, 'y': .4}], 'ring without r'), ([dict(ok[2], x2=None)], 'arrow without a head')):
+        try: resolve_callouts({'callouts': bad}, pp); raise AssertionError(why + ' must be refused')
+        except SystemExit: pass
+    good = {'lines': [{'text': 'a b'}, {'text': 'so what do you think'}], 'callouts': ok}; check_beats(good, pp, cs)
+    nq = [dict(pp[0], banner='NO Q')] + pp[1:]
+    for name, S2, pops2, cs2 in (('no spotlight', good, pp, [c for c in cs if c['type'] != 'spotlight']), ('loop line ends with ?', dict(good, lines=[{'text': 'a'}, {'text': 'so what do you think?'}]), pp, cs),
+                                 ('no visual question', good, nq, [c for c in cs if c['beat'] != 0]), ('last line ends with a full stop', dict(good, lines=[{'text': 'a'}, {'text': 'That is all.'}]), pp, cs)):
+        try: check_beats(S2, pops2, cs2); raise AssertionError(name + ' must be refused')
+        except SystemExit: pass
+    sc = sfx_cues(pp, cs); sy = {(c['t'], c['type']) for c in sc}
+    assert (0.25, 'ding') in sy and (1.8, 'ding') in sy and (1.8, 'hit') in sy, sy                 # ding on the ring and the spotlight, hit on the arrow, at the callout start
+    assert all(c['type'] in HYPE_CUES for c in sc), 'only cue types mix.py already has'
+    im, x, y = callout_frame(cs[1], 0.8); assert im.size == (W, H) and (x, y) == (0, 0) and im.getpixel((W // 2, int(H * .4)))[3] == 0 and im.getpixel((5, 5))[3] > 100, 'spotlight: bright hole on the target, dim elsewhere'
+    im, x, y = callout_frame(cs[0], 0.5); assert im.getchannel('A').getbbox() and im.getpixel((im.width // 2, im.height // 2))[3] == 0 and abs(x + im.width / 2 - W / 2) <= 1, 'ring: hollow, centred on the target'
+    im, x, y = callout_frame(cs[2], 0.5); assert im.getchannel('A').getbbox() and 0 <= x < W, 'arrow draws'
+    assert callout_frame(cs[0], 0.0)[0].getchannel('A').getbbox() is None, 'a callout fades in from nothing'
+    ze = zoom_expr([1.0, 3.0]); assert ze.count('between') == 2 and zoom_expr([]) == '1', ze
+    assert zoom_at([1.0], 0.5) == 1 and abs(zoom_at([1.0], 1.0) - 1) < 1e-9 and abs(zoom_at([1.0], 1.0 + PUNCH_D / 2) - (1 + PUNCH_A)) < 1e-9 and abs(zoom_at([1.0], 1.0 + PUNCH_D) - 1) < 1e-9, 'punch-in: back to 1.0 before and after, +7 % in the middle'
     shutil.rmtree(T); print('render_commentary.py: self-check OK')
 
 if __name__ == '__main__':
