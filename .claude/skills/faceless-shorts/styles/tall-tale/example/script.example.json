@@ -1,0 +1,58 @@
+{
+ "title": "The Bullet Holes That Fooled The Generals",
+ "speed": 1.0,
+ "lead": 0.15,
+ "outro": 0.15,
+ "gap": 0.18,
+ "music": "tension",
+ "sources": [
+  "EXAMPLE ONLY: re-check with 2 fresh sources before publishing",
+  "Wikipedia, 'Survivorship bias' (Abraham Wald and the returning WWII bombers)",
+  "Mangel & Samaniego, 'Abraham Wald's Work on Aircraft Survivability', Journal of the American Statistical Association 79 (1984)"
+ ],
+ "lines": [
+  {
+   "text": "bombers that came home, riddled with bullet holes!",
+   "emo": 0.9
+  },
+  {
+   "text": "The generals look at the damage and say, armor the holes!"
+  },
+  {
+   "text": "But a mathematician named Abraham Wald stops them."
+  },
+  {
+   "text": "He asks one strange question: where are the planes that never came back?",
+   "emo": 0.85
+  },
+  {
+   "text": "Every hole on this plane is a hit it survived."
+  },
+  {
+   "text": "The planes hit in the engines crashed, so they are missing from the data."
+  },
+  {
+   "text": "Those clean spots are not safe, they are deadly.",
+   "emo": 0.85
+  },
+  {
+   "text": "So Wald tells them to armor the engines, where there are no holes at all."
+  },
+  {
+   "text": "The military listens to his math, and the planes get tougher."
+  },
+  {
+   "text": "That mistake has a name: survivorship bias.",
+   "emo": 0.8
+  },
+  {
+   "text": "We only study the winners, and ignore everyone who vanished."
+  },
+  {
+   "text": "So next time you hear a success story, ask who is missing."
+  },
+  {
+   "text": "Because we only ever hear from the"
+  }
+ ]
+}

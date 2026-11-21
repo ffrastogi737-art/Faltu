@@ -3,6 +3,7 @@
 //   house({ wall, roof, trim }) .door (hinge group)   ·  signpost([['LEWISTON', 'r'], ...])   ·  platformScale() .set(lbs)
 //   train() .update(t)  (locomotive + mail car + smoke)   ·  rails(len)   ·  cubbies(w, h)   ·  mailSack()   ·  parcel(w, h, d)
 //   desk()   ·  poster(lines, opts)   ·  chickCrate() .update(t)   ·  lockers(n)   ·  barbell()
+//   diagram(ops, opts) .reveal(k)   ·  solid(parts)   (a story's own board and 3D props, built from shot_plan.json)
 import * as THREE from 'three';
 import { T, mat, canvasTex, signBoard } from './world.js';
 
@@ -179,5 +180,54 @@ export function barbell() {
   const g = new THREE.Group(), bar = mat({ color: '#B8BCC6', metalness: 0.8, roughness: 0.3 }), plate = mat({ color: '#1F1F26', roughness: 0.6 });
   cyl(0.025, 0.025, 1.8, bar, 0, 0.3, 0, g, 12).rotation.z = Math.PI / 2;
   [-0.85, 0.85].forEach((x) => { cyl(0.3, 0.3, 0.12, plate, x, 0.3, 0, g, 24).rotation.z = Math.PI / 2; cyl(0.2, 0.2, 0.14, plate, x * 0.8, 0.3, 0, g, 24).rotation.z = Math.PI / 2; });
+  return g;
+}
+
+/** a drawn board for a story's own diagram (origin = board centre, facing +z). `ops` are in fractions of the board, in order:
+ *  { t: 'rect', x, y, w, h, col, line } · { t: 'ellipse', x, y, rx, ry, col } · { t: 'dot', x, y, r, col } · { t: 'line' | 'arrow', x, y, x2, y2, col, lw }
+ *  · { t: 'poly', pts: [[x, y], ...], col } · { t: 'text', x, y, s, size, col, align }.  Any op may carry k0 (0..1): it appears at that point of the shot,
+ *  so a pinboard fills up or a hole count grows while the camera moves. g.reveal(k) redraws; `legs` = height of the centre above the floor (an easel). */
+export function diagram(ops = [], { w = 2.0, h = 1.4, bg = '#F4EBD6', fg = '#1F1C33', title = '', legs = 0 } = {}) {
+  const cw = Math.round(w * 300), ch = Math.round(h * 300), cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
+  const c = cv.getContext('2d'), tex = new THREE.CanvasTexture(cv); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 4;
+  let shown = '';
+  const X = (v) => v * cw, Y = (v) => v * ch;
+  const draw = (k) => {
+    const key = ops.map((o) => (k >= (o.k0 || 0) ? 1 : 0)).join(''); if (key === shown) return; shown = key;
+    c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = bg; c.fillRect(0, 0, cw, ch); c.strokeStyle = fg; c.lineWidth = 8; c.strokeRect(10, 10, cw - 20, ch - 20);
+    c.textAlign = 'center'; c.textBaseline = 'middle'; c.lineCap = c.lineJoin = 'round';
+    if (title) { c.fillStyle = fg; c.font = `900 ${ch * 0.1}px Inter`; c.fillText(title, cw / 2, ch * 0.09); }
+    ops.forEach((o, i) => {
+      if (key[i] !== '1') return;
+      c.fillStyle = o.col || fg; c.strokeStyle = o.line || o.col || fg; c.lineWidth = o.lw || 6;
+      if (o.t === 'rect') { c.fillRect(X(o.x), Y(o.y), X(o.w), Y(o.h)); if (o.line) c.strokeRect(X(o.x), Y(o.y), X(o.w), Y(o.h)); }
+      else if (o.t === 'ellipse') { c.beginPath(); c.ellipse(X(o.x), Y(o.y), X(o.rx), Y(o.ry), 0, 0, Math.PI * 2); c.fill(); if (o.line) c.stroke(); }
+      else if (o.t === 'dot') { c.beginPath(); c.arc(X(o.x), Y(o.y), Y(o.r || 0.02), 0, Math.PI * 2); c.fill(); }
+      else if (o.t === 'poly') { c.beginPath(); o.pts.forEach(([px, py], j) => (j ? c.lineTo(X(px), Y(py)) : c.moveTo(X(px), Y(py)))); c.closePath(); c.fill(); if (o.line) c.stroke(); }
+      else if (o.t === 'line' || o.t === 'arrow') {
+        c.beginPath(); c.moveTo(X(o.x), Y(o.y)); c.lineTo(X(o.x2), Y(o.y2)); c.stroke();
+        if (o.t === 'arrow') { const a = Math.atan2(Y(o.y2) - Y(o.y), X(o.x2) - X(o.x)); c.beginPath(); c.moveTo(X(o.x2), Y(o.y2)); c.lineTo(X(o.x2) - 34 * Math.cos(a - 0.45), Y(o.y2) - 34 * Math.sin(a - 0.45)); c.lineTo(X(o.x2) - 34 * Math.cos(a + 0.45), Y(o.y2) - 34 * Math.sin(a + 0.45)); c.closePath(); c.fill(); }
+      } else if (o.t === 'text') { c.textAlign = o.align || 'center'; c.font = `900 ${Y(o.size || 0.1)}px Inter`; c.fillText(o.s, X(o.x), Y(o.y)); c.textAlign = 'center'; }
+    });
+    tex.needsUpdate = true;
+  };
+  draw(0);
+  const g = new THREE.Group(), m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, toneMapped: false }));
+  m.castShadow = true; g.add(m);
+  const wood = mat({ color: '#6B4A32' });
+  box(w + 0.1, h + 0.1, 0.04, wood, 0, 0, -0.03, g);
+  if (legs > 0) [-1, 1].forEach((s) => box(0.06, legs, 0.06, wood, s * (w / 2 - 0.1), -legs / 2, -0.12, g));    // the easel's legs reach the floor
+  g.mesh = m; g.reveal = draw; g.draw = draw; return g;
+}
+/** a custom 3D prop from primitives: parts [{ shape: 'box' | 'cyl' | 'cone' | 'sphere', size: [w, h, d] | [r, h] | [r], pos: [x, y, z] (y = centre), col, rot: [rx, ry, rz] (deg), metal }] */
+export function solid(parts = []) {
+  const g = new THREE.Group();
+  parts.forEach((p) => {
+    const [a = 1, b = 1, d = 1] = p.size || [];
+    const geo = p.shape === 'cyl' ? new THREE.CylinderGeometry(a, a, b, 22) : p.shape === 'cone' ? new THREE.ConeGeometry(a, b, 22) : p.shape === 'sphere' ? new THREE.SphereGeometry(a, 22, 16) : new THREE.BoxGeometry(a, b, d);
+    const m = new THREE.Mesh(geo, mat({ color: p.col || '#9A6A43', metalness: p.metal ? 0.7 : 0, roughness: p.metal ? 0.35 : 0.85 }));
+    m.position.set(...(p.pos || [0, b / 2, 0])); (p.rot || [0, 0, 0]).forEach((v, i) => { m.rotation['xyz'[i]] = v * Math.PI / 180; });
+    m.castShadow = m.receiveShadow = true; g.add(m);
+  });
   return g;
 }

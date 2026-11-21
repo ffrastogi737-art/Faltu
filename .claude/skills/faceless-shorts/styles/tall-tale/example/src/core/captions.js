@@ -1,11 +1,11 @@
 // Captions (owner 21 Nov 2026): 2-3 words on screen at a time, white heavy sans with a black outline and a soft shadow.
-// The word being spoken is #FFE600 and pops to 112 %. The block sits in the lower safe zone (CAP.y), clear of the Shorts
+// The word being spoken is #FFE600 and grows to 105 %. The block sits in the lower safe zone (CAP.y), clear of the Shorts
 // buttons and of the bodies (plan.js keeps the cast above y 1300). Words keep their punctuation and the script's spelling.
 // A script line may set "caps": "He bet | his life | savings" to choose the chunks; otherwise they're made automatically.
 import { ctx, clamp, lerp, seg, eob } from './lib.js';
 import { T, lineWords } from './timing.js';
 
-export const CAP = { y: 1400, size: 92, maxW: 980 };
+export const CAP = { y: 1400, size: 92, maxW: 920 };
 const HL = '#FFE600';
 let caps = [];
 const SHORT = /^(a|an|the|to|of|in|on|at|by|and|but|or|so|is|it|he|she|we|i|his|her|my|no|up|for|was)$/i;
@@ -52,7 +52,7 @@ export function captionText(text, x = 540, y = CAP.y, sc = 1) {
   ctx.fillStyle = '#FFFFFF'; ctx.fillText(text, 0, 0);
   ctx.restore();
 }
-/** one chunk: each word white, the word spoken right now #FFE600 at 112 %. t = film time. */
+/** one chunk: each word white, the word spoken right now #FFE600 at 105 % (subtle). t = film time. */
 export function drawChunk(words, t, y = CAP.y, pop = 1) {
   ctx.save(); ctx.font = `900 ${CAP.size}px Inter`; ctx.letterSpacing = '0px'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.lineJoin = 'round';
   const sp = ctx.measureText(' ').width, ws = words.map((w) => ({ ...w, wd: ctx.measureText(w.txt).width }));
@@ -61,7 +61,7 @@ export function drawChunk(words, t, y = CAP.y, pop = 1) {
   let x = -total / 2;
   for (const w of ws) {
     const active = t >= w.s && t < w.e + 0.04;
-    ctx.save(); ctx.translate(x + w.wd / 2, 0); if (active) ctx.scale(1.12, 1.12); ctx.translate(-w.wd / 2, 0);
+    ctx.save(); ctx.translate(x + w.wd / 2, 0); if (active) ctx.scale(1.05, 1.05); ctx.translate(-w.wd / 2, 0);
     ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillText(w.txt, 3, 8);
     ctx.lineWidth = 15; ctx.strokeStyle = '#0B0B10'; ctx.strokeText(w.txt, 0, 0);
     ctx.fillStyle = active ? HL : '#FFFFFF'; ctx.fillText(w.txt, 0, 0);

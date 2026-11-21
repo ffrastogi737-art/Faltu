@@ -1,90 +1,87 @@
-# Tall Tale 3D: funny true stories and fictional skits, 9:16
+# Tall Tale 3D: visual fables (the @aiwithcb formula), 9:16, 30-60 s
 
-Playful, clever, a little cheeky. Flat 2D cartoon people (thick ink outlines, big round white heads, bean bodies, stick
-limbs) acting inside a sunny, saturated 3D world: offices, gyms, school corridors, streets, a friend's flat. The camera
-moves, faces react on every beat, captions come 2-3 words at a time with the spoken word lit in yellow.
-Reference: `example/` = **THE GIRL WHO WAS MAILED TO GRANDMA** (hand-coded shots, the old way; 52 s). Sheet: `style-sheet.png`.
-New videos are built from a **shot plan** (section 3), not from hand-coded shot functions.
+A gripping true story told like a fable: story-dressed 2D cartoon characters (thick ink outlines, big round white heads) acting inside
+a matching 3D set full of story props, drawn diagrams and cut-aways. The camera moves in every shot, the first sentence starts inside the
+action, and the last line loops back into the first. No sitcom cast, no gag skits.
+Reference build for the formula: `example/script.example.json` + `example/shot_plan.example.json` (**The Bullet Holes That Fooled The
+Generals**, Abraham Wald and survivorship bias; its sources must be re-checked with 2 fresh sources before anything is published).
+`example/script.json` + `src/shots.js` (the mailed-girl story) is the old hand-coded way, kept only as an engine reference.
 
-## 1. Rules
-- **Two kinds of story, both 25-35 s, 9:16.**
-  - *True story*: punchy and sourced. 2+ reliable sources (museums, encyclopaedias, major outlets) listed in `script.json`
-    "sources". If sources disagree on a number, use the one most give and keep the wording simple.
-  - *Fictional skit*: a made-up comedy sketch. No real person named, no claim that it happened, and the first line must not
-    say it is true.
-  - Settings rotate (one new setting per video, never the same as the last two): `office`, `gym`, `school` (school or
-    college), `street`, `friends` (a friend group in a flat). Map: `THEMES` in `src/plan.js`.
-- **People are 2D, the world is 3D.** Every person is a `Toon` cut-out that turns to face the camera and casts a real
-  shadow. Never build people in 3D; never draw sets flat.
-- **Every shot needs a character.** No text-only shots, no full-screen text slides. Posters are props on a 3D wall, never more
-  than 45 % of the frame. The build refuses a shot without a character.
-- **Faces do the acting.** Change the mood on the beat: `smug` when someone's clever, `shock` on the reveal, `laugh` /
-  `happy` for the payoff, `worried` + `sweat` for trouble. Blink and talk are automatic.
-- **Safe zone.** Every character stays inside x 70..1010, y 170..1300 of the 1080x1920 frame in every frame of the shot,
-  falls and slips included. The framing solver dollies out or widens the lens to make that true; if the cast cannot fit at
-  70 deg, the build stops with a message: move the cast closer together or use fewer people.
-- **No size jumps.** The head size changes by at most 1.6x from one shot to the next (measured, not requested). Cameras
-  blend from the previous shot over 0.4 s.
-- **Captions**: 2-3 words per chunk, white Inter Black with a black edge, in the lower safe zone (y 1400, size 92). The spoken
-  word turns **#FFE600** and grows to 112 %. Words keep their punctuation and spelling.
-- Bright midday sun outside, warm bulbs inside, pink sunset for endings or flashbacks.
-- Story shape: open on the most surprising line (inside 2 s), then the setup, one picture per clause, short reaction beats,
-  and a punchline that flips the opening.
-- Narration: upbeat storyteller (`cbx_voice.py`, Chatterbox, tempo 1.12). Lots of small sounds on the words that call for them
-  (`pop`, `boing`, `stamp`, `ding`, `whoosh`, `thud`, `slide`). Music `"bounce"` (light comedy).
-- **Loudness**: the final mix is -15.5 LUFS (integrated), true peak -1.5 dBTP (`tools/loudness.py`, section 4).
+## 1. Topics (what a tall-tale is about)
+- True historical paradoxes (the bomber armor, the Monty Hall argument), bizarre real-world mysteries, mind-bending
+  science explainers, and "What Happens If..." survival stories told as a visual fable with a person in them.
+- Every fact checked against 2+ reliable sources, listed in `script.json` "sources". Hypotheticals ("what happens if") stay scientifically grounded and say so.
+- Not for: office / gym / school sitcom skits, invented jokes about real people, anything that cannot be sourced. Pick topics by `pick_style.py solo kinds` and the hook data like any other solo video.
 
-## 2. Engine map (`example/src/`)
-| file | gives you |
-|---|---|
-| `plan.js` | `buildPlanShots(E, plan)`: turns `shot_plan.json` into shots, cues and a report; `validatePlan`; `THEMES` (sets), `CAMS` (camera presets), `SAFE` (the safe zone) |
-| `core/engine.js` | `makeEngine` (tone curve, soft shadows, bloom, depth of field, saturation grade), `camera(fov)` |
-| `core/toon.js` | `new Toon(look, { height })` (cut-out: `.at(x,y,z)`, `.set(st)`, `.face(cam)`), `drawToon` (2D drawing) |
-| `core/world.js` | sets: `interior(E, o)` (room: `w`, `depth`, `wall`, `motif`, `floor`, `ceiling`, `signText`), `mainStreet`, `coast`, `meadow`; `snapshot(E, scene, cam)` |
-| `core/props.js` | `poster(lines, {w,h,bg,fg,accent})`, `lockers(n, col)`, `barbell()`, `desk(w)`, `house()`, `train()`, and more |
-| `core/captions.js` | `buildCaptions(script)` (2-3 word chunks with word timings), `drawCaption(t)` (active word #FFE600) |
-| `cast.js` | `CREW`: 12 original characters (`rookie`, `cop`, `tony`, `lucy`, `hank`, `gus`, `rex`, `dee`, `max`, `pete`, `moe`, `nia`); `cast.html` is the sheet. Never real GTA character art |
+## 2. Narrative structure (30-60 s, about 90-150 words)
+- **0:00 in medias res.** Sentence 1 is already inside the action or the paradox. No greeting, no "today", no setup.
+- **New visual every 2-3 lines.** A prop, a drawn diagram, a cut-away metaphor, a costume change (`wear`) or a state change (`soot`: a soot-black face after an
+  explosion; a pinboard that fills up; a comparison board). The build refuses 3 shots in a row with nothing new.
+- **Camera moves in every shot** (eased push, pull or orbit); no static scene. The build refuses a shot whose camera cannot move.
+- **Shape**: paradox or hook, the obvious (wrong) answer, the twist, the evidence, the payoff, then one line that names the lesson.
+- **Seamless loop.** The final line stops mid-sentence and flows into line 1 ("...we only ever hear from the" -> "bombers that came home, riddled with bullet holes!").
+  No fade in or out anywhere (the last frame cuts straight to the first); `script.json` `lead` 0.15, `outro` 0.15. The build refuses a last line ending in `. ! ?` (`"loop": false` opts out).
+- Narration: Chatterbox (`cbx_voice.py`, per-line `emo` 0.8-0.9 on the hook and the twist, tempo 1.1). Write the way you talk to a friend; read it aloud.
 
-**Toon look**: `{ body, pattern, patCol, hat, hatCol, neck, neckCol, hair, hairCol, beard, beardCol, extra: [sunglasses, glasses, headset, earring, scar, snout, bignose, mustache, freckles, blush, pencil, monocle], kid }`.
-**Toon state**: `{ mood: neutral│smug│happy│laugh│shock│worried│angry│sad│sly│proud│tired│dizzy, look, blink, talk, sweat, armL / armR, legs: stand│walk│run│sit│jump, lean, bob, holdL / holdR }`.
+## 3. Characters: dressed for THIS story
+Every episode defines its own cast in `shot_plan.json` `characters`: a `role` (who they are in the story) and a `look`. No recurring crew, no sitcom archetypes;
+the build refuses a look copied from `cast.js` and any look with fewer than 3 costume parts.
+- Costume parts: `hat` (cap, bowler, boater, beanie, visor, tophat, baseball, backcap, police, cowboy, fedora, bandana, hood, **crown, helmet, wizard**), `hair`, `beard`
+  (full goatee stubble long chops), `neck` (bowtie tie scarf collar chain), `pattern` (check stripes overalls vest apron **coat** = lab coat / uniform), `extra` (glasses
+  monocle mustache freckles sunglasses headset earring scar goggles ...), plus `body`/`patCol`/`hatCol`/`band` colours.
+- Dress by period and job: WWII mathematician (fedora, glasses, coat) + mechanic (cap, goggles, overalls) + general (peaked cap, gold band); alchemist (wizard hat, long beard,
+  coat) + emperor (crown, beard, rich colours); scientist (coat, goggles, glasses); climber (helmet, beanie, scarf); a historical figure in their signature outfit.
+- States per shot: `mood`, `action` (stand walk run sit jump clap point shock worry fall slip lie dizzy), `soot` (0-1), `wear` (a look patch for that shot, e.g. `{ "hat": "none" }`), `talk`, `look`.
+- Faces do the acting: `smug`, `shock`, `worried`, `happy`, `laugh`, `proud`, `sad`, `angry`, `dizzy` on the beat.
 
-## 3. Shot plan (`shot_plan.json`, one shot per script line)
-Copy `example/shot_plan.example.json` into the project and edit it. Its shots are the 10-shot office skit (`lines` must match
-`script.json`; `line` is the index of the script line the shot starts on).
+## 4. The world: a custom 3D set + story props
+- `setting` / shot `theme`: a name (`room`, `office`, `gym`, `school`, `friends`, `street`, `coast`, `meadow`) or `{ "name": "room", "o": { "wall", "motif", "floor", "ceiling", "signText" } }`
+  to paint your own interior (a hangar, a lab, a throne room). Outdoor stories use `street`, `coast`, `meadow`.
+- Props per shot (`props[]`): `diagram` (a board you draw with `ops`: rect, ellipse, dot, line, arrow, poly, text; each op can carry `k0` 0-1 to appear during the shot), `solid` (your own 3D prop from
+  `parts`: box, cyl, cone, sphere with size, pos, rot, colour, metal), `poster`, `lockers`, `barbell`, `desk`.
+- **Every shot needs a character with 3D depth around them. No text-only shots, no full-screen text slides.** A poster or diagram covers at most 45 % of the frame.
+- Place props so they are in the picture: a board behind the focus character (z about -6.3, 0.4-0.9 m to the side), a solid within 1 m of them, a diagram between the two people of a two-shot.
+
+## 5. Camera and framing (enforced when the plan is built)
+- Presets (`cam`): `wide`, `two-shot`, `medium`, `reaction-push`, `payoff` (head = the figure's height as a share of the frame: 0.15 / 0.22 / 0.31 / 0.24 to 0.33 / 0.27).
+- `move`: `push`, `pull`, `orbit-left`, `orbit-right` (defaults: wide orbit-left, two-shot orbit-right, medium push, payoff pull). All eased (eio); each shot blends from the previous camera over 0.4 s.
+- Safe zone: every character inside x 70..1010, y 170..1300 in every frame (falls included). Head size changes at most 1.6x between cuts. The solver dollies, shifts the lens and widens the fov to make it so, or stops with a message.
+- Inside a room the camera stays at z <= 1.6 (the lens widens instead of getting closer).
+
+## 6. Captions, music, loudness
+- Captions: 2-3 words, **clean bold white** (Inter Black, black edge, soft shadow), centred in the lower safe zone (y 1400, size 92, max width 920 so it stays inside x 70..1010); the spoken
+  word turns #FFE600 and grows only to 105 % (subtle). Words keep their punctuation and the script's spelling.
+- **Default music: `tension`** (a low drone with a slow minor pulse; mix.py). Set it the same in `script.json` `"music"` and `shot_plan.json` `"music"`. Others: `bed`, `neon`, `hype`, `none`
+  (there is no "bounce"). Sounds sit on the words that earn them (`hit`, `boom`, `thud`, `slam`, `ding`, `riser`, `scratch`, `whoosh` on cuts).
+- Loudness: the final mix is -15.5 LUFS integrated, true peak -1.5 dBTP (`tools/loudness.py`).
+
+## 7. Shot plan (`shot_plan.json`, one shot per script line)
 ```json
-{ "setting": "office", "track": "TALL-TALE", "cast_keys": ["moe", "nia"],
-  "shots": [ { "line": 0, "theme": "office", "cam": "medium", "focus": "moe", "yaw": 0,
-               "cast": [ { "who": "moe", "pos": "left", "mood": "smug", "action": "walk", "to": [-1.2, -2.8], "dir": "left",
-                           "talk": true, "look": [0, 0] } ],
-               "props": [ { "kind": "poster", "pos": "back", "lines": ["THE BIG IDEA"], "w": 2.2, "h": 1.3 } ],
-               "cues": [ { "word": "stole", "type": "boom", "gain": 0.9 }, { "at": "start", "type": "whoosh" } ] } ] }
+{ "setting": { "name": "room", "o": { "wall": "#8A8F6A", "signText": "HANGAR 3 · 1943" } }, "track": "TALL-TALE", "music": "tension",
+  "characters": { "wald": { "role": "1943 mathematician", "look": { "body": "#7A6A58", "pattern": "coat", "hat": "fedora", "neck": "bowtie", "extra": ["glasses", "mustache"] } } },
+  "shots": [ { "line": 0, "cam": "medium", "move": "push", "focus": "wald",
+               "cast": [ { "who": "wald", "pos": [-0.8, -5.4], "mood": "shock", "action": "shock", "talk": true, "soot": 1, "wear": { "hat": "none" } } ],
+               "props": [ { "kind": "diagram", "pos": [0.1, -6.3], "w": 1.5, "h": 1.1, "title": "RETURNED BOMBER", "ops": [ { "t": "dot", "x": 0.4, "y": 0.5, "r": 0.02, "col": "#D8343F", "k0": 0.3 } ] },
+                          { "kind": "solid", "pos": [0.3, -4.6], "parts": [ { "shape": "cyl", "size": [0.4, 0.6], "pos": [0, 0.7, 0], "rot": [90, 0, 0], "col": "#4A4F55", "metal": true } ] } ],
+               "cues": [ { "word": "riddled", "type": "hit" }, { "at": "start", "type": "whoosh" } ] } ] }
 ```
-- `cam`: `wide` (fov 60, heads about 0.10-0.15 of the frame), `two-shot` (2 characters, 0.17), `medium` (0.24), `reaction-push`
-  (0.17 → 0.23 on the beat), `payoff` (low camera, 0.20).
-- `cast[]`: `who` (a `CREW` key), `pos` (`left centre right far-left far-right back front`, or `[x, z]` in metres: keep multi-person
-  shots 2-3 m apart), `mood`, `action` (`stand walk run sit jump clap point shock worry fall slip lie dizzy`), `to` (walk to
-  `[x, z]`), `dir` (`left` / `right` for falls and slips), `kid`, `talk`, `look`.
-  A fall leans at most 40 deg, a slip at most 30 deg (the cut-out goes edge-on beyond that); `lie` is a slumped sit.
-- `props[]`: `poster` (`lines`, `w`, `h`, `pos`), `lockers`, `barbell`, `desk`. Posters are the on-screen text: short, big.
-- `cues[]`: `{ "word": "...", "type": ..., "gain": ... }` (sound on a word; the word must be in the line) or `{ "at": "start" | seconds, "type": ... }`.
-  Types: the ones `tools/mix.py` plays (`whoosh`, `pop`, `boom`, `thud`, `ding`, `boing`, `slide`, ...), listed in `plan.js` `CUE_TYPES`.
-- Themes are `office`, `gym`, `school`, `street`, `friends`, `coast`, `meadow` (interior themes take `lockers` and `poster` props on walls).
+`pos`: `left centre right far-left far-right back front` or `[x, z]` metres (camera on +z, back wall at z = -9). Keep people in one shot 2-3 m apart. Cue `word` must be in the line.
 
-## 4. Pipeline (project = `~/faceless-shorts/<name>`, made by `scripts/new_video.sh tall-tale <name>`)
-1. `script.json` (lines, `sources`, `lead` 0.15, `gap` 0.12, `outro` 0.7), `cbx_voice.py`, `words.py`.
-2. `shot_plan.json` from the example; one shot per line.
-3. `node tools/capture.mjs check` → `CHECK OK` (every shot in the safe zone, head sizes within 1.6x). A failure names the shot and the rule.
-4. `node tools/capture.mjs cues`, `python3 tools/mix.py .` (raw mix, `data/mix.wav`).
-5. `python3 tools/loudness.py .` → `data/mix.wav` at -15.5 LUFS, true peak -1.5 dBTP; the raw mix is kept as `data/mix_raw.wav`.
-   It detects a fresh mix.py run by hash, so running it twice is safe. It refuses to write if the duration changes.
-6. `node tools/capture.mjs sheet review/all.jpg 1 9`: look at it (captions correct and in the lower zone, no empty frames over 1 s,
-   characters readable, no cut-outs cut by the frame edge, posters legible).
-7. `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/out.mp4` (muxes `data/mix.wav`).
-   Render speed ≈ 1.5-3 s per frame without a GPU.
+## 8. Pipeline (project = `~/faceless-shorts/<name>`, made by `scripts/new_video.sh tall-tale <name>`)
+1. `script.json` (lines, `sources`, `music: "tension"`, `lead` 0.15, `outro` 0.15), then `/root/cbx/bin/python scripts/cbx_voice.py <proj>` and `scripts/words.py <proj>` (no voice yet: `scripts/estimate.py <proj>`).
+2. `cp shot_plan.example.json shot_plan.json` and rewrite it for the story (characters first, then one shot per line).
+3. `node tools/capture.mjs check` -> `CHECK OK`. A failure names the shot and the rule.
+4. `node tools/capture.mjs cues`, `python3 tools/mix.py .`, then `python3 tools/loudness.py .` (`data/mix.wav` at -15.5 LUFS; the raw mix stays in `data/mix_raw.wav`; safe to repeat).
+5. `node tools/capture.mjs sheet review/all.jpg 1.5 9` and LOOK: characters readable, props in frame, captions correct and in the lower zone, something new every 2-3 lines.
+6. `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/out.mp4` (about 1.5-3 s per frame without a GPU).
 
-## 5. QA pitfalls
-- A cut-out seen from the side becomes a sliver: the camera stays within ~60° of facing people (`.face(cam)` handles the rest).
-- People inside furniture: check the feet heights (boardwalk 0.18, counter top 1.18 + scale 0.08).
-- Shadows only fall inside the sun's shadow box: move `sun.key.target` near the action when you build a new set.
-- Cut-outs keep their state from shot to shot: move unused people out of frame and reset moving props each shot.
-- The room is small: a medium shot inside a room needs the camera at z ≤ 1.6 (the solver widens the lens instead of getting closer).
+## 9. Engine map (`example/src/`)
+`plan.js` (plan -> shots, validation, themes, cameras) · `core/toon.js` (2D cut-out drawing + `Toon`) · `core/world.js` (interior, mainStreet, coast, meadow) · `core/props.js` (`diagram`, `solid`,
+`poster`, `lockers`, `barbell`, `desk`, ...) · `core/captions.js` · `core/engine.js` (tone curve, shadows, bloom, depth of field) · `cast.js` (the old recurring crew: legacy, not used by plans).
+
+## 10. QA pitfalls
+- A cut-out seen from the side becomes a sliver (falls lean at most 40 deg, slips 30 deg; `lie` is a slumped sit).
+- Shadows only fall inside the sun's shadow box; a new set may need `sun.key.target` moved near the action.
+- Cut-outs keep their state between shots: unused people are hidden, props only show in their own shot.
+- A push or pull needs room: when the cast already fills the frame the build asks for an orbit instead.
+- Check the facts again after the script is final; the example's sources are placeholders for the format, not a verified publish.

@@ -1,7 +1,7 @@
 # JARVIS BRAIN: run these channels as if they were mine (owner handed over everything, 19 Nov 2026: "ye tera hi channel hai")
 
 The owner does not watch. Nobody approves anything. The goal is **YouTube monetization** (solo hype, Kratos Playz) and
-Instagram @solohypee growth. Platform-safety limits in CLAUDE.md stay: they are what keeps the channels from being banned,
+Instagram @solohype_1 growth. Platform-safety limits in CLAUDE.md stay: they are what keeps the channels from being banned,
 not creative limits. Everything else (topic, language, style, format, length, time, number of videos, even which channel
 gets the effort) is my call, decided by evidence. Read this file, then FACTORY.md (the how), then act.
 

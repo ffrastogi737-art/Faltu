@@ -106,12 +106,14 @@ export function drawToon(g, look = {}, st = {}) {
   g.fillStyle = shadeOf(L.head, 0.9); g.beginPath(); g.arc(hx + 52, hy + 44, r, 0, Math.PI * 2); g.rect(hx - 400, hy - 400, 800, 800); g.fill('evenodd');
   g.restore();
   g.strokeStyle = INK; g.lineWidth = LW + 1; g.stroke(head);
+  if (S.soot) drawSoot(g, S.soot, hx, hy, r);                    // soot-black face after an explosion (state change)
   drawBeard(g, L, hx, hy, r);
   drawFace(g, L, S, hx, hy);
   drawGear(g, L, hx, hy, r, hy + 4);
   hairFront(g, L, hx, hy, r);
   drawHat(g, L, hx, hy, r);
   drawHat2(g, L, hx, hy, r);
+  drawHat3(g, L, hx, hy, r);
   g.restore();
   g.restore();
   return hands;
@@ -191,7 +193,31 @@ function drawHat2(g, L, hx, hy, r) {
     g.fillStyle = L.hatCol || '#A9A27A'; g.beginPath(); g.moveTo(hx - r * 0.94, hy - 10); g.quadraticCurveTo(hx, hy - r * 1.16, hx + r * 0.94, hy - 10); g.quadraticCurveTo(hx + r * 0.7, hy - 90, hx, hy - 96); g.quadraticCurveTo(hx - r * 0.7, hy - 90, hx - r * 0.94, hy - 10); g.closePath(); g.fill(); g.stroke();
   }
 }
+// ---------- story costumes (owner 21 Nov 2026): crown, helmet, wizard hat, goggles, lab coat / uniform, soot ----------
+function drawSoot(g, k, hx, hy, r) {
+  g.save(); g.beginPath(); g.ellipse(hx, hy, r, r * 0.97, 0, 0, Math.PI * 2); g.clip();
+  g.globalAlpha = Math.min(1, k) * 0.88; g.fillStyle = '#2B2623';
+  g.beginPath(); g.ellipse(hx, hy + 28, r * 0.92, r * 0.74, 0, 0, Math.PI * 2); g.fill();
+  [[-80, -70, 40], [30, -96, 34], [86, -50, 30]].forEach(([dx, dy, q]) => { g.beginPath(); g.arc(hx + dx, hy + dy, q, 0, Math.PI * 2); g.fill(); });
+  g.restore();
+}
+function drawHat3(g, L, hx, hy, r) {
+  const c = L.hatCol || '#C9A13B', top = hy - r * 0.97; g.strokeStyle = INK; g.lineWidth = LW; g.fillStyle = c;
+  if (L.hat === 'crown') {
+    g.beginPath(); g.moveTo(hx - r * 0.62, top + 36); g.lineTo(hx - r * 0.7, top - 34); g.lineTo(hx - r * 0.32, top - 4); g.lineTo(hx, top - 40); g.lineTo(hx + r * 0.32, top - 4); g.lineTo(hx + r * 0.7, top - 34); g.lineTo(hx + r * 0.62, top + 36); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = L.band || '#B5372E'; [-0.4, 0, 0.4].forEach((k) => { g.beginPath(); g.arc(hx + r * k, top + 16, 11, 0, 7); g.fill(); g.lineWidth = 4; g.stroke(); }); g.lineWidth = LW;
+  } else if (L.hat === 'helmet') {                                // army / climbing helmet: dome + rim + shine
+    g.beginPath(); g.ellipse(hx, top + 44, r * 1.02, 84, 0, Math.PI, 0); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = shadeOf(c, 0.75); g.beginPath(); g.roundRect(hx - r * 1.06, top + 38, r * 2.12, 22, 10); g.fill(); g.stroke();
+    g.strokeStyle = 'rgba(255,255,255,0.35)'; g.lineWidth = 6; g.beginPath(); g.arc(hx - 24, top + 34, r * 0.64, Math.PI * 1.15, Math.PI * 1.6); g.stroke();
+  } else if (L.hat === 'wizard') {                                // alchemist / scholar: stubby cone with a bent tip and a moon
+    g.beginPath(); g.ellipse(hx, top + 40, r * 1.2, 24, 0, 0, 7); g.fill(); g.stroke();
+    g.beginPath(); g.moveTo(hx - r * 0.7, top + 36); g.quadraticCurveTo(hx - r * 0.3, top - 30, hx + r * 0.5, top - 38); g.quadraticCurveTo(hx + r * 0.46, top - 6, hx + r * 0.7, top + 36); g.closePath(); g.fill(); g.stroke();
+    g.fillStyle = L.band || '#F2C230'; g.beginPath(); g.arc(hx - r * 0.1, top + 6, 14, 0, 7); g.fill(); g.lineWidth = 4; g.stroke(); g.lineWidth = LW;
+  }
+}
 function drawGear(g, L, hx, hy, r, ey) {
+  if (L.extra.includes('goggles')) { g.fillStyle = 'rgba(160,220,240,0.9)'; g.strokeStyle = INK; g.lineWidth = 7; [-1, 1].forEach((s) => { g.beginPath(); g.arc(hx + s * 46, hy - r * 0.6, 28, 0, 7); g.fill(); g.stroke(); }); g.beginPath(); g.moveTo(hx - 18, hy - r * 0.6); g.lineTo(hx + 18, hy - r * 0.6); g.stroke(); }
   if (L.extra.includes('sunglasses')) { g.fillStyle = '#16151F'; g.strokeStyle = INK; g.lineWidth = 6; [-1, 1].forEach((s) => { g.beginPath(); g.roundRect(hx + s * 46 - 38, ey - 28, 76, 54, [10, 10, 26, 26]); g.fill(); g.stroke(); });
     g.beginPath(); g.moveTo(hx - 10, ey - 12); g.lineTo(hx + 10, ey - 12); g.stroke(); g.strokeStyle = 'rgba(255,255,255,0.5)'; g.lineWidth = 5; [-1, 1].forEach((s) => { g.beginPath(); g.moveTo(hx + s * 46 - 24, ey - 14); g.lineTo(hx + s * 46 - 8, ey - 20); g.stroke(); }); }
   if (L.extra.includes('headset')) { g.fillStyle = L.headsetCol || '#E23B5C'; g.strokeStyle = INK; g.lineWidth = 7; [-1, 1].forEach((s) => { g.beginPath(); g.roundRect(hx + s * (r * 1.0) - 22, hy - 30, 44, 84, 18); g.fill(); g.stroke(); });
@@ -211,6 +237,10 @@ function drawPattern(g, L, bx, top, bot, bw) {
     g.lineWidth = 2; g.globalAlpha = 0.5; g.strokeStyle = L.patCol2 || '#B5372E';
     for (let x = bx - 103; x < bx + 120; x += 68) { g.beginPath(); g.moveTo(x, top - 20); g.lineTo(x, bot + 20); g.stroke(); }
     g.globalAlpha = 1;
+  } else if (L.pattern === 'coat') {                              // lab coat / uniform: lapels, centre seam, buttons, breast pocket
+    g.strokeStyle = pc; g.lineWidth = 6; g.beginPath(); g.moveTo(bx - 40, top + 8); g.lineTo(bx, top + 84); g.lineTo(bx + 40, top + 8); g.moveTo(bx, top + 84); g.lineTo(bx, bot); g.stroke();
+    g.fillStyle = pc; [0.38, 0.55, 0.72].forEach((k) => { g.beginPath(); g.arc(bx + 16, top + (bot - top) * k, 7, 0, 7); g.fill(); });
+    g.strokeRect(bx + 28, top + 104, 46, 40);
   } else if (L.pattern === 'stripes') {
     g.fillStyle = pc; for (let x = bx - 130; x < bx + 130; x += 36) g.fillRect(x, top - 20, 14, bot - top + 40);
   } else if (L.pattern === 'overalls') {

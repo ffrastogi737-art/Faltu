@@ -6,7 +6,7 @@ description: Make narrated faceless YouTube Shorts / TikToks / Reels fully in co
 # Faceless Shorts
 
 You make a finished vertical short from a topic: script, voice, word-synced captions, animated shots, sound and
-music, rendered to MP4. **Everything is code**: canvas drawing, headless Chrome capture, ffmpeg, a local Kokoro voice,
+music, rendered to MP4. **Everything is code**: canvas drawing, headless Chrome capture, ffmpeg, a local Chatterbox voice (`scripts/cbx_voice.py`),
 local Whisper word timing, numpy sound. No AI images or video, no API keys, no credits.
 `SKILL` = the folder this file is in. Projects live in `~/faceless-shorts/<short-name>/`.
 
@@ -17,7 +17,7 @@ local Whisper word timing, numpy sound. No AI images or video, no API keys, no c
 | **Inside Out** `inside-out` | flat 2D "What happens if…?" explainer: a simple hero, x-ray cutaways, bold 1-3 word captions, punchy cuts | 25-40 s · 9:16 |
 | **Stick Story** `stick-story` | "What would you do if…?" survival steps: stick people with acting eyes, flat rooms day/night, gold step cards | 30-45 s · 9:16 |
 | **Paper Atlas** `paper-atlas` | history in cut paper: parchment maps, crimson routes, gold date ribbons, period figures | 30-45 s · 9:16 |
-| **Tall Tale 3D** `tall-tale` | funny true stories or fictional skits (office, gym, school, street, friend group): flat 2D cartoon people (big round heads, ink outlines) in a sunny 3D world, a shot plan per line (`shot_plan.json`), safe-zone camera, 2-3-word captions with a yellow active word, -15.5 LUFS | 25-35 s · 9:16 |
+| **Tall Tale 3D** `tall-tale` | @aiwithcb-style visual fables: true historical paradoxes, bizarre real mysteries, mind-bending science, "what happens if" survival stories. Story-dressed 2D characters (period outfits, hats, beards, uniforms) in a matching 3D set with story props, drawn diagrams and cut-aways, a camera that moves in every shot, in-medias-res hook, seamless loop ending, clean white captions, -15.5 LUFS. A shot plan per line (`shot_plan.json`) | 30-60 s · 9:16 |
 | **Neon Versus** `neon-versus` | gaming / tech "X vs Y", top-5 lists and launch countdowns in a synthwave Vice City look: glowing panels, neon text, generic skylines and silhouettes (never real game art), Hindi voice with Hinglish captions, optional "vote for Part 2" ending | 40-58 s · 9:16 |
 | **Chalk Talk** `chalk-talk` | "why does your body do that?" explainers drawn on a green chalkboard: chalk lines that draw themselves on, stick people, cross-section diagrams with labels and arrows, chalk-white captions with one yellow word | 35-50 s · 9:16 |
 | **Comic Pop** `comic-pop` | bright, colourful thumbnail-style explainers, lists, launch news and versus: saturated sunburst backgrounds that change every shot, white sticker cards with thick ink outlines, count-up numbers on comic bursts, big outlined captions. Kratos Playz GTA default since 18 Nov 2026 (replaced the dark neon look) | 35-55 s · 9:16 |
@@ -27,20 +27,20 @@ local Whisper word timing, numpy sound. No AI images or video, no API keys, no c
 
 Which style: body / health / science "what happens if" → **Deep Dive 3D** (or **Inside Out** for a lighter, faster 2D
 look) · creepy, unexplained, true crime, "this happened in 1971" → **Night File 3D** · survival, life hacks, "here's what
-you do" → **Stick Story** · a historical event, "how X happened" → **Paper Atlas** · a funny or clever true story, a con, a loophole, "this guy did X" → **Tall Tale 3D**. · a game, phone or gadget comparison or launch ("GTA 5 vs GTA 6") → **Neon Versus**. · a simple "why does X happen" body or science fact you would explain at a blackboard → **Chalk Talk**. If it isn't obvious, ask once.
+you do" → **Stick Story** · a historical event, "how X happened" → **Paper Atlas** · a true historical paradox, a bizarre real mystery, a mind-bending science idea or a "what happens if" told as a visual fable with characters → **Tall Tale 3D**. · a game, phone or gadget comparison or launch ("GTA 5 vs GTA 6") → **Neon Versus**. · a simple "why does X happen" body or science fact you would explain at a blackboard → **Chalk Talk**. If it isn't obvious, ask once.
 
 Each style = `styles/<style>/style-sheet.png` (the look in one image, drawn by the style's own code) + `STYLE.md` (the rules + the engine manual) +
 `example/` (a complete project that renders as-is). **Read the style's STYLE.md in full before planning.**
 
 ## 0. First use on a computer
 `bash SKILL/scripts/setup.sh` until it prints **All set** (checks Node 22+, ffmpeg, Chrome; builds `~/.faceless-shorts/venv`;
-downloads the Kokoro voice ~340 MB and Whisper small.en ~0.5 GB). Install anything missing the free, official way, and ask
+downloads Whisper small.en ~0.5 GB; the Chatterbox voice lives in `/root/cbx`, see `scripts/cloud_bootstrap.sh`). Install anything missing the free, official way, and ask
 before anything that needs a password. Then `bash SKILL/scripts/selftest.sh` must print **SELFTEST PASSED**: open the
 contact sheet and clip it names and look at them.
 
 ## 1. Intake (ONE message, defaults filled in)
 Ask only what's unknown, all at once: topic (or "you pick 3 ideas"), a link to a short whose format they like (optional),
-length (default ~30 s), voice (`SKILL/scripts/py SKILL/scripts/voice.py --list`; default `am_michael`); Hindi: `hm_omega` etc. with a Devanagari `"say"` per line (see Neon Versus STYLE.md), voiceover mode:
+length (default ~30 s), voice (default: Chatterbox, `cbx_voice.py <proj> [exaggeration] [tempo]`, per-line `emo`; the old Kokoro `voice.py --list` is only for Hindi: `hm_omega` etc. with a Devanagari `"say"` per line, see Neon Versus STYLE.md), voiceover mode:
 **AI voice** (default) · **their own recording** (they record after seeing the script; `words.py --audio`) ·
 **captions-only** (no voice yet; `estimate.py`), music (built-in bed · none · their own royalty-free file), end line / handle.
 "Just go" = the defaults.
@@ -53,7 +53,7 @@ their sources. Ask **"Build it?"** and wait.
 **Script rules.** Write it the way a person actually talks to a friend: full, flowing sentences with connecting words
 ("Well,", "where", "but", "so", "which means"), not a list of short caption-like statements. ~90-110 words for 35 s.
 **A line is a CUT, not a sentence**: split each sentence into 1-3 lines at natural pauses (commas, "and", "where"), so
-the picture changes every 1.5-3.5 s while the voice keeps flowing (voice.py speaks each whole sentence in one pass).
+the picture changes every 1.5-3.5 s while the voice keeps flowing (the voice speaks each whole sentence in one pass).
 Shape: hook question, then escalation, a myth or surprise, a twist ("but if you…"), a punchy last line that loops.
 Write numbers as they're said ("seven"). Read it out loud in your head: if it sounds like captions, rewrite it.
 Original writing only: take a format you like, never another creator's script or shots. Every fact is checked against a
@@ -62,7 +62,7 @@ reliable source (list them in `script.json` "sources"). Health topics: accurate,
 ## 3. Build
 1. `bash SKILL/scripts/new_video.sh <style> <short-name>` copies the example into `~/faceless-shorts/<short-name>/`.
 2. Write `script.json` (lines + caps + gaps; see STYLE.md).
-3. Timing: `SKILL/scripts/py SKILL/scripts/voice.py <proj>` then `SKILL/scripts/py SKILL/scripts/words.py <proj>`
+3. Timing: `/root/cbx/bin/python SKILL/scripts/cbx_voice.py <proj>` (Chatterbox) then `SKILL/scripts/py SKILL/scripts/words.py <proj>`
    (own recording: `words.py <proj> --audio their.m4a`; captions-only: `estimate.py <proj>`).
 4. Rewrite `src/shots.js`: one shot per line (or two for long lines), each placed with `cut(i)` and its key moments on
    words with `Wd('word', line)`. Reuse the kit (`src/core/kit.js`); add new components there, in the style's look.

@@ -1,17 +1,25 @@
 // Tall Tale shot plans (owner 21 Nov 2026). A shot_plan.json, one shot per script line, drives the whole film: no hand-coded
-// shot functions per video. Build-time safety rules (the build stops with a message when one fails):
-//   - every shot has at least one character (no text-only shots), and a poster never covers more than 45 % of the frame;
+// shot functions per video. The look is the @aiwithcb fable look: story-authentic 2D characters inside a matching 3D world.
+// Build-time safety rules (the build stops with a message when one fails):
+//   - every character is dressed for THIS story (plan.characters: role + look with 3+ costume parts); no recurring crew / sitcom archetypes;
+//   - every shot has at least one character (no text-only shots); a poster or diagram never covers more than 45 % of the frame;
+//   - at least every 3rd shot brings something new: a prop, diagram, 3D solid, a costume change ("wear") or a state change ("soot");
+//   - the camera moves in every shot (push, pull or orbit; "none" is refused), eased, and blends from the previous shot over 0.4 s;
 //   - every character stays inside the safe zone (x 70..1010, y 170..1300 of 1080x1920) in every frame of the shot, falls included;
-//   - the head size changes by at most 1.6x from one shot to the next; each camera blends from the previous shot over 0.4 s.
+//   - the head size changes by at most 1.6x from one shot to the next;
+//   - the last script line must not end with . ! ? : it flows into line 1 so the video loops (plan.loop = false opts out).
 // shot_plan.json:
-//   { "setting": "office", "track": "TALL-TALE", "cast_keys": ["tony", "lucy"],
-//     "shots": [ { "line": 0, "theme": "office", "cam": "medium", "focus": "tony", "yaw": 0,
-//                  "cast": [ { "who": "tony", "pos": "left", "mood": "smug", "action": "walk", "to": [-1.2, -2.8], "dir": "left",
-//                              "kid": false, "talk": true, "look": [0, 0] } ],
-//                  "props": [ { "kind": "poster", "pos": "back", "lines": ["THE BIG IDEA"], "w": 2.2, "h": 1.3 } ],
+//   { "setting": "room" | { "name": "room", "o": { "wall": "#..", "signText": "HANGAR 3 · 1943" } }, "music": "tension",
+//     "characters": { "wald": { "role": "1943 mathematician", "look": { "body": "#..", "pattern": "coat", "hat": "fedora", "extra": ["glasses"], "neck": "bowtie" } } },
+//     "shots": [ { "line": 0, "theme": "room", "cam": "medium", "move": "push", "focus": "wald", "yaw": 0,
+//                  "cast": [ { "who": "wald", "pos": "left", "mood": "smug", "action": "walk", "to": [-1.2, -2.8], "dir": "left", "soot": 1,
+//                              "wear": { "hat": "none" }, "kid": false, "talk": true, "look": [0, 0] } ],
+//                  "props": [ { "kind": "diagram", "pos": [1.4, -5], "w": 2, "h": 1.4, "title": "HOLES", "ops": [ { "t": "dot", "x": 0.4, "y": 0.5, "k0": 0.3 } ] },
+//                             { "kind": "solid", "pos": [-1, -4], "parts": [ { "shape": "box", "size": [1, 1, 1], "col": "#.." } ] },
+//                             { "kind": "poster", "pos": "back", "lines": ["!TOP SECRET"], "w": 2.2, "h": 1.3 } ],
 //                  "cues": [ { "word": "stole", "type": "boom", "gain": 0.9 }, { "at": "start", "type": "whoosh" } ] } ] }
-// cam: wide | two-shot | medium | reaction-push | payoff.   action: stand walk run sit jump clap point shock worry fall slip lie dizzy.
-// pos: left centre right far-left far-right back front, or [x, z] in metres (the set's own frame, camera on +z).
+// cam: wide | two-shot | medium | reaction-push | payoff.   move: push | pull | orbit-left | orbit-right (default by cam).
+// action: stand walk run sit jump clap point shock worry fall slip lie dizzy.   pos: left centre right far-left far-right back front, or [x, z] in metres.
 import * as THREE from 'three';
 import { clamp, lerp, eio, eo } from './core/lib.js';
 import { L, Wd, T } from './core/timing.js';
@@ -23,17 +31,21 @@ import { CREW } from './cast.js';
 
 const W = 1080, H = 1920, PERSON = 1.75;
 export const SAFE = { l: 70, r: 1010, t: 170, b: 1300 };
-const HEAD_MIN = 0.07, HEAD_MAX = 0.30, JUMP = 1.6, BLEND = 0.4, POSTER_MAX = 0.45;
+const HEAD_MIN = 0.07, HEAD_MAX = 0.40, JUMP = 1.6, BLEND = 0.4, POSTER_MAX = 0.45;
 const ROOM_CAM_Z = 1.6;                              // inside a room the camera stays in front of the floor edge (z 2)
-const CAMS = {
-  wide: { fov: 60, head: 0.10, y: 1.6 },
-  'two-shot': { fov: 44, head: 0.17, y: 1.3 },
-  medium: { fov: 40, head: 0.24, y: 1.4 },
-  'reaction-push': { fov: 40, head: 0.17, head2: 0.23, y: 1.4 },
-  payoff: { fov: 40, head: 0.20, y: 0.6 },
+const CAMS = {                                        // head = the figure's height as a fraction of the frame (feet to hat)
+  wide: { fov: 60, head: 0.15, y: 1.6 },
+  'two-shot': { fov: 44, head: 0.22, y: 1.3 },
+  medium: { fov: 40, head: 0.31, y: 1.4 },
+  'reaction-push': { fov: 40, head: 0.24, head2: 0.33, y: 1.4 },
+  payoff: { fov: 40, head: 0.27, y: 0.6 },
 };
 const ACTIONS = new Set(['stand', 'walk', 'run', 'sit', 'jump', 'clap', 'point', 'shock', 'worry', 'fall', 'slip', 'lie', 'dizzy']);
-const PROP_KINDS = new Set(['poster', 'lockers', 'barbell', 'desk']);
+const PROP_KINDS = new Set(['poster', 'lockers', 'barbell', 'desk', 'diagram', 'solid']);
+export const MUSIC = new Set(['tension', 'bed', 'neon', 'hype', 'none']);
+export const DEFAULT_MUSIC = 'tension';        // the default track of every tall-tale (script.json "music" must match the plan's)
+const MOVES = { push: 1.18, pull: 1 / 1.18, 'orbit-left': 1, 'orbit-right': 1 };      // head growth over the shot; orbits swing the camera +-7 deg
+const DEFAULT_MOVE = { wide: 'orbit-left', 'two-shot': 'orbit-right', medium: 'push', 'reaction-push': null, payoff: 'pull' };   // reaction-push already pushes in
 const CUE_TYPES = new Set(['inhale', 'heartbeat', 'whoosh', 'slide', 'pop', 'plop', 'gulp', 'boing', 'bubbles', 'sizzle', 'sparkle', 'thud', 'slam', 'tock', 'zip',
   'alarm', 'boom', 'riser', 'ding', 'hit', 'swoosh', 'applause', 'tickclock', 'scratch', 'coin']);   // every type mix.py can play
 const POS = {
@@ -52,6 +64,7 @@ export const THEMES = {
     props: [{ kind: 'lockers', pos: 'right-wall', n: 4, col: '#3C6FB6' }, { kind: 'poster', pos: 'back', lines: ['POP QUIZ', 'TODAY'], bg: '#1F3A2E', fg: '#F2F2E6', w: 2.0, h: 1.2 }] },
   friends: { build: 'interior', o: { w: 7, depth: 9, wall: '#8FC9B5', motif: '#78B8A3', floor: '#A46B3E', ceiling: '#EDEFE6', signText: 'APT 3B', picture: false, counterOn: false, litter: false },
     props: [{ kind: 'poster', pos: 'back', lines: ['FRIDAY', 'NIGHT'], bg: '#F2C230', fg: '#1F1C33', w: 2.0, h: 1.2 }] },
+  room: { build: 'interior', o: { w: 7, depth: 9, wall: '#C9B48A', motif: '#B79F73', floor: '#6B4A32', ceiling: '#E9DFC8', signText: '', picture: false, counterOn: false, litter: false }, props: [] },   // a blank room: dress it with theme.o + props
   street: { build: 'mainStreet', o: {}, props: [] },
   coast: { build: 'coast', o: {}, props: [] },
   meadow: { build: 'meadow', o: {}, props: [] },
@@ -63,26 +76,48 @@ const toRad = (d) => (d * Math.PI) / 180;
 /** a readable error at build time (plan problems stop the build, they never render a bad shot) */
 export function validatePlan(plan) {
   if (!plan || !Array.isArray(plan.shots) || !plan.shots.length) throw new Error('shot_plan.json: "shots" is empty');
+  const chars = plan.characters;
+  if (!chars || typeof chars !== 'object' || !Object.keys(chars).length) throw new Error('shot_plan.json: "characters" is empty. Dress every character for THIS story (role + look); recurring crew characters are not used');
+  const crewSig = (l) => [l.body, l.hat, l.hair, l.pattern, l.neck].join('|');
+  const crew = new Set(Object.values(CREW).map(crewSig));
+  Object.entries(chars).forEach(([k, c]) => {
+    if (!c || !c.role) throw new Error(`character "${k}": "role" is missing (who is this in the story, e.g. "1943 mathematician")`);
+    const lk = c.look || {};
+    if (!lk.body) throw new Error(`character "${k}": look.body (the outfit colour) is missing`);
+    const parts = ['hat', 'hair', 'beard', 'neck', 'pattern', 'extra'].filter((f) => lk[f] && lk[f] !== 'none' && lk[f] !== 'plain' && !(Array.isArray(lk[f]) && !lk[f].length));
+    if (parts.length < 3) throw new Error(`character "${k}": dress it for the story: at least 3 of hat, hair, beard, neck, pattern, extra (it has ${parts.length})`);
+    if (crew.has(crewSig(lk))) throw new Error(`character "${k}" is a recurring crew look from cast.js: design an outfit that belongs to this story`);
+  });
+  if (plan.music !== undefined && !MUSIC.has(plan.music)) throw new Error(`music "${plan.music}": use ${[...MUSIC].join(', ')} (default ${DEFAULT_MUSIC})`);
   let last = -1;
+  const novel = plan.shots.map((sp) => !!((sp.props || []).length || (sp.cast || []).some((c) => c.soot || c.wear)));
   plan.shots.forEach((sp, i) => {
     const id = `shot ${i + 1} (line ${sp.line})`;
     if (!Number.isInteger(sp.line) || sp.line < 0 || sp.line <= last) throw new Error(`${id}: lines must be unique and in increasing order`);
     last = sp.line;
     if (!Array.isArray(sp.cast) || !sp.cast.length) throw new Error(`${id}: no cast. Every shot needs at least one character (text-only shots are banned)`);
     if (!CAMS[sp.cam]) throw new Error(`${id}: cam must be one of ${Object.keys(CAMS).join(', ')}`);
+    if (sp.move !== undefined && !MOVES[sp.move]) throw new Error(`${id}: move "${sp.move}" is not allowed (the camera always moves: ${Object.keys(MOVES).join(', ')})`);
     const th = sp.theme || plan.setting, name = typeof th === 'string' ? th : th && th.name;
     if (!THEMES[name]) throw new Error(`${id}: unknown theme "${name}" (use ${Object.keys(THEMES).join(', ')})`);
     sp.cast.forEach((c) => {
-      if (!CREW[c.who]) throw new Error(`${id}: unknown character "${c.who}" (cast.js has ${Object.keys(CREW).join(', ')})`);
+      if (!chars[c.who]) throw new Error(`${id}: character "${c.who}" is not defined in "characters" (defined: ${Object.keys(chars).join(', ')})`);
       if (c.action && !ACTIONS.has(c.action)) throw new Error(`${id}: unknown action "${c.action}"`);
     });
     if (sp.cam === 'two-shot' && sp.cast.length < 2) throw new Error(`${id}: two-shot needs 2 characters`);
-    (sp.props || []).forEach((p) => { if (!PROP_KINDS.has(p.kind)) throw new Error(`${id}: unknown prop "${p.kind}"`); });
+    (sp.props || []).forEach((p) => {
+      if (!PROP_KINDS.has(p.kind)) throw new Error(`${id}: unknown prop "${p.kind}" (use ${[...PROP_KINDS].join(', ')})`);
+      if (p.kind === 'diagram' && !(p.ops || []).length) throw new Error(`${id}: a diagram needs "ops" (what is drawn on it)`);
+      if (p.kind === 'solid' && !(p.parts || []).length) throw new Error(`${id}: a solid needs "parts"`);
+    });
     (sp.cues || []).forEach((c) => {
       if (!CUE_TYPES.has(c.type)) throw new Error(`${id}: unknown sound "${c.type}"`);
       if (c.word === undefined && c.at === undefined) throw new Error(`${id}: a cue needs "word" or "at"`);
     });
   });
+  for (let i = 0; i + 2 < plan.shots.length; i++)
+    if (!novel[i] && !novel[i + 1] && !novel[i + 2])
+      throw new Error(`shots ${i + 1}-${i + 3} (lines ${plan.shots[i].line}-${plan.shots[i + 2].line}): nothing new for 3 shots in a row. Add a prop, a diagram, a solid, a costume change ("wear") or a state change ("soot")`);
   return plan;
 }
 
@@ -95,7 +130,7 @@ function place(kind, pos) {
 /** the cut-out's pose at film progress k (0..1 inside the shot), time t and shot-local time */
 function poseOf(c, k, t) {
   const a = c.action || 'stand', dir = c.dir === 'left' ? -1 : 1;
-  const st = { mood: c.mood || 'neutral', look: c.look || [0, 0], blink: blink(t, c.off || 0), talk: c.talk ? talk(t) : 0, armL: [12, 8], armR: [12, 8], legs: 'stand', lean: 0, bob: 0, phase: 0 };
+  const st = { soot: c.soot || 0, mood: c.mood || 'neutral', look: c.look || [0, 0], blink: blink(t, c.off || 0), talk: c.talk ? talk(t) : 0, armL: [12, 8], armR: [12, 8], legs: 'stand', lean: 0, bob: 0, phase: 0 };
   switch (a) {
     case 'stand': break;
     case 'walk': st.legs = 'walk'; st.phase = t * 9; st.bob = 1; break;
@@ -133,19 +168,23 @@ function propPos(S, kind, pos) {
   throw new Error(`prop position "${pos}" is not known in this set (use [x, z] here)`);
 }
 function addProp(S, p, shot) {
+  const wall = typeof p.pos === 'string', h = p.h || (p.kind === 'diagram' ? 1.4 : 1.2);
+  const y = p.kind === 'poster' ? (p.y ?? 2.3) : p.kind === 'diagram' ? (p.y ?? (wall ? 2.3 : 0.6 + h / 2)) : 0;
   const g = p.kind === 'poster' ? PR.poster(p.lines || ['NOTICE'], { w: p.w || 2.0, h: p.h || 1.2, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', accent: p.accent || '#B5372E' })
+    : p.kind === 'diagram' ? PR.diagram(p.ops || [], { w: p.w || 2.0, h, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', title: p.title || '', legs: wall ? 0 : y })
+    : p.kind === 'solid' ? PR.solid(p.parts || [])
     : p.kind === 'lockers' ? PR.lockers(p.n || 4, p.col) : p.kind === 'barbell' ? PR.barbell() : PR.desk(p.w || 2.2);
   const q = propPos(S, p.kind, p.pos);
-  g.position.set(q.x, p.kind === 'poster' ? (p.y ?? 2.3) : 0, q.z); g.rotation.y = q.ry; S.scene.add(g);
+  g.position.set(q.x, y, q.z); g.rotation.y = q.ry + toRad(p.ry || 0); S.scene.add(g);
   g.visible = shot == null;                              // theme props stay visible; a shot's props only during that shot
   if (shot != null) S.shotProps.push({ g, shot });
-  return { g, q, w: p.w || 2.0, h: p.h || 1.2, y: p.kind === 'poster' ? (p.y ?? 2.3) : 0, kind: p.kind };
+  return { g, q, w: p.w || 2.0, h, y, kind: p.kind };
 }
-function toonFor(S, who, kid) {
+function toonFor(S, chars, who, kid) {
   const key = who + (kid ? '|kid' : '');
   if (!S.toons[key]) {
-    const look = { ...CREW[who], extra: [...(CREW[who].extra || [])] }; delete look.name; delete look.mood; if (kid) look.kid = true;
-    const tn = new Toon(look, { height: kid ? 1.4 : PERSON }); S.scene.add(tn.group); S.toons[key] = tn;
+    const def = chars[who], look = { ...def.look, extra: [...(def.look.extra || [])] }; if (kid || def.kid) look.kid = true;
+    const tn = new Toon(look, { height: kid || def.kid ? 1.4 : PERSON }); tn.baseLook = { ...look }; tn.wearKey = ''; S.scene.add(tn.group); S.toons[key] = tn;
   }
   return S.toons[key];
 }
@@ -153,14 +192,16 @@ function toonFor(S, who, kid) {
 /** builds every shot of the plan. Returns { shots, cues, report }. Call after loadTiming() and buildCaptions(). */
 export function buildPlanShots(E, plan) {
   validatePlan(plan);
+  const lastTxt = String((T.lines[T.lines.length - 1] || {}).text || '').trim();
+  if (plan.loop !== false && /[.!?]["')]*$/.test(lastTxt)) throw new Error(`the last script line ends with "${lastTxt.slice(-1)}": write it mid-sentence so it flows into line 1 and the video loops cleanly (or set "loop": false)`);
   const cam = camera(36), sets = new Map(), shots = [], cues = [], report = [];
   const setFor = (th) => { const key = JSON.stringify(th); if (!sets.has(key)) sets.set(key, buildSet(E, th)); return sets.get(key); };
   let prevEnd = null;
   plan.shots.forEach((sp, i) => {
-    const th = typeof (sp.theme || plan.setting) === 'string' ? { name: sp.theme || plan.setting } : (sp.theme || { name: plan.setting });
+    const rawTh = sp.theme || plan.setting, th = typeof rawTh === 'string' ? { name: rawTh } : rawTh;     // a theme is a name or { name, o: { ...custom colours / sign } }
     const S = setFor(th), P = CAMS[sp.cam], id = `P${String(i + 1).padStart(2, '0')}`;
     const at = i === 0 ? 0 : L(sp.line) - 0.06;
-    const cast = sp.cast.map((c) => ({ ...c, kid: !!c.kid, p0: place(S.kind, c.pos), p1: c.to || null, toon: toonFor(S, c.who, !!c.kid) }));
+    const cast = sp.cast.map((c) => ({ ...c, kid: !!c.kid, p0: place(S.kind, c.pos), p1: c.to || null, toon: toonFor(S, plan.characters, c.who, !!c.kid) }));
     const castSet = new Set(cast.map((c) => c.toon));
     const posAt = (c, k) => (c.p1 ? { x: lerp(c.p0[0], c.p1[0], eio(k)), z: lerp(c.p0[1], c.p1[1], eio(k)) } : { x: c.p0[0], z: c.p0[1] });
     const fi = sp.focus === undefined ? 0 : typeof sp.focus === 'number' ? sp.focus : cast.findIndex((c) => c.who === sp.focus);
@@ -171,14 +212,16 @@ export function buildPlanShots(E, plan) {
       if (sp.cam === 'two-shot') return { x: (pts[0].x + pts[1].x) / 2, z: (pts[0].z + pts[1].z) / 2, y: 1.0 };
       return { x: pts[fi].x, z: pts[fi].z, y: 1.0 };
     };
-    const headLim = (k) => {                             // requested head size, held within 1.6x of the previous shot
-      let h = (P.head2 != null ? lerp(P.head, P.head2, eio(k)) : P.head) * adj;
-      if (prevEnd) h = clamp(h, prevEnd / JUMP, prevEnd * JUMP);
+    const mv = sp.move || DEFAULT_MOVE[sp.cam], gain = mv ? MOVES[mv] : 1;
+    const headLim = (k) => {                             // requested head size: the cut-in size is held within 1.6x of the previous shot, the move still plays out
+      const f = (kk) => (P.head2 != null ? lerp(P.head, P.head2, eio(kk)) : P.head) * adj * lerp(1, gain, eio(kk));
+      let h = f(k);
+      if (prevEnd) h *= clamp(f(0), prevEnd / JUMP, prevEnd * JUMP) / f(0);
       return clamp(h, HEAD_MIN, HEAD_MAX);
     };
     let fovV = P.fov, adj = 1;                           // the lens may widen (up to 70) when the room is too small; adj re-aims the requested head
     const state = (k, s, sx, sy) => {
-      const T0 = tgt(k), h = headLim(k), a = toRad(sp.yaw || 0);
+      const T0 = tgt(k), h = headLim(k), a = toRad((sp.yaw || 0) + (mv === 'orbit-left' ? lerp(-7, 7, eio(k)) : mv === 'orbit-right' ? lerp(7, -7, eio(k)) : 0));
       let D = (PERSON / (2 * h * Math.tan(toRad(P.fov / 2)))) * s, fo = fovV;
       if (S.kind === 'interior') {                       // in a room the lens cannot leave the floor: the frame is limited to the room, and the lens widens instead of getting closer than 0.30
         D = Math.min(D, ROOM_CAM_Z - T0.z); fo = Math.max(fovV, 2 * Math.atan(PERSON / (2 * D * h)) * 180 / Math.PI);   // the lens gives the requested head size (continuity holds at room cuts)
@@ -231,26 +274,29 @@ export function buildPlanShots(E, plan) {
       if (!prevEnd || pass === 5 || (head0 >= lo && head0 <= hi)) break;
       adj = head0 < lo ? Math.max(adj * lo * 1.03 / head0, lo * 1.03 / P.head) : adj * hi * 0.97 / head0;
     }
+    const m0 = state(0, s, sx, sy), m1 = state(1, s, sx, sy);
+    if (m0.pos.distanceTo(m1.pos) < 0.3 && Math.abs(m0.fov - m1.fov) < 1) throw new Error(`${id} (line ${sp.line}): the camera would not move in this shot (the cast fills the frame, so a push or pull has no room). Use "move": "orbit-left" or "orbit-right"`);
     if (prevEnd && (head0 < prevEnd / JUMP || head0 > prevEnd * JUMP)) console.warn(`${id}: head size ${(head0 / prevEnd).toFixed(2)}x of the shot before (the cast cannot hold 1.6x)`);
     prevEnd = head1;
     // props of this shot + the 45 % poster rule
     const shotProps = (sp.props || []).map((p) => addProp(S, p, i));
     shotProps.forEach((pr) => {
-      if (pr.kind !== 'poster') return;
-      const cs = toRad(pr.g.rotation.y), pts = [[-pr.w / 2, -pr.h / 2], [pr.w / 2, -pr.h / 2], [pr.w / 2, pr.h / 2], [-pr.w / 2, pr.h / 2]];
+      if (pr.kind !== 'poster' && pr.kind !== 'diagram') return;
+      const cs = pr.g.rotation.y, pts = [[-pr.w / 2, -pr.h / 2], [pr.w / 2, -pr.h / 2], [pr.w / 2, pr.h / 2], [-pr.w / 2, pr.h / 2]];
       apply(state(0.5, s, sx, sy));
       const q = pts.map(([lx, ly]) => toPx(new THREE.Vector3(pr.q.x + lx * Math.cos(cs), pr.y + ly, pr.q.z - lx * Math.sin(cs))));
       const area = (Math.max(...q.map((v) => v.x)) - Math.min(...q.map((v) => v.x))) * (Math.max(...q.map((v) => v.y)) - Math.min(...q.map((v) => v.y)));
-      if (area > POSTER_MAX * W * H) throw new Error(`${id}: a poster covers ${(100 * area / (W * H)).toFixed(0)} % of the frame (max 45 %): make it smaller, it must not replace the cast`);
+      if (area > POSTER_MAX * W * H) throw new Error(`${id}: a ${pr.kind} covers ${(100 * area / (W * H)).toFixed(0)} % of the frame (max 45 %): make it smaller, it must not replace the cast`);
     });
     const shot = {
-      id, at, note: `${S.kind}/${sp.cam}: head ${head0.toFixed(2)}->${head1.toFixed(2)}, cast in safe zone`, line: sp.line,
+      id, at, note: `${S.kind}/${sp.cam}/${mv || 'push'}: head ${head0.toFixed(2)}->${head1.toFixed(2)}, cast in safe zone`, line: sp.line,
       cam: (k) => state(k, s, sx, sy),
       draw(lt, d, t, blit) {
         const k = clamp(lt / d);
-        S.shotProps.forEach((pr) => { pr.g.visible = pr.shot === i; });
+        S.shotProps.forEach((pr) => { pr.g.visible = pr.shot === i; if (pr.shot === i && pr.g.reveal) pr.g.reveal(k); });
         Object.values(S.toons).forEach((tn) => { if (!castSet.has(tn)) tn.group.visible = false; });
-        cast.forEach((c) => { c.toon.group.visible = true; const q = posAt(c, k); c.toon.at(q.x, 0, q.z).set(poseOf(c, k, t)); });
+        cast.forEach((c) => { const wk = c.wear ? JSON.stringify(c.wear) : ''; if (c.toon.wearKey !== wk) { c.toon.look = { ...c.toon.baseLook, ...(c.wear || {}) }; c.toon.wearKey = wk; c.toon.key = ''; }
+          c.toon.group.visible = true; const q = posAt(c, k); c.toon.at(q.x, 0, q.z).set(poseOf(c, k, t)); });
         const now = shot.cam(k);                         // blend from the previous camera over the first BLEND seconds
         let st = now;
         if (i > 0 && lt < BLEND) { const pe = shots[i - 1].cam(1), a = eo(clamp(lt / BLEND)); st = { pos: pe.pos.clone().lerp(now.pos, a), tgt: pe.tgt.clone().lerp(now.tgt, a), fov: lerp(pe.fov, now.fov, a), sx: lerp(pe.sx, now.sx, a), sy: lerp(pe.sy, now.sy, a) }; }
@@ -261,7 +307,7 @@ export function buildPlanShots(E, plan) {
       },
     };
     shots.push(shot);
-    report.push({ id, line: sp.line, set: S.kind, cam: sp.cam, head0: +head0.toFixed(3), head1: +head1.toFixed(3), box: [b1.l | 0, b1.t | 0, b1.r | 0, b1.b | 0] });
+    report.push({ id, line: sp.line, set: S.kind, cam: sp.cam, move: mv || 'push (built in)', head0: +head0.toFixed(3), head1: +head1.toFixed(3), box: [b1.l | 0, b1.t | 0, b1.r | 0, b1.b | 0] });
     // sounds: a whoosh on the cut unless the plan turns it off, then the plan's own cues
     const end = i + 1 < plan.shots.length ? L(plan.shots[i + 1].line) - 0.06 : T.dur;
     if (sp.whoosh !== false) cues.push({ t: +at.toFixed(3), type: 'whoosh' });
