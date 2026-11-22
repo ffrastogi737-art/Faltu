@@ -1,0 +1,204 @@
+{
+ "title": "Did Rockstar Show Us GTA 6 In 2021",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "VideoGamesChronicle: GTA 6 players discover the first look at the game was likely hidden in a 2021 remaster (San Andreas Definitive Edition picture, Lil' Probe'Inn)",
+  "Dexerto: GTA 6 screenshot hidden in San Andreas in 2021 was real, house found via GTA Wiki mapping project (Belville, Leonida)",
+  "Kotaku: turns out GTA San Andreas remastered was teasing GTA 6 back in 2021 (fan finding, Rockstar no comment)"
+ ],
+ "lines": [
+  {
+   "text": "Rockstar may have shown us GTA 6 back in 2021."
+  },
+  {
+   "text": "Remember the San Andreas remaster? A framed picture hung on a bar wall."
+  },
+  {
+   "text": "Fans always said it looked like a leaked GTA 6 screenshot."
+  },
+  {
+   "text": "Now players say they found that exact house in Leonida."
+  },
+  {
+   "text": "Same garage, same palm trees, even the bushes match."
+  },
+  {
+   "text": "It sits in Belville, and the GTA Wiki mapping project found it."
+  },
+  {
+   "text": "One outlet says the new version has far more detail."
+  },
+  {
+   "text": "Rockstar has not said a word."
+  },
+  {
+   "text": "So was it a secret teaser, or just a lucky coincidence? Tell us below, do you think"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/vgc.jpg",
+   "badge": "FAN FIND",
+   "banner": "GTA 6 IN 2021?",
+   "sub": "HIDDEN IN SAN ANDREAS REMASTER",
+   "stamp": "UNCONFIRMED",
+   "mark": {
+    "circle": [
+     0.5,
+     0.55,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "Remember",
+   "kind": "image",
+   "img": "assets/kotaku.jpg",
+   "label": "SAN ANDREAS REMASTER (2021)"
+  },
+  {
+   "at": "Fans",
+   "kind": "proof",
+   "img": "assets/vgc.jpg",
+   "tag": "FAN THEORY",
+   "text": "A LEAKED GTA 6 SHOT?",
+   "hl": [
+    [
+     0.1,
+     0.4,
+     0.8,
+     0.25
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.5
+    ]
+   ]
+  },
+  {
+   "at": "Now",
+   "kind": "compare",
+   "title": "2021 PICTURE VS GTA 6",
+   "left": {
+    "img": "assets/kotaku.jpg",
+    "label": "2021 remaster picture",
+    "circle": [
+     0.5,
+     0.5,
+     0.22
+    ]
+   },
+   "right": {
+    "img": "assets/dexerto.jpg",
+    "label": "GTA 6 house",
+    "circle": [
+     0.3,
+     0.33,
+     0.14
+    ]
+   }
+  },
+  {
+   "at": "Same",
+   "kind": "proof",
+   "img": "assets/vgc.jpg",
+   "tag": "MATCH?",
+   "text": "GARAGE. PALMS. BUSHES.",
+   "hl": [
+    [
+     0.55,
+     0.45,
+     0.3,
+     0.25
+    ]
+   ],
+   "arrows": [
+    [
+     0.7,
+     0.55
+    ]
+   ]
+  },
+  {
+   "at": "It",
+   "kind": "image",
+   "img": "assets/dexerto.jpg",
+   "label": "BELVILLE, LEONIDA",
+   "mark": {
+    "circle": [
+     0.3,
+     0.33,
+     0.14
+    ]
+   }
+  },
+  {
+   "at": "One",
+   "kind": "image",
+   "img": "assets/dexerto.jpg",
+   "label": "GTA 6 VERSION: MORE DETAIL",
+   "crop": [
+    0.0,
+    0.0,
+    0.5,
+    1.0
+   ]
+  },
+  {
+   "at": "Rockstar",
+   "kind": "image",
+   "img": "assets/kotaku.jpg",
+   "label": "NO COMMENT FROM ROCKSTAR"
+  },
+  {
+   "at": "So",
+   "kind": "poll",
+   "question": "TEASER OR LUCK?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 2,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.55,
+   "r": 0.16,
+   "start": 0.4,
+   "dur": 1.6
+  },
+  {
+   "beat": 4,
+   "type": "ring",
+   "x": 0.65,
+   "y": 0.5,
+   "r": 0.1,
+   "start": 0.3,
+   "dur": 1.5
+  },
+  {
+   "beat": 5,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.4,
+   "y2": 0.45,
+   "start": 0.3,
+   "dur": 1.4
+  }
+ ],
+ "bg": {
+  "file_id": "1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg",
+  "name": "lv_0_20261120213612.mp4",
+  "start": 4.66,
+  "len": 30.1
+ }
+}

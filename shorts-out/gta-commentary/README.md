@@ -16,3 +16,12 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Settings:** zoom 1.18, cy 0.0 (bottom crop hides the source's black bars), neon synthwave bed -28 LUFS, narrator emo 0.9-1.0 / cfg 0.3, 3 beats, punch zoom + red circle at 17.8 s.
 **Slot:** 21 Nov 09:00 IST is taken by Kratos 15 (N7w7hBdAm98), so slot.py's best free slot: 22 Nov 09:00 IST. Instagram: ig-gta16-react queued 22 Nov 04:00Z (09:30 IST; 03:45Z is taken by solo ig-name-in-crowd), caption credits Goofy Oblivion. Judge at 48 h vs gta median 283.
 **v2 note (20 Nov late night IST):** the first upload N7w7hBdAm98 had no audio in its last ~3 s (old loudnorm bug), so on the owner's go-ahead the fixed render `15-gta-online-painting-map-v2.mp4` was uploaded as ytOn4rV-bbg and took the 21 Nov 09:00 IST slot. N7w7hBdAm98 stays PRIVATE with no publishAt (never deleted, never public). Instagram not queued for this one.
+
+## 18 · `18-gta6-house-2021.mp4` · gta-commentary · WAITING UPLOAD (quota, 22 Nov 2026 ~09:35 IST; first run after 13:30 IST uploads it, slot.py gta)
+**Title:** Did Rockstar Show Us GTA 6 In 2021? 👀 (Fan Theory) #shorts
+**Description:** Fans say a house hidden in the 2021 San Andreas remaster matches a house in GTA 6's Belville. Fan finding, Rockstar has not commented. Sources: VGC, Dexerto, Kotaku. Image credits on the cards. #shorts #gta6 #gta #rockstargames #gaming #gta6news
+**Tags:** gta 6, gta6 easter egg, san andreas definitive edition, gta 6 belville, gta 6 fan theory, rockstar games, gta 6 secrets, gta wiki
+**Hook:** Rockstar may have shown us GTA 6 back in 2021. (loop: last words "do you think" -> line 1)
+**Facts (fan finding, not confirmed by Rockstar):** VGC, Dexerto, Kotaku (GTA Wiki mapping project, house in Belville, picture on the Lil' Probe'Inn wall of the 2021 Definitive Edition).
+**Background:** lv_0_20261120213612.mp4 (Drive 1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg), source 4.66-34.76 s, lap 1. 24.3 s, 98 words, 9 cards, 3 callouts. Images: VGC, Kotaku, Dexerto.
+**Top-3 (match):** n/a (commentary track). **Instagram:** ig-gta18-house-2021 PENDING 22 Nov 05:15Z. **Known weak spots:** Minecraft background on a GTA topic; hook stamp covers part of the picture.
