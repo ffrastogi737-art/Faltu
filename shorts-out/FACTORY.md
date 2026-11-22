@@ -10,16 +10,17 @@
 
 ## DAILY PLAN (owner, 22 Nov 2026; replaces saver mode, "ONE video per run", the 08:55 / 16:55 factory and the 11:25 / 19:25 publisher)
 Daily targets (IST day): **solo hype 2, Kratos Playz 3** = 5 uploads, split around the YouTube quota reset (13:30 IST) so each Pacific day holds
-about 5 uploads (afternoon 3 + next morning 2). Every publish time comes from `slot.py` (see SLOT): never a fixed hour, never hand-picked.
+about 5 uploads (afternoon 3 + next morning 2). Every publish time comes from `slot.py` (see SLOT): never a fixed hour, never hand-picked. A NORMAL new upload calls `slot.py solo|gta` (no flag): the explore/exploit best-time picker, spread over the day.
+`slot.py <ch> --catchup` is for recovery only: a genuinely overdue video (guard) or a WAITING UPLOAD retry.
 Five ticks, each wakes the Jarvis chat, which calls create_session (one run per tick, skip a tick if the same kind of run started in the last
 3 h; guard ticks: last 45 min):
 | IST | run (session title) | does |
 |---|---|---|
 | 08:30 | MORNING FACTORY ("Shorts factory run") | 00 verdicts + post-mortems (no perf refresh), P, then 2 videos one after the other: 1 solo + 1 Kratos, uploaded PRIVATE |
 | 09:30 | PUBLISH GUARD ("Shorts publish guard") | PRE-PUBLISH GUARD below |
-| 14:00 | AFTERNOON FACTORY ("Shorts factory run") | first every WAITING UPLOAD (oldest first), P, then 3 videos: 1 solo + 2 Kratos, uploaded PRIVATE |
+| 14:00 | AFTERNOON FACTORY ("Shorts factory run") | first every WAITING UPLOAD (oldest first, `slot.py <ch> --catchup`), P, then 3 videos: 1 solo + 2 Kratos, uploaded PRIVATE |
 | 15:30 | PUBLISH GUARD ("Shorts publish guard") | PRE-PUBLISH GUARD below |
-| 21:00 | ANALYTICS ("Shorts analytics run") | one retry of every WAITING UPLOAD, then the perf refresh + CHANNEL CARE, only when all daily uploads are scheduled |
+| 21:00 | ANALYTICS ("Shorts analytics run") | one retry of every WAITING UPLOAD (`--catchup`), then the perf refresh + CHANNEL CARE, only when all daily uploads are scheduled |
 A factory run builds ONE video at a time: research, hook, script, template match, build, deliver, upload, write its perf.csv row (and its
 publish-queue line for solo) and IG entry, and only then start the next video, so `slot.py` sees the booking of the first when it picks the second.
 Per video the order is unchanged (DECIDE story first). Quota hit (`quotaExceeded`): do not retry in the run, mark WAITING UPLOAD, keep building.
@@ -34,8 +35,9 @@ Every factory run does these in this order. Stop a step if the tokens or the tim
    THEN the template match (DECIDE 3). Never the other way round.
 3. COMMENTS (Haiku): read new comments on the last 4 days of videos on both channels; reply to at most 3 per channel.
 4. BUILD + UPLOAD (Sonnet for build and QA, Haiku for upload, Instagram posts and logs).
-- Target shortfall (SAME-DAY QUOTA GUARANTEE, 21 Nov 2026): `slot.py <ch>` checks today's count first (videos public or scheduled
-  for today's IST date, catch-up rows included) against DAILY (solo 2, gta 3). While today is short it returns `mode=catchup`: the earliest
+- Target shortfall (SAME-DAY QUOTA GUARANTEE, 21 Nov 2026): `slot.py <ch> --catchup` checks today's count (videos public or scheduled
+  for today's IST date, catch-up rows included) against DAILY (solo 2, gta 3). Only with `slot.py <ch> --catchup` (recovery: a genuinely overdue video or a WAITING UPLOAD retry; NEVER for a normal new
+  upload, owner 22 Nov 2026) and while today is short it returns `mode=catchup`: the earliest
   open IST slot today (>= now + 20 min, rounded to 5 min, 30 min clear of every taken time, before 23:30 IST). Tomorrow's explore/exploit
   bins are used only when today is full, or after 23:30 IST (then the note `catchup: none ...` is printed; the shortfall stays visible).
   Record a catch-up upload with slot_mode = catchup. Do not switch a tomorrow video to public just to fill today unless slot.py says catch-up.
@@ -171,7 +173,7 @@ and leave it alone. slot.py stays the only source of any new time.
 3. ALREADY LIVE: privacyStatus public (or the IG post exists) -> line/entry `DONE`, README `PUBLIC <date> <time> IST`. Nothing is posted or switched again.
 4. DUE (slot <= now + 10 min) and still private, id + title match our record: do step P exactly (solo: the owner-approved timed switch, read back; IG: post).
 5. OVERDUE (slot already passed by more than 10 min) and still private, or a private upload of ours with no valid future slot:
-   do NOT flip it to public on the spot. Blank that row's `public_ist` in perf.csv (so it does not count as today's upload), run `python3 shorts-out/slot.py <solo|gta>`,
+   do NOT flip it to public on the spot. Blank that row's `public_ist` in perf.csv (so it does not count as today's upload), run `python3 shorts-out/slot.py <solo|gta> --catchup`,
    and give it the printed time (catch-up mode gives the earliest open IST slot, at least 20 min ahead, so always more than 15 min):
    solo = rewrite the PENDING line's time (keep the line) + one send_later at that time; Kratos = PUT publishAt (Kratos method in UPLOAD, read back);
    then write the new `public_ist` and `slot_mode` as slot.py printed them, and move its PENDING ig-queue entry's `at` to slot + 15 min.
@@ -327,7 +329,7 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
   videoFile {name, mimetype "video/mp4", s3key}}, account=...)`. Check snippet.channelId. Upload exactly once: on an
   error list the channel's uploads before retrying.
 - SLOT (owner 21 Nov 2026: slot.py is the single source of truth; the fixed-hour lists were removed). `python3 shorts-out/slot.py solo`
-  (Kratos: `slot.py gta`) prints the time, `mode=explore|exploit` and the bin. Rules, all inside slot.py: hours 09-21 IST on the hour, 60 min
+  (Kratos: `slot.py gta`) prints the time, `mode=explore|exploit` and the bin (a normal upload never passes `--catchup`). Rules, all inside slot.py: hours 09-21 IST on the hour, 60 min
   ahead, within 3 days, 30 min clear of every taken time (solo: publish-queue.txt; both channels: every scheduled time in perf.csv).
   Time bins (IST): morning 09-10, midday 11-13, afternoon 14-16, evening 17-19, night 20-21.
   - slot_mode = catchup (21 Nov 2026): a same-day catch-up upload. It counts toward today's quota and blocks its time (taken_utc, 30 min), but it is

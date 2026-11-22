@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Publish time for both channels (owner 21 Nov 2026): slot.py is the single source of truth; the fixed-hour lists are retired.
    python3 shorts-out/slot.py [solo|gta]   -> '<UTC> <HH>:00 IST  mode=explore|exploit  bin=<name>  (why)' + a HYPOTHESIS line for explore
+   python3 shorts-out/slot.py [solo|gta] --catchup  -> RECOVERY only (a genuinely overdue video, or a WAITING UPLOAD retry): while today is
+        short of DAILY it returns mode=catchup, the earliest open IST slot today. Normal uploads never pass --catchup (owner 22 Nov 2026).
    python3 shorts-out/slot.py --test       -> self-check (asserts)
 Slot: hours 09-21 IST on the hour, >= 60 min ahead, within 3 days, >= 30 min from every taken time. Taken = solo: publish-queue.txt;
 gta and solo: every scheduled or public time in perf.csv (so the Kratos bookings count).
@@ -204,6 +206,9 @@ def _test():
     assert d['mode'] == CATCHUP and d['utc'] == dt.datetime(2026, 11, 21, 10, 20), d       # 15:50 IST
     d = decide(now21, [gtr('g0', '2026-11-21 09:00', '', 'gx0'), gtr('blk', '2026-11-21 15:50', '', 'gx9')], 'gta')
     assert d['mode'] == CATCHUP and d['utc'] == dt.datetime(2026, 11, 21, 10, 50), d       # 30 min buffer from 15:50 IST
+    # 9b. normal upload (CLI default, gate=False): a short day does NOT turn it into a catch-up; it gets the explore/exploit best-time slot
+    d = decide(now21, [gtr('g0', '2026-11-21 09:00', '', 'gx0')], 'gta', gate=False)
+    assert d['mode'] in ('explore', 'exploit') and d['utc'] >= now21 + dt.timedelta(minutes=60) and 9 <= d['hour'] <= 21, d
     # 10. after 23:30 IST: no catch-up, normal tomorrow scheduling, and the rollover is recorded
     late = dt.datetime(2026, 11, 21, 18, 15)                                    # 23:45 IST
     d = decide(late, [gtr('g0', '2026-11-21 09:00', '', 'gx0')], 'gta')
@@ -215,9 +220,10 @@ def _test():
 if __name__ == '__main__':
     if '--test' in sys.argv:
         _test(); sys.exit()
-    ch = sys.argv[1] if len(sys.argv) > 1 else 'solo'
+    args = [a for a in sys.argv[1:] if not a.startswith('--')]
+    ch = args[0] if args else 'solo'
     raw = load_rows(ch)
-    res = decide(dt.datetime.now(dt.timezone.utc).replace(tzinfo=None), raw, ch)
+    res = decide(dt.datetime.now(dt.timezone.utc).replace(tzinfo=None), raw, ch, gate='--catchup' in sys.argv)
     if res is None: sys.exit('no free slot in 3 days: check publish-queue.txt and perf.csv')
     print(f"{res['utc']:%Y-%m-%dT%H:%M:%SZ} {res['hour']:02d}:00 IST  mode={res['mode']}  bin={res['bin']}  ({res['why']}; clean timed rows {res['n_clean']}; bins n {res['n_bin']})")
     if res['mode'] == 'explore': print('HYPOTHESIS (copy to experiments.txt): ' + res['hypothesis'])
