@@ -223,7 +223,7 @@ Sources: Moray 1959 (Q J Exp Psychol); Wood & Cowan 1995 (JEP:LMC); Conway, Cowa
 **Tags:** cocktail party effect, hear your name, psychology facts, brain facts, selective attention, why you hear your name, attention psychology, did you know, science facts, human brain
 **Experiment:** kind psychology-myth (new, after 3 body-science); story-first hook "someone says your name across a loud party" in comic-panels dialogue panels; 28.6 s, Chatterbox 0.7x1.08. Compare vs chalk-talk 922 / comic-pop 1,001.
 
-## 20 · `20-hanoi-rat-tails.mp4` · tall-tale 3D (TALL-TALE track turn; match #1 and only tall-tale; hook shape: odd-detail statement "the rats have no tails", structure: bounty -> cheat -> analogy -> loop) · QUEUED: goes public 22 Nov 2026 12:00 IST (https://www.youtube.com/watch?v=FiOCVCynU9U) · IG ig-hanoi-rat-tails 12:15 IST
+## 20 · `20-hanoi-rat-tails.mp4` · tall-tale 3D (TALL-TALE track turn; match #1 and only tall-tale; hook shape: odd-detail statement "the rats have no tails", structure: bounty -> cheat -> analogy -> loop) · PUBLIC 22 Nov 2026 (switched 16:58 IST, late) (https://www.youtube.com/watch?v=FiOCVCynU9U) · IG ig-hanoi-rat-tails 12:15 IST
 **Title:** The City That Paid For More Rats
 **Description:**
 ```
