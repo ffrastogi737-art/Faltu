@@ -3,10 +3,27 @@
 > Thinking loop and weekly review: shorts-out/BRAIN.md (read it before this file). Style/topic choice: DECIDE section below.
 
 > HOW THE RUNS START (fixed 20 Nov 2026): the old "Shorts factory" routine started sessions WITHOUT the repo (git 403, nothing ran).
-> It is OFF. The trigger "Shorts factory tick (this session)" (08:55 + 16:55 IST) wakes the long-lived Jarvis chat, which calls
-> create_session with source_url Faltu + outcome_branch ccr-8c1babe8-9jk0db, so every factory run has the repo and push works. A Haiku "Shorts
+> It is OFF. The ticks listed in DAILY PLAN below wake the long-lived Jarvis chat, which calls
+> create_session with source_url Faltu + outcome_branch ccr-8c1babe8-9jk0db, so every run has the repo and push works. A Haiku "Shorts
 > scheduler" session cannot do this (auto-mode denies create_session there): do not rebuild that. Quota: YouTube uploads/switches fail after the
 > daily quota (resets 13:30 IST); a timed retry via send_later at 13:35 IST handles a missed public switch.
+
+## DAILY PLAN (owner, 22 Nov 2026; replaces saver mode, "ONE video per run", the 08:55 / 16:55 factory and the 11:25 / 19:25 publisher)
+Daily targets (IST day): **solo hype 2, Kratos Playz 3** = 5 uploads, split around the YouTube quota reset (13:30 IST) so each Pacific day holds
+about 5 uploads (afternoon 3 + next morning 2). Every publish time comes from `slot.py` (see SLOT): never a fixed hour, never hand-picked.
+Five ticks, each wakes the Jarvis chat, which calls create_session (one run per tick, skip a tick if the same kind of run started in the last
+3 h; guard ticks: last 45 min):
+| IST | run (session title) | does |
+|---|---|---|
+| 08:30 | MORNING FACTORY ("Shorts factory run") | 00 verdicts + post-mortems (no perf refresh), P, then 2 videos one after the other: 1 solo + 1 Kratos, uploaded PRIVATE |
+| 09:30 | PUBLISH GUARD ("Shorts publish guard") | PRE-PUBLISH GUARD below |
+| 14:00 | AFTERNOON FACTORY ("Shorts factory run") | first every WAITING UPLOAD (oldest first), P, then 3 videos: 1 solo + 2 Kratos, uploaded PRIVATE |
+| 15:30 | PUBLISH GUARD ("Shorts publish guard") | PRE-PUBLISH GUARD below |
+| 21:00 | ANALYTICS ("Shorts analytics run") | one retry of every WAITING UPLOAD, then the perf refresh + CHANNEL CARE, only when all daily uploads are scheduled |
+A factory run builds ONE video at a time: research, hook, script, template match, build, deliver, upload, write its perf.csv row (and its
+publish-queue line for solo) and IG entry, and only then start the next video, so `slot.py` sees the booking of the first when it picks the second.
+Per video the order is unchanged (DECIDE story first). Quota hit (`quotaExceeded`): do not retry in the run, mark WAITING UPLOAD, keep building.
+Tokens: one sub-agent at a time, Haiku for upload and queue edits, 2D styles only when the run still has videos to build (3D renders are long).
 
 ## RUN ORDER (owner, 19 Nov 2026: check first, then research, then comments, then new videos)
 Every factory run does these in this order. Stop a step if the tokens or the time are tight; never skip CHECK.
@@ -44,8 +61,8 @@ push works) by a small scheduler session. In such a session:
 - Slots: `slot.py` is the only scheduler for both channels (section SLOT below). No fixed hours anywhere.
 - The session ends after its report; wake-ups from its send_later calls keep it alive just long enough to post.
 
-The scheduled tasks "Shorts factory" (08:55 and 16:55 IST) and "Shorts publisher" (11:25 and 19:25 IST) each start a
-FRESH cloud session and follow this file. The why is in /home/user/Faltu/CLAUDE.md: read it first.
+The five ticks of DAILY PLAN each start a FRESH cloud session (create_session) and follow this file. The why is in
+/home/user/Faltu/CLAUDE.md: read it first.
 
 Owner (15 Nov 2026): both YouTube channels and Instagram @solohype_1 are yours to grow to monetization ("tujhe puri
 azaadi hai", "NO LIMIT MEAN NO LIMIT"). The owner is not watching: never ask questions or wait. Topic, style, script,
@@ -107,7 +124,8 @@ Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). 
 Commit lines end with the session attribution the system gives you.
 
 ## 00. FEEDBACK (every factory tick, FIRST, before P and DECIDE; the system learns from its own numbers)
-1. Refresh views: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH (both YouTube channels)
+1. Refresh views: ONLY in the 21:00 ANALYTICS run, after all daily uploads are scheduled (the factory runs use the last numbers in perf.csv,
+   so they spend no quota on reads before the uploads): a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH (both YouTube channels)
    and saves the printed lines to a file, then `python3 shorts-out/perf_merge.py < that-file` (updates views, likes and the
    checked date; prints any video id that has no perf row: add that row by hand). Quota blocked: skip, use last numbers, say so.
 2. Verdicts, automatic: `python3 shorts-out/pick_style.py solo --verdicts` and `... gta --verdicts` append WIN/LOSE lines to
@@ -142,13 +160,28 @@ Load Composio tools with ToolSearch "+composio", start with COMPOSIO_SEARCH_TOOL
    or `FAILED <reason>`. ALWAYS account `instagram_osiery-fun` (the default Instagram is the jewellery shop: never post there).
 3. Commit and push. The **publisher** run stops here and replies in one Hindi line.
 
-## 0. WHICH VIDEO (factory runs)
-- Count per channel what goes public from now to the end of TOMORROW (IST): solo hype = PENDING lines in
-  publish-queue.txt + its videos with a future publishAt; Kratos Playz = future publishAt (YOUTUBE_LIST_CHANNEL_VIDEOS
-  mine=true + YOUTUBE_GET_VIDEO_DETAILS_BATCH parts ["status"], each with its own account) + WAITING UPLOAD entries.
-- Saver mode (one video): make it for the channel with fewer lined up (ties: GTA until 10 Dec, then normal).
-  After saver mode: one of each.
-- Both channels full through tomorrow: skip building, do CHANNEL CARE only.
+## PRE-PUBLISH GUARD (22 Nov 2026; the 09:30 and 15:30 IST "Shorts publish guard" runs; replaces the old publisher)
+Purpose: no slot is ever missed or doubled. Hard rules: never delete anything; never switch a video to public unless step P's own checks below
+pass; a private video this repo has no record of (no perf.csv row, no queue line) is an unverified draft or a build in progress: report its id
+and leave it alone. slot.py stays the only source of any new time.
+1. SYNC: Git section (fetch + checkout -B), then the step P push check. Re-sync (fetch + merge) right before every push: a factory run may be pushing too.
+2. LIVE CHECK: collect every `PENDING` line of publish-queue.txt, every PENDING ig-queue entry, and every Kratos row of perf.csv whose
+   `public_ist` is today or earlier and not marked PUBLIC in its README. Read their real state in one batch (YOUTUBE_GET_VIDEO_DETAILS_BATCH
+   parts ["status"], solo `youtube_maimon-mealy`, Kratos `youtube_volt-equal`; Instagram: INSTAGRAM_GET_IG_MEDIA by media id if an entry has one).
+3. ALREADY LIVE: privacyStatus public (or the IG post exists) -> line/entry `DONE`, README `PUBLIC <date> <time> IST`. Nothing is posted or switched again.
+4. DUE (slot <= now + 10 min) and still private, id + title match our record: do step P exactly (solo: the owner-approved timed switch, read back; IG: post).
+5. OVERDUE (slot already passed by more than 10 min) and still private, or a private upload of ours with no valid future slot:
+   do NOT flip it to public on the spot. Blank that row's `public_ist` in perf.csv (so it does not count as today's upload), run `python3 shorts-out/slot.py <solo|gta>`,
+   and give it the printed time (catch-up mode gives the earliest open IST slot, at least 20 min ahead, so always more than 15 min):
+   solo = rewrite the PENDING line's time (keep the line) + one send_later at that time; Kratos = PUT publishAt (Kratos method in UPLOAD, read back);
+   then write the new `public_ist` and `slot_mode` as slot.py printed them, and move its PENDING ig-queue entry's `at` to slot + 15 min.
+6. Then step P for anything else due, commit, push, one Hindi line (start with ⚠️ DIKKAT only for a failure, an unverified draft or a conflict).
+
+## 0. WHICH VIDEOS (factory runs; saver mode and "one video per run" are retired, 22 Nov 2026)
+- The run's list is fixed by DAILY PLAN: MORNING = 1 solo + 1 Kratos; AFTERNOON = 1 solo + 2 Kratos.
+- Before each video, count today's uploads (public or scheduled for today's IST date) with slot.py's own counter:
+  `python3 -c "import sys,datetime as dt;sys.path.insert(0,'shorts-out');import slot;n=dt.datetime.now(dt.timezone.utc).replace(tzinfo=None);[print(c,slot.today_count(c,slot.load_rows(c),n),'/',slot.DAILY[c]) for c in ('solo','gta')]"`
+  A channel already at its daily target (a re-run, or an earlier run did its part): skip that video. Both at target: no building, only P and the report.
 - After delivering append to shorts-out/factory-log.txt: `<kind>  <file name> (<YYYY-MM-DD>)`.
 
 ## DECIDE: story first, template second (owner 20 Nov 2026; replaces "pick the style first")
@@ -212,7 +245,7 @@ The script chooses the template; a template never forces the script.
 - 2D: `node tools/capture.mjs check` (CHECK OK), `cues`, `py tools/mix.py .`, `sheet review/all.jpg 0.5 10`, LOOK at it
   (empty frames > 1 s, anything under the captions at y ~1400, label collisions, people cut by the edge, misspellings,
   pictures not matching the line), fix, then `video`. Mean volume (ffmpeg volumedetect) above -40 dB.
-- 3D styles cost a long render: in saver mode use 2D only.
+- 3D styles cost a long render: when the run still has other videos to build, prefer 2D.
 - Facts: every fact and number agrees across 2+ reliable sources (WebSearch; WebFetch is mostly blocked). List them in
   script.json "sources". Unverifiable: drop it or change topic. Reported claims are said as reported.
 
@@ -286,8 +319,9 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
 - Accounts: normal -> `youtube_maimon-mealy` (solo hype, UCNtzvOyrcKhdA1HiM8frvkg); GTA -> `youtube_volt-equal`
   (Kratos Playz, UCO8lnJFO1TLtHPkn9cCNPng). COMPOSIO_MANAGE_CONNECTIONS "list": ACTIVE, else do not upload, say so.
 - Upload every `WAITING UPLOAD` entry first (oldest first), then the new video. On `quotaExceeded`: do not retry; set
-  README status `WAITING UPLOAD (quota)` and carry on (Instagram is unaffected). The 08:55 IST run usually has no quota
-  left: mark WAITING without trying when the 16:55 run already uploaded 5 that Pacific day (count in factory-log).
+  README status `WAITING UPLOAD (quota)` and carry on (Instagram is unaffected). The 08:30 IST run is still in the previous
+  Pacific day (reset 13:30 IST): mark WAITING without trying when 5 uploads already went out since the last 13:30 IST (count in factory-log).
+  The 14:00 run uploads every WAITING first; the 21:00 run retries each still-WAITING entry ONCE (never a loop).
 - Stage: workbench downloads the raw GitHub URL, `upload_local_file` -> s3key. `run_composio_tool(
   "YOUTUBE_MULTIPART_UPLOAD_VIDEO", {title, description, tags, categoryId "27" (GTA "20"), privacyStatus "private",
   videoFile {name, mimetype "video/mp4", s3key}}, account=...)`. Check snippet.channelId. Upload exactly once: on an
@@ -315,9 +349,12 @@ SAMENESS RISK) the hook shape, structure, characters and colours must still diff
   "selfDeclaredMadeForKids": False, "embeddable": True, "license": "youtube", "publicStatsViewable": True}}; confirm with
   YOUTUBE_GET_VIDEO_DETAILS_BATCH (account youtube_volt-equal). Status `SCHEDULED <date> <time> IST (<url>)`. Else use the
   solo hype method.
-- Solo hype: stays private; append `<slot UTC>  <videoId>  <title>  PENDING` to publish-queue.txt (a later run's step P
-  makes it public; its slot is slot.py's time). Status `QUEUED: goes public <date> <time> IST (<url>)`.
-  Do NOT create send_later reminders.
+- Solo hype: stays private; append `<slot UTC>  <videoId>  <title>  PENDING` to publish-queue.txt (step P makes it public; its slot is
+  slot.py's time). Status `QUEUED: goes public <date> <time> IST (<url>)`. The YouTube tool cannot set publishAt for solo and no tick
+  runs between 09:30-14:00 or 15:30-21:00, so ALSO create ONE send_later at the slot time ("step P now: git pull, switch <videoId> if its line is
+  still PENDING, push"): the Hanoi video once went public 5 h late with no such timer. A tick that already switched it makes the timer a no-op (line DONE).
+- Several videos in one run: after each upload write its perf.csv row (`public_ist`, `slot_mode` as slot.py printed it) and, for solo, its publish-queue
+  line BEFORE calling `slot.py` for the next video. slot.py then counts the booking (today count, 30 min clearance); never pick or shift a time by hand.
 - Push the status changes.
 
 ## INSTAGRAM (every new video)
@@ -326,7 +363,10 @@ path>, "status": "PENDING", "caption": ...}`. Caption: 1-2 sentence hook, key fa
 B = ... 👇", normal: "Follow for a weird true fact every day 🧠", 6-8 plain # hashtags ending #reels #explore.
 Step P of a later run posts it. No send_later. Backfill: max 1 older video a day, at a slot.py slot, when a run has spare time.
 
-## CHANNEL CARE (16:55 IST run only; short)
+## CHANNEL CARE (21:00 IST ANALYTICS run only, after the retry of WAITING UPLOAD; short)
+- Gate: run the perf refresh and everything below ONLY when every daily upload is scheduled (no entry still `WAITING UPLOAD` after the one retry).
+  If one is still waiting: skip this section, say so in the report; the next 14:00 run uploads it first. Optional API writes (titles, comments) come last.
+- Sundays: the BRAIN.md weekly review and one discovery experiment run here.
 - Refresh `shorts-out/perf.csv`: a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH, saves the printed
   lines, then `python3 shorts-out/perf_merge.py < lines.txt`. A 48 h+ video with n>=2 evidence goes to style-verdicts.txt.
 - Stats for both channels + Instagram (INSTAGRAM_GET_IG_USER_MEDIA fields id,caption,permalink,timestamp,like_count,

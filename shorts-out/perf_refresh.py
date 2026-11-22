@@ -1,5 +1,5 @@
 # Paste into COMPOSIO_REMOTE_WORKBENCH (a Haiku subagent can do it). Prints one line per video: ch|id|privacy|publishAt|publishedAt|views|likes|title
-# Then save the printed lines to a file and run: python3 shorts-out/perf_merge.py < file     (CHANNEL CARE, 16:55 run)
+# Then save the printed lines to a file and run: python3 shorts-out/perf_merge.py < file     (CHANNEL CARE, 21:00 run)
 out=[]
 for acct,ch in (("youtube_maimon-mealy","UCNtzvOyrcKhdA1HiM8frvkg"),("youtube_volt-equal","UCO8lnJFO1TLtHPkn9cCNPng")):
     ids=[];tok=None
