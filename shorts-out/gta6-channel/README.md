@@ -274,7 +274,7 @@ Sources: Engadget (plane trick to reveal the map), Beebom (remove map fog, crop 
 **Tags:** gta 6 map, gta 6 map fog, gta 6 plane, gta 6 crop duster, gta 6 tips, gta 6 guide, gta 6 wanted level, gta vi, rockstar games
 **Language:** English · 28 s · player-tip warning (gaming-guide) · Experiment: DON'T-do-this hook + guide kind (new: guide), slot explore: midday 11:00 IST (slot.py)
 
-## 19 · `19-gta6-egg-tower.mp4` · comic-pop (STANDARD; icons tower+egg added) · UPLOADING 22 Nov 2026
+## 19 · `19-gta6-egg-tower.mp4` · comic-pop (STANDARD; icons tower+egg added) · SCHEDULED 22 Nov 2026 17:50 IST (https://www.youtube.com/watch?v=yCVfN9pSLsk)
 **Title:** The GTA 6 Egg Secret That Takes 7 Minutes To Reach 🥚 #shorts
 **Hook:** "A seven-minute climb, just to throw an egg." (odd-detail statement)
 **Sources:** GamingBible (19 Nov), IBTimes UK, ComicBook.com. Location differs between outlets, so not stated; Vice City link said as "reports".
