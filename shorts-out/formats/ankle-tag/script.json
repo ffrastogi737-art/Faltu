@@ -1,0 +1,211 @@
+{
+ "title": "Lucia's Ankle Tag In The GTA 6 Trailer",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "PC Gamer: GTA 6 detectives think its first trailer plays out in reverse, thanks to an ankle bracelet (Lucia's ankle monitor, fan theory)",
+  "SVG: GTA 6 Lucia ankle monitor theory explained (fan theory, probation reading)",
+  "Beebom: Lucia's ankle monitor in GTA 6, story and gameplay impact explained (speculation, Rockstar has not explained it)"
+ ],
+ "lines": [
+  {
+   "text": "Fans spotted a police ankle tag on Lucia in the GTA 6 trailer, and it could change how you play."
+  },
+  {
+   "text": "Lucia is one of the two leads, alongside Jason, and Rockstar showed her leaving prison."
+  },
+  {
+   "text": "Several outlets noticed an ankle monitor on her leg."
+  },
+  {
+   "text": "Fans think it could mean she is on probation."
+  },
+  {
+   "text": "Which might mean she can't roam the whole map at the start."
+  },
+  {
+   "text": "Others think the trailer tells her story in reverse."
+  },
+  {
+   "text": "But Rockstar has not explained it, so all of this is just theory."
+  },
+  {
+   "text": "Either way, it is a detail worth watching for in the game."
+  },
+  {
+   "text": "So tell us below, do you think her ankle tag will actually limit where you can go and"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/gr1.jpg",
+   "badge": "FAN SPOT",
+   "banner": "LUCIA'S ANKLE TAG?",
+   "sub": "IN THE GTA 6 TRAILER",
+   "stamp": "FAN THEORY",
+   "mark": {
+    "circle": [
+     0.55,
+     0.3,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "one",
+   "kind": "image",
+   "img": "assets/cb.jpg",
+   "label": "JASON & LUCIA",
+   "mark": {
+    "circle": [
+     0.62,
+     0.35,
+     0.15
+    ]
+   }
+  },
+  {
+   "at": "Several",
+   "kind": "proof",
+   "img": "assets/pc2.jpg",
+   "tag": "FAN THEORY",
+   "text": "ANKLE MONITOR SPOTTED",
+   "hl": [
+    [
+     0.35,
+     0.55,
+     0.4,
+     0.3
+    ]
+   ],
+   "arrows": [
+    [
+     0.6,
+     0.8
+    ]
+   ]
+  },
+  {
+   "at": "mean",
+   "kind": "image",
+   "img": "assets/gr1.jpg",
+   "label": "PROBATION?",
+   "mark": {
+    "circle": [
+     0.55,
+     0.3,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "Which",
+   "kind": "compare",
+   "title": "FREE ROAM VS LIMITS",
+   "left": {
+    "img": "assets/pcgamer.jpg",
+    "label": "THE WHOLE MAP",
+    "circle": [
+     0.5,
+     0.5,
+     0.25
+    ]
+   },
+   "right": {
+    "img": "assets/cb.jpg",
+    "label": "LUCIA?",
+    "circle": [
+     0.62,
+     0.4,
+     0.18
+    ]
+   }
+  },
+  {
+   "at": "Others",
+   "kind": "image",
+   "img": "assets/ts.jpg",
+   "label": "STORY IN REVERSE?"
+  },
+  {
+   "at": "But",
+   "kind": "proof",
+   "img": "assets/pc2.jpg",
+   "tag": "ROCKSTAR SILENT",
+   "text": "NOT EXPLAINED",
+   "hl": [
+    [
+     0.4,
+     0.62,
+     0.35,
+     0.28
+    ]
+   ],
+   "arrows": [
+    [
+     0.8,
+     0.45
+    ]
+   ]
+  },
+  {
+   "at": "Either",
+   "kind": "image",
+   "img": "assets/cb.jpg",
+   "label": "KEEP AN EYE OUT",
+   "crop": [
+    0.0,
+    0.0,
+    0.6,
+    1.0
+   ]
+  },
+  {
+   "at": "tell",
+   "kind": "poll",
+   "question": "WILL IT LIMIT HER?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 2,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.6,
+   "r": 0.18,
+   "start": 0.4,
+   "dur": 1.6
+  },
+  {
+   "beat": 4,
+   "type": "ring",
+   "x": 0.7,
+   "y": 0.5,
+   "r": 0.1,
+   "start": 0.3,
+   "dur": 1.5
+  },
+  {
+   "beat": 6,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.4,
+   "y2": 0.45,
+   "start": 0.3,
+   "dur": 1.4
+  }
+ ],
+ "bg": {
+  "file_id": "1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux",
+  "name": "lv_0_20261120213056.mp4",
+  "start": 0.76,
+  "len": 30.1
+ }
+}
