@@ -234,7 +234,7 @@ Sources: Wikipedia "Great Hanoi Rat Massacre"; Atlas Obscura "Hanoi Rat Massacre
 **Tags:** hanoi rat massacre, rat tail bounty, 1902 hanoi, cobra effect, perverse incentive, weird history, history facts, true story, did you know, colonial history
 **Experiment:** kind history (not in last 5); cinematic mini-movie tall-tale (@aiwithcb formula), 46 s, Chatterbox 1.03; slot explore midday 12:00 IST 22 Nov (target >= 1.2x legacy median 193).
 
-## 21 · `21-voice-on-recordings.mp4` · inside-out (STANDARD track turn; story-first, template chosen from the script: body-science explainer, x-ray + hero; hook shape: challenge statement "That voice you hate? That's the one everyone else hears") · QUEUED: goes public 23 Nov 2026 10:00 IST · IG ig-voice-on-recordings
+## 21 · `21-voice-on-recordings.mp4` · inside-out (STANDARD track turn; story-first, template chosen from the script: body-science explainer, x-ray + hero; hook shape: challenge statement "That voice you hate? That's the one everyone else hears") · QUEUED: goes public 23 Nov 2026 10:00 IST (https://www.youtube.com/watch?v=IYN_tQFWQNw) · IG ig-voice-on-recordings
 **Title:** Why Your Voice Sounds Weird On Recordings
 **Description:**
 ```
