@@ -1,0 +1,21 @@
+{
+  "title": "Why Your Voice Sounds Weird On Recordings",
+  "voice": "chatterbox",
+  "lead": 0.3, "outro": 0.9, "gap": 0.26, "music": "hype",
+  "sources": [
+    "Scientific American, 'Why does my voice sound different on recordings?' (the bone-conducted pathway is missing from a recording; you hear only the air-conducted sound)",
+    "Popular Science, 'Why your voice sounds weird on recordings' (bone conduction boosts low frequencies, so your own voice sounds rich and full to you)"
+  ],
+  "lines": [
+    { "text": "That voice you hate on recordings? That's the one everyone else hears!", "caps": "THAT *VOICE | YOU HATE? | THAT'S *REAL", "emo": 0.9 },
+    { "text": "When you talk, sound reaches your ears two different ways.", "caps": "SOUND TAKES | *TWO *ROUTES", "emo": 0.7 },
+    { "text": "First, through the air, just like everyone else hears you.", "caps": "ROUTE ONE: | THROUGH *AIR" },
+    { "text": "Second, straight through your skull bones, to your inner ear.", "caps": "ROUTE TWO: | THROUGH *BONE", "emo": 0.8 },
+    { "text": "And bones boost the deep, low tones, so your own voice sounds rich and full.", "caps": "BONES BOOST | THE *BASS | SO YOU SOUND *RICH" },
+    { "text": "But a microphone only catches the air route.", "caps": "BUT A *MIC | ONLY GETS | THE *AIR", "emo": 0.8 },
+    { "text": "No bone bass, so the recording sounds thinner and higher.", "caps": "NO *BONE BASS | THINNER | AND *HIGHER", "emo": 0.85 },
+    { "text": "So is the recording wrong? Nope!", "caps": "IS IT *WRONG? | *NOPE", "emo": 0.9 },
+    { "text": "It's actually how everyone else hears you every day.", "caps": "IT'S HOW *EVERYONE | HEARS *YOU", "emo": 0.8 },
+    { "text": "You're the only person who never hears your real voice. Wild, right?", "caps": "YOU NEVER HEAR | YOUR *REAL *VOICE", "emo": 0.9 }
+  ]
+}

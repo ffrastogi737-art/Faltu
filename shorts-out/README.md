@@ -233,3 +233,14 @@ Sources: Wikipedia "Great Hanoi Rat Massacre"; Atlas Obscura "Hanoi Rat Massacre
 ```
 **Tags:** hanoi rat massacre, rat tail bounty, 1902 hanoi, cobra effect, perverse incentive, weird history, history facts, true story, did you know, colonial history
 **Experiment:** kind history (not in last 5); cinematic mini-movie tall-tale (@aiwithcb formula), 46 s, Chatterbox 1.03; slot explore midday 12:00 IST 22 Nov (target >= 1.2x legacy median 193).
+
+## 21 · `21-voice-on-recordings.mp4` · inside-out (STANDARD track turn; story-first, template chosen from the script: body-science explainer, x-ray + hero; hook shape: challenge statement "That voice you hate? That's the one everyone else hears") · QUEUED: goes public 23 Nov 2026 10:00 IST · IG ig-voice-on-recordings
+**Title:** Why Your Voice Sounds Weird On Recordings
+**Description:**
+```
+You hear your own voice two ways: through the air and through your skull bones, which boost the low tones. A microphone only catches the air route, so a recording sounds thinner and higher. It's how everyone else hears you.
+Sources: Scientific American "Why does my voice sound different on recordings?"; Popular Science "Why your voice sounds weird on recordings".
+#shorts #science #sciencefacts #didyouknow #psychology #voice #bodyfacts #learnonshorts
+```
+**Tags:** voice on recording, why my voice sounds different, bone conduction, hear your own voice, body facts, science facts, did you know, how hearing works
+**Experiment:** kind body-science/hearing ("Why..." title, the pattern of the top solo videos); 27 s; slot exploit morning 10:00 IST; Chatterbox.

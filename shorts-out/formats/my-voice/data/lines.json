@@ -1,0 +1,65 @@
+{
+ "duration": 27.039,
+ "lines": [
+  {
+   "i": 0,
+   "text": "That voice you hate on recordings? That's the one everyone else hears!",
+   "start": 0.3,
+   "end": 3.578
+  },
+  {
+   "i": 1,
+   "text": "When you talk, sound reaches your ears two different ways.",
+   "start": 3.838,
+   "end": 6.212
+  },
+  {
+   "i": 2,
+   "text": "First, through the air, just like everyone else hears you.",
+   "start": 6.472,
+   "end": 8.636
+  },
+  {
+   "i": 3,
+   "text": "Second, straight through your skull bones, to your inner ear.",
+   "start": 8.896,
+   "end": 10.986
+  },
+  {
+   "i": 4,
+   "text": "And bones boost the deep, low tones, so your own voice sounds rich and full.",
+   "start": 11.246,
+   "end": 14.599
+  },
+  {
+   "i": 5,
+   "text": "But a microphone only catches the air route.",
+   "start": 14.859,
+   "end": 16.632
+  },
+  {
+   "i": 6,
+   "text": "No bone bass, so the recording sounds thinner and higher.",
+   "start": 16.892,
+   "end": 19.429
+  },
+  {
+   "i": 7,
+   "text": "So is the recording wrong? Nope!",
+   "start": 19.689,
+   "end": 21.394
+  },
+  {
+   "i": 8,
+   "text": "It's actually how everyone else hears you every day.",
+   "start": 21.654,
+   "end": 23.387
+  },
+  {
+   "i": 9,
+   "text": "You're the only person who never hears your real voice. Wild, right?",
+   "start": 23.647,
+   "end": 26.139
+  }
+ ]
+}

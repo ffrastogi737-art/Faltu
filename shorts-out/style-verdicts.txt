@@ -11,3 +11,4 @@ comic-pop@solo WIN 2026-11-20 auto: n=2 median 870 vs channel median 210
 chalk-talk@solo OK 2026-11-21 auto: n=3 median 605 vs channel median 552
 inside-out@solo OK 2026-11-21 auto: n=4 median 778 vs channel median 552
 comic-pop@gta OK 2026-11-21 auto: n=5 median 994 vs channel median 878
+comic-pop@gta WIN 2026-11-23 auto: n=6 median 1006 vs channel median 612
