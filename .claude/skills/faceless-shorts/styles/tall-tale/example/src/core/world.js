@@ -404,3 +404,37 @@ export function coast(E, { len = 70, sunset = false, shops } = {}) {
   const crowd = extras(scene, [[5.6, -7, 1], [-4.6, -9, 3, 'happy'], [5.4, -16, 5], [-5.0, -24, 2], [5.5, -30, 6], [-5.2, -36, 7, 'laugh']]);
   return { scene, sun, people: crowd, cars: carsList, buildings, faceAll(cam) { crowd.forEach((p) => p.face(cam)); } };
 }
+
+/** richer sets (owner 22 Nov 2026): layered depth around the cast, so a moving camera shows parallax instead of one flat backdrop.
+ *  interior: ceiling beams + wall pilasters (a rhythm along the room), a runner to the back wall, cabinets / desks / plants flanking the window.
+ *  outdoors: lamp or tree rows on both sides at several depths + low foreground bushes. Called once per set by plan.js. */
+export function depthLayers(S, kind) {
+  const sc = S.scene, wood = mat({ map: T.planks('#6B3E26', [1, 1]) }), trim = mat({ color: '#E9DFC8', roughness: 0.7 }), leaf = mat({ color: '#3F8F4A' });
+  const bush = (x, z, s = 1) => { const g = new THREE.Group(); [[0, 0], [0.32, 0.05], [-0.3, 0.02]].forEach(([dx, dz], i) => { const m = new THREE.Mesh(new THREE.SphereGeometry(0.34 * s * (i ? 0.8 : 1), 12, 9), leaf); m.position.set(dx * s, 0.3 * s, dz); m.castShadow = m.receiveShadow = true; g.add(m); }); g.position.set(x, 0, z); sc.add(g); };
+  if (kind === 'interior') {
+    const { w, depth, h } = S;
+    for (let z = -1.6; z > -depth + 0.4; z -= 2.6) {
+      box(w, 0.22, 0.28, wood, 0, h - 0.11, z, sc);
+      [-1, 1].forEach((s) => box(0.22, h, 0.28, trim, s * (w / 2 - 0.11), h / 2, z, sc));
+    }
+    box(1.7, 0.012, depth - 0.6, mat({ color: '#5B6475', roughness: 0.9 }), 0, 0.012, -depth / 2 + 0.3, sc).castShadow = false;
+    [-1, 1].forEach((s) => {                                         // furniture flanking the window on the back wall, and a plant in front of each
+      box(1.1, 1.15, 0.5, wood, s * 2.35, 0.575, -depth + 0.45, sc); box(1.2, 0.05, 0.58, trim, s * 2.35, 1.17, -depth + 0.45, sc);
+      cyl(0.17, 0.12, 0.3, mat({ color: '#B5553C' }), s * 2.7, 1.34, -depth + 0.45, sc, 14);
+      const l = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 9), leaf); l.scale.y = 1.25; l.position.set(s * 2.7, 1.78, -depth + 0.45); l.castShadow = true; sc.add(l);
+      const lampPole = cyl(0.025, 0.025, 1.7, mat({ color: '#2A2530' }), s * 1.4, 0.85, -depth + 0.9, sc, 8); lampPole.castShadow = false;   // a standing lamp
+      const shade = cyl(0.14, 0.26, 0.32, mat({ color: '#F3DDA6', emissive: '#F3C46A', emissiveIntensity: 0.5 }), s * 1.4, 1.78, -depth + 0.9, sc, 16); shade.castShadow = false;
+    });
+  } else {
+    const wide = kind === 'coast', rows = wide ? 4 : 5;
+    for (let i = 0; i < rows; i++) {
+      const z = -1.5 - i * 6.5;
+      [-1, 1].forEach((s) => {
+        const x = s * (3.4 + (i % 2) * 0.6);
+        const ob = kind === 'street' ? lamp() : wide ? palm(1 + (i % 3) * 0.1, 0.1 * s) : tree(0.9 + (i % 3) * 0.12, '#4E9A3C', 'round');
+        ob.position.set(x, 0, z); sc.add(ob);
+      });
+    }
+    bush(-1.55, -1.1, 1); bush(1.6, -1.4, 0.85);
+  }
+}

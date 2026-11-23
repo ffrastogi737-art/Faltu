@@ -8,12 +8,13 @@
 //             one 2+ solid comparison, 2+ moving solids, every solid on screen; 2+ set or light changes, never 30 s in one look;
 //             something new at least every 3rd shot.
 // See example/shot_plan.example.json for a full plan.
-// cam: wide | two-shot | medium | reaction-push | payoff.   move: push | pull | orbit-left | orbit-right.   light: day warm dusk night alarm spot.
+// cam: wide | two-shot | medium | reaction-push | payoff.   light: day warm dusk night alarm spot (real 3D rigs, engine.js LIGHT_RIGS).
+// move: push pull orbit-left orbit-right | dolly-in dolly-out | track-left track-right | crane-up crane-down tilt-up (STYLE.md section 5).
 // action: stand walk run sit jump clap point shock worry fall slip lie dizzy.   pos: [x, z] metres (or left centre right far-left far-right back front).
 import * as THREE from 'three';
 import { clamp, lerp, eio, eo } from './core/lib.js';
 import { L, Wd, T } from './core/timing.js';
-import { camera } from './core/engine.js';
+import { camera, LIGHT_RIGS, applyRig } from './core/engine.js';
 import * as WD from './core/world.js';
 import * as PR from './core/props.js';
 import { Toon } from './core/toon.js';
@@ -32,14 +33,22 @@ const CAMS = {                                        // head = the figure's hei
   'reaction-push': { fov: 40, head: 0.58, head2: 0.70, y: 1.4 },
   payoff: { fov: 40, head: 0.62, y: 0.7 },
 };
-const ACTIONS = new Set(['stand', 'walk', 'run', 'sit', 'jump', 'clap', 'point', 'shock', 'worry', 'fall', 'slip', 'lie', 'dizzy']);
-const PROP_KINDS = new Set(['solid', 'poster', 'lockers', 'barbell', 'desk']);
+const ACTIONS = new Set(['stand', 'walk', 'run', 'sit', 'jump', 'clap', 'point', 'shock', 'worry', 'fall', 'slip', 'lie', 'dizzy',
+  'recoil', 'triumph', 'accuse', 'facepalm', 'cower', 'slump', 'smug-stand']);   // the last seven are dramatic reaction stances (poseOf)
+const MOODS = new Set(['neutral', 'smug', 'smirk', 'happy', 'laugh', 'shock', 'wide', 'worried', 'angry', 'sad', 'sly', 'proud', 'tired', 'dizzy']);
+const FX = new Set(['steam', 'sweat', 'sweat-fly']);   // cast[].fx: angry steam off the head, a sweat drop, sweat flying off the face
+const PROP_KINDS = new Set(['solid', 'poster', 'lockers', 'barbell', 'desk', 'calendar', 'sign', 'breaker', 'clock', 'phone', 'marker', 'papers']);
+const DIEGETIC = new Set(['calendar', 'sign', 'breaker', 'clock', 'phone', 'marker', 'papers']);   // story details that live inside the 3D set (STYLE.md section 6)
+const WALL_Y = { calendar: 1.75, sign: 2.0, breaker: 1.45, clock: 2.55, phone: 1.5 };   // default hanging / floating height (m); marker + papers stand on the floor
 const LECTURE = new Set(['diagram', 'whiteboard', 'board', 'easel', 'chart', 'slide', 'blackboard']);   // banned: no character explains in front of a board
-export const LIGHTS = { day: [1, '#FFFFFF'], warm: [0.95, '#FFD9A8'], dusk: [0.85, '#FF9F70'], night: [0.5, '#8FA8FF'], alarm: [0.75, '#FF6B5A'], spot: [0.7, '#FFF2D0'] };
+export const LIGHTS = LIGHT_RIGS;                      // day warm dusk night alarm spot: real per-shot 3D rigs (engine.js), not a colour tint
 const DEFINITION = /\b(is defined as|refers to|is a term for|is known as|is called|has a name|according to|wikipedia|in conclusion|in summary|by definition)\b/i;
 export const MUSIC = new Set(['suspense', 'tension', 'bed', 'neon', 'hype', 'none']);
 export const DEFAULT_MUSIC = 'suspense';             // the default track of every tall-tale (script.json "music" must match the plan's)
-const MOVES = { push: 1.1, pull: 1 / 1.1, 'orbit-left': 1, 'orbit-right': 1 };      // head growth over the shot; orbits swing the camera +-7 deg
+// camera choreography (owner 22 Nov 2026). Value = head growth over the shot (dolly pushes / pulls the lens position, not the fov); orbits swing the camera +-7 deg.
+// dolly-in / dolly-out: 1.22x. track-left / track-right: the camera slides sideways 0.22 m and its look-at follows half of it (parallax). crane-up: the camera rises 0.9 m and tilts down;
+// crane-down: it sinks from a high angle; tilt-up: a fixed camera tilts from the feet up to the face. Every cut blends the previous camera in over BLEND s: the camera never stops.
+const MOVES = { push: 1.1, pull: 1 / 1.1, 'orbit-left': 1, 'orbit-right': 1, 'dolly-in': 1.22, 'dolly-out': 1 / 1.22, 'track-left': 1, 'track-right': 1, 'crane-up': 1, 'crane-down': 1, 'tilt-up': 1 };
 const DEFAULT_MOVE = { wide: 'orbit-left', 'two-shot': 'orbit-right', medium: 'push', 'reaction-push': null, payoff: 'pull' };   // reaction-push already pushes in
 const CUE_TYPES = new Set(['inhale', 'heartbeat', 'whoosh', 'slide', 'pop', 'plop', 'gulp', 'boing', 'bubbles', 'sizzle', 'sparkle', 'thud', 'slam', 'tock', 'zip',
   'alarm', 'boom', 'riser', 'ding', 'hit', 'swoosh', 'applause', 'tickclock', 'scratch', 'coin']);   // every type mix.py can play
@@ -110,13 +119,21 @@ export function validatePlan(plan) {
     if (!THEMES[name]) throw new Error(`${id}: unknown theme "${name}" (use ${Object.keys(THEMES).join(', ')})`);
     sp.cast.forEach((c) => {
       if (!chars[c.who]) throw new Error(`${id}: character "${c.who}" is not defined in "characters" (defined: ${Object.keys(chars).join(', ')})`);
-      if (c.action && !ACTIONS.has(c.action)) throw new Error(`${id}: unknown action "${c.action}"`);
+      if (c.action && !ACTIONS.has(c.action)) throw new Error(`${id}: unknown action "${c.action}" (use ${[...ACTIONS].join(', ')})`);
+      if (c.mood !== undefined && !MOODS.has(c.mood)) throw new Error(`${id}: unknown mood "${c.mood}" (use ${[...MOODS].join(', ')})`);
+      if (c.fx !== undefined && (!Array.isArray(c.fx) || c.fx.some((f) => !FX.has(f)))) throw new Error(`${id}: "fx" is a list of ${[...FX].join(', ')}`);
     });
     if (sp.cam === 'two-shot' && sp.cast.length < 2) throw new Error(`${id}: two-shot needs 2 characters`);
     (sp.props || []).forEach((p) => {
       if (LECTURE.has(p.kind)) throw new Error(`${id}: "${p.kind}" is a whiteboard / chart lecture shot, which is banned. Show the idea with real 3D objects ("solid"), a set change or a character's reaction`);
       if (!PROP_KINDS.has(p.kind)) throw new Error(`${id}: unknown prop "${p.kind}" (use ${[...PROP_KINDS].join(', ')})`);
       if (p.kind === 'poster' && (p.lines || []).length > 2) throw new Error(`${id}: a poster is a sign in the set (2 short lines at most), not a chart`);
+      if (DIEGETIC.has(p.kind)) {                          // story details: short text only, inside the 3D world
+        const txt = [...(p.lines || []), p.label, p.month].filter(Boolean).map(String);
+        if ((p.lines || []).length > 2) throw new Error(`${id}: a ${p.kind} carries 2 short lines at most`);
+        if (txt.some((t) => t.length > 18)) throw new Error(`${id}: ${p.kind} text "${txt.find((t) => t.length > 18)}" is longer than 18 characters: it is a prop, not a paragraph`);
+        if (p.kind === 'calendar' && (p.cross || []).some((d) => !Number.isInteger(d) || d < 1 || d > 30)) throw new Error(`${id}: calendar "cross" days are 1-30`);
+      }
       if (p.kind === 'solid' && !(p.parts || []).length) throw new Error(`${id}: a solid needs "parts"`);
     });
     (sp.cues || []).forEach((c) => {
@@ -151,11 +168,26 @@ function poseOf(c, k, t) {
     case 'shock': st.mood = 'shock'; st.armL = [150, 10]; st.armR = [150, 10]; break;
     case 'worry': st.mood = 'worried'; st.sweat = 1; st.armL = [60, 90]; break;
     // a fall reads as a stumble: at 40 deg and more a 2D cut-out turns edge-on (a known limit of the toon engine, see STYLE.md)
-    case 'fall': st.mood = 'dizzy'; st.lean = dir * 40 * eio(clamp(k * 1.6)); st.armL = [120, 30]; st.armR = [120, 30]; break;
+    case 'fall': st.mood = 'dizzy'; st.lean = dir * 55 * eio(clamp(k * 1.6)); st.armL = [120, 30]; st.armR = [120, 30]; break;
     case 'slip': st.mood = 'shock'; st.legs = 'jump'; st.lean = dir * 30 * eo(clamp(k * 3)); break;
     case 'lie': st.mood = 'dizzy'; st.legs = 'sit'; st.lean = dir * 22; break;     // a slumped sit: a true lie is edge-on
     case 'dizzy': st.mood = 'dizzy'; st.lean = dir * 10 * Math.sin(t * 6); break;
+    // dramatic reaction stances (owner 22 Nov 2026)
+    case 'recoil': st.mood = 'wide'; st.lean = -dir * (4 + 4 * eo(clamp(k * 4))); st.armL = [140, 10]; st.armR = [125, 25]; st.bob = 2; break;
+    case 'triumph': st.mood = 'proud'; st.armL = [165, 12]; st.armR = [165, 12]; st.bob = 3 * Math.abs(Math.sin(t * 5)); break;
+    case 'accuse': st.mood = 'angry'; st.armR = [98, 4]; st.armL = [18, 10]; st.lean = dir * 2; st.steam = 1; break;
+    case 'facepalm': st.mood = 'tired'; st.armR = [150, 112]; st.armL = [14, 8]; st.lean = dir * 4; break;
+    case 'cower': st.mood = 'wide'; st.sweat = 1.6; st.armL = [78, 125]; st.armR = [78, 125]; st.lean = dir * 2; st.bob = 1; break;
+    case 'slump': st.mood = 'tired'; st.lean = dir * 7; st.armL = [4, 2]; st.armR = [4, 2]; break;
+    case 'smug-stand': st.mood = 'smirk'; st.armL = [34, 112]; st.armR = [34, 112]; st.lean = -dir * 3; break;
   }
+  if (Array.isArray(c.fx)) {                              // expression effects: animated, so they carry the clock t
+    if (c.fx.includes('steam')) { st.steam = 1; st.t = t; }
+    if (c.fx.includes('sweat')) st.sweat = Math.max(st.sweat || 0, 1);
+    if (c.fx.includes('sweat-fly')) { st.sweat = Math.max(st.sweat || 0, 1.6); st.t = t; }
+  }
+  if (st.steam && st.t === undefined) st.t = t;
+  if (st.sweat >= 1.5 && st.t === undefined) st.t = t;
   return st;
 }
 
@@ -163,8 +195,7 @@ function poseOf(c, k, t) {
 function buildSet(E, th) {
   const def = THEMES[th.name], o = { ...def.o, ...(th.o || {}) };
   const S = def.build === 'interior' ? WD.interior(E, o) : def.build === 'mainStreet' ? WD.mainStreet(E, o) : def.build === 'coast' ? WD.coast(E, o) : WD.meadow(E, o);
-  S.lights = []; S.scene.traverse((ob) => { if (ob.isLight) S.lights.push([ob, ob.intensity, ob.color.clone()]); });
-  S.kind = SETKIND[def.build]; S.toons = {}; S.shotProps = [];
+  S.kind = SETKIND[def.build]; S.toons = {}; S.shotProps = []; WD.depthLayers(S, S.kind);
   (def.props || []).forEach((p) => addProp(S, p, null));
   return S;
 }
@@ -179,12 +210,20 @@ function propPos(S, kind, pos) {
 }
 function addProp(S, p, shot) {
   const wall = typeof p.pos === 'string', h = p.h || (p.kind === 'diagram' ? 1.4 : 1.2);
-  const y = p.kind === 'poster' ? (p.y ?? 2.3) : p.kind === 'diagram' ? (p.y ?? (wall ? 2.3 : 0.6 + h / 2)) : 0;
+  const y = p.kind === 'poster' ? (p.y ?? 2.3) : p.kind === 'diagram' ? (p.y ?? (wall ? 2.3 : 0.6 + h / 2)) : DIEGETIC.has(p.kind) ? (p.y ?? WALL_Y[p.kind] ?? 0) : 0;
   const g = p.kind === 'poster' ? PR.poster(p.lines || ['NOTICE'], { w: p.w || 2.0, h: p.h || 1.2, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', accent: p.accent || '#B5372E' })
     : p.kind === 'diagram' ? PR.diagram(p.ops || [], { w: p.w || 2.0, h, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', title: p.title || '', legs: wall ? 0 : y })
     : p.kind === 'solid' ? PR.solid(p.parts || [])
+    : p.kind === 'calendar' ? PR.calendar({ month: p.month || 'NOV', mark: p.mark || 0, cross: p.cross || [], w: p.w, h: p.h })
+    : p.kind === 'sign' ? PR.sign(p.lines || ['KEEP OUT'], { bg: p.bg, fg: p.fg, w: p.w, h: p.h })
+    : p.kind === 'breaker' ? PR.breaker({ flip: !!p.flip, switches: p.switches, w: p.w, h: p.h })
+    : p.kind === 'clock' ? PR.clock({ hour: p.hour ?? 12, min: p.min ?? 0, spin: p.spin ?? 0.25, r: p.r, hang: p.hang })
+    : p.kind === 'phone' ? PR.phone({ lines: p.lines, glow: p.glow })
+    : p.kind === 'marker' ? PR.marker({ label: p.label || '39 FT', h: p.h2 })
+    : p.kind === 'papers' ? PR.papers({ lines: p.lines, n: p.n })
     : p.kind === 'lockers' ? PR.lockers(p.n || 4, p.col) : p.kind === 'barbell' ? PR.barbell() : PR.desk(p.w || 2.2);
   const q = propPos(S, p.kind, p.pos);
+  if (typeof p.pos === 'string' && DIEGETIC.has(p.kind) && p.kind !== 'phone') q.z += 0.06;   // flush against the wall
   g.position.set(q.x, y, q.z); g.rotation.y = q.ry + toRad(p.ry || 0); S.scene.add(g);
   g.visible = shot == null;                              // theme props stay visible; a shot's props only during that shot
   if (shot != null) S.shotProps.push({ g, shot, motion: p.motion || null, base: { x: q.x, y, z: q.z, ry: g.rotation.y } });
@@ -243,7 +282,9 @@ export function buildPlanShots(E, plan) {
       if (S.kind === 'interior') {                       // in a room the lens cannot leave the floor: the frame is limited to the room, and the lens widens instead of getting closer than 0.30
         D = Math.min(D, ROOM_CAM_Z - T0.z); fo = Math.max(fovV, 2 * Math.atan(PERSON / (2 * D * h)) * 180 / Math.PI);   // the lens gives the requested head size (continuity holds at room cuts)
       }
-      return { pos: new THREE.Vector3(T0.x + D * Math.sin(a), P.y, T0.z + D * Math.cos(a)), tgt: new THREE.Vector3(T0.x, T0.y, T0.z), fov: fo, sx, sy };
+      const e = eio(k), tl = mv === 'track-left' ? lerp(0.22, -0.22, e) : mv === 'track-right' ? lerp(-0.22, 0.22, e) : 0;      // sideways track (m)
+      const cy = mv === 'crane-up' ? lerp(0, 0.9, e) : mv === 'crane-down' ? lerp(0.9, 0, e) : 0, ty = mv === 'tilt-up' ? lerp(-0.35, 0.3, e) : mv === 'crane-up' ? lerp(0, -0.1, e) : 0;
+      return { pos: new THREE.Vector3(T0.x + D * Math.sin(a) + tl, P.y + cy, T0.z + D * Math.cos(a)), tgt: new THREE.Vector3(T0.x + tl * 0.5, T0.y + ty, T0.z), fov: fo, sx, sy };
     };
     const apply = (st) => {
       cam.fov = st.fov; cam.updateProjectionMatrix(); cam.position.copy(st.pos); cam.lookAt(st.tgt);
@@ -303,7 +344,7 @@ export function buildPlanShots(E, plan) {
       adj = head0 < lo ? Math.max(adj * lo * 1.03 / head0, lo * 1.03 / P.head) : adj * hi * 0.97 / head0;
     }
     const m0 = state(0, s, sx, sy), m1 = state(1, s, sx, sy);
-    if (m0.pos.distanceTo(m1.pos) < 0.3 && Math.abs(m0.fov - m1.fov) < 1) throw new Error(`${id} (line ${sp.line}): the camera would not move in this shot (the cast fills the frame, so a push or pull has no room). Use "move": "orbit-left" or "orbit-right"`);
+    if (m0.pos.distanceTo(m1.pos) < 0.3 && m0.tgt.distanceTo(m1.tgt) < 0.15 && Math.abs(m0.fov - m1.fov) < 1) throw new Error(`${id} (line ${sp.line}): the camera would not move in this shot (the cast fills the frame, so a push or pull has no room). Use "move": "orbit-left" or "orbit-right"`);
     if (prevEnd && (head0 < prevEnd / JUMP || head0 > prevEnd * JUMP)) console.warn(`${id}: head size ${(head0 / prevEnd).toFixed(2)}x of the shot before (the cast cannot hold 1.6x)`);
     prevEnd = head1;
     const figH = (c, k) => { apply(state(k, s, sx, sy)); const q = posAt(c, k), hh = c.kid ? 1.4 : PERSON; return (toPx(new THREE.Vector3(q.x, 0, q.z)).y - toPx(new THREE.Vector3(q.x, hh, q.z)).y) / H; };
@@ -342,17 +383,17 @@ export function buildPlanShots(E, plan) {
           pr.g.position.set(pr.base.x + dx * (e - 1), pr.base.y + (m.bob || 0) * Math.abs(Math.sin(lt * 4)), pr.base.z + dz * (e - 1));
           pr.g.rotation.y = pr.base.ry + toRad((m.spin || 0) * e); pr.g.scale.setScalar(lerp(m.grow ?? 1, 1, e));
         });
-        const lt0 = LIGHTS[sp.light || 'day'], tint = new THREE.Color(lt0[1]);
-        S.lights.forEach(([ob, i0, c0]) => { ob.intensity = i0 * lt0[0]; ob.color.copy(c0).multiply(tint); });
+        const rig = applyRig(S, sp.light || 'day', k, lt);                // real 3D light rig: key angle, rim, bounce, atmosphere (engine.js)
+        const key = S.rig && S.rig.key, sd = key ? { x: key.t.x - key.o.position.x, z: key.t.z - key.o.position.z } : { x: 0, z: 0 };
         Object.values(S.toons).forEach((tn) => { if (!castSet.has(tn)) tn.group.visible = false; });
         cast.forEach((c) => { const wk = c.wear ? JSON.stringify(c.wear) : ''; if (c.toon.wearKey !== wk) { c.toon.look = { ...c.toon.baseLook, ...(c.wear || {}) }; c.toon.wearKey = wk; c.toon.key = ''; }
-          c.toon.group.visible = true; const q = posAt(c, k); c.toon.at(q.x, 0, q.z).set(poseOf(c, k, t)); });
+          c.toon.group.visible = true; const q = posAt(c, k); c.toon.at(q.x, 0, q.z).set(poseOf(c, k, t)).ground(rig.contact, sd.x, sd.z); });
         const now = shot.cam(k);                         // blend from the previous camera over the first BLEND seconds
         let st = now;
         if (i > 0 && lt < BLEND) { const pe = shots[i - 1].cam(1), a = eo(clamp(lt / BLEND)); st = { pos: pe.pos.clone().lerp(now.pos, a), tgt: pe.tgt.clone().lerp(now.tgt, a), fov: lerp(pe.fov, now.fov, a), sx: lerp(pe.sx, now.sx, a), sy: lerp(pe.sy, now.sy, a) }; }
         apply(st);
         cast.forEach((c) => c.toon.face(cam)); if (S.faceAll) S.faceAll(cam);
-        E.render(S.scene, cam, { ...LOOKS[S.kind], focus: st.pos.distanceTo(st.tgt) });
+        E.render(S.scene, cam, { ...LOOKS[S.kind], bloom: rig.bloom, vignette: rig.vignette, exposure: rig.exposure, tint: rig.tint, focus: st.pos.distanceTo(st.tgt) });
         blit();
       },
     };

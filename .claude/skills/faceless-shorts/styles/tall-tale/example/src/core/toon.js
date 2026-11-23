@@ -296,15 +296,16 @@ function eye(g, x, y, S, side, L) {
   }
   if (m === 'dizzy') { g.lineWidth = 6; g.beginPath(); for (let a = 0; a < 12; a += 0.3) { const rr = a * 1.6; g.lineTo(x + Math.cos(a * side) * rr, y + Math.sin(a * side) * rr); } g.stroke(); return; }
   if (m === 'angry' && false) return;
-  if (m === 'shock') {
-    g.fillStyle = '#FFFFFF'; g.lineWidth = 6; g.beginPath(); g.ellipse(x, y, 26, 30, 0, 0, 7); g.fill(); g.stroke();
-    g.fillStyle = INK; g.beginPath(); g.arc(x + lx * 8, y + ly * 8, 7, 0, 7); g.fill(); return;
+  if (m === 'shock' || m === 'wide') {                          // wide: saucer eyes with pin-prick pupils (the "I cannot believe it" look)
+    const wd = m === 'wide';
+    g.fillStyle = '#FFFFFF'; g.lineWidth = 6; g.beginPath(); g.ellipse(x, y - (wd ? 4 : 0), wd ? 33 : 26, wd ? 40 : 30, 0, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = INK; g.beginPath(); g.arc(x + lx * 8, y + ly * 8 - (wd ? 4 : 0), wd ? 5 : 7, 0, 7); g.fill(); return;
   }
   if (bl > 0.6) { g.lineWidth = 8; g.beginPath(); g.moveTo(x - 14, y + 4); g.quadraticCurveTo(x, y + 10, x + 14, y + 4); g.stroke(); return; }
   // pupil
   const px = x + lx * 9, py = y + ly * 8;
   g.beginPath(); g.ellipse(px, py, 13, 17 * (1 - bl * 0.6), 0, 0, 7); g.fill();
-  if (m === 'smug' || m === 'tired' || m === 'sly' || m === 'proud') {           // heavy lid over the top half
+  if (m === 'smug' || m === 'tired' || m === 'sly' || m === 'proud' || (m === 'smirk' && side < 0)) {           // heavy lid over the top half
     g.fillStyle = L.head; g.fillRect(x - 24, y - 28, 48, 26 + (m === 'tired' ? 6 : 0));
     g.lineWidth = 7; g.beginPath(); g.moveTo(x - 20, y - 2 + (m === 'tired' ? 6 : 0)); g.lineTo(x + 20, y - 2 + (m === 'tired' ? 6 : 0)); g.stroke();
   }
@@ -315,11 +316,12 @@ function drawFace(g, L, S, hx, hy) {
   const m = S.mood, ex = 46, ey = hy + 4;
   // eyebrows
   const brow = { neutral: [4, 0], smug: [-8, 10], happy: [8, 0], laugh: [10, 0], shock: [24, 0], worried: [10, -16], angry: [-10, 22],
-    sad: [8, -18], sly: [-6, 12], proud: [6, 4], tired: [-2, 0], dizzy: [14, 0] }[m] || [4, 0];
+    sad: [8, -18], sly: [-6, 12], proud: [6, 4], tired: [-2, 0], dizzy: [14, 0], smirk: [0, 6], wide: [32, 0] }[m] || [4, 0];
   g.strokeStyle = INK; g.lineWidth = 12;
   [-1, 1].forEach((s) => {
     let lift = brow[0], tilt = brow[1] * s;           // tilt > 0: inner end lower (angry)
-    if ((m === 'smug' || m === 'sly') && s > 0) { lift = 16; tilt = -4; }
+    if ((m === 'smug' || m === 'sly' || m === 'smirk') && s > 0) { lift = 18; tilt = -5; }
+    if (m === 'smirk' && s < 0) { lift = -2; tilt = 12; }
     const y = ey - 44 - lift;
     g.beginPath(); g.moveTo(hx + s * (ex - 26), y + tilt * 0.5); g.quadraticCurveTo(hx + s * ex, y - 7, hx + s * (ex + 26), y - tilt * 0.5);
     g.stroke();
@@ -337,9 +339,11 @@ function drawFace(g, L, S, hx, hy) {
     if (tongue && h > 12) { g.save(); g.clip(); g.fillStyle = '#E2697A'; g.beginPath(); g.ellipse(hx, my + h * 1.1, w * 0.7, h * 0.6, 0, 0, 7); g.fill(); g.restore(); }
   };
   if (m === 'shock') openMouth(16, 20 + t * 6);
+  else if (m === 'wide') openMouth(18, 28 + t * 8);
   else if (m === 'laugh') { g.beginPath(); g.moveTo(hx - 40, my - 6); g.quadraticCurveTo(hx, my - 2, hx + 40, my - 6); g.quadraticCurveTo(hx + 34, my + 52, hx, my + 52); g.quadraticCurveTo(hx - 34, my + 52, hx - 40, my - 6); g.closePath(); g.fillStyle = '#3A1A2A'; g.fill(); g.save(); g.clip(); g.fillStyle = '#E2697A'; g.beginPath(); g.ellipse(hx, my + 50, 24, 18, 0, 0, 7); g.fill(); g.fillStyle = '#FFFFFF'; g.fillRect(hx - 40, my - 10, 80, 12); g.restore(); g.stroke(); }
   else if (t > 0.05) openMouth(14 + t * 10, 6 + t * 18);
   else if (m === 'happy' || m === 'proud') { g.beginPath(); g.moveTo(hx - 28, my); g.quadraticCurveTo(hx, my + 26, hx + 28, my); g.stroke(); }
+  else if (m === 'smirk') { g.beginPath(); g.moveTo(hx - 26, my + 12); g.quadraticCurveTo(hx + 8, my + 20, hx + 32, my - 10); g.stroke(); g.lineWidth = 5; g.beginPath(); g.arc(hx + 36, my - 6, 8, -1.2, 1.4); g.stroke(); g.lineWidth = 8; }
   else if (m === 'smug' || m === 'sly') { g.beginPath(); g.moveTo(hx - 22, my + 6); g.quadraticCurveTo(hx + 4, my + 16, hx + 24, my - 4); g.stroke(); }
   else if (m === 'worried') { g.beginPath(); g.moveTo(hx - 26, my + 8); g.bezierCurveTo(hx - 12, my - 4, hx + 8, my + 14, hx + 26, my + 2); g.stroke(); }
   else if (m === 'angry') { g.beginPath(); g.moveTo(hx - 30, my + 12); g.quadraticCurveTo(hx, my - 8, hx + 30, my + 12); g.stroke(); g.lineWidth = 5; g.fillStyle = '#FFFFFF'; g.beginPath(); g.roundRect(hx - 24, my - 2, 48, 14, 6); g.fill(); g.stroke(); }
@@ -353,6 +357,16 @@ function drawFace(g, L, S, hx, hy) {
   }
   if (L.extra.includes('pencil')) { g.save(); g.translate(hx + 132, hy - 50); g.rotate(-0.5); g.fillStyle = '#F2C230'; g.fillRect(-8, -60, 16, 120); g.fillStyle = '#E58A9A'; g.fillRect(-8, -70, 16, 14); g.strokeStyle = INK; g.lineWidth = 4; g.strokeRect(-8, -70, 16, 130); g.restore(); }
   if (S.sweat || m === 'worried') { const k = S.sweat ?? 1; g.globalAlpha = Math.min(1, k); g.fillStyle = '#8FD3F4'; g.strokeStyle = INK; g.lineWidth = 4; g.beginPath(); const sx = hx + 104, sy = hy - 70; g.moveTo(sx, sy - 26); g.quadraticCurveTo(sx + 18, sy, sx, sy + 12); g.quadraticCurveTo(sx - 18, sy, sx, sy - 26); g.fill(); g.stroke(); g.globalAlpha = 1; }
+  if (S.steam) {                                                          // angry steam: puffs rise off both sides of the head
+    const tt = S.t || 0; g.fillStyle = '#FFFFFF'; g.strokeStyle = INK; g.lineWidth = 5;
+    [-1, 1].forEach((sd) => { for (let i = 0; i < 3; i++) { const ph = (tt * 1.5 + i / 3 + (sd > 0 ? 0.17 : 0)) % 1; g.globalAlpha = Math.min(1, S.steam) * (1 - ph * 0.9); g.beginPath(); g.arc(hx + sd * (134 + ph * 26 + i * 4), hy - 10 - ph * 130, 16 + ph * 14, 0, 7); g.fill(); g.stroke(); } });
+    g.globalAlpha = 1;
+  }
+  if (S.sweat >= 1.5) {                                                   // sweat flying off the face (more than the one drop)
+    const tt = S.t || 0; g.fillStyle = '#8FD3F4'; g.strokeStyle = INK; g.lineWidth = 3;
+    [-1, 1].forEach((sd, j) => { const ph = (tt * 1.8 + j * 0.5) % 1; g.globalAlpha = 1 - ph; g.beginPath(); g.ellipse(hx + sd * (112 + ph * 44), hy - 52 + ph * 70, 8, 13, sd * 0.4, 0, 7); g.fill(); g.stroke(); });
+    g.globalAlpha = 1;
+  }
   if (S.tears || m === 'sad') { g.fillStyle = '#8FD3F4'; [-1, 1].forEach((s) => { g.beginPath(); g.ellipse(hx + s * (ex + 6), ey + 40, 7, 14, 0, 0, 7); g.fill(); }); }
 }
 
@@ -429,7 +443,13 @@ function bill(g, x, y, rot) {
 }
 
 // ---------- the 3D cut-out ----------
-let shadowTex = null;
+let shadowTex = null, contactT = null;
+function contactTex() {                                                   // a tight dark ellipse right under the shoes
+  if (contactT) return contactT;
+  const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64); gr.addColorStop(0, 'rgba(12,8,22,0.95)'); gr.addColorStop(0.55, 'rgba(12,8,22,0.55)'); gr.addColorStop(1, 'rgba(12,8,22,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 128, 128); contactT = new THREE.CanvasTexture(c); return contactT;
+}
 function blobTex() {
   if (shadowTex) return shadowTex;
   const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
@@ -452,7 +472,13 @@ export class Toon {
     this.mesh.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: this.tex, alphaTest: 0.5 });
     this.blob = new THREE.Mesh(new THREE.PlaneGeometry(Wd * 0.9, Wd * 0.34), new THREE.MeshBasicMaterial({ map: blobTex(), transparent: true, depthWrite: false, opacity: 0.55 }));
     this.blob.rotation.x = -Math.PI / 2; this.blob.position.y = 0.01;
-    this.group = new THREE.Group(); this.pivot = new THREE.Group(); this.pivot.add(this.mesh); this.group.add(this.pivot, this.blob);
+    this.contact = new THREE.Mesh(new THREE.PlaneGeometry(Wd * 0.62, Wd * 0.24), new THREE.MeshBasicMaterial({ map: contactTex(), transparent: true, depthWrite: false, opacity: 0.8 }));
+    this.contact.rotation.x = -Math.PI / 2; this.contact.position.y = 0.014;
+    this.group = new THREE.Group(); this.pivot = new THREE.Group(); this.pivot.add(this.mesh); this.group.add(this.pivot, this.blob, this.contact);
+    this.layers = [0.035, 0.07].map((dz, i) => {              // card thickness: two dark copies right behind the cut-out show as a solid edge when the card is turned
+      const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ map: this.tex, color: i ? '#15122A' : '#2A2540', transparent: true, alphaTest: 0.04, side: THREE.DoubleSide, toneMapped: false }));
+      m.position.z = -dz; this.pivot.add(m); return m;
+    });
     this.key = ''; this.H = H; this.set({});
   }
   /** redraws only when the state changed */
@@ -465,8 +491,19 @@ export class Toon {
     this.tex.needsUpdate = true; return this;
   }
   /** turn the cut-out to face the camera (around the vertical axis only) */
-  face(cam) { const p = new THREE.Vector3(); this.group.getWorldPosition(p); this.pivot.rotation.y = Math.atan2(cam.position.x - p.x, cam.position.z - p.z) - this.group.rotation.y; return this; }
-  tint(col) { this.mat.color.set(col); return this; }
+  /** the card turns toward the camera by `turn` of the camera angle, never more than `maxYaw` degrees: a 3/4 view with visible thickness, never edge-on */
+  face(cam, turn = 0.5, maxYaw = 32) {
+    const p = new THREE.Vector3(); this.group.getWorldPosition(p);
+    let a = Math.atan2(cam.position.x - p.x, cam.position.z - p.z) - this.group.rotation.y; a = Math.atan2(Math.sin(a), Math.cos(a));
+    const lim = maxYaw * Math.PI / 180; this.pivot.rotation.y = Math.max(-lim, Math.min(lim, a * turn)); return this;
+  }
+  /** grounded shadows: strength 0..1 (the rig's `contact`), (sx, sz) = the ground direction the key light throws shadows */
+  ground(strength = 0.6, sx = 0, sz = 0) {
+    const n = Math.hypot(sx, sz) || 1, d = Math.min(1, Math.hypot(sx, sz) * 1.5);
+    this.blob.material.opacity = 0.35 + 0.5 * strength; this.blob.position.x = (sx / n) * 0.16 * d; this.blob.position.z = (sz / n) * 0.16 * d; this.blob.scale.set(1 + 0.45 * d, 1 + 0.2 * d, 1);
+    this.contact.material.opacity = Math.min(1, 0.55 + 0.45 * strength); return this;
+  }
+  tint(col) { this.mat.color.set(col); this.layers.forEach((l, i) => l.material.color.set(col).multiplyScalar(i ? 0.25 : 0.4)); return this; }
   /** change the look (e.g. more stamps) and force a redraw */
   restyle(patch) { Object.assign(this.look, patch); this.key = ''; return this; }
   at(x, y, z) { this.group.position.set(x, y, z); return this; }

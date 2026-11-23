@@ -231,3 +231,98 @@ export function solid(parts = []) {
   });
   return g;
 }
+
+// ---------- diegetic story props (owner 22 Nov 2026): the story's details live INSIDE the 3D world, never as text overlays ----------
+// calendar · sign · breaker · clock · phone · marker · papers. Wall props hang at y = 1.4-2.6 (plan.js sets the default), each has .reveal(k) (k = 0..1
+// across the shot) that animates it: crosses appear on the calendar, the breaker lever flips, the clock ticks, the phone pops in, the flag unfurls.
+const fit = (c, txt, maxW, size, wt = 900) => { let fs = size; c.font = `${wt} ${fs}px Inter`; while (c.measureText(txt).width > maxW && fs > 12) { fs -= 2; c.font = `${wt} ${fs}px Inter`; } return fs; };
+const live = (w, h, draw) => {                                   // a canvas texture that can be redrawn (the cached canvasTex cannot)
+  const c = document.createElement('canvas'); c.width = Math.round(w); c.height = Math.round(h); const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  let key = null; return { tex: t, redraw(arg) { const kk = JSON.stringify(arg); if (kk === key) return; key = kk; draw(c.getContext('2d'), c.width, c.height, arg); t.needsUpdate = true; } };
+};
+const face = (w, h, t, z) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: t, toneMapped: false })); m.position.z = z; return m; };
+
+/** a wall calendar: month, circled day (mark) and crossed-out days (cross: [1, 2, 3 ...] appear one by one over the shot) */
+export function calendar({ month = 'NOV', mark = 0, cross = [], w = 0.9, h = 1.1, accent = '#C8372D' } = {}) {
+  const g = new THREE.Group(); box(w, h, 0.04, mat({ color: '#F4EBD6' }), 0, 0, 0, g);
+  const L = live(w * 360, h * 360, (c, cw, ch, n) => {
+    c.fillStyle = '#F4EBD6'; c.fillRect(0, 0, cw, ch); c.fillStyle = accent; c.fillRect(0, 0, cw, ch * 0.2);
+    c.fillStyle = '#FFF'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = `900 ${ch * 0.12}px Inter`; c.fillText(month, cw / 2, ch * 0.105);
+    const cw7 = cw / 7, top = ch * 0.26, rh = (ch - top - 14) / 5; c.font = `800 ${rh * 0.42}px Inter`;
+    for (let d = 1; d <= 30; d++) {
+      const i = d - 1 + 2, x = (i % 7 + 0.5) * cw7, y = top + (Math.floor(i / 7) + 0.5) * rh;
+      c.fillStyle = INK; c.fillText(String(d), x, y);
+      if (cross.slice(0, n).includes(d)) { c.strokeStyle = accent; c.lineWidth = 7; c.beginPath(); c.moveTo(x - cw7 * 0.36, y - rh * 0.36); c.lineTo(x + cw7 * 0.36, y + rh * 0.36); c.moveTo(x + cw7 * 0.36, y - rh * 0.36); c.lineTo(x - cw7 * 0.36, y + rh * 0.36); c.stroke(); }
+      if (d === mark) { c.strokeStyle = accent; c.lineWidth = 8; c.beginPath(); c.ellipse(x, y, cw7 * 0.42, rh * 0.44, 0, 0, 7); c.stroke(); }
+    }
+  });
+  g.add(face(w - 0.04, h - 0.04, L.tex, 0.021)); L.redraw(cross.length); g.reveal = (k) => L.redraw(Math.ceil(k * 1.15 * cross.length));
+  return g;
+}
+/** a wall / door sign with 1-2 short lines (a plate on screws) */
+export function sign(lines = ['KEEP OUT'], { w = 1.1, h = 0.42, bg = '#7A1F1F', fg = '#F6EBD2' } = {}) {
+  const g = new THREE.Group(); box(w, h, 0.05, mat({ color: '#2E221C' }), 0, 0, 0, g);
+  const t = canvasTex('sign' + lines.join('|') + bg + fg, w * 300, h * 300, (c, cw, ch) => {
+    c.fillStyle = bg; c.fillRect(0, 0, cw, ch); c.strokeStyle = fg; c.lineWidth = 6; c.strokeRect(12, 12, cw - 24, ch - 24); c.fillStyle = fg; c.textAlign = 'center'; c.textBaseline = 'middle';
+    lines.slice(0, 2).forEach((l, i) => { fit(c, l, cw * 0.84, ch * (lines.length > 1 ? 0.3 : 0.46)); c.fillText(l, cw / 2, ch * ((i + 1) / (Math.min(lines.length, 2) + 1))); });
+  });
+  g.add(face(w - 0.04, h - 0.04, t, 0.026)); [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([a, b]) => cyl(0.016, 0.016, 0.02, mat({ color: '#B9B2A4', metalness: 0.6, roughness: 0.4 }), a * (w / 2 - 0.05), b * (h / 2 - 0.05), 0.04, g, 10).rotation.x = Math.PI / 2);
+  return g;
+}
+/** a breaker panel: a column of small switches and one big main lever. flip: the main lever throws down during the shot and the lamp turns red */
+export function breaker({ switches = 4, flip = false, w = 0.72, h = 1.0 } = {}) {
+  const g = new THREE.Group(); box(w, h, 0.12, mat({ color: '#7C8590', metalness: 0.4, roughness: 0.5 }), 0, 0, 0, g); box(w - 0.1, h - 0.1, 0.03, mat({ color: '#586069', roughness: 0.6 }), 0, 0, 0.06, g);
+  for (let i = 0; i < switches; i++) { const y = h / 2 - 0.2 - i * 0.12; box(0.2, 0.07, 0.03, mat({ color: '#1F2328' }), -0.16, y, 0.085, g); box(0.07, 0.06, 0.05, mat({ color: i % 2 ? '#3FBF6A' : '#E8B000' }), -0.16 + (i % 2 ? 0.045 : -0.045), y, 0.1, g); }
+  box(0.22, 0.46, 0.03, mat({ color: '#1F2328' }), 0.18, -0.08, 0.085, g);
+  const lever = new THREE.Group(); lever.position.set(0.18, -0.08, 0.1); g.add(lever);
+  box(0.06, 0.34, 0.05, mat({ color: '#C8372D', roughness: 0.4 }), 0, 0.14, 0, lever); const knob = new THREE.Mesh(new THREE.SphereGeometry(0.06, 14, 10), mat({ color: '#E04A3A', roughness: 0.4 })); knob.position.set(0, 0.32, 0); knob.castShadow = true; lever.add(knob);
+  const lamp = new THREE.Mesh(new THREE.CircleGeometry(0.045, 20), new THREE.MeshBasicMaterial({ color: '#3FE070', toneMapped: false })); lamp.position.set(0.18, h / 2 - 0.12, 0.078); g.add(lamp);
+  lever.rotation.z = flip ? 0.55 : -0.05;
+  g.reveal = (k) => { if (!flip) return; const e = Math.min(1, Math.max(0, (k - 0.3) / 0.3)), s = e * e * (3 - 2 * e); lever.rotation.z = 0.55 - 1.1 * s; lamp.material.color.set(e > 0.5 ? '#FF3B2E' : '#3FE070'); };
+  return g;
+}
+/** a round wall clock. hour / min = the time shown at the start; spin = turns of the minute hand across the shot (it visibly ticks) */
+export function clock({ hour = 12, min = 0, spin = 0.25, r = 0.4, hang = 0 } = {}) {   // hang = the ceiling height (m): the clock then hangs from a rod (a station clock) instead of a wall
+  const g = new THREE.Group(); if (hang) { const rod = box(0.04, hang, 0.04, mat({ color: '#2A2530' }), 0, r + (hang) / 2 - 0.02, 0, g); rod.castShadow = false; }
+  const rim = cyl(r, r, 0.07, mat({ color: '#2A2530', roughness: 0.5 }), 0, 0, 0, g, 40); rim.rotation.x = Math.PI / 2;
+  const t = canvasTex('clk' + r, 512, 512, (c, cw) => { c.fillStyle = '#F8F3E6'; c.fillRect(0, 0, cw, cw); c.strokeStyle = INK; for (let i = 0; i < 60; i++) { const a = i / 60 * 2 * Math.PI, big = i % 5 === 0, r0 = cw * (big ? 0.38 : 0.44); c.lineWidth = big ? 12 : 4; c.beginPath(); c.moveTo(cw / 2 + Math.sin(a) * r0, cw / 2 - Math.cos(a) * r0); c.lineTo(cw / 2 + Math.sin(a) * cw * 0.47, cw / 2 - Math.cos(a) * cw * 0.47); c.stroke(); } });
+  const f = new THREE.Mesh(new THREE.CircleGeometry(r * 0.92, 40), new THREE.MeshBasicMaterial({ map: t, toneMapped: false })); f.position.z = 0.037; g.add(f);
+  const hand = (len, wd, col, z) => { const p = new THREE.Group(); p.position.z = z; const b = box(wd, len, 0.012, mat({ color: col, roughness: 0.4 }), 0, len / 2 - len * 0.12, 0, p); b.castShadow = false; g.add(p); return p; };
+  const hh = hand(r * 0.5, 0.035, INK, 0.045), mh = hand(r * 0.78, 0.025, INK, 0.052), sh = hand(r * 0.85, 0.01, '#C8372D', 0.06);
+  cyl(0.03, 0.03, 0.03, mat({ color: INK }), 0, 0, 0.065, g, 12).rotation.x = Math.PI / 2;
+  g.reveal = (k) => { const m = min + spin * 60 * k; mh.rotation.z = -(m / 60) * 2 * Math.PI; hh.rotation.z = -((hour % 12 + m / 60) / 12) * 2 * Math.PI; sh.rotation.z = -(k * 12) * 2 * Math.PI; };
+  g.reveal(0); return g;
+}
+/** a phone floating in the scene with a message popup (lines: [sender, message], both short). It pops in at the start of the shot */
+export function phone({ lines = ['BOSS', 'Where are you?'], glow = '#6FE3FF' } = {}) {
+  const g = new THREE.Group(), body = box(0.34, 0.66, 0.035, mat({ color: '#14141C', roughness: 0.3, metalness: 0.5 }), 0, 0, 0, g);
+  const t = canvasTex('ph' + lines.join('|'), 300, 600, (c, cw, ch) => {
+    const gr = c.createLinearGradient(0, 0, 0, ch); gr.addColorStop(0, '#1B2A52'); gr.addColorStop(1, '#0C1020'); c.fillStyle = gr; c.fillRect(0, 0, cw, ch);
+    c.fillStyle = '#3A4A7A'; c.beginPath(); c.roundRect(18, ch * 0.34, cw - 36, ch * 0.3, 26); c.fill();
+    c.fillStyle = glow; c.textAlign = 'left'; c.textBaseline = 'middle'; fit(c, lines[0] || '', cw * 0.7, 34); c.fillText(lines[0] || '', 38, ch * 0.4);
+    c.fillStyle = '#FFF'; fit(c, lines[1] || '', cw * 0.78, 40, 800); c.fillText(lines[1] || '', 38, ch * 0.54);
+  });
+  g.add(face(0.3, 0.6, t, 0.019));
+  const at = canvasTex('aura' + glow, 128, 128, (c, cw) => { const gr = c.createRadialGradient(cw / 2, cw / 2, 0, cw / 2, cw / 2, cw / 2); gr.addColorStop(0, glow); gr.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = gr; c.fillRect(0, 0, cw, cw); });
+  const aura = new THREE.Mesh(new THREE.PlaneGeometry(1.1, 1.1), new THREE.MeshBasicMaterial({ map: at, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false, toneMapped: false })); aura.position.z = -0.03; g.add(aura);
+  g.reveal = (k) => { const a = Math.min(1, k / 0.14), s = a < 1 ? 1.12 * Math.sin(a * Math.PI / 2) : 1 + 0.03 * Math.sin(k * 30); g.scale.setScalar(Math.max(0.01, s)); body.rotation.z = 0.06 * Math.sin(k * 20) * (1 - k); };
+  return g;
+}
+/** a measurement marker: a striped pole (a band every 0.2 m) with a flag showing a short label ("39 FT"). The flag unfurls at the start of the shot */
+export function marker({ label = '39 FT', h = 1.6, col = '#E8B000' } = {}) {
+  const g = new THREE.Group(); cyl(0.2, 0.22, 0.05, mat({ color: '#3A3340' }), 0, 0.025, 0, g, 20);
+  for (let i = 0; i < Math.round(h / 0.2); i++) cyl(0.035, 0.035, 0.2, mat({ color: i % 2 ? INK : col }), 0, 0.05 + 0.1 + i * 0.2, 0, g, 12);
+  const t = canvasTex('mk' + label + col, 300, 150, (c, cw, ch) => { c.fillStyle = col; c.fillRect(0, 0, cw, ch); c.strokeStyle = INK; c.lineWidth = 10; c.strokeRect(5, 5, cw - 10, ch - 10); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; fit(c, label, cw * 0.84, ch * 0.55); c.fillText(label, cw / 2, ch / 2); });
+  const flag = new THREE.Group(); flag.position.set(0.04, h * 0.92, 0); g.add(flag); const fm = face(0.56, 0.28, t, 0); fm.position.x = 0.28; fm.material.side = THREE.DoubleSide; flag.add(fm);
+  g.reveal = (k) => { const e = Math.min(1, k / 0.3); flag.scale.x = 0.15 + 0.85 * (e * e * (3 - 2 * e)); flag.rotation.y = 0.12 * Math.sin(k * 14); };
+  return g;
+}
+/** a stack of papers on a desk / the floor; the sheets fan out across the shot. lines = 1-2 short lines on the top sheet */
+export function papers({ lines = ['REPORT'], n = 6, w = 0.5, h = 0.38 } = {}) {
+  const g = new THREE.Group(), sheets = [];
+  const t = canvasTex('pp' + lines.join('|'), 300, 230, (c, cw, ch) => { c.fillStyle = '#FFFDF4'; c.fillRect(0, 0, cw, ch); c.fillStyle = INK; c.textAlign = 'center'; c.textBaseline = 'middle'; fit(c, lines[0] || '', cw * 0.8, ch * 0.22); c.fillText(lines[0] || '', cw / 2, ch * 0.2); c.fillStyle = '#B9B6AA'; for (let i = 0; i < 6; i++) c.fillRect(24, ch * 0.38 + i * ch * 0.09, cw * (i % 2 ? 0.7 : 0.9) - 24, 7); if (lines[1]) { c.fillStyle = '#C8372D'; fit(c, lines[1], cw * 0.7, ch * 0.16); c.fillText(lines[1], cw / 2, ch * 0.9); } });
+  for (let i = 0; i < n; i++) { const s = box(w, 0.008, h, mat({ color: '#FBF8EE' }), 0, 0.006 + i * 0.009, 0, g); s.rotation.y = (rnd(i + 3) - 0.5) * 0.25; sheets.push(s); }
+  const top = face(w - 0.02, h - 0.02, t, 0); top.rotation.x = -Math.PI / 2; top.position.y = 0.011 + n * 0.009; g.add(top); g.topSheet = top;
+  g.reveal = (k) => { const e = Math.min(1, k / 0.5); sheets.forEach((s, i) => { s.position.x = (i - n / 2) * 0.03 * e; s.rotation.y = (rnd(i + 3) - 0.5) * 0.25 + (i - n / 2) * 0.09 * e; }); top.position.x = sheets[n - 1].position.x; top.rotation.z = sheets[n - 1].rotation.y; };
+  return g;
+}
