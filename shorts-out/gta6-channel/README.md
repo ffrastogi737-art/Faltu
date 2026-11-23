@@ -280,7 +280,7 @@ Sources: Engadget (plane trick to reveal the map), Beebom (remove map fog, crop 
 **Sources:** GamingBible (19 Nov), IBTimes UK, ComicBook.com. Location differs between outlets, so not stated; Vice City link said as "reports".
 **Top-3 (match):** n/a (hand-matched: comic-pop, proven for gaming-list/news) · 23.6 s, 89 words, kind gaming-news (secrets) · slot catchup · IG ig-gta19-egg-tower
 
-## 21 · `21-gta6-npc-knows-game.mp4` · myth-or-fact (STANDARD; story-first, template matched from the script: rumour check with MYTH/FACT stamps; comic-pop on COOLDOWN) · SCHEDULED 24 Nov 2026 11:00 IST (explore midday) (url pending)
+## 21 · `21-gta6-npc-knows-game.mp4` · myth-or-fact (STANDARD; story-first, template matched from the script: rumour check with MYTH/FACT stamps; comic-pop on COOLDOWN) · SCHEDULED 24 Nov 2026 11:00 IST (explore midday) (https://www.youtube.com/watch?v=c8pO56jQCtI)
 **Title:** This GTA 6 NPC Knows It's A Video Game? 👀 #shorts
 **Hook:** "A GTA 6 player found a man who thinks the whole world is a video game." (discovery statement)
 **Description:**
