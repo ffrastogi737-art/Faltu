@@ -25,3 +25,10 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Facts (fan finding, not confirmed by Rockstar):** VGC, Dexerto, Kotaku (GTA Wiki mapping project, house in Belville, picture on the Lil' Probe'Inn wall of the 2021 Definitive Edition).
 **Background:** lv_0_20261120213612.mp4 (Drive 1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg), source 4.66-34.76 s, lap 1. 24.3 s, 98 words, 9 cards, 3 callouts. Images: VGC, Kotaku, Dexerto.
 **Top-3 (match):** n/a (commentary track). **Instagram:** ig-gta18-house-2021 PENDING 22 Nov 05:15Z. **Known weak spots:** Minecraft background on a GTA topic; hook stamp covers part of the picture.
+
+## 20 · `20-gta6-lucia-ankle-tag.mp4` · gta-commentary · UPLOADED PRIVATE, WAITING SCHEDULE (quota: publishAt PUT got quotaExceeded 23 Nov 08:50 IST) (https://www.youtube.com/watch?v=bLgJ8sAoyiQ)
+**Title:** Lucia's Ankle Tag In The GTA 6 Trailer? 👀 (Fan Theory) #shorts
+**Hook:** Fans spotted a police ankle tag on Lucia in the GTA 6 trailer, and it could change how you play. (loop: last words "limit where you can go and" -> line 1)
+**Facts (fan theory, Rockstar no explanation):** PC Gamer, SVG, Beebom (ankle monitor on Lucia). Images: GamesRadar, ComicBook, PC Gamer, Tom's Guide.
+**Background:** lv_0_20261120213056.mp4 (Drive 1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux) 0.76-30.86 s. 25.6 s, 117 words, 9 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Next step:** the 14:00 IST run (after quota reset) PUTs publishAt via `slot.py gta --catchup` (recovery) and writes public_ist + slot_mode. Instagram: ig-gta20-ankle-tag PENDING 05:45Z. **Known weak spots:** Minecraft background on a GTA topic; no screenshot shows the tag itself, cards only credit the outlets' images.
