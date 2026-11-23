@@ -17,7 +17,7 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Slot:** 21 Nov 09:00 IST is taken by Kratos 15 (N7w7hBdAm98), so slot.py's best free slot: 22 Nov 09:00 IST. Instagram: ig-gta16-react queued 22 Nov 04:00Z (09:30 IST; 03:45Z is taken by solo ig-name-in-crowd), caption credits Goofy Oblivion. Judge at 48 h vs gta median 283.
 **v2 note (20 Nov late night IST):** the first upload N7w7hBdAm98 had no audio in its last ~3 s (old loudnorm bug), so on the owner's go-ahead the fixed render `15-gta-online-painting-map-v2.mp4` was uploaded as ytOn4rV-bbg and took the 21 Nov 09:00 IST slot. N7w7hBdAm98 stays PRIVATE with no publishAt (never deleted, never public). Instagram not queued for this one.
 
-## 18 · `18-gta6-house-2021.mp4` · gta-commentary · SCHEDULED 22 Nov 2026 17:20 IST (https://www.youtube.com/watch?v=FPfu8cayjSA)
+## 18 · `18-gta6-house-2021.mp4` · gta-commentary · PUBLIC 22 Nov 2026 17:20 IST (https://www.youtube.com/watch?v=FPfu8cayjSA)
 **Title:** Did Rockstar Show Us GTA 6 In 2021? 👀 (Fan Theory) #shorts
 **Description:** Fans say a house hidden in the 2021 San Andreas remaster matches a house in GTA 6's Belville. Fan finding, Rockstar has not commented. Sources: VGC, Dexerto, Kotaku. Image credits on the cards. #shorts #gta6 #gta #rockstargames #gaming #gta6news
 **Tags:** gta 6, gta6 easter egg, san andreas definitive edition, gta 6 belville, gta 6 fan theory, rockstar games, gta 6 secrets, gta wiki
