@@ -36,3 +36,4 @@ SFX on beats, one-word captions. Reference clips the owner showed are another cr
   (or a new channel, which needs an owner account) onto skit content; log the verdict in style-verdicts.txt and discovery-log.txt.
 - An earlier owner remark: a past stickman video with different characters reached ~1,400-1,500 views (not found in perf.csv: the closest is "Paid $19,000
   To Stay In Bed", stick-story, 1,182). Treat that number as unverified.
+2026-11-23 | gta 21-gta6-npc-knows-game | HYPOTHESIS: Testing midday bin 11:00 IST, n=0 -> target >= 1.2x channel legacy median (879); also first myth-or-fact on this channel (NEW STYLE use), rumour-check hook | status: scheduled

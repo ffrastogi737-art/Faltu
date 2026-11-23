@@ -279,3 +279,15 @@ Sources: Engadget (plane trick to reveal the map), Beebom (remove map fog, crop 
 **Hook:** "A seven-minute climb, just to throw an egg." (odd-detail statement)
 **Sources:** GamingBible (19 Nov), IBTimes UK, ComicBook.com. Location differs between outlets, so not stated; Vice City link said as "reports".
 **Top-3 (match):** n/a (hand-matched: comic-pop, proven for gaming-list/news) · 23.6 s, 89 words, kind gaming-news (secrets) · slot catchup · IG ig-gta19-egg-tower
+
+## 21 · `21-gta6-npc-knows-game.mp4` · myth-or-fact (STANDARD; story-first, template matched from the script: rumour check with MYTH/FACT stamps; comic-pop on COOLDOWN) · SCHEDULED 24 Nov 2026 11:00 IST (explore midday) (url pending)
+**Title:** This GTA 6 NPC Knows It's A Video Game? 👀 #shorts
+**Hook:** "A GTA 6 player found a man who thinks the whole world is a video game." (discovery statement)
+**Description:**
+```
+Players reportedly found a hideout in GTA 6's Belville where someone is convinced the world is a video game: wall notes, identical NPCs and locked doors with nothing behind them. Two outlets reported it, a fan on launch day found it, and Rockstar has not commented, so treat it as a fan discovery.
+Sources: Dexerto, games.gg, GTA Wiki (credits Jared of the GTA VI Mapping server).
+#shorts #gta6 #gta #gtavi #rockstargames #gaming #easteregg
+```
+**Tags:** gta 6, gta 6 easter egg, gta 6 belville, gta 6 npc, gta 6 secrets, gta 6 conspiracy, gta vi, rockstar games
+**Top-3 (match):** myth-or-fact 7.3 | breaking-desk 4.8 | pixel-quest 4.8 (rerun on final script: myth-or-fact 9.3) · 20 s, 72 words, kind gaming-secret · slot explore midday · IG ig-gta21-npc-knows-game
