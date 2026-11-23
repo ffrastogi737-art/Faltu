@@ -26,7 +26,7 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Background:** lv_0_20261120213612.mp4 (Drive 1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg), source 4.66-34.76 s, lap 1. 24.3 s, 98 words, 9 cards, 3 callouts. Images: VGC, Kotaku, Dexerto.
 **Top-3 (match):** n/a (commentary track). **Instagram:** ig-gta18-house-2021 PENDING 22 Nov 05:15Z. **Known weak spots:** Minecraft background on a GTA topic; hook stamp covers part of the picture.
 
-## 20 · `20-gta6-lucia-ankle-tag.mp4` · gta-commentary · UPLOADED PRIVATE, WAITING SCHEDULE (quota: publishAt PUT got quotaExceeded 23 Nov 08:50 IST) (https://www.youtube.com/watch?v=bLgJ8sAoyiQ)
+## 20 · `20-gta6-lucia-ankle-tag.mp4` · gta-commentary · SCHEDULED 23 Nov 2026 14:00 IST (catch-up slot, publishAt set 13:37 IST after quota reset) (https://www.youtube.com/watch?v=bLgJ8sAoyiQ)
 **Title:** Lucia's Ankle Tag In The GTA 6 Trailer? 👀 (Fan Theory) #shorts
 **Hook:** Fans spotted a police ankle tag on Lucia in the GTA 6 trailer, and it could change how you play. (loop: last words "limit where you can go and" -> line 1)
 **Facts (fan theory, Rockstar no explanation):** PC Gamer, SVG, Beebom (ankle monitor on Lucia). Images: GamesRadar, ComicBook, PC Gamer, Tom's Guide.
