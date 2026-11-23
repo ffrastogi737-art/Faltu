@@ -1,0 +1,1600 @@
+{
+ "setting": {
+  "name": "room"
+ },
+ "track": "TALL-TALE",
+ "music": "suspense",
+ "characters": {
+  "yama": {
+   "role": "Tsutomu Yamaguchi, 1945 shipyard engineer, bandaged",
+   "look": {
+    "body": "#6B6F73",
+    "pattern": "coat",
+    "patCol": "#55595C",
+    "hat": "cap",
+    "hatCol": "#3C3C3C",
+    "neck": "tie",
+    "neckCol": "#7A2B2B",
+    "extra": [
+     "glasses"
+    ]
+   }
+  },
+  "boss": {
+   "role": "Mitsubishi section boss",
+   "look": {
+    "body": "#2E3440",
+    "pattern": "vest",
+    "patCol": "#1F232B",
+    "hat": "bowler",
+    "hatCol": "#1A1A1A",
+    "neck": "bowtie",
+    "neckCol": "#C9A24A",
+    "extra": [
+     "mustache",
+     "monocle"
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "line": 0,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "worry",
+     "action": "walk",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.45,
+      -5.2
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.1,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        -0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.2,
+        0.95,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.35,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.16,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#F1EEE6",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.16,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.9,
+        0
+       ],
+       "col": "#F1EEE6",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ],
+     "motion": {
+      "bob": 0.1
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "city",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "street"
+   },
+   "light": "dusk",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.3,
+      -3.0
+     ],
+     "mood": "sad",
+     "action": "walk",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -3.6
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.8,
+        0.9,
+        0.9
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#6E6A60"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.12,
+        0.8
+       ],
+       "pos": [
+        0,
+        1.0,
+        0
+       ],
+       "col": "#8C2F2F"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.09,
+        0.3
+       ],
+       "pos": [
+        0.5,
+        1.25,
+        0
+       ],
+       "col": "#D9D9D9"
+      }
+     ],
+     "motion": {
+      "slide": [
+       -0.5,
+       0.2
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "Hiroshima",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "street"
+   },
+   "light": "day",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.4,
+      -3.3
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.9,
+        0.7,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.55,
+        0
+       ],
+       "col": "#3F5F4A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.3,
+        0.5,
+        0.7
+       ],
+       "pos": [
+        0.7,
+        1.1,
+        0
+       ],
+       "col": "#2E4636"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.18,
+        0.08
+       ],
+       "pos": [
+        -0.5,
+        0.2,
+        0.4
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.18,
+        0.08
+       ],
+       "pos": [
+        0.5,
+        0.2,
+        0.4
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      }
+     ],
+     "motion": {
+      "slide": [
+       0.8,
+       0
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "train",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": {
+    "name": "street"
+   },
+   "light": "alarm",
+   "cam": "reaction-push",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      0,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -3.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        1.6
+       ],
+       "pos": [
+        0,
+        1.2,
+        0
+       ],
+       "col": "#FFFFFF"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.9
+       ],
+       "pos": [
+        0.1,
+        1.0,
+        0.2
+       ],
+       "col": "#FFF4B0"
+      }
+     ],
+     "motion": {
+      "grow": 0.2
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "flashed",
+     "type": "riser"
+    },
+    {
+     "word": "gone",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#3A3F4A",
+     "motif": "#32363F",
+     "floor": "#2A2A2F",
+     "ceiling": "#3a3a3a",
+     "signText": "AIR RAID SHELTER"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "sad",
+     "action": "sit",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -5.4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.1,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.35,
+        0
+       ],
+       "col": "#5B4A35"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.35,
+        0.4
+       ],
+       "pos": [
+        -0.4,
+        0.17,
+        0
+       ],
+       "col": "#3E3224"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.35,
+        0.4
+       ],
+       "pos": [
+        0.4,
+        0.17,
+        0
+       ],
+       "col": "#3E3224"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.1,
+        0.2
+       ],
+       "pos": [
+        0.2,
+        0.5,
+        0
+       ],
+       "col": "#C9A24A",
+       "metal": true
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "train",
+     "type": "whoosh"
+    }
+   ]
+  },
+  {
+   "line": 5,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "warm",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.4,
+      -4.9
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    },
+    {
+     "who": "yama",
+     "pos": [
+      0.4,
+      -4.9
+     ],
+     "mood": "sad",
+     "action": "stand",
+     "talk": false
+    }
+   ],
+   "focus": "boss",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.1,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        -0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.2,
+        0.95,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "destroyed",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.3,
+      -5.2
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "focus": "boss",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.8,
+        0.1,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.3,
+        0.5
+       ],
+       "pos": [
+        0,
+        1.15,
+        0
+       ],
+       "col": "#E8E8E0"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "cannot",
+     "type": "slam"
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "spot",
+   "cam": "reaction-push",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      0,
+      -5.2
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -5.4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.28,
+        0.9
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#F1EEE6"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.3,
+        0.2,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#B8352E"
+      }
+     ],
+     "motion": {
+      "grow": 0.5
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "standing",
+     "type": "heartbeat"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "alarm",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.4,
+      -4.9
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": false
+    },
+    {
+     "who": "yama",
+     "pos": [
+      0.4,
+      -4.9
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "pull",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -6.2
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.8,
+        1.3,
+        0.1
+       ],
+       "pos": [
+        0,
+        1.3,
+        0
+       ],
+       "col": "#FFFFFF"
+      }
+     ],
+     "motion": {
+      "grow": 0.1
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "white",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#5A5F68",
+     "motif": "#4E535B",
+     "floor": "#2B2B30",
+     "ceiling": "#222",
+     "signText": "NAGASAKI 11:02"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "shock",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "orbit-left",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.1
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.22
+       ],
+       "pos": [
+        -0.25,
+        0.9,
+        0
+       ],
+       "col": "#E8E0D0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.22
+       ],
+       "pos": [
+        0.25,
+        0.9,
+        0
+       ],
+       "col": "#E8E0D0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        1.0
+       ],
+       "pos": [
+        0,
+        0.9,
+        0
+       ],
+       "col": "#C0392B",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ],
+     "motion": {
+      "spin": 180
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "second",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 10,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "dusk",
+   "cam": "wide",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.5,
+      -3.0
+     ],
+     "mood": "worry",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "orbit-right",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.1,
+      -3.4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.7,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#C9A87A"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.8,
+        0.6
+       ],
+       "pos": [
+        0,
+        1.0,
+        0
+       ],
+       "col": "#8C2F2F"
+      }
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.1,
+      -3.4
+     ],
+     "parts": [
+      {
+       "shape": "cone",
+       "size": [
+        0.12,
+        0.6
+       ],
+       "pos": [
+        -0.3,
+        1.9,
+        0
+       ],
+       "col": "#FFE600",
+       "rot": [
+        0,
+        0,
+        180
+       ]
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.12,
+        0.6
+       ],
+       "pos": [
+        0.3,
+        1.7,
+        0
+       ],
+       "col": "#FFE600",
+       "rot": [
+        0,
+        0,
+        180
+       ]
+      }
+     ],
+     "motion": {
+      "slide": [
+       0,
+       0.3
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "lightning",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 11,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": false
+    }
+   },
+   "light": "warm",
+   "cam": "reaction-push",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      0,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -3.2
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.1,
+        1.2
+       ],
+       "pos": [
+        0,
+        0.6,
+        0
+       ],
+       "col": "#7A5A3A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.4,
+        0.05
+       ],
+       "pos": [
+        0.4,
+        1.0,
+        0
+       ],
+       "col": "#C0392B"
+      }
+     ],
+     "motion": {
+      "grow": 0.3
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "stood",
+     "type": "riser"
+    }
+   ]
+  },
+  {
+   "line": 12,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A9A8A",
+     "motif": "#7A8A7A",
+     "floor": "#6B5B48",
+     "ceiling": "#3a3a3a",
+     "signText": "NO MORE NUCLEAR WEAPONS"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -5.1
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.1,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.45
+       ],
+       "pos": [
+        0,
+        1.3,
+        0
+       ],
+       "col": "#4A90D9"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.95,
+        0
+       ],
+       "col": "#2E6AA8"
+      }
+     ],
+     "motion": {
+      "spin": 360
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "ninety-three",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 13,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#C8D0C8",
+     "motif": "#B8C0B8",
+     "floor": "#8C9890",
+     "ceiling": "#3a3a3a",
+     "signText": ""
+    }
+   },
+   "light": "day",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.4,
+      -4.9
+     ],
+     "mood": "happy",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.4,
+      -4.9
+     ],
+     "mood": "neutral",
+     "action": "clap",
+     "talk": false,
+     "bg": false
+    }
+   ],
+   "focus": "yama",
+   "move": "pull",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -6.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.9,
+        1.2,
+        0.06
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#F5F0E1"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.15,
+        0.04
+       ],
+       "pos": [
+        0,
+        1.9,
+        0.05
+       ],
+       "col": "#C9A24A"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.1,
+        0.04
+       ],
+       "pos": [
+        0,
+        1.0,
+        0.05
+       ],
+       "col": "#C0392B"
+      }
+     ],
+     "motion": {
+      "grow": 0.4
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "recognised",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 14,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "sad",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.5,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": false
+    }
+   ],
+   "focus": "yama",
+   "move": "orbit-right",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.1,
+      -3.5
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        1.3,
+        0.5
+       ],
+       "pos": [
+        -0.5,
+        0.65,
+        0
+       ],
+       "col": "#E8C03A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.6,
+        0.5
+       ],
+       "pos": [
+        0.5,
+        0.3,
+        0
+       ],
+       "col": "#3C7A3C"
+      }
+     ],
+     "motion": {
+      "slide": [
+       0,
+       0.15
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "luckiest",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 15,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#B9A878",
+     "motif": "#A89868",
+     "floor": "#5A3F28",
+     "ceiling": "#3a3a3a",
+     "signText": "MITSUBISHI NAGASAKI"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "cast": [
+    {
+     "who": "yama",
+     "pos": [
+      -0.2,
+      -5.2
+     ],
+     "mood": "worry",
+     "action": "walk",
+     "talk": true
+    }
+   ],
+   "focus": "yama",
+   "move": "push",
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.45,
+      -5.2
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.6,
+        0.1,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#6B4A2E"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        -0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.1,
+        0.85,
+        0.7
+       ],
+       "pos": [
+        0.7,
+        0.42,
+        0
+       ],
+       "col": "#4E3620"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.12,
+        0.03
+       ],
+       "pos": [
+        0.2,
+        0.95,
+        0
+       ],
+       "col": "#D9A82E",
+       "metal": true
+      }
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.35,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.16,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#F1EEE6",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.16,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.9,
+        0
+       ],
+       "col": "#F1EEE6",
+       "rot": [
+        0,
+        0,
+        90
+       ]
+      }
+     ],
+     "motion": {
+      "bob": 0.1
+     }
+    }
+   ]
+  }
+ ]
+}

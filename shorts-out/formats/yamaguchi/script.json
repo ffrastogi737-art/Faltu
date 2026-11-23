@@ -1,0 +1,77 @@
+{
+ "title": "The Man Who Survived Both Atomic Bombs",
+ "tempo": 1.03,
+ "exaggeration": 0.75,
+ "speed": 1.0,
+ "lead": 0.15,
+ "outro": 0.15,
+ "gap": 0.3,
+ "music": "suspense",
+ "sources": [
+  "Wikipedia, 'Tsutomu Yamaguchi' (Mitsubishi engineer, Hiroshima 6 Aug 1945 then Nagasaki 9 Aug; Japan recognised him as a double survivor in March 2009; died 4 Jan 2010 aged 93)",
+  "Biography.com, 'Tsutomu Yamaguchi: Hiroshima and Nagasaki bombing survivor' (about 3 km from each blast, boss disbelieved him, later nuclear-disarmament advocate)",
+  "RNZ, 'Tsutomu Yamaguchi: the man who survived both atomic bombs' (same account; dialogue is dramatized, not verbatim)"
+ ],
+ "lines": [
+  {
+   "text": "a bandaged man walks into his office, and says a whole city is gone.",
+   "emo": 0.92
+  },
+  {
+   "text": "Nagasaki, August 1945. Engineer Tsutomu Yamaguchi has just crawled home from Hiroshima."
+  },
+  {
+   "text": "Days earlier, he was there on business, one train ride from home."
+  },
+  {
+   "text": "Then the sky flashed white, and the street he stood on was gone.",
+   "emo": 0.9
+  },
+  {
+   "text": "Burned and half deaf, he sheltered overnight, then took the first train out."
+  },
+  {
+   "text": "His boss stares at the bandages. \"One bomb? One bomb destroyed a whole city?\"",
+   "emo": 0.9
+  },
+  {
+   "text": "\"Be reasonable. A single bomb cannot do that.\"",
+   "emo": 0.85
+  },
+  {
+   "text": "\"I saw it. I was standing in it.\"",
+   "emo": 0.95,
+   "pause": 0.6
+  },
+  {
+   "text": "Then the office window turned white again.",
+   "emo": 0.95,
+   "pause": 0.7
+  },
+  {
+   "text": "Same man, three kilometres from the blast, a second time.",
+   "pause": 0.4
+  },
+  {
+   "text": "Picture lightning striking your roof twice in three days."
+  },
+  {
+   "text": "And still, he stood up.",
+   "emo": 0.9,
+   "pause": 0.5
+  },
+  {
+   "text": "He lived to ninety-three, speaking out against nuclear weapons."
+  },
+  {
+   "text": "In 2009, Japan recognised him as a survivor of both bombs."
+  },
+  {
+   "text": "Unluckiest man alive? Or luckiest? People still argue."
+  },
+  {
+   "text": "So when you call yourself unlucky, remember that",
+   "emo": 0.88
+  }
+ ]
+}

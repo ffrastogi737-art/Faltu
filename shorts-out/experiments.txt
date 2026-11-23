@@ -47,3 +47,4 @@ Legacy caveat: 13:xx solo rows (quota-reset switches, 13:35-13:46) are marked qu
 20-hanoi-rat-tails | 2026-11-22 12:00 IST | Testing midday bin 12:00 IST, n=0 -> target >= 1.2x channel legacy median (193); also history kind + tall-tale mini-movie on a perverse-incentive story | slot_mode=explore | result: pending
 
 21 Nov 2026 (catch-up): Kratos #16 and #17 moved to 21 Nov 18:30 and 20:00 IST as slot_mode=catchup (daily quota). The 11:00 IST midday explore test that #17 carried is superseded: it has no result and counts for nothing.
+2026-11-23 | solo 22-yamaguchi-both-bombs | tall-tale history/survival story, slot exploit morning 09:00 IST (24 Nov) | prediction: >= channel median 522 views in 72 h (tall-tale best 1,112, worst 1); if again < 261 the tall-tale format, not the slot, is the cause

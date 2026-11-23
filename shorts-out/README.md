@@ -244,3 +244,14 @@ Sources: Scientific American "Why does my voice sound different on recordings?";
 ```
 **Tags:** voice on recording, why my voice sounds different, bone conduction, hear your own voice, body facts, science facts, did you know, how hearing works
 **Experiment:** kind body-science/hearing ("Why..." title, the pattern of the top solo videos); 27 s; slot exploit morning 10:00 IST; Chatterbox.
+
+## 22 · `22-yamaguchi-both-bombs.mp4` · tall-tale (TALL-TALE track turn; story-first, true historical paradox as a mini-movie; match ranked tall-tale only; hook shape: in-medias-res image "a bandaged man walks into his office...") · QUEUED: goes public 24 Nov 2026 09:00 IST (url pending) · IG ig-yamaguchi-both-bombs
+**Title:** The Man Who Survived Both Atomic Bombs
+**Description:**
+```
+Tsutomu Yamaguchi was in Hiroshima on a business trip on 6 August 1945, got home to Nagasaki, and was there again on 9 August. Japan officially recognised him as a survivor of both bombings in 2009; he died in 2010 aged 93. Dialogue in the video is dramatized.
+Sources: Wikipedia "Tsutomu Yamaguchi"; Biography.com; RNZ.
+#shorts #history #historyfacts #ww2 #truestory #didyouknow #storytime #learnonshorts
+```
+**Tags:** tsutomu yamaguchi, survived hiroshima and nagasaki, history facts, ww2 history, true story, unbelievable true stories, did you know, history shorts
+**Experiment:** story/history kind via tall-tale (boss-karma 1,112 is the best tall-tale); slot exploit morning 09:00 IST; 51 s, 161 words; Chatterbox. Hanoi-rats (1 view, noon slot) post-mortem: weak hook + slot; this hook is a visual in-medias-res statement with a stakes line.
