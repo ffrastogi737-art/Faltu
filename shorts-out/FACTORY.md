@@ -125,6 +125,16 @@ Work in /home/user/Faltu on branch `ccr-8c1babe8-9jk0db` (not the session's own 
 Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). Never the default branch, no PRs.
 Commit lines end with the session attribution the system gives you.
 
+## 000. LIVE CHECK (owner 24 Nov 2026: a record is never proof; the platform is). Every run, first, and every guard tick.
+- Read the live state yourself. Windsor get_data (connector youtube, fields video, video_title, privacy_status, published_at, video_view_count, video_comment_count, date_from 2026-11-01), account 119622 = solo hype, 119632 = Kratos Playz. Save the rows as JSON to `shorts-out/live/<YYYY-MM-DD-HHMM>Z.json`.
+- Run `python3 shorts-out/live_check.py shorts-out/live/<file>.json`. It prints MISMATCH / FIX / NOTE lines and writes `shorts-out/live-check.txt`.
+- MISMATCH = a record says DONE or public but the video is not public, or an overdue slot is still private. Fix the RECORD to the live state (never the other way), then act:
+  overdue private solo video -> `slot.py solo --catchup` (recovery) and a timer; overdue Kratos video -> `slot.py gta --catchup`, then publishAt.
+- FIX = live public but the queue says PENDING: mark DONE. NOTE = a live video with no record: report only, never delete.
+- Going public: Windsor execute_action youtube update_video_details {"privacy_status":"public"} (account per channel), then read it back live. Uploads: Windsor upload_video with publish_at (private, scheduled). Comments: Windsor fields comment_text / comment_author / comment_video_id / comment_id, reply with reply_to_comment (max 3 per channel per run, genuine viewer comments only).
+- Instagram is not on Windsor yet: check IG state with Composio (INSTAGRAM_GET_IG_MEDIA), account instagram_osiery-fun only.
+- Report the live numbers and the mismatches; never write "PUBLIC" in a README unless the read-back said public.
+
 ## 00. FEEDBACK (every factory tick, FIRST, before P and DECIDE; the system learns from its own numbers)
 1. Refresh views: ONLY in the 21:00 ANALYTICS run, after all daily uploads are scheduled (the factory runs use the last numbers in perf.csv,
    so they spend no quota on reads before the uploads): a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH (both YouTube channels)

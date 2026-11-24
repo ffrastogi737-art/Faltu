@@ -1,3 +1,11 @@
+## 2026-11-24 13:40 IST (live check by hand; the records were wrong, the live state is below)
+live (Windsor full read, 24 Nov 08:00Z): PRIVATE on solo = Dgr3 (Yamaguchi), -mllve (shrimp), IdHJSEsVkfA (13 Nov old draft). PRIVATE/UNLISTED on Kratos = N7w7hBdAm98 and tev-QLHyKy0 (duplicate drafts, 0 views), ID0o6Y-NKes (unlisted duplicate). solo Yamaguchi "Man Who Survived Both Atomic Bombs" was PRIVATE though
+the factory log said public 09:00 IST: fixed, now a timer at 08:25Z (13:55 IST), plus a live read-back. Shrimp PRIVATE, timer 09:30Z (15:00 IST).
+Kratos NPC c8pO56 public 11:00 IST; its Instagram reel was overdue (due 11:15 IST): posted by a Haiku agent (see ig-queue).
+new upload: Kratos "GTA 6's First Patch Fixes The Stuck Weather" hwp3aY2zNHU, scheduled 16:00 IST (10:30Z), IG reel due 16:00 IST (timer).
+comments (Windsor): 12 visible, 2 unanswered genuine ones replied (Kratos "Safe", solo "So I'm annoying").
+issue: solo comments via the old Composio read returned 403; Windsor reads them fine.
+
 ## 2026-11-20 17:00 IST (factory run, channel care)
 subs: solo hype 7 (7,288 views, 20 videos) · Kratos Playz 4 (6,495 views, 17 videos). Monetization gap: 993 / 496 subs + 10M Shorts views: far; reach per video ~1k on solo, ~0.3k on Kratos.
 wins: solo body-science and comic-pop (WIN verdict: median 870 vs channel 210); Kratos comic-pop median 1180 vs neon 65 (neon-versus LOSE).
