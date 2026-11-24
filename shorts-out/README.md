@@ -256,7 +256,7 @@ Sources: Wikipedia "Tsutomu Yamaguchi"; Biography.com; RNZ.
 **Tags:** tsutomu yamaguchi, survived hiroshima and nagasaki, history facts, ww2 history, true story, unbelievable true stories, did you know, history shorts
 **Experiment:** story/history kind via tall-tale (boss-karma 1,112 is the best tall-tale); slot exploit morning 09:00 IST; 51 s, 161 words; Chatterbox. Hanoi-rats (1 view, noon slot) post-mortem: weak hook + slot; this hook is a visual in-medias-res statement with a stakes line.
 
-## 23 · `23-mantis-shrimp-punch.mp4` · comic-pop auto-vertical (STANDARD track turn; story-first; match #1 comic-pop (proven n=2 med 1018), inside-out/comic-panels/chalk-talk in cooldown; hook shape: impossible-number claim "...punches at eighty kilometers an hour. Underwater!") · QUEUED: goes public 24 Nov 2026 15:00 IST (https://www.youtube.com/watch?v=-mllveSTgGA)
+## 23 · `23-mantis-shrimp-punch.mp4` · comic-pop auto-vertical (STANDARD track turn; story-first; match #1 comic-pop (proven n=2 med 1018), inside-out/comic-panels/chalk-talk in cooldown; hook shape: impossible-number claim "...punches at eighty kilometers an hour. Underwater!") · PUBLIC 24 Nov 2026 15:00 IST (https://www.youtube.com/watch?v=-mllveSTgGA)
 **Title:** This Shrimp Punches Twice With One Swing
 **Description:**
 ```
