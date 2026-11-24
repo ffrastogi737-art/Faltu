@@ -126,6 +126,7 @@ Commit on top, `git push -u origin ccr-8c1babe8-9jk0db` (retry network errors). 
 Commit lines end with the session attribution the system gives you.
 
 ## 000. LIVE CHECK (owner 24 Nov 2026: a record is never proof; the platform is). Every run, first, and every guard tick.
+- PRIVACY AUTHORITY = the YouTube API read (Composio YOUTUBE_GET_VIDEO_DETAILS_BATCH, parts ["status"], account youtube_maimon-mealy for solo, youtube_volt-equal for Kratos). Windsor data is CACHED (trial plan cannot force a refresh): a Windsor 'private' right after a publish time is not proof; confirm with the API before acting. Windsor is good for views, comments and the channel list.
 - Read the live state yourself. Windsor get_data (connector youtube, fields video, video_title, privacy_status, published_at, video_view_count, video_comment_count, date_from 2026-11-01), account 119622 = solo hype, 119632 = Kratos Playz. Save the rows as JSON to `shorts-out/live/<YYYY-MM-DD-HHMM>Z.json`.
 - Run `python3 shorts-out/live_check.py shorts-out/live/<file>.json`. It prints MISMATCH / FIX / NOTE lines and writes `shorts-out/live-check.txt`.
 - MISMATCH = a record says DONE or public but the video is not public, or an overdue slot is still private. Fix the RECORD to the live state (never the other way), then act:
