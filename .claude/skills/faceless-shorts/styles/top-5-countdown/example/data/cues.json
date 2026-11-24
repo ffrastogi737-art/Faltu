@@ -1,0 +1,92 @@
+{
+ "duration": 27.124,
+ "cues": [
+  {
+   "t": 0.12,
+   "type": "hit",
+   "gain": 0.7
+  },
+  {
+   "t": 2.093,
+   "type": "swoosh"
+  },
+  {
+   "t": 3.122,
+   "type": "pop"
+  },
+  {
+   "t": 4.724,
+   "type": "swoosh"
+  },
+  {
+   "t": 5.487,
+   "type": "pop"
+  },
+  {
+   "t": 6.764,
+   "type": "swoosh"
+  },
+  {
+   "t": 7.784,
+   "type": "pop"
+  },
+  {
+   "t": 9.375,
+   "type": "swoosh"
+  },
+  {
+   "t": 9.605,
+   "type": "hit"
+  },
+  {
+   "t": 12.524,
+   "type": "swoosh"
+  },
+  {
+   "t": 14.141,
+   "type": "swoosh"
+  },
+  {
+   "t": 14.221,
+   "type": "pop"
+  },
+  {
+   "t": 15.96,
+   "type": "hit"
+  },
+  {
+   "t": 17.772,
+   "type": "swoosh"
+  },
+  {
+   "t": 17.822,
+   "type": "riser",
+   "dur": 1.6579999999999984
+  },
+  {
+   "t": 19.48,
+   "type": "boom"
+  },
+  {
+   "t": 19.58,
+   "type": "ding"
+  },
+  {
+   "t": 20.23,
+   "type": "swoosh"
+  },
+  {
+   "t": 21.779,
+   "type": "swoosh"
+  },
+  {
+   "t": 23.746,
+   "type": "swoosh"
+  },
+  {
+   "t": 23.866,
+   "type": "boing",
+   "gain": 0.7
+  }
+ ]
+}

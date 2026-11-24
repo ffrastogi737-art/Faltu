@@ -291,3 +291,15 @@ Sources: Dexerto, games.gg, GTA Wiki (credits Jared of the GTA VI Mapping server
 ```
 **Tags:** gta 6, gta 6 easter egg, gta 6 belville, gta 6 npc, gta 6 secrets, gta 6 conspiracy, gta vi, rockstar games
 **Top-3 (match):** myth-or-fact 7.3 | breaking-desk 4.8 | pixel-quest 4.8 (rerun on final script: myth-or-fact 9.3) · 20 s, 72 words, kind gaming-secret · slot explore midday · IG ig-gta21-npc-knows-game
+
+## 23 · `23-gta6-cash-mistakes.mp4` · top-5-countdown (NEW STYLE, ported on comic-pop) · UPLOADING
+**Title:** GTA 6 Mistakes That Cost You Cash 💸 #shorts
+**Description:**
+```
+Three early-game money mistakes GTA 6 guides warn about: carrying cash (reported as lost if you die or get arrested), the $20,000 pocket cap, and stealing a car without scanning it first (security, trackers, resale value).
+Sources: FandomWire (beginner tips); games.gg (money guide); Inven Global (13 tips). Reported by outlets, not by Rockstar.
+#shorts #gta6 #gta6tips #grandtheftauto6 #rockstargames #gaming #gtavi
+```
+**Tags:** gta 6, gta 6 tips, gta 6 money, gta 6 cash, gta 6 beginner guide, gta 6 atm, gta vi, rockstar games
+**Hook:** Die in GTA 6 with your pockets full, and that cash can be gone for good. (loop: last words "ever lost when you" -> line 1)
+**Top-3 (match):** top-5-countdown 5.8 | glitch-pack 4.8 | quiz-countdown 4.8 · 25 s, 97 words, kind gaming-guide · tests: list/guide kind + new countdown template
