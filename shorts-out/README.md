@@ -255,3 +255,14 @@ Sources: Wikipedia "Tsutomu Yamaguchi"; Biography.com; RNZ.
 ```
 **Tags:** tsutomu yamaguchi, survived hiroshima and nagasaki, history facts, ww2 history, true story, unbelievable true stories, did you know, history shorts
 **Experiment:** story/history kind via tall-tale (boss-karma 1,112 is the best tall-tale); slot exploit morning 09:00 IST; 51 s, 161 words; Chatterbox. Hanoi-rats (1 view, noon slot) post-mortem: weak hook + slot; this hook is a visual in-medias-res statement with a stakes line.
+
+## 23 · `23-mantis-shrimp-punch.mp4` · comic-pop auto-vertical (STANDARD track turn; story-first; match #1 comic-pop (proven n=2 med 1018), inside-out/comic-panels/chalk-talk in cooldown; hook shape: impossible-number claim "...punches at eighty kilometers an hour. Underwater!") · QUEUED: goes public 24 Nov 2026 15:00 IST
+**Title:** This Shrimp Punches Twice With One Swing
+**Description:**
+```
+The mantis shrimp strikes with a club at over 80 km/h underwater, with about 1,500 newtons of force. The strike is so fast the water cavitates into bubbles, and when they collapse they hit the prey a second time.
+Sources: Natural History Museum London "Mantis shrimp: the crustacean that packs a punch"; Wikipedia "Mantis shrimp"; Patek et al., Nature 2004.
+#shorts #animals #sciencefacts #mantisshrimp #didyouknow #ocean #naturefacts #learnonshorts
+```
+**Tags:** mantis shrimp, mantis shrimp punch, fastest punch in nature, animal facts, ocean facts, cavitation, science facts, did you know, weird animals
+**Experiment:** new kind animals-nature (not in last 5); 29 s, 111 words, Chatterbox; slot explore afternoon 15:00 IST (n=0 hour).

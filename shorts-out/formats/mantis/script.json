@@ -1,0 +1,90 @@
+{
+ "title": "This Shrimp Punches Twice With One Swing",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.3,
+ "music": "hype",
+ "sources": [
+  "Natural History Museum London: Mantis shrimp, the crustacean that packs a punch (club strike, cavitation)",
+  "Wikipedia: Mantis shrimp (strike over 80 km/h, about 1,500 newtons, cavitation adds a second force)",
+  "Patek et al., Nature 2004: Deadly strike mechanism of a mantis shrimp (cavitation bubbles collapse after the strike)"
+ ],
+ "lines": [
+  {
+   "text": "This shrimp is only as long as your hand, and it punches at eighty kilometers an hour. Underwater!",
+   "vis": {
+    "k": "Q",
+    "icon": "hand",
+    "head": "SHRIMP PUNCH?!"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Water is thick, so a normal punch crawls. But its club speeds up like a bullet.",
+   "vis": {
+    "k": "S",
+    "big": "80 KM/H",
+    "label": "FASTEST PUNCH ON EARTH",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "It's called the mantis shrimp, and its punch hits with about fifteen hundred newtons.",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "MANTIS SHRIMP",
+    "sub": "1,500 NEWTONS"
+   }
+  },
+  {
+   "text": "That is enough to smash a snail shell, or crack a crab like a nut.",
+   "vis": {
+    "k": "S",
+    "big": "CRACK!",
+    "label": "SHELLS BREAK",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "But here is the twist. The club moves so fast that the water can't keep up,",
+   "vis": {
+    "k": "I",
+    "icon": "water",
+    "head": "WATER CAN'T KEEP UP",
+    "sub": "THE TWIST",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "so it tears into tiny bubbles. And those bubbles collapse in a snap,",
+   "vis": {
+    "k": "I",
+    "icon": "bubble",
+    "head": "BUBBLES!",
+    "sub": "THEN THEY COLLAPSE"
+   }
+  },
+  {
+   "text": "hitting the prey a second time!",
+   "vis": {
+    "k": "S",
+    "big": "HIT TWICE",
+    "label": "ONE SWING",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "One swing, two hits. Now imagine what that shrimp does when it's angry!",
+   "vis": {
+    "k": "Q",
+    "icon": "hand",
+    "head": "TWO HITS!"
+   },
+   "emo": 0.85
+  }
+ ]
+}
