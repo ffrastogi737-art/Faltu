@@ -47,3 +47,5 @@ Sources: Push Square (patch notes, PS5 603.8MB); PC Gamer; esports.gg / GamerFuz
 **Background:** lv_0_20261120213403.mp4 (Drive 1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe) 5.29-35.39 s, lap 1. 26.3 s, 98 words, 11 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Instagram:** ig-gta22-patch-weather PENDING 24 Nov 10:30Z. **Known weak spots:** Minecraft background on a GTA topic; the CRASHES compare card uses character art, not a crash picture; hook card runs 4.4 s.
 **Next step:** 14:00 IST run uploads it first (`slot.py gta --catchup`), writes public_ist + slot_mode; quotaExceeded hit 24 Nov 08:50 IST.
+
+**Duplicate:** a second copy 6tcrcdtZr0M was uploaded by mistake at 13:40 IST (two sessions raced); it is private with NO publishAt and stays private forever (never delete). Canonical: hwp3aY2zNHU, scheduled 16:00 IST.
