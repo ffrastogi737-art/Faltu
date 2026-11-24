@@ -186,12 +186,25 @@ and leave it alone. slot.py stays the only source of any new time.
   A channel already at its daily target (a re-run, or an earlier run did its part): skip that video. Both at target: no building, only P and the report.
 - After delivering append to shorts-out/factory-log.txt: `<kind>  <file name> (<YYYY-MM-DD>)`.
 
+## TREND SCAN (every 3 days, never daily; owner 24 Nov 2026: credits and tokens are spent only when needed)
+- DUE = `shorts-out/trends/last-scan.txt` is missing, or its IST date is 3 or more days old. Not due: use `shorts-out/trends/shortlist.md` and make NO scan call.
+  The owner will later add a trigger that starts a scan on request; until then a run checks DUE itself.
+- Calls (one Haiku subagent, Composio `scrapecreators` instant account, only its allowed tools): `SCRAPECREATORS_SEARCH_REDDIT` and
+  `SCRAPECREATORS_SEARCH_YOUTUBE` with 2-3 short queries per channel (solo: body, science, weird job, history, psychology; gta: GTA 6, Rockstar, leak),
+  `SCRAPECREATORS_LIST_REDDIT_SUBREDDIT_POSTS` for r/GTA, r/gaming, r/todayilearned (top, past week). At most 15 calls per scan. WebSearch only for
+  gta news (past 72 h). X and TikTok are not scanned (platform rules: no scraping of their data for topics).
+- Filter: drop gta items older than 72 h; drop any topic whose key words match perf.csv or a README (`grep -i`); keep only items a second outlet
+  or source can confirm. Write 5 items per channel to `shorts-out/trends/shortlist.md`: topic, one-line hook idea, 2 links, the engagement number.
+- Then write today's IST date into `shorts-out/trends/last-scan.txt`. Commit both files with the run.
+- Cost: each call is about $0.001 (paid by the owner's account); one scan is about 15 calls. Never give the posts' claims as facts.
+
 ## DECIDE: story first, template second (owner 20 Nov 2026; replaces "pick the style first")
 Order of every video: RESEARCH the strongest topic -> HOOK (the first 3 seconds) -> SCRIPT -> TEMPLATE MATCH -> BUILD -> QA -> UPLOAD.
 The script chooses the template; a template never forces the script.
 1. Topic. `python3 shorts-out/pick_style.py solo|gta kinds` lists saturated and unused topic kinds (3 of the last 5 = saturated: change
    kind). solo = open discovery channel: any true topic or a clearly labelled skit (body/science, viral facts, history, comedy skits, stories, myths).
-   gta = GTA 6 news, leaks (only as "reported"), details and comparisons. Fresh WebSearch, 2 reliable sources for every fact.
+   gta = GTA 6 news, leaks (only as "reported"), details and comparisons. Take the best unused item from `shorts-out/trends/shortlist.md`
+   (see TREND SCAN below); if the scan is due, run it first. Fresh WebSearch, 2 reliable sources for every fact (a shortlist item is a lead, never a source).
 2. Hook first. Run `python3 shorts-out/pick_style.py <ch> hooks 5` and read the title and opening line of the best and the worst counted videos
    (question? number? second person? conflict word? short?). Read the latest POSTMORTEM lines in discovery-log.txt (what not to repeat). Write 3
    openings for the first 3 seconds, keep the strongest, then write the whole script as script.json (optional key "demand": "<style>", see 3).
