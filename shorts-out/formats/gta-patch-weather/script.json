@@ -1,0 +1,212 @@
+{
+ "title": "GTA 6 First Patch Fixes Stuck Weather",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "Push Square: First GTA 6 PS5 patch live, update 01.002.002 (23 Nov 2026; patch notes: weather not changing for extended periods, crashes, autosave, wanted level; PS5 603.8MB)",
+  "PC Gamer: GTA 6 players swore the weather system was broken and the latest patch has confirmed those suspicions",
+  "esports.gg / Space4Games / GamerFuzion patch-notes roundups for update 01.002.002 (same fix list)"
+ ],
+ "lines": [
+  {
+   "text": "The weather in GTA 6 felt stuck, and Rockstar's first patch just backed up the players who said so."
+  },
+  {
+   "text": "It's update 01.002.002, out November twenty-third."
+  },
+  {
+   "text": "The notes say Rockstar fixed weather that did not change for extended periods."
+  },
+  {
+   "text": "So endless sunshine, or a storm that never ends, should finally cycle."
+  },
+  {
+   "text": "The patch also fixes crashes, autosave, and a wanted level you could not lose."
+  },
+  {
+   "text": "On PS5 it's only about six hundred megabytes."
+  },
+  {
+   "text": "Some players still report crashes, though, so it's just the first patch."
+  },
+  {
+   "text": "It shows Rockstar is listening, so tell us below, did you also notice that"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/s4g.jpg",
+   "badge": "FIRST PATCH",
+   "banner": "WEATHER BROKEN?",
+   "sub": "ROCKSTAR JUST FIXED IT",
+   "stamp": "PATCH 01.002.002",
+   "mark": {
+    "circle": [
+     0.5,
+     0.2,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "update",
+   "kind": "image",
+   "img": "assets/gfz.jpg",
+   "label": "UPDATE 01.002.002"
+  },
+  {
+   "at": "notes",
+   "kind": "proof",
+   "img": "assets/s4g.jpg",
+   "tag": "PATCH NOTES",
+   "text": "WEATHER NOT CHANGING: FIXED",
+   "hl": [
+    [
+     0.1,
+     0.05,
+     0.8,
+     0.3
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.2
+    ]
+   ]
+  },
+  {
+   "at": "extended",
+   "kind": "image",
+   "img": "assets/pcg.jpg",
+   "label": "STUCK FOR HOURS?",
+   "crop": [
+    0.0,
+    0.0,
+    0.7,
+    1.0
+   ]
+  },
+  {
+   "at": "endless",
+   "kind": "image",
+   "img": "assets/s4g.jpg",
+   "label": "NO MORE ENDLESS SUN",
+   "crop": [
+    0.3,
+    0.3,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "storm",
+   "kind": "image",
+   "img": "assets/rintel.jpg",
+   "label": "STORMS RETURN?"
+  },
+  {
+   "at": "fixes",
+   "kind": "compare",
+   "title": "ALSO FIXED",
+   "left": {
+    "img": "assets/rintel.jpg",
+    "label": "CRASHES",
+    "circle": [
+     0.5,
+     0.4,
+     0.25
+    ]
+   },
+   "right": {
+    "img": "assets/gfz.jpg",
+    "label": "WANTED LEVEL",
+    "circle": [
+     0.5,
+     0.4,
+     0.25
+    ]
+   }
+  },
+  {
+   "at": "PS5",
+   "kind": "image",
+   "img": "assets/s4g.jpg",
+   "label": "ABOUT 600 MB ON PS5"
+  },
+  {
+   "at": "Some",
+   "kind": "proof",
+   "img": "assets/rintel.jpg",
+   "tag": "PLAYERS REPORT",
+   "text": "CRASHES CAN STILL HAPPEN",
+   "hl": [
+    [
+     0.3,
+     0.2,
+     0.4,
+     0.4
+    ]
+   ],
+   "arrows": [
+    [
+     0.6,
+     0.7
+    ]
+   ]
+  },
+  {
+   "at": "listening",
+   "kind": "image",
+   "img": "assets/pcg.jpg",
+   "label": "ROCKSTAR IS LISTENING"
+  },
+  {
+   "at": "tell",
+   "kind": "poll",
+   "question": "WAS YOUR WEATHER STUCK?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 2,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.2,
+   "r": 0.2,
+   "start": 0.3,
+   "dur": 1.4
+  },
+  {
+   "beat": 5,
+   "type": "ring",
+   "x": 0.55,
+   "y": 0.4,
+   "r": 0.1,
+   "start": 0.3,
+   "dur": 1.2
+  },
+  {
+   "beat": 8,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.45,
+   "y2": 0.45,
+   "start": 0.3,
+   "dur": 1.2
+  }
+ ],
+ "bg": {
+  "file_id": "1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe",
+  "name": "lv_0_20261120213403.mp4",
+  "start": 5.29,
+  "len": 30.1
+ }
+}

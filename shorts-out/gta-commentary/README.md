@@ -32,3 +32,18 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Facts (fan theory, Rockstar no explanation):** PC Gamer, SVG, Beebom (ankle monitor on Lucia). Images: GamesRadar, ComicBook, PC Gamer, Tom's Guide.
 **Background:** lv_0_20261120213056.mp4 (Drive 1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux) 0.76-30.86 s. 25.6 s, 117 words, 9 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Next step:** the 14:00 IST run (after quota reset) PUTs publishAt via `slot.py gta --catchup` (recovery) and writes public_ist + slot_mode. Instagram: ig-gta20-ankle-tag PENDING 05:45Z. **Known weak spots:** Minecraft background on a GTA topic; no screenshot shows the tag itself, cards only credit the outlets' images.
+
+## 22 · `22-gta6-patch-weather.mp4` · gta-commentary · WAITING UPLOAD (quota)
+**Title:** GTA 6's First Patch Fixes The Stuck Weather ⛈️ #shorts
+**Description:**
+```
+Rockstar's first GTA 6 patch, update 01.002.002 (23 Nov 2026), lists a fix for "an issue that resulted in the weather not changing for extended periods", plus crash, autosave and wanted level fixes. Some players still report crashes.
+Sources: Push Square (patch notes, PS5 603.8MB); PC Gamer; esports.gg / GamerFuzion / Space4Games patch-note roundups. Images: Space4Games, GamerFuzion, RockstarINTEL, PC Gamer (credited on screen).
+#shorts #gta6 #gta6patch #grandtheftauto6 #rockstargames #gaming #gtavi
+```
+**Tags:** gta 6, gta 6 patch, gta 6 update, gta 6 weather bug, 01.002.002, rockstar games, gta 6 news, gta vi
+**Hook:** The weather in GTA 6 felt stuck, and Rockstar's first patch just backed up the players who said so. (loop: last words "did you also notice that" -> line 1)
+**Facts:** Push Square patch notes (version, 603.8MB PS5, weather/crash/autosave/wanted-level lines), PC Gamer headline, roundups. Said as reported; no release claim beyond the dated patch.
+**Background:** lv_0_20261120213403.mp4 (Drive 1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe) 5.29-35.39 s, lap 1. 26.3 s, 98 words, 11 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Instagram:** ig-gta22-patch-weather PENDING 24 Nov 10:30Z. **Known weak spots:** Minecraft background on a GTA topic; the CRASHES compare card uses character art, not a crash picture; hook card runs 4.4 s.
+**Next step:** 14:00 IST run uploads it first (`slot.py gta --catchup`), writes public_ist + slot_mode; quotaExceeded hit 24 Nov 08:50 IST.
