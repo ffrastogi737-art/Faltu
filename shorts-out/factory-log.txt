@@ -35,3 +35,4 @@ gta  21-gta6-npc-knows-game (2026-11-23)
 solo  22-yamaguchi-both-bombs (2026-11-23)
 solo  23-mantis-shrimp-punch (2026-11-24)
 gta  gta-commentary/22-gta6-patch-weather.mp4 (2026-11-24)
+gta  gta6-channel/23-gta6-cash-mistakes.mp4 (2026-11-24) WAITING UPLOAD

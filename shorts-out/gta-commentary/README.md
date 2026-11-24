@@ -33,7 +33,7 @@ Format per video: `## NN · file · gta-commentary · status` then Title / Hook 
 **Background:** lv_0_20261120213056.mp4 (Drive 1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux) 0.76-30.86 s. 25.6 s, 117 words, 9 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Next step:** the 14:00 IST run (after quota reset) PUTs publishAt via `slot.py gta --catchup` (recovery) and writes public_ist + slot_mode. Instagram: ig-gta20-ankle-tag PENDING 05:45Z. **Known weak spots:** Minecraft background on a GTA topic; no screenshot shows the tag itself, cards only credit the outlets' images.
 
-## 22 · `22-gta6-patch-weather.mp4` · gta-commentary · WAITING UPLOAD (quota)
+## 22 · `22-gta6-patch-weather.mp4` · gta-commentary · SCHEDULED 24 Nov 16:00 IST (hwp3aY2zNHU, live read: private+scheduled; duplicate 6tcrcdtZr0M private, left alone)
 **Title:** GTA 6's First Patch Fixes The Stuck Weather ⛈️ #shorts
 **Description:**
 ```
