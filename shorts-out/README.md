@@ -245,7 +245,7 @@ Sources: Scientific American "Why does my voice sound different on recordings?";
 **Tags:** voice on recording, why my voice sounds different, bone conduction, hear your own voice, body facts, science facts, did you know, how hearing works
 **Experiment:** kind body-science/hearing ("Why..." title, the pattern of the top solo videos); 27 s; slot exploit morning 10:00 IST; Chatterbox.
 
-## 22 · `22-yamaguchi-both-bombs.mp4` · tall-tale (TALL-TALE track turn; story-first, true historical paradox as a mini-movie; match ranked tall-tale only; hook shape: in-medias-res image "a bandaged man walks into his office...") · QUEUED: goes public 24 Nov 2026 09:00 IST (https://www.youtube.com/watch?v=Dgr3Jg63DpE) · IG ig-yamaguchi-both-bombs
+## 22 · `22-yamaguchi-both-bombs.mp4` · tall-tale (TALL-TALE track turn; story-first, true historical paradox as a mini-movie; match ranked tall-tale only; hook shape: in-medias-res image "a bandaged man walks into his office...") · QUEUED: switch to public was blocked by quotaExceeded at 08:55 IST 24 Nov; retry timer 13:35 IST, else 15:30 guard (https://www.youtube.com/watch?v=Dgr3Jg63DpE) · IG ig-yamaguchi-both-bombs
 **Title:** The Man Who Survived Both Atomic Bombs
 **Description:**
 ```
