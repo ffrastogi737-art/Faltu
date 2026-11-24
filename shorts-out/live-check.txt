@@ -1,4 +1,5 @@
-LIVE CHECK 2026-11-24 08:39Z: 56 live rows
+LIVE CHECK 2026-11-24 10:10Z: 56 live rows
+MISMATCH queue DONE but live is 'private': -mllveSTgGA (2026-11-24 09:30Z)
 NOTE live but no record: eC5W0w_VFs4 (public)
 NOTE live but no record: M0GquFY5nUM (public)
 NOTE live but no record: IdHJSEsVkfA (private)
@@ -10,3 +11,4 @@ NOTE live but no record: N7w7hBdAm98 (private)
 NOTE live but no record: IQK5LW-4vok (public)
 NOTE live but no record: JqGb4VyObBM (public)
 NOTE live but no record: tev-QLHyKy0 (private)
+NOTE 24 Nov 10:15Z: Windsor showed -mllveSTgGA private (stale cache); YouTube API (Composio status) says public -> queue DONE is correct, no change.
