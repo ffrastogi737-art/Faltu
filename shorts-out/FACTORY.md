@@ -135,6 +135,12 @@ Commit lines end with the session attribution the system gives you.
 - Instagram is not on Windsor yet: check IG state with Composio (INSTAGRAM_GET_IG_MEDIA), account instagram_osiery-fun only.
 - Report the live numbers and the mismatches; never write "PUBLIC" in a README unless the read-back said public.
 
+## YOUTUBE ROUTE (owner 24 Nov 2026: Windsor and Composio take turns for YouTube writes)
+- Writes (upload, privacy switch, reply) go through `python3 shorts-out/yt_route.py pick`: the less recently used tool that is not exhausted. Windsor = `windsor`, Composio = `composio`.
+- After each write run `yt_route.py used <tool>`. If a tool returns quotaExceeded, run `yt_route.py exhausted <tool>`: it sits out until 08:00Z (13:30 IST) and the other tool takes over. Both out = `none`: wait, mark WAITING UPLOAD.
+- Reads (live check, comments) use Windsor only, they cost nothing against this rule. Instagram stays on Composio only.
+- The owner will see from the runs whether the two share one quota; do not test it by hand.
+
 ## 00. FEEDBACK (every factory tick, FIRST, before P and DECIDE; the system learns from its own numbers)
 1. Refresh views: ONLY in the 21:00 ANALYTICS run, after all daily uploads are scheduled (the factory runs use the last numbers in perf.csv,
    so they spend no quota on reads before the uploads): a Haiku subagent runs `shorts-out/perf_refresh.py` in COMPOSIO_REMOTE_WORKBENCH (both YouTube channels)
