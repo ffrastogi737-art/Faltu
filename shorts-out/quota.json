@@ -1,10 +1,10 @@
 {
  "windsor": {
-  "exhausted_until": null,
+  "exhausted_until": "2026-11-26T08:00:00",
   "last_used": null
  },
  "composio": {
   "exhausted_until": "2026-11-25T08:00:00",
-  "last_used": "2026-11-25T03:16:56"
+  "last_used": "2026-11-25T14:13:43"
  }
 }
