@@ -292,7 +292,7 @@ Sources: Dexerto, games.gg, GTA Wiki (credits Jared of the GTA VI Mapping server
 **Tags:** gta 6, gta 6 easter egg, gta 6 belville, gta 6 npc, gta 6 secrets, gta 6 conspiracy, gta vi, rockstar games
 **Top-3 (match):** myth-or-fact 7.3 | breaking-desk 4.8 | pixel-quest 4.8 (rerun on final script: myth-or-fact 9.3) · 20 s, 72 words, kind gaming-secret · slot explore midday · IG ig-gta21-npc-knows-game
 
-## 23 · `23-gta6-cash-mistakes.mp4` · top-5-countdown (NEW STYLE, ported on comic-pop) · WAITING UPLOAD (quota: YouTube rate-limited 3x, last 24 Nov 00:05 IST analytics retry)
+## 23 · `23-gta6-cash-mistakes.mp4` · top-5-countdown (NEW STYLE, ported on comic-pop) · UPLOADED PRIVATE 7orqIQpNb_w (25 Nov 08:50 IST), publishAt NOT set: quotaExceeded on the PUT, next run sets it with slot.py gta --catchup
 **Title:** GTA 6 Mistakes That Cost You Cash 💸 #shorts
 **Description:**
 ```
