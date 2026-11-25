@@ -266,3 +266,14 @@ Sources: Natural History Museum London "Mantis shrimp: the crustacean that packs
 ```
 **Tags:** mantis shrimp, mantis shrimp punch, fastest punch in nature, animal facts, ocean facts, cavitation, science facts, did you know, weird animals
 **Experiment:** new kind animals-nature (not in last 5); 29 s, 111 words, Chatterbox; slot explore afternoon 15:00 IST (n=0 hour).
+
+## 24 · `24-voyager-light-day.mp4` · comic-pop auto-vertical (match override: solo 50/50 asked TALL-TALE, skipped on purpose: stat-type script, yamaguchi tall-tale under median at 18 h, 3D render ~25 min; hook shape: timeline paradox "shout at Voyager 1 right now, it hears you tomorrow") · WAITING UPLOAD (quota: YouTube quotaExceeded 25 Nov 08:50 IST)
+**Title:** Voyager 1 Is One Light-Day Away
+**Description:**
+```
+NASA says Voyager 1 reached one light-day from Earth on 18 November 2026, about 16 billion miles away. A radio command takes about a day to arrive, and the reply takes another day to come back. Voyager 2 is expected to reach the same distance in 2035.
+Sources: NASA Scientific Visualization Studio "How Far Away Is Voyager 1? One Light-Day, Explained"; Space.com; Popular Science.
+#shorts #space #voyager1 #nasa #sciencefacts #didyouknow #astronomy #learnonshorts
+```
+**Tags:** voyager 1, voyager 1 light day, nasa voyager, space facts, how far is voyager 1, interstellar space, science facts, did you know
+**Experiment:** new kind space-scale (not in last 5) on a 7-day-old news hook; 28 s, 101 words, Chatterbox, comic-pop; next upload slot from slot.py solo --catchup.

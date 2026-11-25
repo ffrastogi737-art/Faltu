@@ -1,0 +1,65 @@
+{
+ "duration": 27.799,
+ "lines": [
+  {
+   "i": 0,
+   "text": "If you shout at Voyager 1 right now, it hears you tomorrow.",
+   "start": 0.3,
+   "end": 2.773
+  },
+  {
+   "i": 1,
+   "text": "On November eighteenth, it reached one light-day from Earth.",
+   "start": 3.073,
+   "end": 5.46
+  },
+  {
+   "i": 2,
+   "text": "That's about sixteen billion miles. Light itself needs a whole day to cross it.",
+   "start": 5.76,
+   "end": 8.9
+  },
+  {
+   "i": 3,
+   "text": "It launched in nineteen seventy-seven, so the trip took forty-nine years.",
+   "start": 9.2,
+   "end": 12.144
+  },
+  {
+   "i": 4,
+   "text": "Send it a command today, and it arrives tomorrow.",
+   "start": 12.444,
+   "end": 14.488
+  },
+  {
+   "i": 5,
+   "text": "Then its reply needs another full day to get back.",
+   "start": 14.788,
+   "end": 17.055
+  },
+  {
+   "i": 6,
+   "text": "Two whole days, just to say hello!",
+   "start": 17.355,
+   "end": 19.091
+  },
+  {
+   "i": 7,
+   "text": "And it's the first human-made thing ever to get this far.",
+   "start": 19.391,
+   "end": 21.281
+  },
+  {
+   "i": 8,
+   "text": "Its twin, Voyager 2, won't get there until twenty thirty-five.",
+   "start": 21.581,
+   "end": 24.817
+  },
+  {
+   "i": 9,
+   "text": "Would you wait two days for a reply?",
+   "start": 25.117,
+   "end": 26.799
+  }
+ ]
+}
