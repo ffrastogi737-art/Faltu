@@ -277,3 +277,15 @@ Sources: NASA Scientific Visualization Studio "How Far Away Is Voyager 1? One Li
 ```
 **Tags:** voyager 1, voyager 1 light day, nasa voyager, space facts, how far is voyager 1, interstellar space, science facts, did you know
 **Experiment:** new kind space-scale (not in last 5) on a 7-day-old news hook; 28 s, 101 words, Chatterbox, comic-pop; next upload slot from slot.py solo --catchup.
+
+## 25 · `25-penny-loses-money.mp4` · isotype (NEW STYLE (library): random draw from STYLE-LIBRARY; flat paper/pictogram look, coin-grid shot kind G)
+**Title:** The US Spent 3.7 Cents To Make Every Penny
+**Description:**
+```
+In fiscal 2024 the U.S. Mint paid 3.69 cents to make and ship every one-cent coin, and lost about $85 million on nearly 3.2 billion pennies. The Mint struck the last circulating penny on 12 November 2025 in Philadelphia; pennies stay legal tender.
+Sources: U.S. Mint (usmint.gov penny FAQ and press release); St. Louis Fed Page One Economics; NBC News.
+#shorts #penny #money #moneyfacts #didyouknow #economics #usmint #learnonshorts
+```
+**Tags:** penny, us penny, cost of a penny, us mint, end of the penny, money facts, did you know, economics
+**Experiment:** new kind money-stats; isotype first use; hook = concrete conflict (1 cent coin costs 3.7 cents); 29 s, 108 words, Chatterbox; slot catchup 14:55Z.
+**Status:** UPLOADING
