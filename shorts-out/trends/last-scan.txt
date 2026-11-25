@@ -1,0 +1,1 @@
+2026-11-25 (WebSearch only: scrapecreators connection missing in this session; owner may reconnect it)

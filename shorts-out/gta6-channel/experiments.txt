@@ -38,3 +38,4 @@ SFX on beats, one-word captions. Reference clips the owner showed are another cr
   To Stay In Bed", stick-story, 1,182). Treat that number as unverified.
 2026-11-23 | gta 21-gta6-npc-knows-game | HYPOTHESIS: Testing midday bin 11:00 IST, n=0 -> target >= 1.2x channel legacy median (879); also first myth-or-fact on this channel (NEW STYLE use), rumour-check hook | status: scheduled
 2026-11-25 NEW STYLE (library): terminal (gta, ported on comic-pop, random draw; test: RDR2 Leonida boat fan theory with credited stills)
+2026-11-25 NEW STYLE (library): stack-split (gta, ported on comic-pop, random draw; test: score-vs-bugs contrast with credited stills)

@@ -316,3 +316,10 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Tags:** gta 6, red dead redemption 2, rdr2 easter egg, leonida, gta 6 theory, rockstar games, gta vi, fan theory
 **Hook:** Red Dead Redemption 2 has an unused boat texture named The Leonida. (loop: last words "a secret hiding inside" -> line 1)
 **Top-3 (match):** n/a (owner order 25 Nov: random draw from the library, drew terminal + stack-split; terminal fits a game-files discovery) · 26.9 s, 108 words, kind gaming-secret · test: first library 2D ids terminal + real credited stills
+
+## 25 · `25-gta6-bugs-vs-99.mp4` · stack-split (NEW STYLE (library), ported on comic-pop; random draw 25 Nov 2026) · SCHEDULED 25 Nov 2026 20:40 IST (H_MLjj0qsDs, live read: private+publishAt 15:10Z) (https://www.youtube.com/watch?v=H_MLjj0qsDs), catch-up slot, uploaded via Composio (Windsor rate-limited)
+**Title:** GTA 6 Scored 99, But Players Post Flying Cars 😳 #shorts
+**Description:** GTA 6 tied the highest Metacritic score (99), yet glitch clips keep going viral (flying cars, vanishing characters, falling through a prison floor, a ship sliding sideways). Reviewers mostly reported small issues; some compare it to Cyberpunk 2077's launch but PC Guide says early reports do not show most players are affected. Sources: PC Guide; Futurism; Gulf News; Latin Times. Images: Futurism, PC Guide (credited on screen).
+**Tags:** gta 6, gta 6 bugs, gta 6 glitches, gta 6 metacritic, gta 6 vs cyberpunk, rockstar games, gta vi, gta 6 news
+**Hook:** A ninety nine on Metacritic, and players are posting flying cars. (loop: last words "does your game deserve" -> line 1)
+**Top-3 (match):** n/a (owner order 25 Nov: random draw from the library; stack-split fits a "score vs reality" contrast) · 23.6 s, 95 words, kind gaming-news · test: stack-split + credited stills; hook names the surprising contrast in the first words
