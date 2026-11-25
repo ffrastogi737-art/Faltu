@@ -267,7 +267,7 @@ Sources: Natural History Museum London "Mantis shrimp: the crustacean that packs
 **Tags:** mantis shrimp, mantis shrimp punch, fastest punch in nature, animal facts, ocean facts, cavitation, science facts, did you know, weird animals
 **Experiment:** new kind animals-nature (not in last 5); 29 s, 111 words, Chatterbox; slot explore afternoon 15:00 IST (n=0 hour).
 
-## 24 · `24-voyager-light-day.mp4` · comic-pop auto-vertical (match override: solo 50/50 asked TALL-TALE, skipped on purpose: stat-type script, yamaguchi tall-tale under median at 18 h, 3D render ~25 min; hook shape: timeline paradox "shout at Voyager 1 right now, it hears you tomorrow") · WAITING UPLOAD (quota: YouTube quotaExceeded 25 Nov 08:50 IST)
+## 24 · `24-voyager-light-day.mp4` · comic-pop auto-vertical (match override: solo 50/50 asked TALL-TALE, skipped on purpose: stat-type script, yamaguchi tall-tale under median at 18 h, 3D render ~25 min; hook shape: timeline paradox "shout at Voyager 1 right now, it hears you tomorrow") · PUBLIC 25 Nov 2026 19:55 IST (live read 21:15 IST: public)
 **Title:** Voyager 1 Is One Light-Day Away
 **Description:**
 ```
