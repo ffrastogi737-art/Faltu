@@ -305,7 +305,7 @@ Sources: FandomWire (beginner tips); games.gg (money guide); Inven Global (13 ti
 **Top-3 (match):** top-5-countdown 5.8 | glitch-pack 4.8 | quiz-countdown 4.8 · 25 s, 97 words, kind gaming-guide · tests: list/guide kind + new countdown template
 **Next step:** next run uploads it first (`slot.py gta --catchup`), writes perf row + IG entry.
 
-## 24 · `24-gta6-rdr2-leonida-boat.mp4` · terminal (NEW STYLE (library), ported on comic-pop; random draw 25 Nov 2026) · UPLOADING 25 Nov 2026 (catch-up slot)
+## 24 · `24-gta6-rdr2-leonida-boat.mp4` · terminal (NEW STYLE (library), ported on comic-pop; random draw 25 Nov 2026) · SCHEDULED 25 Nov 2026 20:10 IST (5loe0Nln458, live read: private+publishAt 14:40Z) (https://www.youtube.com/watch?v=5loe0Nln458), catch-up slot, uploaded via Composio (Windsor rate-limited twice)
 **Title:** Red Dead 2 Has A Boat Named Leonida 👀 (Fan Theory) #shorts
 **Description:**
 ```

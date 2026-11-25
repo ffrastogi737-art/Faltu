@@ -1,0 +1,99 @@
+{
+ "title": "GTA 6 Scored 99 But Players Post Flying Cars",
+ "lead": 0.15,
+ "outro": 0.8,
+ "gap": 0.15,
+ "music": "hype",
+ "sources": [
+  "PC Guide: GTA 6 bugs draw comparisons to Cyberpunk 2077's messy launch, but far from the same",
+  "Futurism: GTA 6 bugs (falling through prison floor, ship glitch)",
+  "Gulf News: GTA 6 glitches go viral (flying cars, disappearing characters)",
+  "Latin Times: GTA 6 Metacritic record, launch bugs"
+ ],
+ "lines": [
+  {
+   "text": "A ninety nine on Metacritic, and players are posting flying cars.",
+   "vis": {
+    "k": "H",
+    "img": "bugsb",
+    "top": "99",
+    "topl": "METACRITIC",
+    "bot": "BUGS",
+    "botl": "VIRAL CLIPS",
+    "tag": "REPORTED"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Reviewers mostly noticed pedestrians walking into walls, and clothes popping in for a second.",
+   "vis": {
+    "k": "X",
+    "top": "REVIEWERS",
+    "topt": "NPCs WALK INTO WALLS",
+    "bot": "SCORE",
+    "bott": "99 / 100"
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "Players are posting clips of cars flying, characters vanishing, and one falling through a prison floor.",
+   "vis": {
+    "k": "P",
+    "img": "bugsa",
+    "src": "Futurism",
+    "label": "PLAYER CLIP: FALLING THROUGH"
+   },
+   "emo": 0.8
+  },
+  {
+   "text": "A ship even slid sideways across the water.",
+   "vis": {
+    "k": "X",
+    "top": "SHIP",
+    "topt": "SLIDES SIDEWAYS",
+    "bot": "WATER",
+    "bott": "STILL FLOATS?!"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "Some people compare it to Cyberpunk's launch.",
+   "vis": {
+    "k": "V",
+    "a": "GTA 6",
+    "b": "CYBERPUNK",
+    "q": "SAME?"
+   },
+   "emo": 0.8
+  },
+  {
+   "text": "But PC Guide says early reports don't show most players are affected.",
+   "vis": {
+    "k": "S",
+    "big": "NOT MOST",
+    "label": "PC GUIDE: EARLY REPORTS"
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "So it's loud online, but far from Cyberpunk, going by early reports.",
+   "vis": {
+    "k": "X",
+    "top": "ONLINE",
+    "topt": "LOUD CLIPS",
+    "bot": "REPORTS",
+    "bott": "NOT WIDESPREAD"
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "So tell us below, have you hit a bug yet, or does your game deserve",
+   "vis": {
+    "k": "Q",
+    "head": "HIT A BUG YET?",
+    "sub": "OR YOURS RUNS CLEAN?"
+   },
+   "emo": 0.85
+  }
+ ]
+}
