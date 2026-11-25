@@ -288,4 +288,4 @@ Sources: U.S. Mint (usmint.gov penny FAQ and press release); St. Louis Fed Page 
 ```
 **Tags:** penny, us penny, cost of a penny, us mint, end of the penny, money facts, did you know, economics
 **Experiment:** new kind money-stats; isotype first use; hook = concrete conflict (1 cent coin costs 3.7 cents); 29 s, 108 words, Chatterbox; slot catchup 14:55Z.
-**Status:** UPLOADING
+**Status:** QUEUED: goes public 25 Nov 2026 20:25 IST (https://youtu.be/H3_bpISCHTQ)
