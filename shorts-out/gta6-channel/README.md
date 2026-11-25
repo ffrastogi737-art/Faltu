@@ -304,3 +304,15 @@ Sources: FandomWire (beginner tips); games.gg (money guide); Inven Global (13 ti
 **Hook:** Die in GTA 6 with your pockets full, and that cash can be gone for good. (loop: last words "ever lost when you" -> line 1)
 **Top-3 (match):** top-5-countdown 5.8 | glitch-pack 4.8 | quiz-countdown 4.8 · 25 s, 97 words, kind gaming-guide · tests: list/guide kind + new countdown template
 **Next step:** next run uploads it first (`slot.py gta --catchup`), writes perf row + IG entry.
+
+## 24 · `24-gta6-rdr2-leonida-boat.mp4` · terminal (NEW STYLE (library), ported on comic-pop; random draw 25 Nov 2026) · UPLOADING 25 Nov 2026 (catch-up slot)
+**Title:** Red Dead 2 Has A Boat Named Leonida 👀 (Fan Theory) #shorts
+**Description:**
+```
+A speedrunner (SonekaSpeedruns) reportedly found a partly unused boat texture in Red Dead Redemption 2's game files that lists ship names, including "The Leonida", the name of the fictional state GTA 6 is set in. Rockstar has never said it is a tease: it is only a fan theory.
+Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 easter egg after 7+ years); iXBT (28 Jan 2026). Images: Daily Dot, OpenCritic (credited on screen).
+#shorts #gta6 #rdr2 #reddeadredemption2 #rockstargames #gaming #fantheory
+```
+**Tags:** gta 6, red dead redemption 2, rdr2 easter egg, leonida, gta 6 theory, rockstar games, gta vi, fan theory
+**Hook:** Red Dead Redemption 2 has an unused boat texture named The Leonida. (loop: last words "a secret hiding inside" -> line 1)
+**Top-3 (match):** n/a (owner order 25 Nov: random draw from the library, drew terminal + stack-split; terminal fits a game-files discovery) · 26.9 s, 108 words, kind gaming-secret · test: first library 2D ids terminal + real credited stills

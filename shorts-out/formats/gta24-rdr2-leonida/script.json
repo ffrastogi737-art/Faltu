@@ -1,0 +1,107 @@
+{
+ "title": "Red Dead Redemption 2 Has A Boat Named Leonida",
+ "lead": 0.15,
+ "outro": 0.8,
+ "gap": 0.15,
+ "music": "hype",
+ "sources": [
+  "Daily Dot: RDR2 / GTA 6 Leonida boat texture",
+  "OpenCritic: Red Dead Redemption 2 almost included a reference to GTA 6",
+  "GamePro.de: RDR2 player finds possible GTA 6 easter egg after over 7 years",
+  "iXBT (28 Jan 2026): RDR2 files reference to GTA VI"
+ ],
+ "lines": [
+  {
+   "text": "Red Dead Redemption 2 has an unused boat texture named The Leonida.",
+   "vis": {
+    "k": "H",
+    "img": "rdr2a",
+    "cmd": "cat boat_texture.txt",
+    "out": [
+     "> THE LEONIDA"
+    ],
+    "tag": "FAN THEORY"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Yes, Leonida, the fictional state GTA 6 is set in.",
+   "vis": {
+    "k": "L",
+    "cmd": "grep -ri leonida RDR2/",
+    "out": [
+     "boats/texture_07: THE LEONIDA",
+     "gta6/setting: LEONIDA"
+    ],
+    "hi": 1
+   },
+   "emo": 0.8
+  },
+  {
+   "text": "A speedrunner called SonekaSpeedruns found it in the game files, years after launch.",
+   "vis": {
+    "k": "P",
+    "img": "rdr2b",
+    "cmd": "open game_files",
+    "src": "Daily Dot / OpenCritic",
+    "label": "FOUND BY SonekaSpeedruns"
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "The texture lists ship names, like The Emily Bell, Moses T Prescott, and The Leonida.",
+   "vis": {
+    "k": "L",
+    "cmd": "cat ship_names.txt",
+    "out": [
+     "THE EMILY BELL",
+     "MOSES T PRESCOTT",
+     "THE LEONIDA"
+    ],
+    "hi": 2
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "Red Dead 2 came out in twenty eighteen.",
+   "vis": {
+    "k": "S",
+    "big": "2018",
+    "label": "RED DEAD 2 RELEASE YEAR"
+   },
+   "emo": 0.8
+  },
+  {
+   "text": "Was Rockstar planning a GTA 6 tease back then? Nobody knows, and Rockstar has never said so.",
+   "vis": {
+    "k": "L",
+    "cmd": "rockstar --explain leonida",
+    "out": [
+     "ERROR: no statement found",
+     "status: UNCONFIRMED"
+    ],
+    "hi": 1,
+    "err": true
+   },
+   "emo": 0.75
+  },
+  {
+   "text": "It could just be a name they liked, so for now it's only a fan theory.",
+   "vis": {
+    "k": "S",
+    "big": "FAN THEORY",
+    "label": "NOT CONFIRMED BY ROCKSTAR"
+   },
+   "emo": 0.7
+  },
+  {
+   "text": "So tell us below, was that boat just a boat, or is it a secret hiding inside",
+   "vis": {
+    "k": "Q",
+    "head": "JUST A BOAT?",
+    "sub": "OR A SECRET TEASE?"
+   },
+   "emo": 0.85
+  }
+ ]
+}
