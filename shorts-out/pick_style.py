@@ -16,9 +16,9 @@ shortcut: script features are keyword counts, not a language model; the agent re
 import re, sys, pathlib, csv, json, collections, statistics as st, datetime as dt
 D = pathlib.Path(__file__).parent
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
-LOCAL = {'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
+LOCAL = {'terminal', 'stack-split', 'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
          'myth-or-fact', 'comic-panels', 'top-5-countdown'}
-PORTED = {'myth-or-fact', 'comic-panels', 'top-5-countdown'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
+PORTED = {'terminal', 'stack-split', 'myth-or-fact', 'comic-panels', 'top-5-countdown'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
 KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
          'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list', 'gaming-guide', 'gaming-reaction']
 # Template catalog: what each template is good at, in the same words the script analysis produces ('3d' = slow render, many minutes).
