@@ -312,7 +312,7 @@ Sources: Stanford Blood Center (The Life of a Red Blood Cell); LibreTexts Anatom
 ```
 **Tags:** red blood cells, blood cells per second, bone marrow, human body facts, body facts, did you know, biology, science facts
 **Experiment:** new angle body-science with number hook (2,000,000 / second); isotype second use; 27 s, 107 words, Chatterbox; slot catchup 09:35Z.
-**Status:** QUEUED: goes public 26 Nov 2026 15:05 IST (https://youtu.be/A2A_NMVR27M)
+**Status:** PUBLIC 26 Nov 2026 15:06 IST (https://youtu.be/A2A_NMVR27M)
 
 ## 28 · `28-baby-memory-isotype.mp4` · isotype (owner command 26 Nov 2026: rebuild of 26 in a good template; psychology-myth kind)
 **Title:** You Had Memories As A Baby (You Can't Reach Them)
