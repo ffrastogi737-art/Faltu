@@ -324,5 +324,5 @@ Sources: Yale News (20 Mar 2025); Scientific American; Guskjolen et al., Current
 ```
 **Tags:** infantile amnesia, baby memory, why cant we remember being a baby, hippocampus, brain facts, psychology facts, science facts, did you know
 **Experiment:** hook = concrete surprise (you had memories, you can't reach them); loop line ends "because"; 37 s, 139 words, Chatterbox; slot 27 Nov 09:00 IST (slot.py exploit morning; normal slot was tomorrow, no catch-up open). Old chalk-talk video eH_qY0GGWoc stays PRIVATE.
-**Status:** QUEUED: private, goes public 27 Nov 2026 09:00 IST (https://youtu.be/ioqEzfmFoMs); uploaded via Composio (Windsor upload rate-limited twice)
+**Status:** QUEUED: private, goes public 26 Nov 2026 15:35 IST (moved to today by the afternoon run, owner rule: same-day) (https://youtu.be/ioqEzfmFoMs); uploaded via Composio (Windsor upload rate-limited twice)
 
