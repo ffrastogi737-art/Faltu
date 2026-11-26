@@ -289,3 +289,15 @@ Sources: U.S. Mint (usmint.gov penny FAQ and press release); St. Louis Fed Page 
 **Tags:** penny, us penny, cost of a penny, us mint, end of the penny, money facts, did you know, economics
 **Experiment:** new kind money-stats; isotype first use; hook = concrete conflict (1 cent coin costs 3.7 cents); 29 s, 108 words, Chatterbox; slot catchup 14:55Z.
 **Status:** PUBLIC 25 Nov 2026 20:25 IST (https://youtu.be/H3_bpISCHTQ)
+
+## 26 · `26-baby-memory.mp4` · chalk-talk (WIN verdict style, not used in last 8 rows; psychology-myth kind, first use of that kind)
+**Title:** Why You Can't Remember Being A Baby
+**Description:**
+```
+Most adults remember nothing from before about age three. A 2025 Yale study published in Science scanned babies' brains and found the memory center (hippocampus) is active when babies later recognize a picture, from about age one, so the memories may be saved and the problem may be finding them again. Scientists are still testing how long baby memories last.
+Sources: Yale News (20 Mar 2025); NPR (20 Mar 2025); Scientific American.
+#shorts #psychology #babybrain #memory #brainfacts #didyouknow #sciencefacts #learnonshorts
+```
+**Tags:** infantile amnesia, why cant we remember being a baby, baby memory, hippocampus, brain facts, psychology facts, science facts, did you know
+**Experiment:** new kind psychology-myth (not in last 5); chalk-talk reuse (WIN); hook = conflict (brain was recording, you can't find one); 32 s, 119 words, Chatterbox; slot exploit morning 09:00 IST 27 Nov.
+**Status:** WAITING UPLOAD

@@ -1,9 +1,26 @@
-LIVE CHECK 2026-11-25 15:42Z: 58 live rows
-NOTE live but no record: eC5W0w_VFs4 (public)
-NOTE live but no record: OcztUrIF60 (public)
-NOTE live but no record: JqGb4VyObBM (public)
-NOTE live but no record: OcztUrfIF60 (public)
-NOTE live but no record: IQK5LW-4vok (public)
-NOTE live but no record: M0GquFY5nUM (public)
-NOTE live but no record: NpniyqY1n5s (public)
-NOTE live but no record: dltJ6ScN2Dw (public)
+LIVE CHECK 2026-11-26 03:12Z: 33 live rows
+MISMATCH queue DONE but live is 'not found': MulUvaewsDc (2026-11-19 11:30Z)
+MISMATCH perf says public at 2026-11-13 19:37 IST, live is 'not found': solo ICzyUB1tef4
+MISMATCH perf says public at 2026-11-13 20:10 IST, live is 'not found': solo -aBbQZE-Em8
+MISMATCH perf says public at 2026-11-14 01:00 IST, live is 'not found': solo -Zi4p6KZ6lU
+MISMATCH perf says public at 2026-11-14 07:00 IST, live is 'not found': solo -8l9qDvx4F8
+MISMATCH perf says public at 2026-11-14 14:00 IST, live is 'not found': solo ihJhmZDtwhY
+MISMATCH perf says public at 2026-11-14 16:20 IST, live is 'not found': gta 7xMov2RIgfs
+MISMATCH perf says public at 2026-11-15 09:00 IST, live is 'not found': gta qD-RaPT1-Pc
+MISMATCH perf says public at 2026-11-15 16:30 IST, live is 'not found': gta O_2A-ZKJON4
+MISMATCH perf says public at 2026-11-15 19:30 IST, live is 'not found': gta 1xDCoJSV7PA
+MISMATCH perf says public at 2026-11-16 16:30 IST, live is 'not found': gta NpniqyY1n5s
+MISMATCH perf says public at 2026-11-16 09:00 IST, live is 'not found': gta h2xXkk-kWQM
+MISMATCH perf says public at 2026-11-16 19:30 IST, live is 'not found': gta mVX_Ig9iiuM
+MISMATCH perf says public at 2026-11-18 19:30 IST, live is 'not found': gta 9S9G7oLu81Y
+MISMATCH perf says public at 2026-11-19 00:30 IST, live is 'not found': gta Cfs1iSjYjFU
+MISMATCH perf says public at 2026-11-19 09:00 IST, live is 'not found': gta cCBrCIFGU0Q
+MISMATCH perf says public at 2026-11-19 16:30 IST, live is 'not found': gta bYZzwATIrvs
+MISMATCH perf says public at 2026-11-19 19:30 IST, live is 'not found': gta 1xBFlE3oniQ
+MISMATCH perf says public at 2026-11-20 09:00 IST, live is 'not found': gta VyY9BsmtGWs
+MISMATCH perf says public at 2026-11-20 16:30 IST, live is 'not found': gta LQIE9zZegT0
+NOTE live but no record: IdHJSEsVkfA (private)
+NOTE live but no record: ID0o6Y-NKes (unlisted)
+NOTE live but no record: 6tcrcdtZr0M (private)
+NOTE live but no record: N7w7hBdAm98 (private)
+NOTE live but no record: tev-QLHyKy0 (private)

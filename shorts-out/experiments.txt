@@ -52,3 +52,4 @@ Legacy caveat: 13:xx solo rows (quota-reset switches, 13:35-13:46) are marked qu
 NEW STYLE (library): top-5-countdown ported on comic-pop 24 Nov 2026 (kind N rank plaque), first use gta 23-gta6-cash-mistakes
 2026-11-25 | NEW STYLE (library): isotype | random draw; flat pictogram look for a money-stats story | 25 min build | | 
 The US Spent 3.7 Cents To Make Every Penny | 2026-11-25 20:25 IST catchup | tests isotype + money-stats kind + conflict-first hook | | 
+2026-11-26 | NEW KIND psychology-myth + chalk-talk reuse | Why You Can't Remember Being A Baby | 2026-11-27 09:00 IST exploit | tests kind psychology-myth, chalk-talk WIN style, conflict-first hook | | 

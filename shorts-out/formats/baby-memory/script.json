@@ -1,0 +1,56 @@
+{
+ "title": "Why You Can't Remember Being A Baby",
+ "voice": "am_michael",
+ "speed": 1.0,
+ "lead": 0.4,
+ "outro": 0.9,
+ "gap": 0.26,
+ "music": "bed",
+ "sources": [
+  "Yale News, 20 Mar 2025: 'Why don't we remember being a baby? New study provides clues' (Yates et al., Science 387: hippocampal encoding of memories in human infants; infants about 1 year and older; retrieval may be the bottleneck) https://news.yale.edu/2025/03/20/why-dont-we-remember-being-baby-new-study-provides-clues",
+  "NPR, 20 Mar 2025: 'Why don't we remember being babies? Brain scans reveal new clues' https://www.npr.org/sections/shots-health-news/2025/03/20/nx-s1-5332387/baby-brain-scans-new-clues-infant-memories",
+  "Scientific American: 'We Make Memories as Babies, So Why Do We Forget Them?' https://www.scientificamerican.com/article/babies-do-make-memories-so-why-cant-we-remember-them-as-adults/"
+ ],
+ "lines": [
+  {
+   "text": "Your baby brain was recording memories, and you can't find a single one.",
+   "caps": "YOUR BABY *BRAIN | WAS *RECORDING | YOU CAN'T FIND *ONE"
+  },
+  {
+   "text": "Most adults remember nothing from before about age three.",
+   "caps": "NOTHING *BEFORE | ABOUT AGE *THREE"
+  },
+  {
+   "text": "For decades, scientists thought baby brains simply couldn't store memories.",
+   "caps": "FOR *DECADES | BABY BRAINS | COULDN'T *STORE"
+  },
+  {
+   "text": "Then in 2025, Yale researchers scanned babies' brains while they looked at pictures.",
+   "caps": "IN *2025 | *YALE SCANNED | BABIES' *BRAINS"
+  },
+  {
+   "text": "When the memory center lit up brighter, the baby was more likely to recognize that picture later.",
+   "caps": "MEMORY CENTER *BRIGHTER | BABY *RECOGNIZED | THE PICTURE"
+  },
+  {
+   "text": "So the memories were being saved, in babies as young as one.",
+   "caps": "THE MEMORIES WERE *SAVED | IN BABIES AS YOUNG AS *ONE"
+  },
+  {
+   "text": "The real problem may be finding them again.",
+   "caps": "THE PROBLEM | MAY BE *FINDING | THEM"
+  },
+  {
+   "text": "It's like a library where the books are on the shelves, but nobody can look them up.",
+   "caps": "A *LIBRARY | BOOKS ON THE *SHELVES | NO WAY TO *LOOK UP"
+  },
+  {
+   "text": "Scientists are still testing how long baby memories last.",
+   "caps": "STILL *TESTING | HOW *LONG | THEY LAST"
+  },
+  {
+   "text": "So somewhere inside you, your first birthday may still be saved.",
+   "caps": "SOMEWHERE *INSIDE YOU | YOUR FIRST *BIRTHDAY | MAY BE *SAVED"
+  }
+ ]
+}
