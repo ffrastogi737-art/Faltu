@@ -49,3 +49,17 @@ Sources: Push Square (patch notes, PS5 603.8MB); PC Gamer; esports.gg / GamerFuz
 **Next step:** 14:00 IST run uploads it first (`slot.py gta --catchup`), writes public_ist + slot_mode; quotaExceeded hit 24 Nov 08:50 IST.
 
 **Duplicate:** a second copy 6tcrcdtZr0M was uploaded by mistake at 13:40 IST (two sessions raced); it is private with NO publishAt and stays private forever (never delete). Canonical: hwp3aY2zNHU, scheduled 16:00 IST.
+
+## 26 · `26-gta6-rdr2-parachute.mp4` · gta-commentary · WAITING UPLOAD
+**Title:** Red Dead 2 Has Hidden Parachute Files? 🪂 (Fan Theory) #shorts
+**Description:**
+```
+A dataminer reportedly found parachute animation names (skydive@parachute@pack, Chute_Off_Bag) in the PC files of Red Dead Redemption 2 and fans guessed they belong to GTA 6. Other outlets say they could be leftovers from parallel Rockstar projects. Rockstar has never confirmed any of it: this is a fan theory.
+Sources: GamesRadar; Gamepressure; Charlie INTEL; IBTimes. Images: GamesRadar, Gamepressure, Charlie INTEL, IBTimes, Daily Dot (credited on screen).
+#shorts #gta6 #rdr2 #reddead #grandtheftauto6 #rockstargames #gaming #gtavi
+```
+**Tags:** gta 6, rdr2 gta 6, red dead redemption 2 files, gta 6 parachute, gta 6 fan theory, rockstar games, gta 6 leak, gta vi
+**Hook:** Red Dead Redemption 2, a western with parachutes in its files? (loop: last words "do you think Rockstar hid a clue inside" -> line 1)
+**Facts:** GamesRadar (rollschuh2282, RDR2 PC, parachute names, not in gta5.exe), Gamepressure, Charlie INTEL, IBTimes; alternative explanations said as reported; stamp UNCONFIRMED.
+**Background:** lv_0_20261120213720.mp4 (Drive 1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8) 8.57-39.9 s, lap 2. 28.0 s, 107 words, 12 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Known weak spots:** Minecraft background on a GTA topic; the 2021 source story (evergreen fan theory, not fresh news).

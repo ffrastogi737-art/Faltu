@@ -1,0 +1,227 @@
+{
+ "title": "RDR2 Parachute Files Fan Theory",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "GamesRadar: Red Dead Redemption 2 dataminer finds parachuting files they think relate to GTA 6 (Jan 2021; dataminer rollschuh2282, PC version; names skydive@parachute@pack, Chute_Off, Chute_Off_Bag; not found in gta5.exe; Rockstar never confirmed)",
+  "Gamepressure: GTA 6 Files in RDR2? This Time It's Parachutes",
+  "Charlie INTEL / IBTimes: GTA 6 rumors grow after players find strange files in RDR2 (alternative explanations: leftovers from parallel Rockstar projects, or a GTA 5 port on the newer engine)"
+ ],
+ "lines": [
+  {
+   "text": "Red Dead Redemption 2, a western with parachutes in its files?"
+  },
+  {
+   "text": "A dataminer found parachute references inside the PC version, and GamesRadar reported it."
+  },
+  {
+   "text": "The names include skydive at parachute pack, and chute off bag."
+  },
+  {
+   "text": "Cowboys never skydive, so fans guessed those files belong to GTA 6."
+  },
+  {
+   "text": "GTA 5 already has parachutes, but those names are not in its own files."
+  },
+  {
+   "text": "Other outlets say it's simpler: Rockstar ran several projects, and leftovers slipped in."
+  },
+  {
+   "text": "Rockstar has never confirmed any of it, so treat this as a fan theory."
+  },
+  {
+   "text": "Still, skydiving over Leonida would be wild."
+  },
+  {
+   "text": "So tell us below, do you think Rockstar hid a clue inside"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/gr.jpg",
+   "badge": "FAN THEORY",
+   "banner": "PARACHUTES IN RDR2?",
+   "sub": "A WESTERN WITH SKYDIVING FILES",
+   "stamp": "UNCONFIRMED",
+   "mark": {
+    "circle": [
+     0.5,
+     0.45,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "dataminer",
+   "kind": "image",
+   "img": "assets/gr.jpg",
+   "label": "DATAMINER FOUND IT"
+  },
+  {
+   "at": "GamesRadar",
+   "kind": "image",
+   "img": "assets/gr.jpg",
+   "label": "GAMESRADAR REPORTED IT",
+   "crop": [
+    0.3,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "skydive",
+   "kind": "proof",
+   "img": "assets/gp.jpg",
+   "tag": "FILE NAMES",
+   "text": "SKYDIVE@PARACHUTE@PACK",
+   "hl": [
+    [
+     0.3,
+     0.1,
+     0.4,
+     0.5
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.3
+    ]
+   ]
+  },
+  {
+   "at": "Cowboys",
+   "kind": "image",
+   "img": "assets/dd.jpg",
+   "label": "COWBOYS DON'T SKYDIVE",
+   "crop": [
+    0.45,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "belong",
+   "kind": "image",
+   "img": "assets/ci.jpg",
+   "label": "FANS SAY: GTA 6?"
+  },
+  {
+   "at": "already",
+   "kind": "compare",
+   "title": "WHERE ARE THEY?",
+   "left": {
+    "img": "assets/gp.jpg",
+    "label": "GTA 5 HAS CHUTES",
+    "circle": [
+     0.5,
+     0.4,
+     0.25
+    ]
+   },
+   "right": {
+    "img": "assets/gr.jpg",
+    "label": "RDR2 FILES",
+    "circle": [
+     0.5,
+     0.45,
+     0.25
+    ]
+   }
+  },
+  {
+   "at": "Other",
+   "kind": "proof",
+   "img": "assets/ci.jpg",
+   "tag": "OTHER OUTLETS",
+   "text": "LEFTOVER FILES?",
+   "hl": [
+    [
+     0.3,
+     0.2,
+     0.4,
+     0.4
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.45
+    ]
+   ]
+  },
+  {
+   "at": "leftovers",
+   "kind": "image",
+   "img": "assets/dd.jpg",
+   "label": "LEFTOVERS SLIPPED IN"
+  },
+  {
+   "at": "confirmed",
+   "kind": "image",
+   "img": "assets/ib.jpg",
+   "label": "NEVER CONFIRMED"
+  },
+  {
+   "at": "Still",
+   "kind": "image",
+   "img": "assets/gp.jpg",
+   "label": "SKYDIVING OVER LEONIDA?",
+   "crop": [
+    0.1,
+    0.0,
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "at": "tell",
+   "kind": "poll",
+   "question": "A GTA 6 CLUE?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 3,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.2,
+   "r": 0.2,
+   "start": 0.2,
+   "dur": 1.2
+  },
+  {
+   "beat": 7,
+   "type": "ring",
+   "x": 0.55,
+   "y": 0.4,
+   "r": 0.1,
+   "start": 0.3,
+   "dur": 1.2
+  },
+  {
+   "beat": 9,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.45,
+   "y2": 0.45,
+   "start": 0.3,
+   "dur": 1.2
+  }
+ ],
+ "bg": {
+  "file_id": "1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8",
+  "name": "lv_0_20261120213720.mp4",
+  "start": 8.57,
+  "len": 31.3
+ }
+}

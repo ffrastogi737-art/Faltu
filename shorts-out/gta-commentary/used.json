@@ -1,32 +1,22 @@
 {
- "1l5l_is6c0-_F0JNCKP0dEC2q5zFNqWTG": [
-  [
-   10.73,
-   38.23
-  ]
- ],
+ "_prev": {
+  "1l5l_is6c0-_F0JNCKP0dEC2q5zFNqWTG": 10.73,
+  "1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8": 1.47,
+  "1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg": 4.66,
+  "1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux": 0.76,
+  "1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe": 5.29
+ },
+ "_cycle": 1,
  "1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8": [
   [
-   1.47,
-   28.97
+   8.57,
+   38.67
   ]
  ],
- "1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg": [
+ "1l5l_is6c0-_F0JNCKP0dEC2q5zFNqWTG": [
   [
-   4.66,
-   34.76
-  ]
- ],
- "1wTjqXgFAWLSc8rgjCagIMyeItO9bBiux": [
-  [
-   0.76,
-   30.86
-  ]
- ],
- "1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe": [
-  [
-   5.29,
-   35.39
+   7.9,
+   39.14
   ]
  ]
 }
