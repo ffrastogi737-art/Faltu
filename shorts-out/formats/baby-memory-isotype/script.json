@@ -1,0 +1,119 @@
+{
+ "title": "You Had Memories As A Baby (You Can't Reach Them)",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.3,
+ "music": "hype",
+ "sources": [
+  "Yale News, 20 Mar 2025 (Yates et al., Science): fMRI of 26 infants 4 months to 2 years; hippocampal activity at first viewing predicted later recognition; strongest after age 1",
+  "Scientific American, \"We Make Memories as Babies, So Why Do We Forget Them?\": same study, memories encoded in infancy, retrieval as a possible explanation",
+  "Columbia news + WebMD (20 Mar 2025): same study, 26 infants",
+  "Akhtar et al. 2018 (BBC survey, 6,641 people): average earliest memory about 3.2 years; review PMC4104227: mean about 3.5 years",
+  "Guskjolen et al., Current Biology 2018 + SickKids press release: infant mice forgot a fear memory, light stimulation of tagged cells brought it back"
+ ],
+ "lines": [
+  {
+   "text": "You had memories as a baby. You just can't reach them.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "YOU HAD MEMORIES",
+    "sub": "YOU CAN'T REACH THEM",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Ask anyone for their first memory, and it usually starts around age three.",
+   "vis": {
+    "k": "S",
+    "big": "AGE 3",
+    "label": "AVERAGE FIRST MEMORY",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Before that? Almost blank. Scientists call it infantile amnesia.",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "INFANTILE AMNESIA"
+   }
+  },
+  {
+   "text": "For decades, the explanation was simple: a baby brain was too young to record anything.",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "TOO YOUNG TO RECORD?"
+   },
+   "emo": 0.8
+  },
+  {
+   "text": "Then in twenty twenty-five, Yale scientists scanned twenty-six babies' brains while they looked at pictures.",
+   "vis": {
+    "k": "S",
+    "big": "26 BABIES",
+    "label": "YALE BRAIN SCANS",
+    "fx": "boom"
+   }
+  },
+  {
+   "text": "The harder the memory center fired the first time, the more the baby recognized that picture later.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "MEMORY CENTER LIT UP",
+    "sub": "THEN THEY RECOGNIZED IT",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "That worked best after about age one.",
+   "vis": {
+    "k": "I",
+    "icon": "bed",
+    "head": "STRONGEST AFTER AGE 1"
+   }
+  },
+  {
+   "text": "Baby mice point the same way: memories that seemed lost came back when scientists switched on the right brain cells.",
+   "vis": {
+    "k": "I",
+    "icon": "nerve",
+    "head": "LOST MEMORIES CAME BACK",
+    "sub": "IN BABY MICE"
+   }
+  },
+  {
+   "text": "So the memories may be saved. The hard part may be finding them.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "SAVED, NOT LOST?",
+    "sub": "FINDING THEM IS THE HARD PART",
+    "fx": "hit"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Scientists still don't know how long baby memories last.",
+   "vis": {
+    "k": "I",
+    "icon": "clock",
+    "head": "HOW LONG THEY LAST?",
+    "sub": "STILL UNKNOWN"
+   }
+  },
+  {
+   "text": "So your first year may still be in there, because",
+   "vis": {
+    "k": "Q",
+    "icon": "person",
+    "head": "STILL IN THERE?"
+   },
+   "emo": 0.85
+  }
+ ]
+}
