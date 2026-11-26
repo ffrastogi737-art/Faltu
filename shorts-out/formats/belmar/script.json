@@ -1,0 +1,100 @@
+{
+ "title": "Jason And Lucia's Apartment Was A Real Building",
+ "lead": 0.15,
+ "outro": 1.0,
+ "gap": 0.25,
+ "music": "hype",
+ "sources": [
+  "Kotaku: GTA 6 Lucia and Jason apartment, Miami / Vice City real location",
+  "Dexerto: GTA 6 fan tracks down Jason and Lucias real-life apartment years after it was demolished",
+  "Player.One: GTA 6 fans claim they found Jason and Lucias Vice City apartment in real life",
+  "GameNGuide (30 Aug 2026): fans may have found the real Miami apartment (demolition date varies between sources, so not stated; Rockstar has not confirmed)"
+ ],
+ "lines": [
+  {
+   "text": "Jason and Lucia's apartment may be a real Miami building. And fans say it's already gone.",
+   "vis": {
+    "k": "Q",
+    "icon": "apt",
+    "head": "A REAL BUILDING?"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "A fan started with the skyline you see through the apartment window.",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "THE WINDOW VIEW",
+    "sub": "FAN INVESTIGATION"
+   }
+  },
+  {
+   "text": "They matched a tall teal tower in that view to real Miami landmarks.",
+   "vis": {
+    "k": "I",
+    "icon": "pin",
+    "head": "MATCHED TO MIAMI",
+    "sub": "SKYLINE CLUES",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "That pointed to a condo called the Belmar, near Biscayne Bay.",
+   "vis": {
+    "k": "I",
+    "icon": "apt",
+    "head": "THE BELMAR",
+    "sub": "NEAR BISCAYNE BAY",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "But on today's maps, the lot looked completely empty.",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "apt",
+      "APARTMENT IN GAME"
+     ],
+     [
+      "crane",
+      "TODAY: EMPTY LOT"
+     ]
+    ]
+   },
+   "emo": 0.88
+  },
+  {
+   "text": "So the fan dug through old Street View photos, and the building showed up.",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "OLD STREET VIEW",
+    "sub": "THE BUILDING WAS THERE",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Reports disagree on when it was torn down, and Rockstar has not confirmed any of this.",
+   "vis": {
+    "k": "I",
+    "icon": "kit",
+    "head": "NOT CONFIRMED",
+    "sub": "AS REPORTED"
+   }
+  },
+  {
+   "text": "So did Rockstar copy a building that no longer exists?",
+   "vis": {
+    "k": "Q",
+    "icon": "crane",
+    "head": "COPIED A GHOST?"
+   },
+   "emo": 0.85
+  }
+ ]
+}

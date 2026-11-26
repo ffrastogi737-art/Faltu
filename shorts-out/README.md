@@ -300,7 +300,7 @@ Sources: Yale News (20 Mar 2025); NPR (20 Mar 2025); Scientific American.
 ```
 **Tags:** infantile amnesia, why cant we remember being a baby, baby memory, hippocampus, brain facts, psychology facts, science facts, did you know
 **Experiment:** new kind psychology-myth (not in last 5); chalk-talk reuse (WIN); hook = conflict (brain was recording, you can't find one); 32 s, 119 words, Chatterbox; slot exploit morning 09:00 IST 27 Nov.
-**Status:** QUEUED: goes public 26 Nov 2026 14:35 IST (https://youtu.be/eH_qY0GGWoc)
+**Status:** PUBLIC 26 Nov 2026 ~14:57 IST, switched late by the run (https://youtu.be/eH_qY0GGWoc)
 
 ## 27 · `27-blood-cells.mp4` · isotype (WIN-style reuse, 25 Nov winner; body-science kind, first use in the last 5)
 **Title:** Your Body Makes 2 Million Blood Cells Every Second
