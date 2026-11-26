@@ -53,3 +53,4 @@ NEW STYLE (library): top-5-countdown ported on comic-pop 24 Nov 2026 (kind N ran
 2026-11-25 | NEW STYLE (library): isotype | random draw; flat pictogram look for a money-stats story | 25 min build | | 
 The US Spent 3.7 Cents To Make Every Penny | 2026-11-25 20:25 IST catchup | tests isotype + money-stats kind + conflict-first hook | | 
 2026-11-26 | NEW KIND psychology-myth + chalk-talk reuse | Why You Can't Remember Being A Baby | 2026-11-27 09:00 IST exploit | tests kind psychology-myth, chalk-talk WIN style, conflict-first hook | | 
+2026-11-26 | gta commentary 26 RDR2 parachute fan theory | 2026-11-27 09:00 IST exploit | tests evergreen multi-outlet fan theory (old 2021 source) on commentary track | | 
