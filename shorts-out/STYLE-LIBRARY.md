@@ -30,6 +30,7 @@ callout-kit, lower-thirds, headline-backdrop, stack-split, sticker-pop, glitch-p
 shadow-puppets, visual-novel, rubber-hose-reel, woodcut-tale, neon-line.
 
 ## Status
+- BANNED (owner 26 Nov 2026): `chalk-talk` (blackboard look). Deleted from styles/, excluded in pick_style.py (BANNED). Never use it again.
 - Tried: none yet. Log each one in experiments.txt as "NEW STYLE (library): <id>".
 - First library video needs `tools/render_html.mjs` (our own, commit it to the skill): seek-per-frame capture at
   720x1280 upscaled to 1080x1920, plus the SFX render mixed under narration. Build it once, then reuse.

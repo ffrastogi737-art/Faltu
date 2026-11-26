@@ -1,9 +1,10 @@
-// Captions (Chalk Talk): 1-3 words, Inter Black, chalk white with a dark board-green outline, ONE yellow word, centre lower third.
+// Captions: 1-3 words, Inter Black, white with a thick ink outline, ONE yellow word, centre lower third.
 // Each script line has "caps": "WHAT IF *YOU | SWALLOW *GUM?"  ("|" = next caption, "*" = the yellow word).
 // Without "caps", the line is chunked automatically (2-3 words, the longest word goes yellow).
 // A chunk appears 0.05 s before its first word and stays until the next chunk (or shortly after the line ends).
 import { ctx, C, clamp, lerp, seg, eob } from './lib.js';
 import { T, lineWords } from './timing.js';
+import { captionBar, CAPLOOK } from './kit.js';
 
 export const CAP = { y: 1400, size: 150, maxW: 900 };
 let caps = [];
@@ -41,28 +42,6 @@ export const captionList = () => caps;
 
 export function drawCaption(t) {
   const c = caps.find((c) => t >= c.s && t < c.e); if (!c) return;
-  const lt = t - c.s, size = CAP.size;
-  ctx.font = `900 ${size}px Inter`; ctx.letterSpacing = '-2px';
-  const sp = size * 0.26;
-  c.words.forEach((w) => (w.w = ctx.measureText(w.txt).width));
-  const width = (ws) => ws.reduce((a, w) => a + w.w, 0) + sp * (ws.length - 1);
-  let lines = [c.words];
-  if (width(c.words) > CAP.maxW && c.words.length > 1) {
-    let best = null;
-    for (let i = 1; i < c.words.length; i++) { const a = c.words.slice(0, i), b = c.words.slice(i), m = Math.max(width(a), width(b)); if (!best || m < best.m) best = { m, l: [a, b] }; }
-    lines = best.l;
-  }
-  const fit = Math.min(1, CAP.maxW / Math.max(...lines.map(width)));
-  const sc = (lt < 0.2 ? lerp(0.65, 1, eob(seg(lt, 0, 0.2))) : 1) * fit;
-  ctx.save(); ctx.translate(540, CAP.y); ctx.scale(sc, sc);
-  ctx.textBaseline = 'middle'; ctx.textAlign = 'left'; ctx.lineJoin = 'round';
-  const lh = size, y0 = -(lines.length - 1) * lh / 2;
-  lines.forEach((ln, li) => {
-    let x = -width(ln) / 2; const y = y0 + li * lh;
-    for (const w of ln) {
-      ctx.lineWidth = 30; ctx.strokeStyle = '#15301F'; ctx.strokeText(w.txt, x, y + 10); ctx.strokeText(w.txt, x, y);
-      ctx.fillStyle = w.hi ? '#F7E26B' : '#F2F0E6'; ctx.fillText(w.txt, x, y); x += w.w + sp;
-    }
-  });
-  ctx.letterSpacing = '0px'; ctx.restore();
+  const lt = t - c.s, sc = lt < 0.18 ? lerp(0.7, 1, eob(seg(lt, 0, 0.18))) : 1;
+  captionBar(c.words, 540, CAPLOOK.y, sc);
 }

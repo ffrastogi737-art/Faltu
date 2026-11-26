@@ -16,15 +16,15 @@ shortcut: script features are keyword counts, not a language model; the agent re
 import re, sys, pathlib, csv, json, collections, statistics as st, datetime as dt
 D = pathlib.Path(__file__).parent
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
-LOCAL = {'terminal', 'stack-split', 'chalk-talk', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
+BANNED = {'chalk-talk'}   # owner 26 Nov 2026: the blackboard theme is deleted and never used again (history rows stay)
+LOCAL = {'terminal', 'stack-split', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
          'myth-or-fact', 'comic-panels', 'top-5-countdown'}
 PORTED = {'terminal', 'stack-split', 'myth-or-fact', 'comic-panels', 'top-5-countdown'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
 KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
          'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list', 'gaming-guide', 'gaming-reaction']
 # Template catalog: what each template is good at, in the same words the script analysis produces ('3d' = slow render, many minutes).
 TAGS = {}
-for _line in '''chalk-talk: body science question calm
-comic-pop: list news versus stat gaming myth quiz fast funny
+for _line in '''comic-pop: list news versus stat gaming myth quiz fast funny
 deep-dive: body science whatif calm 3d
 inside-out: body science whatif question
 neon-versus: gaming versus news dark
@@ -234,6 +234,7 @@ def rank(f, channel, hist, ok, E, demand=None):
     used = collections.Counter(s for e in E for s in e['styles']); last2 = [e['styles'] for e in E[-2:]]
     out = []
     for s in sorted(catalog()):
+        if s in BANNED: continue                                                  # owner ban (26 Nov 2026)
         if current(s, channel, hist) == 'LOSE' and s != demand: continue          # the only hard block
         tags = TAGS.get(s, set()); hit = sorted(t for t in tags if f.get(t))
         sc = sum(f[t] for t in hit); why = list(hit)
@@ -384,9 +385,9 @@ def _test():
     assert len(library_ids() - LOCAL) >= 40 and 'tier-list' in library_ids(), len(library_ids())
     assert all(s in TAGS for s in catalog()), [s for s in catalog() if s not in TAGS]
     assert {'gaming-guide', 'gaming-reaction'} <= set(KINDS)
-    ok6 = [{'style': 'comic-pop', 'views': 900}] * 6 + [{'style': 'chalk-talk', 'views': 100}] * 6          # median 500: comic-pop 900 is proven
+    ok6 = [{'style': 'comic-pop', 'views': 900}] * 6 + [{'style': 'deep-dive', 'views': 100}] * 6          # median 500: comic-pop 900 is proven
     sg = {x['style']: x['score'] for x in rank({'gaming': 2}, 'gta', [], ok6, [], None)}; ss = {x['style']: x['score'] for x in rank({'gaming': 2}, 'solo', [], ok6, [], None)}
-    assert sg['comic-pop'] == ss['comic-pop'] - 1 and sg['chalk-talk'] == ss['chalk-talk'], 'gta: 5+ videos -> +1 (decay); solo keeps +2'
+    assert sg['comic-pop'] == ss['comic-pop'] - 1 and sg['deep-dive'] == ss['deep-dive'], 'gta: 5+ videos -> +1 (decay); solo keeps +2'
     assert explore_due(['a'] * 15) and not explore_due(['a'] * 16) and not explore_due(['a'] * 17) and explore_due(['a'] * 18)
     assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}, {'style': 'b'}], ['comic-pop'])[1] == {'comic-pop'}
     assert apply_cooldown([{'style': 'comic-pop'}, {'style': 'a'}], ['comic-pop'])[1] == set(), 'fewer than 2 alternatives: no cooldown'
@@ -394,10 +395,10 @@ def _test():
     assert solo_track_next([]) == 'TALL-TALE'
     tl = {'channel': 'solo', 'video_id': 'a', 'style': TALL}; sd = {'channel': 'solo', 'video_id': 'b', 'style': 'comic-panels'}
     assert solo_track_next([tl]) == 'STANDARD' and solo_track_next([tl, sd]) == 'TALL-TALE', 'strict alternation, last upload decides'
-    assert solo_track_next([tl, {'channel': 'solo', 'video_id': 'TBD', 'style': 'chalk-talk'}]) == 'STANDARD', 'planned rows do not count'
+    assert solo_track_next([tl, {'channel': 'solo', 'video_id': 'TBD', 'style': 'deep-dive'}]) == 'STANDARD', 'planned rows do not count'
     assert solo_track_next([tl, {'channel': 'gta', 'video_id': 'g', 'style': 'comic-pop'}]) == 'STANDARD', 'gta rows never count for solo'
-    ranked = [{'style': TALL, 'score': 1}, {'style': 'comic-pop', 'score': 2}, {'style': 'chalk-talk', 'score': 1.5}, {'style': 'myth-or-fact', 'score': 1}, {'style': 'inside-out', 'score': 0.5}]
-    rows_std = [{'channel': 'solo', 'video_id': str(i), 'style': x} for i, x in enumerate(['inside-out', 'chalk-talk', 'comic-panels'])]
+    ranked = [{'style': TALL, 'score': 1}, {'style': 'comic-pop', 'score': 2}, {'style': 'deep-dive', 'score': 1.5}, {'style': 'myth-or-fact', 'score': 1}, {'style': 'inside-out', 'score': 0.5}]
+    rows_std = [{'channel': 'solo', 'video_id': str(i), 'style': x} for i, x in enumerate(['inside-out', 'deep-dive', 'comic-panels'])]
     keep, notes = solo_filter(ranked, 'STANDARD', rows_std)
     assert [r['style'] for r in keep] == ['comic-pop', 'myth-or-fact'], keep     # the last 3 STANDARD styles blocked, tall-tale never
     keep, _ = solo_filter(ranked, 'TALL-TALE', rows_std); assert [r['style'] for r in keep] == [TALL]

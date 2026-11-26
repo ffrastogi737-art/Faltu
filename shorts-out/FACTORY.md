@@ -81,7 +81,7 @@ upload public at upload time (private, then publishAt or the timed switch).
   new topics, keep what wins (experiments.txt).
 - Each run: ONE Short per channel (solo hype + Kratos Playz). Every 3rd run also ONE LONG video (6-10 min, 16:9
   1920x1080, alternate channels; GTA 6 launch guides/tips for Kratos, a deep "everything about X" for solo hype).
-  Long video: use a 16:9 Nafay library style (creator-motion, data-story, clean-tech, pop-info, chalk-talk; see
+  Long video: use a 16:9 Nafay library style (creator-motion, data-story, clean-tech, pop-info; see
   STYLE-LIBRARY.md) or adapt our kit to 1920x1080; Kokoro narration + words.json; chapters in the description; render in
   background segments; same QA. First long video: build tools/render_html.mjs (seek per frame + SFX.render) into the
   skill and commit it.
@@ -241,7 +241,7 @@ The script chooses the template; a template never forces the script.
    + `capture.mjs check` + one contact sheet, add the id to LOCAL and PORTED in pick_style.py, note it in STYLE-LIBRARY.md. Rebuild in our own engine,
    never commit a library source file. 3D ids render slowly (render_html.mjs route): only when no 2D template fits the story.
 5. Channel routing. solo: match every script to the template that holds attention for that genre (tall-tale or comic-panels for character skits; comic-pop,
-   myth-or-fact or comic-panels for fast facts and stories; inside-out / chalk-talk for body science; ...). gta: the topic stays GTA 6, the template is matched
+   myth-or-fact or comic-panels for fast facts and stories; inside-out for body science (chalk-talk is BANNED, owner 26 Nov 2026); ...). gta: the topic stays GTA 6, the template is matched
    per video from the script's angle (comic-pop; myth-or-fact for rumour checks; comic-panels for player situations; a ported library id when it fits better;
    neon-versus only if its LOSE is lifted or demanded).
 5b. **gta only: 50/50 with the commentary track** (owner 20 Nov 2026; solo never does this, pick_style.py is not involved).

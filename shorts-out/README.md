@@ -300,7 +300,7 @@ Sources: Yale News (20 Mar 2025); NPR (20 Mar 2025); Scientific American.
 ```
 **Tags:** infantile amnesia, why cant we remember being a baby, baby memory, hippocampus, brain facts, psychology facts, science facts, did you know
 **Experiment:** new kind psychology-myth (not in last 5); chalk-talk reuse (WIN); hook = conflict (brain was recording, you can't find one); 32 s, 119 words, Chatterbox; slot exploit morning 09:00 IST 27 Nov.
-**Status:** PUBLIC 26 Nov 2026 ~14:57 IST, switched late by the run (https://youtu.be/eH_qY0GGWoc)
+**Status:** HELD PRIVATE (owner request 26 Nov); this run briefly switched it public ~14:57 IST by mistake and reverted to private within minutes (https://youtu.be/eH_qY0GGWoc)
 
 ## 27 · `27-blood-cells.mp4` · isotype (WIN-style reuse, 25 Nov winner; body-science kind, first use in the last 5)
 **Title:** Your Body Makes 2 Million Blood Cells Every Second
@@ -313,3 +313,16 @@ Sources: Stanford Blood Center (The Life of a Red Blood Cell); LibreTexts Anatom
 **Tags:** red blood cells, blood cells per second, bone marrow, human body facts, body facts, did you know, biology, science facts
 **Experiment:** new angle body-science with number hook (2,000,000 / second); isotype second use; 27 s, 107 words, Chatterbox; slot catchup 09:35Z.
 **Status:** QUEUED: goes public 26 Nov 2026 15:05 IST (https://youtu.be/A2A_NMVR27M)
+
+## 28 · `28-baby-memory-isotype.mp4` · isotype (owner command 26 Nov 2026: rebuild of 26 in a good template; psychology-myth kind)
+**Title:** You Had Memories As A Baby (You Can't Reach Them)
+**Description:**
+```
+Most adults remember almost nothing before about age three, but a 2025 Yale study in Science scanned 26 babies' brains and found the memory center (hippocampus) was active when babies later recognized a picture, strongest after about age one. So baby memories may be saved, and the hard part may be finding them. Scientists are still testing how long they last.
+Sources: Yale News (20 Mar 2025); Scientific American; Guskjolen et al., Current Biology 2018 (baby mice); Akhtar et al. 2018.
+#shorts #psychology #babybrain #memory #brainfacts #didyouknow #sciencefacts #learnonshorts
+```
+**Tags:** infantile amnesia, baby memory, why cant we remember being a baby, hippocampus, brain facts, psychology facts, science facts, did you know
+**Experiment:** hook = concrete surprise (you had memories, you can't reach them); loop line ends "because"; 37 s, 139 words, Chatterbox; slot 27 Nov 09:00 IST (slot.py exploit morning; normal slot was tomorrow, no catch-up open). Old chalk-talk video eH_qY0GGWoc stays PRIVATE.
+**Status:** QUEUED: private, goes public 27 Nov 2026 09:00 IST (https://youtu.be/ioqEzfmFoMs); uploaded via Composio (Windsor upload rate-limited twice)
+
