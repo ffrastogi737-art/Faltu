@@ -300,7 +300,7 @@ Sources: Yale News (20 Mar 2025); NPR (20 Mar 2025); Scientific American.
 ```
 **Tags:** infantile amnesia, why cant we remember being a baby, baby memory, hippocampus, brain facts, psychology facts, science facts, did you know
 **Experiment:** new kind psychology-myth (not in last 5); chalk-talk reuse (WIN); hook = conflict (brain was recording, you can't find one); 32 s, 119 words, Chatterbox; slot exploit morning 09:00 IST 27 Nov.
-**Status:** QUEUED: goes public 27 Nov 2026 09:00 IST (https://youtu.be/eH_qY0GGWoc)
+**Status:** QUEUED: goes public 26 Nov 2026 14:35 IST (https://youtu.be/eH_qY0GGWoc)
 
 ## 27 · `27-blood-cells.mp4` · isotype (WIN-style reuse, 25 Nov winner; body-science kind, first use in the last 5)
 **Title:** Your Body Makes 2 Million Blood Cells Every Second
@@ -312,4 +312,4 @@ Sources: Stanford Blood Center (The Life of a Red Blood Cell); LibreTexts Anatom
 ```
 **Tags:** red blood cells, blood cells per second, bone marrow, human body facts, body facts, did you know, biology, science facts
 **Experiment:** new angle body-science with number hook (2,000,000 / second); isotype second use; 27 s, 107 words, Chatterbox; slot catchup 09:35Z.
-**Status:** UPLOADING
+**Status:** QUEUED: goes public 26 Nov 2026 15:05 IST (https://youtu.be/A2A_NMVR27M)
