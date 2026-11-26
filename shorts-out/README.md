@@ -300,4 +300,4 @@ Sources: Yale News (20 Mar 2025); NPR (20 Mar 2025); Scientific American.
 ```
 **Tags:** infantile amnesia, why cant we remember being a baby, baby memory, hippocampus, brain facts, psychology facts, science facts, did you know
 **Experiment:** new kind psychology-myth (not in last 5); chalk-talk reuse (WIN); hook = conflict (brain was recording, you can't find one); 32 s, 119 words, Chatterbox; slot exploit morning 09:00 IST 27 Nov.
-**Status:** WAITING UPLOAD
+**Status:** QUEUED: goes public 27 Nov 2026 09:00 IST (https://youtu.be/eH_qY0GGWoc)
