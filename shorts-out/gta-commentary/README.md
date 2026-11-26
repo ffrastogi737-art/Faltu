@@ -50,7 +50,7 @@ Sources: Push Square (patch notes, PS5 603.8MB); PC Gamer; esports.gg / GamerFuz
 
 **Duplicate:** a second copy 6tcrcdtZr0M was uploaded by mistake at 13:40 IST (two sessions raced); it is private with NO publishAt and stays private forever (never delete). Canonical: hwp3aY2zNHU, scheduled 16:00 IST.
 
-## 26 · `26-gta6-rdr2-parachute.mp4` · gta-commentary · WAITING UPLOAD (quota): uploaded PRIVATE as rhpVQMYc5Z4 (https://youtu.be/rhpVQMYc5Z4), publishAt 2026-11-27T03:30:00Z NOT set yet (quotaExceeded on the PUT, both routes out); next run: PUT publishAt (slot.py gta --catchup if that time is gone) and read back
+## 26 · `26-gta6-rdr2-parachute.mp4` · gta-commentary · PUBLIC 2026-11-26 15:10 IST (live read-back 26 Nov 21:15 IST: public) (https://youtu.be/rhpVQMYc5Z4)
 **Title:** Red Dead 2 Has Hidden Parachute Files? 🪂 (Fan Theory) #shorts
 **Description:**
 ```
