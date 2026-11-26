@@ -323,3 +323,18 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Tags:** gta 6, gta 6 bugs, gta 6 glitches, gta 6 metacritic, gta 6 vs cyberpunk, rockstar games, gta vi, gta 6 news
 **Hook:** A ninety nine on Metacritic, and players are posting flying cars. (loop: last words "does your game deserve" -> line 1)
 **Top-3 (match):** n/a (owner order 25 Nov: random draw from the library; stack-split fits a "score vs reality" contrast) · 23.6 s, 95 words, kind gaming-news · test: stack-split + credited stills; hook names the surprising contrast in the first words
+
+## 27 · `27-gta6-dexter-apartment.mp4` · comic-pop (STANDARD; icons apt/boat/door/pin/kit added; rumour-check mood) · SCHEDULED 26 Nov 2026 15:40 IST (OzG4wxpihBA, private+publishAt 10:10Z) (https://www.youtube.com/watch?v=OzG4wxpihBA), catch-up slot, uploaded via Composio (Windsor rate-limited)
+**Title:** Players Found Dexter's Apartment In GTA 6 👀 (Reported) #shorts
+**Description:** Players say they found Dexter Morgan's apartment in GTA 6 (door only, reports of a boat and kill kit); Rockstar has not confirmed; location differs between outlets.
+**Tags:** gta 6, gta 6 dexter, dexter apartment, gta 6 easter egg, gta 6 secrets, rockstar games, gta vi, gta 6 news
+**Hook:** Players say they found Dexter's apartment in GTA 6. And you can steal his boat. (loop: last words flow into line 1)
+**Top-3 (match):** comic-pop 7 | myth-or-fact 7 | breaking-desk 5.8
+**Sources:** Dexerto, Insider Gaming, TheWrap, Bloody Disgusting. 28.4 s, 119 words, kind gaming-secret.
+
+## 28 · `28-gta6-belmar-apartment.mp4` · comic-pop (STANDARD; compare shot C used for game vs empty lot; same icon kit) · SCHEDULED 26 Nov 2026 16:10 IST (ET1IbjUdk6k, private+publishAt 10:40Z) (https://www.youtube.com/watch?v=ET1IbjUdk6k), catch-up slot, Composio
+**Title:** Jason And Lucia's GTA 6 Apartment Was A Real Building? 🏢 (Fan Theory) #shorts
+**Description:** Fans say Jason and Lucia's apartment is based on the Belmar condo in Miami, found via skyline and old Street View; Rockstar has not confirmed; demolition date varies by source.
+**Tags:** gta 6, jason and lucia, gta 6 apartment, gta 6 real location, gta 6 miami, rockstar games, gta vi, gta 6 news
+**Hook:** Jason and Lucia's apartment may be a real Miami building. And fans say it's already gone.
+**Sources:** Kotaku, Dexerto, Player.One, GameNGuide. 25.7 s, 101 words, kind gaming-secret. Note: two comic-pop uploads in one run (time pressure after the slow voice render): SAMENESS RISK, hook shapes differ.
