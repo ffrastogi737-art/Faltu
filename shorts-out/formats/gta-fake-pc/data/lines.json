@@ -1,0 +1,65 @@
+{
+ "duration": 27.066,
+ "lines": [
+  {
+   "i": 0,
+   "text": "A free GTA 6 PC download that's secretly a virus?",
+   "start": 0.15,
+   "end": 2.857
+  },
+  {
+   "i": 1,
+   "text": "Rockstar hasn't announced any PC version.",
+   "start": 2.977,
+   "end": 4.758
+  },
+  {
+   "i": 2,
+   "text": "But fake PC builds are spreading anyway.",
+   "start": 4.878,
+   "end": 6.44
+  },
+  {
+   "i": 3,
+   "text": "TechRadar says one 113 gigabyte download is almost all empty zeroes, plus a tiny virus.",
+   "start": 6.56,
+   "end": 11.304
+  },
+  {
+   "i": 4,
+   "text": "Malwarebytes found fake GTA 6 demo sites that lead to password-stealing malware.",
+   "start": 11.424,
+   "end": 14.683
+  },
+  {
+   "i": 5,
+   "text": "Hackers love hype, and nothing has more hype than GTA 6.",
+   "start": 14.803,
+   "end": 17.842
+  },
+  {
+   "i": 6,
+   "text": "If a site promises a free PC copy, that's the bait.",
+   "start": 17.962,
+   "end": 20.229
+  },
+  {
+   "i": 7,
+   "text": "Only download games from stores you trust.",
+   "start": 20.349,
+   "end": 22.175
+  },
+  {
+   "i": 8,
+   "text": "Never turn off your antivirus for a game.",
+   "start": 22.295,
+   "end": 24.3
+  },
+  {
+   "i": 9,
+   "text": "Tell us below, would you ever risk your whole PC for",
+   "start": 24.42,
+   "end": 26.366
+  }
+ ]
+}

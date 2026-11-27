@@ -1,0 +1,231 @@
+{
+ "title": "Fake GTA 6 PC Builds Are Malware",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "TechRadar: fake GTA VI ISO download is malware, 113GB is 99.99% empty zeroes with a tiny virus attached",
+  "Malwarebytes: fake GTA 6 Extended Look and demo sites deliver an infostealer",
+  "Cybernews / Windows Report / TweakTown / PC Games Hardware: fake 100+ GB GTA 6 build hides malware",
+  "Rockstar has announced no PC version (GadgetReview, Take-Two warning on AI-assisted ports)"
+ ],
+ "lines": [
+  {
+   "text": "A free GTA 6 PC download that's secretly a virus?"
+  },
+  {
+   "text": "Rockstar hasn't announced any PC version."
+  },
+  {
+   "text": "But fake PC builds are spreading anyway."
+  },
+  {
+   "text": "TechRadar says one 113 gigabyte download is almost all empty zeroes, plus a tiny virus."
+  },
+  {
+   "text": "Malwarebytes found fake GTA 6 demo sites that lead to password-stealing malware."
+  },
+  {
+   "text": "Hackers love hype, and nothing has more hype than GTA 6."
+  },
+  {
+   "text": "If a site promises a free PC copy, that's the bait."
+  },
+  {
+   "text": "Only download games from stores you trust."
+  },
+  {
+   "text": "Never turn off your antivirus for a game."
+  },
+  {
+   "text": "Tell us below, would you ever risk your whole PC for"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/tr.jpg",
+   "badge": "WARNING",
+   "banner": "FREE GTA 6 PC?",
+   "sub": "OR A VIRUS?",
+   "stamp": "FAKE BUILDS",
+   "mark": {
+    "circle": [
+     0.45,
+     0.35,
+     0.2
+    ]
+   }
+  },
+  {
+   "at": "Rockstar",
+   "kind": "image",
+   "img": "assets/gb.jpg",
+   "label": "NO PC VERSION ANNOUNCED"
+  },
+  {
+   "at": "spreading",
+   "kind": "image",
+   "img": "assets/mb.jpg",
+   "label": "FAKE BUILDS EVERYWHERE",
+   "crop": [
+    0.0,
+    0.0,
+    0.7,
+    1.0
+   ]
+  },
+  {
+   "at": "TechRadar",
+   "kind": "proof",
+   "img": "assets/tr.jpg",
+   "tag": "REPORTED",
+   "text": "113 GB, MOSTLY EMPTY",
+   "hl": [
+    [
+     0.05,
+     0.1,
+     0.6,
+     0.3
+    ]
+   ],
+   "arrows": [
+    [
+     0.4,
+     0.5
+    ]
+   ]
+  },
+  {
+   "at": "zeroes",
+   "kind": "image",
+   "img": "assets/tr.jpg",
+   "label": "ALMOST ALL ZEROES",
+   "crop": [
+    0.3,
+    0.2,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "Malwarebytes",
+   "kind": "proof",
+   "img": "assets/mb.jpg",
+   "tag": "MALWAREBYTES",
+   "text": "FAKE DEMO SITES",
+   "hl": [
+    [
+     0.1,
+     0.1,
+     0.8,
+     0.3
+    ]
+   ],
+   "arrows": [
+    [
+     0.5,
+     0.5
+    ]
+   ]
+  },
+  {
+   "at": "Hackers",
+   "kind": "image",
+   "img": "assets/mb2.jpg",
+   "label": "HYPE = BAIT"
+  },
+  {
+   "at": "bait",
+   "kind": "image",
+   "img": "assets/gb.jpg",
+   "label": "FREE COPY = TRAP",
+   "crop": [
+    0.0,
+    0.0,
+    0.8,
+    1.0
+   ]
+  },
+  {
+   "at": "stores",
+   "kind": "compare",
+   "title": "SAFE VS TRAP",
+   "left": {
+    "img": "assets/gb.jpg",
+    "label": "OFFICIAL STORE",
+    "circle": [
+     0.5,
+     0.4,
+     0.25
+    ]
+   },
+   "right": {
+    "img": "assets/tr.jpg",
+    "label": "RANDOM LINK",
+    "circle": [
+     0.5,
+     0.4,
+     0.25
+    ]
+   }
+  },
+  {
+   "at": "antivirus",
+   "kind": "image",
+   "img": "assets/mb2.jpg",
+   "label": "KEEP ANTIVIRUS ON",
+   "crop": [
+    0.1,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "Tell",
+   "kind": "poll",
+   "question": "WOULD YOU RISK IT?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 3,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.3,
+   "r": 0.2,
+   "start": 0.3,
+   "dur": 1.4
+  },
+  {
+   "beat": 5,
+   "type": "ring",
+   "x": 0.5,
+   "y": 0.3,
+   "r": 0.12,
+   "start": 0.3,
+   "dur": 1.2
+  },
+  {
+   "beat": 7,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.5,
+   "y2": 0.45,
+   "start": 0.3,
+   "dur": 1.2
+  }
+ ],
+ "bg": {
+  "file_id": "1LZuvDiZhjLl8VEN-6Ii_CY0G97-Sc8Dg",
+  "name": "lv_0_20261120213612.mp4",
+  "start": 2.64,
+  "len": 30.4
+ }
+}

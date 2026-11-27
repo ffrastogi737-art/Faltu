@@ -63,3 +63,18 @@ Sources: GamesRadar; Gamepressure; Charlie INTEL; IBTimes. Images: GamesRadar, G
 **Facts:** GamesRadar (rollschuh2282, RDR2 PC, parachute names, not in gta5.exe), Gamepressure, Charlie INTEL, IBTimes; alternative explanations said as reported; stamp UNCONFIRMED.
 **Background:** lv_0_20261120213720.mp4 (Drive 1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8) 8.57-39.9 s, lap 2. 28.0 s, 107 words, 12 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Known weak spots:** Minecraft background on a GTA topic; the 2021 source story (evergreen fan theory, not fresh news).
+
+## 29 · `29-gta6-fake-pc-builds.mp4` · gta-commentary · building upload
+**Title:** Free GTA 6 PC Download? It's Malware ⚠️ (Reported) #shorts
+**Description:**
+```
+Rockstar has announced no PC version of GTA 6, but fake "PC builds" are spreading online. TechRadar reports one 113 GB download is almost all empty zeroes with a tiny virus attached, and Malwarebytes found fake GTA 6 demo sites that lead to password-stealing malware. Only download games from stores you trust.
+Sources: TechRadar; Malwarebytes; PC Games Hardware; Cybernews. Images: TechRadar, Malwarebytes, PC Games Hardware (credited on cards).
+#shorts #gta6 #gta6pc #grandtheftauto6 #rockstargames #gaming #malware
+```
+**Tags:** gta 6, gta 6 pc, gta 6 pc download, fake gta 6, gta 6 malware, gta 6 scam, rockstar games, gta vi
+**Hook:** A free GTA 6 PC download that's secretly a virus? (loop: last words "risk your whole PC for" flow into line 1)
+**Facts:** TechRadar (113GB fake ISO, 99.99% zeroes + tiny virus), Malwarebytes (fake Extended Look/demo sites, infostealer), PCGH/Cybernews (fake build hides malware); no PC version announced. Said as reported; no release claim. Kind gaming-guide (player-safety angle).
+**Background:** lv_0_20261120213612.mp4 2.64 s, 30.4 s, lap 2. 27.1 s, 98 words, 11 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Known weak spots:** Minecraft background on a GTA topic; generic outlet art as cards; card 7 held 5.2 s.
+**Status:** building upload
