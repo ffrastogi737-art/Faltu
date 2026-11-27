@@ -1,0 +1,2644 @@
+{
+ "setting": {
+  "name": "meadow",
+  "o": {
+   "sunset": true,
+   "fenceOn": false
+  }
+ },
+ "track": "TALL-TALE",
+ "music": "suspense",
+ "characters": {
+  "cutlar": {
+   "role": "American farmer Lyman Cutlar, 1859",
+   "look": {
+    "body": "#8A6B3F",
+    "pattern": "overalls",
+    "patCol": "#4F6FA0",
+    "hat": "cowboy",
+    "hatCol": "#6B4A2B",
+    "hair": "short",
+    "hairCol": "#4A3020",
+    "extra": [
+     "mustache"
+    ]
+   }
+  },
+  "griffin": {
+   "role": "Irish Hudson's Bay Company pig owner",
+   "look": {
+    "body": "#3F6B4A",
+    "pattern": "vest",
+    "patCol": "#7A2E2E",
+    "hat": "bowler",
+    "hatCol": "#2A2A2A",
+    "neck": "scarf",
+    "neckCol": "#C98B2B",
+    "extra": [
+     "glasses"
+    ]
+   }
+  },
+  "pickett": {
+   "role": "US Army Captain George Pickett",
+   "look": {
+    "body": "#2E4A7A",
+    "pattern": "coat",
+    "patCol": "#1E2F55",
+    "hat": "police",
+    "hatCol": "#1E2F55",
+    "band": "#E0C050",
+    "neck": "tie",
+    "neckCol": "#C23030",
+    "extra": [
+     "mustache"
+    ]
+   }
+  },
+  "admiral": {
+   "role": "British Royal Navy admiral",
+   "look": {
+    "body": "#9A2E2E",
+    "pattern": "coat",
+    "patCol": "#5A1818",
+    "hat": "tophat",
+    "hatCol": "#1A1A2A",
+    "neck": "bowtie",
+    "neckCol": "#F0F0F0",
+    "extra": [
+     "monocle"
+    ]
+   }
+  },
+  "nbr1": {
+   "role": "angry neighbor (the analogy)",
+   "look": {
+    "body": "#D8A43C",
+    "pattern": "stripes",
+    "patCol": "#B5372E",
+    "hat": "cap",
+    "hatCol": "#3C6FB6",
+    "extra": [
+     "mustache"
+    ]
+   }
+  },
+  "nbr2": {
+   "role": "angry neighbor (the analogy)",
+   "look": {
+    "body": "#7FAF7A",
+    "pattern": "check",
+    "patCol": "#3E6B3A",
+    "hat": "beanie",
+    "hatCol": "#6B4A7A",
+    "extra": [
+     "glasses"
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "line": 0,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "push",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      -0.5,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -3.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.42
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.26
+       ],
+       "pos": [
+        0.45,
+        1.5,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.18
+       ],
+       "pos": [
+        0.7,
+        1.48,
+        0
+       ],
+       "col": "#D9808F",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "bob": 0.08
+     },
+     "ry": 20
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4.3
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        -0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.0,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.5999999999999999,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "pig",
+     "type": "boom",
+     "gain": 0.8
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "move": "push",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      -0.5,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.2,
+      -3.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.42
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.26
+       ],
+       "pos": [
+        0.45,
+        1.5,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.18
+       ],
+       "pos": [
+        0.7,
+        1.48,
+        0
+       ],
+       "col": "#D9808F",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 20
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4.3
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        -0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.0,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.5999999999999999,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -1.3,
+      -3.6
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        -0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.0,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.5999999999999999,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ]
+    }
+   ],
+   "cues": []
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "warm",
+   "cam": "two-shot",
+   "move": "orbit-left",
+   "focus": "griffin",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      -0.45,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "stand"
+    },
+    {
+     "who": "griffin",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.0,
+      -4.5
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.42
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.26
+       ],
+       "pos": [
+        0.45,
+        1.5,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.18
+       ],
+       "pos": [
+        0.7,
+        1.48,
+        0
+       ],
+       "col": "#D9808F",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 80
+    }
+   ],
+   "cues": [
+    {
+     "word": "fires",
+     "type": "hit"
+    },
+    {
+     "word": "drops",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "move": "orbit-right",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      -0.45,
+      -3.0
+     ],
+     "mood": "smug",
+     "action": "point",
+     "talk": true
+    },
+    {
+     "who": "griffin",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.4,
+      -4.4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        0.96,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.02,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.08,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "ry": 15
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.4,
+      -4.4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        0.96,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.02,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.08,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.1400000000000001,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.2,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.26,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.32,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.38,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.44,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.5,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.56,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.62,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.6800000000000002,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.74,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.7999999999999998,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.8599999999999999,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.92,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        1.98,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        2.04,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.5,
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0,
+        2.1,
+        0
+       ],
+       "col": "#6BAA55"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "grow": 0.3
+     },
+     "ry": 15
+    }
+   ],
+   "cues": [
+    {
+     "word": "hundred",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "coast",
+    "o": {}
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "crane-up",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      0.0,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.6,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        2.2
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.45,
+        0.03
+       ],
+       "pos": [
+        0.38,
+        1.9,
+        0
+       ],
+       "col": "#2E4A9A"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 0
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.55,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        2.2
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.45,
+        0.03
+       ],
+       "pos": [
+        0.38,
+        1.9,
+        0
+       ],
+       "col": "#C23030"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 0
+    }
+   ],
+   "cues": []
+  },
+  {
+   "line": 5,
+   "theme": {
+    "name": "coast",
+    "o": {}
+   },
+   "light": "alarm",
+   "cam": "two-shot",
+   "move": "orbit-left",
+   "focus": "griffin",
+   "cast": [
+    {
+     "who": "griffin",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "fx": [
+      "steam"
+     ],
+     "talk": true
+    },
+    {
+     "who": "cutlar",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "cower",
+     "fx": [
+      "sweat-fly"
+     ]
+    }
+   ],
+   "props": [],
+   "cues": [
+    {
+     "word": "arrest",
+     "type": "slam"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "pickett",
+   "cast": [
+    {
+     "who": "pickett",
+     "pos": [
+      0.0,
+      -3.0
+     ],
+     "mood": "proud",
+     "action": "triumph",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.65,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        2.2
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.45,
+        0.03
+       ],
+       "pos": [
+        0.38,
+        1.9,
+        0
+       ],
+       "col": "#2E4A9A"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 0
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.55,
+      -4.2
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.14,
+        1.0
+       ],
+       "pos": [
+        0,
+        1.3,
+        0
+       ],
+       "col": "#2A2A2A",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.2,
+        0.1
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        0.2
+       ],
+       "col": "#4A3A2A",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.2,
+        0.1
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        -0.2
+       ],
+       "col": "#4A3A2A",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "ry": 25
+    }
+   ],
+   "cues": [
+    {
+     "word": "lands",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": {
+    "name": "coast",
+    "o": {}
+   },
+   "light": "alarm",
+   "cam": "medium",
+   "move": "push",
+   "focus": "pickett",
+   "cast": [
+    {
+     "who": "pickett",
+     "pos": [
+      0.0,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "recoil",
+     "fx": [
+      "sweat"
+     ],
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.7,
+      -5.5
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        2.2,
+        0.5,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#4B3A2B"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        1.6
+       ],
+       "pos": [
+        0,
+        1.5,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.05,
+        1.0,
+        0.9
+       ],
+       "pos": [
+        0.1,
+        1.6,
+        0
+       ],
+       "col": "#F2EBD8"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.07,
+        0.4
+       ],
+       "pos": [
+        0.6,
+        0.7,
+        0.36
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.07,
+        0.4
+       ],
+       "pos": [
+        -0.2,
+        0.7,
+        0.36
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "metal": true
+      }
+     ],
+     "motion": {
+      "slide": [
+       -0.3,
+       0
+      ]
+     },
+     "ry": 10
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.7,
+      -6.5
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        2.2,
+        0.5,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.5,
+        0
+       ],
+       "col": "#4B3A2B"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.05,
+        1.6
+       ],
+       "pos": [
+        0,
+        1.5,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.05,
+        1.0,
+        0.9
+       ],
+       "pos": [
+        0.1,
+        1.6,
+        0
+       ],
+       "col": "#F2EBD8"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.07,
+        0.4
+       ],
+       "pos": [
+        0.6,
+        0.7,
+        0.36
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.07,
+        0.4
+       ],
+       "pos": [
+        -0.2,
+        0.7,
+        0.36
+       ],
+       "col": "#222",
+       "rot": [
+        90,
+        0,
+        0
+       ],
+       "metal": true
+      }
+     ],
+     "motion": {
+      "slide": [
+       0.3,
+       0
+      ]
+     },
+     "ry": 10
+    }
+   ],
+   "cues": [
+    {
+     "word": "cannons",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "day",
+   "cam": "two-shot",
+   "move": "orbit-right",
+   "focus": "nbr1",
+   "cast": [
+    {
+     "who": "nbr1",
+     "pos": [
+      -0.45,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "fx": [
+      "steam"
+     ],
+     "talk": true
+    },
+    {
+     "who": "nbr2",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "fx": [
+      "steam"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0,
+      -2.4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.14,
+        1.0
+       ],
+       "pos": [
+        0,
+        1.3,
+        0
+       ],
+       "col": "#2A2A2A",
+       "rot": [
+        0,
+        0,
+        90
+       ],
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.2,
+        0.1
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        0.2
+       ],
+       "col": "#4A3A2A",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.2,
+        0.1
+       ],
+       "pos": [
+        -0.2,
+        1.1,
+        -0.2
+       ],
+       "col": "#4A3A2A",
+       "rot": [
+        90,
+        0,
+        0
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "ry": 25
+    }
+   ],
+   "cues": [
+    {
+     "word": "screaming",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#6B4A2B",
+     "signText": "HMS ADMIRAL"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "admiral",
+   "cast": [
+    {
+     "who": "admiral",
+     "pos": [
+      0.0,
+      -5.0
+     ],
+     "mood": "smirk",
+     "action": "facepalm",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.6,
+        0.5,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#8A5A3A"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.08,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.55,
+        0
+       ],
+       "col": "#6B3A22"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.28
+       ],
+       "pos": [
+        0,
+        0.85,
+        0
+       ],
+       "col": "#E7A3B0"
+      }
+     ],
+     "motion": {
+      "bob": 0.04
+     },
+     "ry": 30
+    }
+   ],
+   "cues": [
+    {
+     "word": "refuses",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 10,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "move": "orbit-left",
+   "focus": "pickett",
+   "cast": [
+    {
+     "who": "pickett",
+     "pos": [
+      -0.45,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": true
+    },
+    {
+     "who": "admiral",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -5.2
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        2.2
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.45,
+        0.03
+       ],
+       "pos": [
+        0.38,
+        1.9,
+        0
+       ],
+       "col": "#2E4A9A"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 0
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -5.2
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.03,
+        2.2
+       ],
+       "pos": [
+        0,
+        1.1,
+        0
+       ],
+       "col": "#6B5A48"
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.7,
+        0.45,
+        0.03
+       ],
+       "pos": [
+        0.38,
+        1.9,
+        0
+       ],
+       "col": "#C23030"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 0
+    },
+    {
+     "kind": "calendar",
+     "pos": [
+      0.0,
+      -4.5
+     ],
+     "y": 1.8,
+     "month": "NOV",
+     "cross": [
+      3,
+      9,
+      15,
+      21,
+      27
+     ]
+    }
+   ],
+   "cues": []
+  },
+  {
+   "line": 11,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "signText": "BERLIN 1872"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "move": "push",
+   "focus": "admiral",
+   "cast": [
+    {
+     "who": "admiral",
+     "pos": [
+      0.0,
+      -5.0
+     ],
+     "mood": "proud",
+     "action": "triumph",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      -0.55,
+      -5.0
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.3,
+        0.6
+       ],
+       "pos": [
+        0,
+        0.3,
+        0
+       ],
+       "col": "#C9A13B",
+       "metal": true
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.35
+       ],
+       "pos": [
+        0,
+        1.0,
+        0
+       ],
+       "col": "#2E4A9A"
+      }
+     ],
+     "motion": {
+      "spin": 180
+     },
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "America",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 12,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": false,
+     "fenceOn": true
+    }
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "push",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "happy",
+     "action": "clap",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -3.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.42
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.26
+       ],
+       "pos": [
+        0.45,
+        1.5,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.18
+       ],
+       "pos": [
+        0.7,
+        1.48,
+        0
+       ],
+       "col": "#D9808F",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "bob": 0.06
+     },
+     "ry": 70
+    }
+   ],
+   "cues": [
+    {
+     "word": "dead",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 13,
+   "theme": {
+    "name": "coast",
+    "o": {}
+   },
+   "light": "dusk",
+   "cam": "two-shot",
+   "move": "orbit-right",
+   "focus": "pickett",
+   "cast": [
+    {
+     "who": "pickett",
+     "pos": [
+      -0.45,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    },
+    {
+     "who": "admiral",
+     "pos": [
+      0.45,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock"
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0,
+      -2.4
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        -0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.0,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.5999999999999999,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ]
+    }
+   ],
+   "cues": []
+  },
+  {
+   "line": 14,
+   "theme": {
+    "name": "meadow",
+    "o": {
+     "sunset": true,
+     "fenceOn": true
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "cutlar",
+   "cast": [
+    {
+     "who": "cutlar",
+     "pos": [
+      0.0,
+      -3.0
+     ],
+     "mood": "sly",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.3,
+      -3.8
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.42
+       ],
+       "pos": [
+        0,
+        1.4,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.26
+       ],
+       "pos": [
+        0.45,
+        1.5,
+        0
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cone",
+       "size": [
+        0.1,
+        0.18
+       ],
+       "pos": [
+        0.7,
+        1.48,
+        0
+       ],
+       "col": "#D9808F",
+       "rot": [
+        0,
+        0,
+        -90
+       ]
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        -0.15,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.06,
+        0.3
+       ],
+       "pos": [
+        0.2,
+        1.05,
+        -0.18
+       ],
+       "col": "#E7A3B0"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "motion": {
+      "bob": 0.05
+     },
+     "ry": 20
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4.3
+     ],
+     "parts": [
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        -0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.0,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.3,
+        1.02,
+        0.0
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.13
+       ],
+       "pos": [
+        0.5999999999999999,
+        1.02,
+        0.2
+       ],
+       "col": "#B98B4B"
+      },
+      {
+       "shape": "box",
+       "size": [
+        1.3,
+        0.9,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ]
+    }
+   ],
+   "cues": []
+  }
+ ]
+}

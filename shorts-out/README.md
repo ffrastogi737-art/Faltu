@@ -326,3 +326,16 @@ Sources: Yale News (20 Mar 2025); Scientific American; Guskjolen et al., Current
 **Experiment:** hook = concrete surprise (you had memories, you can't reach them); loop line ends "because"; 37 s, 139 words, Chatterbox; slot 27 Nov 09:00 IST (slot.py exploit morning; normal slot was tomorrow, no catch-up open). Old chalk-talk video eH_qY0GGWoc stays PRIVATE.
 **Status:** PUBLIC 26 Nov 2026 15:36 IST (moved to today by the afternoon run, owner rule: same-day) (https://youtu.be/ioqEzfmFoMs); uploaded via Composio (Windsor upload rate-limited twice)
 
+
+## 29 · `29-pig-war.mp4` · tall-tale (TALL-TALE turn; history kind; 3D mini-movie)
+**Title:** The War That Started With A Pig
+**Description:**
+```
+In 1859 an American farmer shot a pig on San Juan Island, and the US and Britain nearly went to war over it. Soldiers and warships showed up; the only casualty was the pig. (Dramatized scenes, real events.)
+Sources: US National Park Service (San Juan Island NHP, The Pig War); The Canadian Encyclopedia (Pig War); HistoryLink essay 5037.
+#shorts #history #pigwar #weirdhistory #truestory #didyouknow #funfacts #usa
+```
+**Tags:** pig war, pig war 1859, san juan island, weird history, history facts, true story, almost war, did you know
+**Hook:** one dead pig almost started a war. (loop: last words "because" flow into line 1)
+**Experiment:** hook = absurd stakes in 6 words; 53 s, 164 words, Chatterbox; first tall-tale on a comic true-history topic (last tall-tale win: Hanoi rats 1208); slot.py exploit morning.
+**Status:** building upload
