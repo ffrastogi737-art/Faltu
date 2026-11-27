@@ -339,3 +339,16 @@ Sources: US National Park Service (San Juan Island NHP, The Pig War); The Canadi
 **Hook:** one dead pig almost started a war. (loop: last words "because" flow into line 1)
 **Experiment:** hook = absurd stakes in 6 words; 53 s, 164 words, Chatterbox; first tall-tale on a comic true-history topic (last tall-tale win: Hanoi rats 1208); slot.py exploit morning.
 **Status:** QUEUED: goes public 28 Nov 2026 10:00 IST (https://youtu.be/uoAFCtca0RQ)
+
+## 30 · `30-wrinkle-fingers.mp4` · comic-pop auto-vertical (STANDARD track turn; body-science kind; match #1 inside-out (hand-built shots, skipped for build cost), comic-pop #3 ready)
+**Title:** Why Your Fingers Wrinkle In Water
+**Description:**
+```
+Your fingertips wrinkle in water because your nervous system narrows the tiny blood vessels under the skin, not because skin swells. People with a damaged finger nerve don't wrinkle. One theory says the grooves work like tire treads for wet grip: a 2013 marble test supported it, but a later Berlin study found no difference, so scientists still argue.
+Sources: Smithsonian Magazine; Scientific American; NPR; PBS NewsHour.
+#shorts #bodyfacts #humanbody #didyouknow #science #biology #learnonshorts
+```
+**Tags:** wrinkled fingers, prune fingers, why fingers wrinkle, body facts, human body, did you know, science facts, biology
+**Hook:** Your fingers wrinkle in water, and it is not swelling. (second-person + conflict word)
+**Experiment:** night bin explore 21:00 IST; contested-science ending question; 34 s, 133 words, Chatterbox.
+**Status:** QUEUED: goes public 27 Nov 2026 21:00 IST (https://youtu.be/EJZeAJVsoVg)
