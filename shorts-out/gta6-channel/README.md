@@ -338,3 +338,11 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Tags:** gta 6, jason and lucia, gta 6 apartment, gta 6 real location, gta 6 miami, rockstar games, gta vi, gta 6 news
 **Hook:** Jason and Lucia's apartment may be a real Miami building. And fans say it's already gone.
 **Sources:** Kotaku, Dexerto, Player.One, GameNGuide. 25.7 s, 101 words, kind gaming-secret. Note: two comic-pop uploads in one run (time pressure after the slow voice render): SAMENESS RISK, hook shapes differ.
+
+## 30 · `30-gta6-patch-glitch.mp4` · myth-or-fact (STANDARD; rumour/news check, MYTH stamp on "patched the glitch") · SCHEDULED 28 Nov 2026 09:00 IST (https://youtu.be/bTISBBruc5o)
+**Title:** GTA 6 Patch Fixed 7 Bugs, Not This One (Reported) #shorts
+**Description:** GTA 6's first patch, Update 1.002.002 (23 Nov 2026), fixed seven bugs... The patch notes do not mention the infinite money glitch; PlayStation LifeStyle reports players say it still works. Sources: PlayStation LifeStyle; games.gg; Notebookcheck.
+**Tags:** gta 6, gta 6 patch, gta 6 update 1.002.002, gta 6 money glitch, gta 6 news, rockstar games, gta vi, gta 6 bugs
+**Hook:** GTA 6's first patch fixed seven bugs and the one everyone asked about is not on the list. (number + conflict). New angle on patch topic (entry 22 was the weather fix).
+**Experiment:** 20.6 s, 81 words, myth-or-fact; Top-3 (match): top-5-countdown 8 | myth-or-fact 7 | versus-split 6.8 (chose myth-or-fact: script is a check, not a countdown).
+**Status:** SCHEDULED 28 Nov 2026 09:00 IST (https://youtu.be/bTISBBruc5o)

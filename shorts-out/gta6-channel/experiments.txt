@@ -41,3 +41,4 @@ SFX on beats, one-word captions. Reference clips the owner showed are another cr
 2026-11-25 NEW STYLE (library): stack-split (gta, ported on comic-pop, random draw; test: score-vs-bugs contrast with credited stills)
 Players Found Dexter's Apartment In GTA 6 | 26 Nov 15:40 IST | rumour hook + comic-pop 2nd same-day | | 
 Jason And Lucia's GTA 6 Apartment Was A Real Building? | 26 Nov 16:10 IST | real-location detective story, compare shot | | 
+GTA 6 Patch Fixed 7 Bugs, Not This One | 28 Nov 09:00 IST | tests: myth-or-fact on news-check, 'what the patch did NOT fix' hook | | 
