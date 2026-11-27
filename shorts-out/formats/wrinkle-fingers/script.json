@@ -1,0 +1,121 @@
+{
+ "title": "Why Your Fingers Wrinkle In Water",
+ "lead": 0.3,
+ "outro": 1.0,
+ "gap": 0.3,
+ "music": "hype",
+ "sources": [
+  "Smithsonian Magazine: Ask Smithsonian, why do we get prune fingers (nerve-controlled blood vessel narrowing, no wrinkles with nerve damage)",
+  "Scientific American: Water-logged prune fingers grip better (Kareklas, Nettle, Smulders 2013, Biology Letters, wet marble test)",
+  "NPR 2011 / PBS NewsHour: Changizi rain-tread theory; later Berlin replication found no grip difference"
+ ],
+ "lines": [
+  {
+   "text": "Your fingers wrinkle in water, and it is not swelling!",
+   "vis": {
+    "k": "Q",
+    "icon": "hand",
+    "head": "NOT SWELLING?!"
+   },
+   "emo": 0.88
+  },
+  {
+   "text": "Skin doesn't puff up like a sponge. Your nervous system does this on purpose!",
+   "vis": {
+    "k": "I",
+    "icon": "skin",
+    "head": "NOT A SPONGE",
+    "sub": "MYTH BUSTED",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "After a few minutes in water, your nerves squeeze the tiny blood vessels under your fingertips,",
+   "vis": {
+    "k": "C",
+    "items": [
+     [
+      "water",
+      "WATER"
+     ],
+     [
+      "nerve",
+      "NERVES"
+     ],
+     [
+      "hand",
+      "SQUEEZE"
+     ]
+    ]
+   }
+  },
+  {
+   "text": "and the skin gets pulled inward, so the wrinkles pop out.",
+   "vis": {
+    "k": "I",
+    "icon": "skin",
+    "head": "SKIN PULLS IN",
+    "sub": "WRINKLES APPEAR",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "Here is the proof. People with a damaged finger nerve don't wrinkle at all!",
+   "vis": {
+    "k": "S",
+    "big": "0 WRINKLES",
+    "label": "WITH A DAMAGED NERVE",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "So why would your body bother? One theory says they work like tire treads.",
+   "vis": {
+    "k": "Q",
+    "icon": "brain",
+    "head": "WHY BOTHER?"
+   }
+  },
+  {
+   "text": "The grooves channel water away, so your grip sticks to wet things.",
+   "vis": {
+    "k": "I",
+    "icon": "water",
+    "head": "TIRE TREADS",
+    "sub": "FOR YOUR FINGERS"
+   }
+  },
+  {
+   "text": "In a two thousand thirteen test, people with wrinkled fingers moved wet marbles faster!",
+   "vis": {
+    "k": "S",
+    "big": "2013 TEST",
+    "label": "WET MARBLES MOVED FASTER",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "But a later study in Berlin found no difference. Scientists still argue about it.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "BERLIN: NO DIFFERENCE",
+    "sub": "STILL DEBATED",
+    "fx": "hit"
+   },
+   "emo": 0.85
+  },
+  {
+   "text": "So are wrinkly fingers a built-in grip upgrade, or just a strange side effect?",
+   "vis": {
+    "k": "Q",
+    "icon": "hand",
+    "head": "UPGRADE OR GLITCH?"
+   },
+   "emo": 0.85
+  }
+ ]
+}
