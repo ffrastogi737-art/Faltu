@@ -1,0 +1,201 @@
+{
+ "title": "GTA 6 Secret Vault Radio",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "Destructoid: how to unlock the secret Vault radio station in GTA 6 (scan the poster in The Vault with the WAiNK app)",
+  "PowerPyx: GTA 6 Vault radio (Vice City Downtown, poster scan, tune in from a vehicle)",
+  "Guides differ on the exact Vice City location; stated as per guides, not confirmed by Rockstar."
+ ],
+ "lines": [
+  {
+   "text": "A secret GTA 6 radio station that you unlock with your phone?"
+  },
+  {
+   "text": "It's called The Vault, and it never shows up on the dial."
+  },
+  {
+   "text": "Guides from Destructoid and PowerPyx say it starts in Vice City."
+  },
+  {
+   "text": "There's a nightclub called The Vault, with a red poster of a mask."
+  },
+  {
+   "text": "Open the WAiNK app on your in-game phone and scan that poster."
+  },
+  {
+   "text": "Do that, and the station unlocks."
+  },
+  {
+   "text": "Then hop in any vehicle and tune in."
+  },
+  {
+   "text": "Guides say it plays electronic and rave music."
+  },
+  {
+   "text": "They disagree on the exact spot, so check your map first."
+  },
+  {
+   "text": "So tell us below, have you found"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/pp1.jpg",
+   "badge": "GUIDES SAY",
+   "banner": "SECRET RADIO?",
+   "sub": "UNLOCK WITH YOUR PHONE",
+   "stamp": "UNCONFIRMED",
+   "mark": {
+    "circle": [
+     0.5,
+     0.45,
+     0.22
+    ]
+   }
+  },
+  {
+   "at": "Vault,",
+   "kind": "image",
+   "img": "assets/pp1.jpg",
+   "label": "THE VAULT STATION",
+   "crop": [
+    0.25,
+    0.15,
+    1.0,
+    0.9
+   ]
+  },
+  {
+   "at": "Guides",
+   "kind": "image",
+   "img": "assets/bx.jpg",
+   "label": "VICE CITY (ILLUSTRATIVE)",
+   "crop": [
+    0.0,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "nightclub",
+   "kind": "image",
+   "img": "assets/pp1.jpg",
+   "label": "KEY ART, NOT THE POSTER",
+   "crop": [
+    0.0,
+    0.2,
+    0.6,
+    1.0
+   ]
+  },
+  {
+   "at": "Open",
+   "kind": "image",
+   "img": "assets/bx.jpg",
+   "label": "SCAN IT (ILLUSTRATIVE)",
+   "crop": [
+    0.35,
+    0.0,
+    1.0,
+    0.8
+   ]
+  },
+  {
+   "at": "Do",
+   "kind": "image",
+   "img": "assets/pp1.jpg",
+   "label": "STATION UNLOCKED",
+   "crop": [
+    0.0,
+    0.0,
+    0.7,
+    0.7
+   ]
+  },
+  {
+   "at": "Then",
+   "kind": "image",
+   "img": "assets/bx.jpg",
+   "label": "TUNE IN FROM A VEHICLE",
+   "crop": [
+    0.0,
+    0.2,
+    0.7,
+    1.0
+   ]
+  },
+  {
+   "at": "Guides",
+   "kind": "image",
+   "img": "assets/pp1.jpg",
+   "label": "ELECTRONIC + RAVE",
+   "crop": [
+    0.3,
+    0.35,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "They",
+   "kind": "image",
+   "img": "assets/bx.jpg",
+   "label": "CHECK YOUR MAP",
+   "crop": [
+    0.2,
+    0.1,
+    1.0,
+    0.9
+   ]
+  },
+  {
+   "at": "So",
+   "kind": "poll",
+   "question": "FOUND IT YET?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 3,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.35,
+   "r": 0.2,
+   "start": 0.3,
+   "dur": 1.4
+  },
+  {
+   "beat": 4,
+   "type": "ring",
+   "x": 0.5,
+   "y": 0.35,
+   "r": 0.14,
+   "start": 0.3,
+   "dur": 1.2
+  },
+  {
+   "beat": 6,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.5,
+   "y2": 0.4,
+   "start": 0.3,
+   "dur": 1.2
+  }
+ ],
+ "bg": {
+  "file_id": "1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe",
+  "name": "lv_0_20261120213403.mp4",
+  "start": 0.58,
+  "len": 30.1
+ }
+}
