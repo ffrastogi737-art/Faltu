@@ -64,7 +64,7 @@ Sources: GamesRadar; Gamepressure; Charlie INTEL; IBTimes. Images: GamesRadar, G
 **Background:** lv_0_20261120213720.mp4 (Drive 1ehCa4ZfcQHWnELFfYaaDONTzJk3kbnl8) 8.57-39.9 s, lap 2. 28.0 s, 107 words, 12 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Known weak spots:** Minecraft background on a GTA topic; the 2021 source story (evergreen fan theory, not fresh news).
 
-## 29 · `29-gta6-fake-pc-builds.mp4` · gta-commentary · building upload
+## 29 · `29-gta6-fake-pc-builds.mp4` · gta-commentary · WAITING UPLOAD
 **Title:** Free GTA 6 PC Download? It's Malware ⚠️ (Reported) #shorts
 **Description:**
 ```
@@ -77,4 +77,4 @@ Sources: TechRadar; Malwarebytes; PC Games Hardware; Cybernews. Images: TechRada
 **Facts:** TechRadar (113GB fake ISO, 99.99% zeroes + tiny virus), Malwarebytes (fake Extended Look/demo sites, infostealer), PCGH/Cybernews (fake build hides malware); no PC version announced. Said as reported; no release claim. Kind gaming-guide (player-safety angle).
 **Background:** lv_0_20261120213612.mp4 2.64 s, 30.4 s, lap 2. 27.1 s, 98 words, 11 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Known weak spots:** Minecraft background on a GTA topic; generic outlet art as cards; card 7 held 5.2 s.
-**Status:** building upload
+**Status:** WAITING UPLOAD (Windsor rate limit 27 Nov 2026 04:3x UTC; Composio quota exhausted): the 14:00 run uploads it first, slot.py gta --catchup
