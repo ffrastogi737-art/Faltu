@@ -1,0 +1,41 @@
+{
+ "duration": 20.567,
+ "lines": [
+  {
+   "i": 0,
+   "text": "GTA 6's first patch fixed seven bugs. So did it fix the money glitch?",
+   "start": 0.15,
+   "end": 3.779
+  },
+  {
+   "i": 1,
+   "text": "Update 1.002.002 landed four days after launch. It fixes crashes, stuck weather, autosaves, phone calls, the wanted level, a gym bar, and partners keeping loot bags.",
+   "start": 3.899,
+   "end": 10.253
+  },
+  {
+   "i": 2,
+   "text": "Not one of them mentions the infinite money glitch!",
+   "start": 10.373,
+   "end": 12.06
+  },
+  {
+   "i": 3,
+   "text": "Rockstar patched the money glitch. Myth! Outlets report it still works.",
+   "start": 12.18,
+   "end": 14.822
+  },
+  {
+   "i": 4,
+   "text": "Guides warn a later update could close it without warning.",
+   "start": 14.942,
+   "end": 16.742
+  },
+  {
+   "i": 5,
+   "text": "So should Rockstar patch it, or leave it alone? Comment which!",
+   "start": 16.862,
+   "end": 19.567
+  }
+ ]
+}
