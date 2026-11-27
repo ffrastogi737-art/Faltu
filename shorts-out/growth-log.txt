@@ -1,3 +1,7 @@
+== 2026-11-27 21:15 IST analytics ==
+Uploads 27 Nov: solo 2/2 (pig-war, wrinkle-fingers), Kratos 3/3 (fake-pc-builds, vault-radio, patch-glitch sched. 28 Nov 09:00 IST); live-read via API/Windsor, nothing WAITING. pig-war was live public already (queue said PENDING 28 Nov): record fixed to DONE.
+Subs: solo hype 11 (16,110 views, 32 videos), Kratos Playz 7 (17,802 views, 33 videos). Monetization needs 500/1,000 subs: far. Verdicts: chalk-talk@solo WIN, comic-pop@gta WIN, gta-commentary@gta WIN. 3 post-mortems written. Replies/IG stats skipped (low usage).
+
 2026-11-27 | LESSON: stale send_later timer (made 26 Nov 03:30Z) switched eH_qY0GGWoc public at 13:36 IST although queue line 19 says HELD (owner: keep PRIVATE); reverted to private within minutes, read back below. Rule: before any timed public switch, git pull and read the queue line: only PENDING is switched, HELD/DONE never. Kratos rhpVQMYc5Z4 was already public since 26 Nov 15:10 IST (records right).
 == 26 Nov 21:15 IST analytics ==
 Uploads 26 Nov: solo 2/2 (blood-cells, baby-isotype), Kratos 3/3 (rdr2-parachute 1.0k, dexter, belmar), all live-read public; nothing WAITING. Subs: solo hype 11, Kratos Playz 7 (monetization needs 500/1000). Views: solo 15.4k total, Kratos 16.4k. 3 Kratos post-mortems written (review-score and tips-list kinds saturated; fan-theory/hidden-secret kind wins). eH_qY0GGWoc stays private, 1 view (README: briefly public ~14:57 IST by mistake and reverted, so that 1 view is likely from then). 1 comment answered (baby-isotype).
