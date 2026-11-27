@@ -78,3 +78,13 @@ Sources: TechRadar; Malwarebytes; PC Games Hardware; Cybernews. Images: TechRada
 **Background:** lv_0_20261120213612.mp4 2.64 s, 30.4 s, lap 2. 27.1 s, 98 words, 11 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Known weak spots:** Minecraft background on a GTA topic; generic outlet art as cards; card 7 held 5.2 s.
 **Status:** SCHEDULED 27 Nov 2026 14:35 IST (https://youtu.be/O6xHRk-M5TE), uploaded 14:10 IST via Composio, publishAt read back.
+
+## 30 · `30-gta6-vault-radio.mp4` · gta-commentary · SCHEDULED 27 Nov 2026 20:00 IST (https://youtu.be/4Ky54QkopEI)
+**Title:** GTA 6 Has A Secret Radio Station (Per Guides) #shorts
+**Description:** Guides say GTA 6 has a hidden radio station, The Vault: scan the poster in The Vault nightclub (Vice City) with the WAiNK app, tune in from a vehicle; reportedly electronic/rave. Not confirmed by Rockstar; guides differ on the exact spot. Sources: Destructoid; PowerPyx. Images: PowerPyx, Bloxodes.
+**Tags:** gta 6, gta 6 secret radio, gta 6 vault radio, gta 6 waink app, gta 6 secrets, rockstar games, gta vi, gta 6 easter egg
+**Hook:** A secret GTA 6 radio station that you unlock with your phone? (loop: last words "have you found" -> line 1)
+**Facts:** Destructoid + PowerPyx (poster scan with WAiNK in The Vault, Vice City; tune in from a vehicle; electronic/rave), stamp UNCONFIRMED, wording "guides say". Kind gaming-guide.
+**Background:** lv_0_20261120213403.mp4 (Drive 1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe) 0.58 s, 30.1 s, lap 2. 22.4 s, 100 words, 10 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Known weak spots:** only 2 distinct images (key art + city shot, both labelled ILLUSTRATIVE; no real shot of the poster found), Minecraft background on a GTA topic, 22 s is under the 24-28 s target, last card 1.3 s before the poll hold.
+**Status:** SCHEDULED 27 Nov 2026 20:00 IST (https://youtu.be/4Ky54QkopEI)
