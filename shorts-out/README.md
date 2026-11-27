@@ -351,4 +351,4 @@ Sources: Smithsonian Magazine; Scientific American; NPR; PBS NewsHour.
 **Tags:** wrinkled fingers, prune fingers, why fingers wrinkle, body facts, human body, did you know, science facts, biology
 **Hook:** Your fingers wrinkle in water, and it is not swelling. (second-person + conflict word)
 **Experiment:** night bin explore 21:00 IST; contested-science ending question; 34 s, 133 words, Chatterbox.
-**Status:** QUEUED: goes public 27 Nov 2026 21:00 IST (https://youtu.be/EJZeAJVsoVg)
+**Status:** PUBLIC 27 Nov 2026 21:00 IST (https://youtu.be/EJZeAJVsoVg), read-back public
