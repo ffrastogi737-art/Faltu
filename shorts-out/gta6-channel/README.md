@@ -365,4 +365,4 @@ Sources: PC Gamer; GamesRadar; Dexerto; GamingBolt; Upcomer.
 **Hook:** Does GTA 6 really make you stop for gas? (question + second person)
 **Top-3 (match):** top-5-countdown 5 | pixel-quest 3.8 | versus-split 3.8 (EXPLORE RUN forced pixel-quest)
 **Experiment:** first use of pixel-quest; kind gaming-versus (new kind); 24 s, 93 words; A/B comment ending; slot explore midday 12:00 IST.
-**Status:** UPLOADING
+**Status:** SCHEDULED 29 Nov 2026 12:00 IST (https://youtu.be/JhzFfPNFfUs)
