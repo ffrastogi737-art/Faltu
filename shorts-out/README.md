@@ -377,4 +377,4 @@ Sources: Psychology Today; PLoS ONE 2011 (Univ. of Pisa); PMC yawn contagion and
 **Tags:** contagious yawning, why do we yawn, yawn science, body facts, psychology facts, did you know, science shorts, weird body
 **Hook:** You are about to yawn, and nobody fully knows why! (loop: "Are you yawning right now?")
 **Experiment:** second-person curiosity hook + honest "unsettled science" ending on the proven "Why you..." body kind; 30 s, 117 words; slot per slot.py (exploit morning).
-**Status:** UPLOADING
+**Status:** QUEUED: goes public 30 Nov 2026 10:00 IST (https://youtu.be/tNWKypt36Es)
