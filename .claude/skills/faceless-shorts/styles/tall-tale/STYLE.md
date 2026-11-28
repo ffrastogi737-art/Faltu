@@ -60,7 +60,11 @@ The cut-out is a card: it turns up to 32 deg toward the camera (a 3/4 view) and 
   Library: **pig** (`col` '#3A3640' = black pig, `mood` angry / scared / happy / x, `pose` stand / dead (on its back, legs up) / side, `mud`),
   **cannon** (`fire` = flash + smoke, `balls`), **flag** (`design` uk / us / stripes / tricolor with `cols` / plain with `col` / pirate; the cloth waves),
   **ship** (sailing warship, `col`, `pennant`), **tank** (riveted storage tank, `label`, `crack` = cracks + oozing liquid, `drip` colour), **wave**
-  (a 3D wall of liquid, molasses by default, `col` for water), **potatoes** (`basket: false` = a heap), **barrel** (`label`), **crate** (`label`).
+  (a 3D wall of liquid, molasses by default, `col` for water), **potatoes** (`basket: false` = a heap), **barrel** (`label`), **crate** (`label`),
+  **plane** (WWII bomber, `holes`, `smoke`); animals **cow horse dog chicken sheep rat** (`mood`, `pose` dead / side; horse `mane`); vehicles **cart**
+  (`load` hay / crates), **carold** (1910s car), **train** (steam, smoking), **rowboat**; things **sack** (`label`), **money**, **gold**, **coins**, **letter**
+  (`label`), **newspaper** (`label` = headline), **bomb** (lit fuse), **fire** (campfire), **tree**, **rock**, **tent**, **lantern**, **bucket** (`fill`), **bottle** (`label`).
+  Wheels turn with `anim: "roll"`. Weak spots to check on the frames: coins read as a lump at small size, gold / coins / lantern brightness under night or alarm light.
   Common options: `h` (height in m, default = real size), `ry` (yaw in degrees; default -25 = 3/4 view toward the camera), `flip` (face left),
   `anim` (bob wobble hop shake sway roll spin), plus `motion` like a solid. Preview every model: serve `example/` and open `sheet-models.html`
   (`?v=[["pig",{"pose":"dead"}]]`). **A story about a thing that is not in the library: build its model in `core/models.js` first** (copy the pig:
