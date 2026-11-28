@@ -18,8 +18,8 @@ D = pathlib.Path(__file__).parent
 IST = dt.timezone(dt.timedelta(hours=5, minutes=30))
 BANNED = {'chalk-talk'}   # owner 26 Nov 2026: the blackboard theme is deleted and never used again (history rows stay)
 LOCAL = {'terminal', 'stack-split', 'comic-pop', 'deep-dive', 'inside-out', 'neon-versus', 'night-file', 'paper-atlas', 'stick-story', 'tall-tale',
-         'myth-or-fact', 'comic-panels', 'top-5-countdown'}
-PORTED = {'terminal', 'stack-split', 'myth-or-fact', 'comic-panels', 'top-5-countdown'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
+         'myth-or-fact', 'comic-panels', 'top-5-countdown', 'quiz-countdown'}
+PORTED = {'terminal', 'stack-split', 'myth-or-fact', 'comic-panels', 'top-5-countdown', 'quiz-countdown'}  # library ids rebuilt as local styles (20 Nov 2026); more via port_style.sh
 KINDS = ['body-science', 'history', 'weird-jobs', 'mystery', 'survival', 'funny-story', 'space-scale', 'money-stats', 'animals-nature', 'places',
          'psychology-myth', 'tech-invention', 'skit-karma', 'gaming-news', 'gaming-versus', 'gaming-list', 'gaming-guide', 'gaming-reaction']
 # Template catalog: what each template is good at, in the same words the script analysis produces ('3d' = slow render, many minutes).
