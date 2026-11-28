@@ -338,7 +338,7 @@ Sources: US National Park Service (San Juan Island NHP, The Pig War); The Canadi
 **Tags:** pig war, pig war 1859, san juan island, weird history, history facts, true story, almost war, did you know
 **Hook:** one dead pig almost started a war. (loop: last words "because" flow into line 1)
 **Experiment:** hook = absurd stakes in 6 words; 53 s, 164 words, Chatterbox; first tall-tale on a comic true-history topic (last tall-tale win: Hanoi rats 1208); slot.py exploit morning.
-**Status:** QUEUED: goes public 28 Nov 2026 10:00 IST (https://youtu.be/uoAFCtca0RQ)
+**Status:** PUBLIC (switched early on 27 Nov 2026; live check 27 Nov 21:15 IST per publish-queue; https://youtu.be/uoAFCtca0RQ)
 
 ## 30 · `30-wrinkle-fingers.mp4` · comic-pop auto-vertical (STANDARD track turn; body-science kind; match #1 inside-out (hand-built shots, skipped for build cost), comic-pop #3 ready)
 **Title:** Why Your Fingers Wrinkle In Water
