@@ -1,3 +1,7 @@
+== 2026-11-28 21:15 IST analytics ==
+Uploads 28 Nov: solo 2/2 (yawn, molasses-3d), Kratos 3/3 (sticker, gas-stops, criminal-profile sched. 30 Nov 09:00 IST); nothing WAITING. Subs: solo hype 11 (17,154 views, 34 videos), Kratos Playz 7 (19,538 views, 35). IG @solohype_1: 1 follower, 56 media. Monetization needs 500/1000 subs: far.
+Fixes: IG pig-war, sticker, yawn were overdue (not posted since 27 Nov): posted 21:20 IST; gas-stops still PENDING (max 3/run). molasses-3d queue line was PENDING but live public: set DONE. OLD molasses video -FBeVvqaTF8 (HELD, owner: keep PRIVATE) was found PUBLIC (78 views): switched back to private, read back private. Cause unknown (a stale timer or early switch): check timers before switching. Verdicts: myth-or-fact@gta LOSE (n=2). No post-mortems due.
+
 == 2026-11-27 21:15 IST analytics ==
 Uploads 27 Nov: solo 2/2 (pig-war, wrinkle-fingers), Kratos 3/3 (fake-pc-builds, vault-radio, patch-glitch sched. 28 Nov 09:00 IST); live-read via API/Windsor, nothing WAITING. pig-war was live public already (queue said PENDING 28 Nov): record fixed to DONE.
 Subs: solo hype 11 (16,110 views, 32 videos), Kratos Playz 7 (17,802 views, 33 videos). Monetization needs 500/1,000 subs: far. Verdicts: chalk-talk@solo WIN, comic-pop@gta WIN, gta-commentary@gta WIN. 3 post-mortems written. Replies/IG stats skipped (low usage).

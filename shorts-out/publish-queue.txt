@@ -23,4 +23,4 @@
 2026-11-27T15:30:00Z  EJZeAJVsoVg  Why Your Fingers Wrinkle In Water  DONE
 2026-11-29T04:30:00Z  -FBeVvqaTF8  The Wave That Drowned A City Street In Molasses  HELD (28 Nov: old tall-tale look, owner unhappy with tall-tale graphics; kept PRIVATE, publishAt cleared; rebuilt with the new 3D models as a new upload)
 2026-11-28T14:40:00Z  tNWKypt36Es  Why You Yawn When Others Yawn  DONE (owner 28 Nov: put live now; read-back public 14:40Z)
-2026-11-29T05:30:00Z  i7pF325jkAM  The Wave That Drowned A City Street In Molasses  PENDING
+2026-11-29T05:30:00Z  i7pF325jkAM  The Wave That Drowned A City Street In Molasses  DONE (live public read-back 28 Nov 21:15 IST, earlier than slot)
