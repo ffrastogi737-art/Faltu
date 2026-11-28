@@ -1,0 +1,53 @@
+{
+ "duration": 29.998,
+ "lines": [
+  {
+   "i": 0,
+   "text": "You are about to yawn, and nobody fully knows why!",
+   "start": 0.3,
+   "end": 3.027
+  },
+  {
+   "i": 1,
+   "text": "Yawns spread like a virus. About half of people catch one just from seeing it or hearing it!",
+   "start": 3.327,
+   "end": 7.053
+  },
+  {
+   "i": 2,
+   "text": "Scientists first blamed empathy: you copy the yawn because you feel the other person.",
+   "start": 7.353,
+   "end": 10.364
+  },
+  {
+   "i": 3,
+   "text": "It fits. Yawns spread faster between friends and family than between strangers.",
+   "start": 10.664,
+   "end": 14.112
+  },
+  {
+   "i": 4,
+   "text": "A brain scan study saw a mirroring area light up when people watched a yawn.",
+   "start": 14.412,
+   "end": 17.192
+  },
+  {
+   "i": 5,
+   "text": "But a study of over three hundred people found empathy barely mattered!",
+   "start": 17.492,
+   "end": 20.028
+  },
+  {
+   "i": 6,
+   "text": "Is it just tiredness? Myth! Tiredness barely changed who caught a yawn, so the science is not settled.",
+   "start": 20.328,
+   "end": 24.803
+  },
+  {
+   "i": 7,
+   "text": "So we know a yawn is contagious, and we still don't know why. Are you yawning right now?",
+   "start": 25.103,
+   "end": 28.998
+  }
+ ]
+}

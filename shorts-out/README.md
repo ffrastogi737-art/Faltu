@@ -365,3 +365,16 @@ Sources: NBC News; History.com; Britannica.
 **Hook:** a rumble like a train. Then a wall of molasses. (loop: last words "and listen for" -> line 1)
 **Experiment:** new topic kind (disaster history, never used); 48 s, 165 words; exploit morning slot.
 **Status:** QUEUED: goes public 29 Nov 2026 10:00 IST (https://youtu.be/-FBeVvqaTF8)
+
+## 32 · `32-yawn-contagious.mp4` · myth-or-fact (STANDARD turn; body-science kind; Top-3 match: deep-dive 5.3 | inside-out 5 | myth-or-fact 3.3; inside-out hand-built, comic-pop on cooldown)
+**Title:** Why You Yawn When Others Yawn
+**Description:**
+```
+Yawns spread: studies find roughly 30-60% of people catch one. Friends and family pass them on faster than strangers do, but a study of over 300 people found empathy and tiredness explained little. Scientists still debate why.
+Sources: Psychology Today; PLoS ONE 2011 (Univ. of Pisa); PMC yawn contagion and empathy; Cirulli et al.
+#shorts #science #yawn #bodyscience #didyouknow #psychology #facts
+```
+**Tags:** contagious yawning, why do we yawn, yawn science, body facts, psychology facts, did you know, science shorts, weird body
+**Hook:** You are about to yawn, and nobody fully knows why! (loop: "Are you yawning right now?")
+**Experiment:** second-person curiosity hook + honest "unsettled science" ending on the proven "Why you..." body kind; 30 s, 117 words; slot per slot.py (exploit morning).
+**Status:** UPLOADING
