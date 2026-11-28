@@ -88,3 +88,17 @@ Sources: TechRadar; Malwarebytes; PC Games Hardware; Cybernews. Images: TechRada
 **Background:** lv_0_20261120213403.mp4 (Drive 1YPkX_eK92nqjKluQ9ipCfMTXjDSK4pSe) 0.58 s, 30.1 s, lap 2. 22.4 s, 100 words, 10 cards, 3 callouts. Top-3 (match): n/a (commentary track).
 **Known weak spots:** only 2 distinct images (key art + city shot, both labelled ILLUSTRATIVE; no real shot of the poster found), Minecraft background on a GTA topic, 22 s is under the 24-28 s target, last card 1.3 s before the poll hold.
 **Status:** SCHEDULED 27 Nov 2026 20:00 IST (https://youtu.be/4Ky54QkopEI)
+
+## 31 · `31-gta6-criminal-profile.mp4` · gta-commentary · UPLOADING
+**Title:** GTA 6 Criminal Profile Can Reportedly Shatter 💥 (Reported) #shorts
+**Description:**
+```
+GTA 6's Criminal Profile reportedly grades HOW you commit crimes (Professional, Aggressive, Violent, Psycho), and push far enough and the profile logo reportedly cracks and shatters, a state one report says stays locked for the rest of your playthrough. Outlets differ on the exact triggers and no formula is published. Reported, not a Rockstar confirmation. Would you shatter it?
+Sources: PC Gamer; Dexerto; IBTimes UK; GamingBolt. Images: PC Gamer, Dexerto, GamingBolt (credited on cards).
+#shorts #gta6 #grandtheftauto6 #rockstargames #gaming #criminalprofile #gtavi
+```
+**Tags:** gta 6, gta 6 criminal profile, gta 6 shattered, gta 6 honor system, rob nelson, rockstar games, gta vi, gta 6 psycho
+**Hook:** breaking your GTA 6 character for good? Reports say it's possible. (loop: last words "would you ever risk" -> line 1)
+**Facts:** PC Gamer, Dexerto, IBTimes UK, GamingBolt (five-state profile, Shattered state reported irreversible; Rob Nelson: nobody forced to play Professional). Stamp UNCONFIRMED; wording "reportedly". Kind gaming-guide.
+**Background:** lv_0_20261120213523.mp4 (Drive 17AN9f09zIr512Qo0D7WGxB0Z7kZNTOWu) 0.25 s, 29.0 s, lap 2. 24.1 s, 96 words, 10 cards, 3 callouts. Top-3 (match): n/a (commentary track).
+**Known weak spots:** Minecraft background on a GTA topic; same 3 official stills reused (art is illustrative, labelled); IBTimes image 403.

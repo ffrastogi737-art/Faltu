@@ -1,0 +1,209 @@
+{
+ "title": "GTA 6 Criminal Profile Can Reportedly Shatter",
+ "lang": "en",
+ "music": "hype",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 0.7,
+ "sources": [
+  "PC Gamer: GTA 6's Criminal Profile system includes a 'shattered' state",
+  "Dexerto: GTA 6's honor system will give up on you if you're too evil",
+  "IBTimes UK: 'Beyond Psycho' Criminal Profile reportedly features an irreversible state",
+  "GamingBolt: Criminal Profile can put players in a state where actions stop being graded",
+  "Said as reported; exact triggers/permanence not confirmed by all outlets."
+ ],
+ "lines": [
+  {
+   "text": "breaking your GTA 6 character for good? Reports say it's possible."
+  },
+  {
+   "text": "GTA 6 has a Criminal Profile, and it grades how you commit crimes, not how many."
+  },
+  {
+   "text": "The reported states are Professional, Aggressive, Violent, and Psycho."
+  },
+  {
+   "text": "Rockstar's Rob Nelson says the game doesn't force you to play Professional."
+  },
+  {
+   "text": "But go too far, and the profile logo reportedly starts to crack,"
+  },
+  {
+   "text": "then shatters completely."
+  },
+  {
+   "text": "One report says that state stays locked for the rest of your playthrough."
+  },
+  {
+   "text": "Other outlets hedge on the exact triggers, and no formula is published."
+  },
+  {
+   "text": "So tell us below, would you ever risk"
+  }
+ ],
+ "popups": [
+  {
+   "at": 0,
+   "kind": "hook",
+   "img": "assets/pc.jpg",
+   "badge": "REPORTED",
+   "banner": "BREAK IT FOREVER?",
+   "sub": "GTA 6 CRIMINAL PROFILE",
+   "stamp": "UNCONFIRMED",
+   "mark": {
+    "circle": [
+     0.5,
+     0.4,
+     0.22
+    ]
+   }
+  },
+  {
+   "at": "has",
+   "kind": "image",
+   "img": "assets/dx.jpg",
+   "label": "THE CRIMINAL PROFILE (ILLUSTRATIVE)",
+   "crop": [
+    0.1,
+    0.0,
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "at": "crimes,",
+   "kind": "image",
+   "img": "assets/gb.jpg",
+   "label": "HOW, NOT HOW MANY",
+   "crop": [
+    0.0,
+    0.0,
+    0.7,
+    1.0
+   ]
+  },
+  {
+   "at": "Professional,",
+   "kind": "image",
+   "img": "assets/gb.jpg",
+   "label": "4 REPORTED STATES",
+   "crop": [
+    0.3,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "Rockstar's",
+   "kind": "image",
+   "img": "assets/pc.jpg",
+   "label": "NO FORCED PLAYSTYLE",
+   "crop": [
+    0.2,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "But",
+   "kind": "proof",
+   "img": "assets/dx.jpg",
+   "tag": "REPORTED",
+   "text": "THE LOGO CRACKS",
+   "crop": [
+    0.15,
+    0.0,
+    0.85,
+    1.0
+   ],
+   "hl": [
+    [
+     0.3,
+     0.72,
+     0.4,
+     0.1
+    ]
+   ]
+  },
+  {
+   "at": "crack,",
+   "kind": "image",
+   "img": "assets/gb.jpg",
+   "label": "SHATTERED?",
+   "crop": [
+    0.0,
+    0.0,
+    0.8,
+    1.0
+   ]
+  },
+  {
+   "at": "One",
+   "kind": "image",
+   "img": "assets/pc.jpg",
+   "label": "LOCKED FOR THE PLAYTHROUGH (REPORTED)",
+   "crop": [
+    0.0,
+    0.0,
+    0.7,
+    1.0
+   ]
+  },
+  {
+   "at": "Other",
+   "kind": "image",
+   "img": "assets/dx.jpg",
+   "label": "TRIGGERS NOT CONFIRMED",
+   "crop": [
+    0.4,
+    0.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "at": "So",
+   "kind": "poll",
+   "question": "WOULD YOU SHATTER IT?",
+   "sub": "TELL US BELOW"
+  }
+ ],
+ "callouts": [
+  {
+   "beat": 5,
+   "type": "spotlight",
+   "x": 0.5,
+   "y": 0.35,
+   "r": 0.22,
+   "start": 0.3,
+   "dur": 1.4
+  },
+  {
+   "beat": 6,
+   "type": "ring",
+   "x": 0.5,
+   "y": 0.4,
+   "r": 0.15,
+   "start": 0.3,
+   "dur": 1.2
+  },
+  {
+   "beat": 7,
+   "type": "arrow",
+   "x": 0.2,
+   "y": 0.3,
+   "x2": 0.5,
+   "y2": 0.4,
+   "start": 0.3,
+   "dur": 1.2
+  }
+ ],
+ "bg": {
+  "file_id": "17AN9f09zIr512Qo0D7WGxB0Z7kZNTOWu",
+  "name": "lv_0_20261120213523.mp4",
+  "start": 0.25,
+  "len": 29.0
+ }
+}
