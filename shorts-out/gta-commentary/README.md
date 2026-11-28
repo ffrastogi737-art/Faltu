@@ -89,7 +89,7 @@ Sources: TechRadar; Malwarebytes; PC Games Hardware; Cybernews. Images: TechRada
 **Known weak spots:** only 2 distinct images (key art + city shot, both labelled ILLUSTRATIVE; no real shot of the poster found), Minecraft background on a GTA topic, 22 s is under the 24-28 s target, last card 1.3 s before the poll hold.
 **Status:** SCHEDULED 27 Nov 2026 20:00 IST (https://youtu.be/4Ky54QkopEI)
 
-## 31 · `31-gta6-criminal-profile.mp4` · gta-commentary · UPLOADING
+## 31 · `31-gta6-criminal-profile.mp4` · gta-commentary · SCHEDULED 30 Nov 2026 09:00 IST (https://youtu.be/lG3Vq3Uph5Y)
 **Title:** GTA 6 Criminal Profile Can Reportedly Shatter 💥 (Reported) #shorts
 **Description:**
 ```
