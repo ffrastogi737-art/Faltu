@@ -38,10 +38,11 @@ def load_rows(ch):
     """perf.csv rows of one channel, in upload order."""
     return [r for r in csv.DictReader((D / 'perf.csv').open()) if r['channel'] == ch]
 
-def today_count(ch, raw, now_utc):
-    """Videos of this channel public or scheduled for today's IST date (catch-up rows included): the quota count."""
-    day = (now_utc + IST_OFF).date().isoformat()
-    return sum(1 for r in raw if (r['video_id'] or '').strip() not in ('', 'TBD') and (r['public_ist'] or '').strip()[:10] == day)
+def day_count(ch, raw, day):
+    """Videos of this channel public or scheduled on an IST date (catch-up rows included): the quota count."""
+    return sum(1 for r in raw if (r['video_id'] or '').strip() not in ('', 'TBD') and (r['public_ist'] or '').strip()[:10] == day.isoformat())
+
+def today_count(ch, raw, now_utc): return day_count(ch, raw, (now_utc + IST_OFF).date())
 
 def catchup_slot(now_utc, taken):
     """Earliest open time today (IST): >= now + 20 min, rounded up to 5 min, 30 min clear of every taken time, before 23:30 IST. None if none."""
@@ -121,9 +122,15 @@ def decide(now_utc, raw, ch, gate=True):
                 h = (t + IST_OFF).hour
                 return dict(utc=t, hour=h, mode=CATCHUP, bin='catch-up', why=f"catch-up: {have}/{DAILY[ch]} today, earliest open IST slot", hypothesis=None, **info)
             info['catchup'] = f'none: no open IST slot before 23:30 today ({have}/{DAILY[ch]}); normal scheduling for tomorrow'
+    # daily output first (owner 28 Nov 2026: whole days went by with no new video while uploads sat 1-2 days ahead): every slot comes from the
+    # earliest IST day still short of DAILY; explore / exploit only choose the hour inside that day
+    day_of = lambda c: (c[0] + IST_OFF).date()
+    open_all = [c for c in free_slots(now_utc, taken, [h for h in HOURS if h not in AUTO_AVOID]) if day_count(ch, raw, day_of(c)) < DAILY[ch]]
+    day0 = min((day_of(c) for c in open_all), default=None)
+    first_day = lambda cs: [c for c in cs if day_of(c) == day0] if day0 else cs
     if explore_due(raw):
         b = min(BINS, key=lambda x: (n_bin[x], ORDER.index(x)))              # least-tested bin
-        cands = free_slots(now_utc, taken, [h for h in BINS[b] if h not in AUTO_AVOID])
+        cands = first_day(free_slots(now_utc, taken, [h for h in BINS[b] if h not in AUTO_AVOID]))
         if cands:
             utc, h = min(cands, key=lambda c: (n_hour[c[1]], c[0]))              # least-tested hour in it, then earliest
             why = f"explore: least-tested bin {b} (n={n_bin[b]}), hour with n={n_hour[h]}"
@@ -145,7 +152,8 @@ def decide(now_utc, raw, ch, gate=True):
         else:
             win = max(BINS, key=lambda b: (st.median(legacy_bin[b]) if legacy_bin[b] else -1, -ORDER.index(b)))
             why = 'fallback: no fair data yet, legacy median used only to order the bins'
-    cands = free_slots(now_utc, taken, [h for h in BINS[win] if h not in AUTO_AVOID]) or free_slots(now_utc, taken, [h for h in HOURS if h not in AUTO_AVOID])
+    cands = (first_day(free_slots(now_utc, taken, [h for h in BINS[win] if h not in AUTO_AVOID])) or first_day(open_all)
+             or free_slots(now_utc, taken, [h for h in BINS[win] if h not in AUTO_AVOID]) or free_slots(now_utc, taken, [h for h in HOURS if h not in AUTO_AVOID]))
     if not cands: return None
     def hour_key(c):
         f = fair_hour.get(c[1]); return (0, -st.median(f)) if f else (1, 0)
@@ -167,8 +175,11 @@ def _test():
     assert not explore_due([row('a', '2026-11-19 10:00', 1, mode='explore'), row('b', '2026-11-19 10:00', 1, vid='y')])
     # 3. explore: least-tested bin (midday here: n=0), hour 11 or 12 (never 13)
     rows = [row(f'r{i}', '2026-11-19 09:00', 100 + i, vid=f'q{i}') for i in range(4)] + [row('e1', '2026-11-19 14:00', 9, vid='e1'), row('e2', '2026-11-19 17:00', 9, vid='e2')]
-    d = decide(now, rows, 'solo', gate=False)
-    assert d['mode'] == 'explore' and d['bin'] == 'midday' and d['hour'] in (11, 12), d
+    d = decide(dt.datetime(2026, 11, 20, 3, 0), rows, 'solo', gate=False)           # 08:30 IST: today's midday is still open
+    assert d['mode'] == 'explore' and d['bin'] == 'midday' and d['hour'] in (11, 12) and d['utc'].date() == dt.date(2026, 11, 20), d
+    d = decide(now, rows, 'solo', gate=False)                                       # 14:23 IST: midday is gone today, today still short -> today wins over the explore bin
+    assert d['mode'] == 'exploit' and (d['utc'] + IST_OFF).date() == dt.date(2026, 11, 20), d
+    d = decide(dt.datetime(2026, 11, 20, 3, 0), rows, 'solo', gate=False)
     assert d['hypothesis'].startswith('Testing midday bin ') and 'n=0' in d['hypothesis'], d['hypothesis']
     # 4. exploit: a bin needs 3 fair rows and 1.5x the reference; a challenger must beat the incumbent (the last exploit row's bin) by 1.5x
     fair = [row(f'm{i}', '2026-11-19 09:00', 100, v72=100, vid=f'm{i}', mode='exploit') for i in range(7)]
@@ -215,6 +226,12 @@ def _test():
     assert d['mode'] in ('explore', 'exploit') and d['utc'] > late and d['catchup'].startswith('none'), d
     d = decide(dt.datetime(2026, 11, 21, 17, 0), [gtr('g0', '2026-11-21 09:00', '', 'gx0')], 'gta')   # 22:30 IST: still open
     assert d['mode'] == CATCHUP and d['utc'] + IST_OFF < dt.datetime.combine(d['utc'].date(), CATCHUP_END), d
+    # 11. daily output first: the best hour (morning) is gone today and today is short -> a slot TODAY, not tomorrow's 10:00
+    best_am = [row(f'b{i}', '2026-11-18 10:00', 900, v72=900, vid=f'b{i}', mode='exploit') for i in range(4)] + [row('e1', '2026-11-18 20:00', 5, vid='e1', mode='explore')]
+    d = decide(now, best_am, 'solo', gate=False)                                # now = 14:23 IST on 20 Nov
+    assert (d['utc'] + IST_OFF).date() == dt.date(2026, 11, 20), d
+    d = decide(now, best_am + [row('t1', '2026-11-20 09:00', 0, vid='t1', mode='exploit'), row('t2', '2026-11-20 11:00', 0, vid='t2', mode='exploit')], 'solo', gate=False)
+    assert (d['utc'] + IST_OFF).date() == dt.date(2026, 11, 21), d                         # today full -> tomorrow
     print('slot.py: self-check OK')
 
 if __name__ == '__main__':
