@@ -43,3 +43,4 @@ Players Found Dexter's Apartment In GTA 6 | 26 Nov 15:40 IST | rumour hook + com
 Jason And Lucia's GTA 6 Apartment Was A Real Building? | 26 Nov 16:10 IST | real-location detective story, compare shot | | 
 GTA 6 Patch Fixed 7 Bugs, Not This One | 28 Nov 09:00 IST | tests: myth-or-fact on news-check, 'what the patch did NOT fix' hook | | 
 GTA 6 Has A Secret Radio Station | 27 Nov 20:00 IST | HYPOTHESIS: night bin 20:00 IST, n=0 -> target >= 1.2x channel fair median (882); how-to secret, commentary track | | 
+GTA 6 Ultimate Edition Sticker (Reported) | 2026-11-29 09:00 IST | NEW STYLE quiz-countdown (A/B quiz card), controversy question hook | |
