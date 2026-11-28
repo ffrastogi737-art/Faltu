@@ -377,7 +377,7 @@ Sources: NBC News; History.com; Britannica.
 **Tags:** great molasses flood, boston molasses flood, 1919 boston, weird history, true story, history shorts, did you know, disaster history
 **Hook:** a rumble like a train. Then a wall of molasses. (loop: last words "and listen for" -> line 1)
 **Experiment:** rebuild of 31 (old look held private); new 3D story models; explore midday slot 11:00 IST.
-**Status:** UPLOADING
+**Status:** QUEUED: goes public 29 Nov 2026 11:00 IST (https://youtu.be/i7pF325jkAM)
 
 
 ## 32 · `32-yawn-contagious.mp4` · myth-or-fact (STANDARD turn; body-science kind; Top-3 match: deep-dive 5.3 | inside-out 5 | myth-or-fact 3.3; inside-out hand-built, comic-pop on cooldown)
