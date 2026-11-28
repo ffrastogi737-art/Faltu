@@ -354,4 +354,4 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Hook:** Did Rockstar hide an insult for fans who paid a hundred dollars? (question + conflict)
 **Top-3 (match):** quiz-countdown 5.8 | top-5-countdown 5 | breaking-desk 3.8
 **Experiment:** first use of quiz-countdown; 27 s, 109 words, kind gaming-news/controversy; A/B poll end.
-**Status:** QUEUED (private until slot)
+**Status:** UPLOADED PRIVATE (91HmDGF6oFk, https://youtu.be/91HmDGF6oFk); publishAt 2026-11-29T03:30:00Z (09:00 IST) NOT SET: WAITING (quota, PUT returned quotaExceeded 28 Nov 08:50 IST). The 14:00 IST run must PUT publishAt first (slot unchanged unless past; else slot.py gta --catchup).
