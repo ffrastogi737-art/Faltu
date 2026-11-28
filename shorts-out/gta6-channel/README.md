@@ -354,4 +354,15 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Hook:** Did Rockstar hide an insult for fans who paid a hundred dollars? (question + conflict)
 **Top-3 (match):** quiz-countdown 5.8 | top-5-countdown 5 | breaking-desk 3.8
 **Experiment:** first use of quiz-countdown; 27 s, 109 words, kind gaming-news/controversy; A/B poll end.
-**Status:** UPLOADED PRIVATE (91HmDGF6oFk, https://youtu.be/91HmDGF6oFk); publishAt 2026-11-29T03:30:00Z (09:00 IST) NOT SET: WAITING (quota, PUT returned quotaExceeded 28 Nov 08:50 IST). The 14:00 IST run must PUT publishAt first (slot unchanged unless past; else slot.py gta --catchup).
+**Status:** SCHEDULED 29 Nov 2026 09:00 IST (https://youtu.be/91HmDGF6oFk), publishAt PUT after the quota reset 28 Nov 14:35 IST, read back.
+
+## 32 · `32-gta6-gas-stops.mp4` · pixel-quest (NEW STYLE: library id ported on comic-pop, retro 8-bit look; STANDARD EXPLORE RUN)
+**Title:** GTA 6 Gas Stops Take 10 Seconds? (Reported) #shorts
+**Description:** Reports say GTA 6 has a refueling animation that takes about 10 seconds. Rockstar North co-head Rob Nelson called it "pretty fast for a fill up" and, when a YouTuber pushed back, said "we'll see what people say". Some fans worry about refueling while escaping the police. Pre-launch coverage; not a Rockstar patch note. Comment A = realism, B = speed bump.
+Sources: PC Gamer; GamesRadar; Dexerto; GamingBolt; Upcomer.
+#shorts #gta6 #grandtheftauto6 #rockstargames #gaming #gtavi #gta6refuel
+**Tags:** gta 6, gta 6 refueling, gta 6 gas stations, gta 6 realism, rob nelson, rockstar games, gta vi, gta 6 news
+**Hook:** Does GTA 6 really make you stop for gas? (question + second person)
+**Top-3 (match):** top-5-countdown 5 | pixel-quest 3.8 | versus-split 3.8 (EXPLORE RUN forced pixel-quest)
+**Experiment:** first use of pixel-quest; kind gaming-versus (new kind); 24 s, 93 words; A/B comment ending; slot explore midday 12:00 IST.
+**Status:** UPLOADING

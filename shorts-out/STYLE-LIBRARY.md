@@ -38,3 +38,5 @@ shadow-puppets, visual-novel, rubber-hose-reel, woodcut-tale, neon-line.
   estimate.py + capture.mjs check + a contact sheet; our own look, no library source copied). Both are in LOCAL and PORTED in pick_style.py.
 - Any other id: `bash .claude/skills/faceless-shorts/scripts/port_style.sh <id> comic-pop` scaffolds it in minutes, and FACTORY DECIDE step 4 builds the
   winner on the fly whenever `pick_style.py match` ranks an unported id first. `pick_style.py` reads this file's `720x1280` block as the library catalog.
+
+- pixel-quest: PORTED 28 Nov 2026 as a restyle of comic-pop (Press Start 2P, square cards, pixel sky + ground). First use: gta 32 gas stops.
