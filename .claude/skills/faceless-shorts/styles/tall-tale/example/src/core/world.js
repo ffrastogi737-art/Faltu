@@ -224,7 +224,9 @@ const SHOPS = [['BAKERY', '#C9603F', 'brick', '#D8343F'], ['GENERAL STORE', '#6F
   ['BANK', '#C7B79A', 'brick', null], ['PHARMACY', '#5FA39A', 'wood', '#D8343F'], ['SHOES', '#D9A34A', 'wood', null], ['THEATER', '#A3485A', 'brick', '#F2C230']];
 
 /** a small-town main street running along -z. The road is x -4..4; boardwalks x ±4..6; shop fronts at x ±6. */
-export function mainStreet(E, { len = 70, people = true, cars = true, dusk = false, shops = SHOPS } = {}) {
+// era: 'old' (owner 28 Nov 2026) = a story before about 1900: no cars, no power poles or wires (oil lamps and bunting stay)
+export function mainStreet(E, { len = 70, people = true, cars = true, dusk = false, shops = SHOPS, era = 'modern' } = {}) {
+  const old = era === 'old'; if (old) cars = false;
   const buildings = [];
   const scene = new THREE.Scene();
   sky(scene, dusk ? { top: '#3B3F8F', horizon: '#F59C6B' } : {});
@@ -245,10 +247,10 @@ export function mainStreet(E, { len = 70, people = true, cars = true, dusk = fal
       if (aw) { const a = box(1.4, 0.06, w - 0.4, mat({ color: aw }), s * 5.6, 2.9, z - w / 2, scene); a.rotation.z = s * 0.35; }
       z -= w + 0.15;
     }
-    for (let zz = 4; zz > -len; zz -= 12) { const p = pole(7.5); p.position.set(s * 4.4, 0, zz); scene.add(p); }
+    if (!old) for (let zz = 4; zz > -len; zz -= 12) { const p = pole(7.5); p.position.set(s * 4.4, 0, zz); scene.add(p); }
     for (let zz = -2; zz > -len; zz -= 16) { const l = lamp(); l.position.set(s * 4.3, 0.18, zz); scene.add(l); }
   });
-  for (let zz = 4; zz > -len + 12; zz -= 12) [-1, 1].forEach((s) => [-0.8, -0.3, 0.3, 0.8].forEach((dx) => scene.add(wire(new THREE.Vector3(s * 4.4 + dx, 6.95, zz), new THREE.Vector3(s * 4.4 + dx, 6.95, zz - 12), 0.45))));
+  if (!old) for (let zz = 4; zz > -len + 12; zz -= 12) [-1, 1].forEach((s) => [-0.8, -0.3, 0.3, 0.8].forEach((dx) => scene.add(wire(new THREE.Vector3(s * 4.4 + dx, 6.95, zz), new THREE.Vector3(s * 4.4 + dx, 6.95, zz - 12), 0.45))));
   for (let zz = -6; zz > -len; zz -= 22) scene.add(bunting(new THREE.Vector3(-4.4, 6.2, zz), new THREE.Vector3(4.4, 6.2, zz - 2)));
   [[-4.6, -3], [4.7, -9], [-4.8, -20], [4.6, -27]].forEach(([x, z], i) => { const o = i % 2 ? barrel() : crate(); o.position.set(x, 0.18, z); scene.add(o); });
   const carsList = [];
@@ -373,12 +375,15 @@ export function convertible(col = '#FF5E9A') {
   box(1.5, 0.08, 0.12, chrome, 0, 0.5, 2.15, g); return g;
 }
 /** coast(E, { names }) -> { scene, sun, people, buildings, faceAll } */
-export function coast(E, { len = 70, sunset = false, shops } = {}) {
+const HARBOR = [['CHANDLERY', '#7A8F9E', 'wood', '#2E4E3F'], ['FISH MARKET', '#5FA39A', 'wood', '#F4EFE4'], ['CUSTOMS HOUSE', '#C7B79A', 'brick', null], ['SAIL LOFT', '#E3C16F', 'wood', '#7A2E2E'], ['TAVERN', '#9E4A3A', 'brick', '#2E4E3F'], ['ROPE WORKS', '#B98A5A', 'wood', null]];
+// era: 'old' = a harbour before about 1900: a dirt road, harbour shops, no cars, no beach umbrellas, surfboards or billboard
+export function coast(E, { len = 70, sunset = false, shops, era = 'modern' } = {}) {
+  const old = era === 'old'; if (old && !shops) shops = HARBOR;
   const scene = new THREE.Scene(), buildings = [];
   sky(scene, sunset ? { top: '#6B4CC8', horizon: '#FF8F6B', ground: '#FFB38A' } : { top: '#1F86FF', horizon: '#CFF0FF', ground: '#8ED8F0' });
   const sun = sunlight(scene, E, sunset ? { col: '#FF9A62', i: 2.4, pos: [-10, 5, -16], sky: '#C9A6E0', ground: '#7A4A5A', hemi: 1.0, box: 16 } : { col: '#FFF1CC', i: 2.8, pos: [-9, 12, 6], box: 16, sky: '#BFE6FF', ground: '#E7C58B', hemi: 1.3 });
   clouds(scene, [[-30, 26, -100, 16], [20, 34, -110, 20], [55, 22, -90, 12], [-60, 30, -80, 14], [5, 20, -70, 9], [-12, 40, -40, 10]], sunset ? '#FFC9B0' : '#FFFFFF');
-  const road = new THREE.Mesh(new THREE.PlaneGeometry(8, len + 40), mat({ map: canvasTex('asphalt', 256, 256, (g, w, h) => { g.fillStyle = '#4A4A58'; g.fillRect(0, 0, w, h); for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(${rnd(i) > 0.5 ? '255,255,255' : '0,0,0'},0.07)`; g.fillRect(rnd(i * 2.1) * w, rnd(i * 3.7) * h, 2, 2); } g.fillStyle = '#FFE066'; g.fillRect(w / 2 - 5, 0, 10, h * 0.55); }, [1, (len + 40) / 8]) })); road.rotation.x = -Math.PI / 2; road.position.set(0, 0, -len / 2 + 10); road.receiveShadow = true; scene.add(road);
+  const road = new THREE.Mesh(new THREE.PlaneGeometry(8, len + 40), old ? mat({ map: T.dirt('#B98A5A', [2, (len + 40) / 8]) }) : mat({ map: canvasTex('asphalt', 256, 256, (g, w, h) => { g.fillStyle = '#4A4A58'; g.fillRect(0, 0, w, h); for (let i = 0; i < 1500; i++) { g.fillStyle = `rgba(${rnd(i) > 0.5 ? '255,255,255' : '0,0,0'},0.07)`; g.fillRect(rnd(i * 2.1) * w, rnd(i * 3.7) * h, 2, 2); } g.fillStyle = '#FFE066'; g.fillRect(w / 2 - 5, 0, 10, h * 0.55); }, [1, (len + 40) / 8]) })); road.rotation.x = -Math.PI / 2; road.position.set(0, 0, -len / 2 + 10); road.receiveShadow = true; scene.add(road);
   const sand = new THREE.Mesh(new THREE.PlaneGeometry(40, len + 40), mat({ map: T.dirt('#F2D9A0', [8, 14], false) })); sand.rotation.x = -Math.PI / 2; sand.position.set(-24, -0.02, -len / 2 + 10); sand.receiveShadow = true; scene.add(sand);
   const sea = new THREE.Mesh(new THREE.PlaneGeometry(260, len + 200), mat({ map: canvasTex('sea', 256, 256, (g, w, h) => { g.fillStyle = '#17B5C9'; g.fillRect(0, 0, w, h); g.strokeStyle = 'rgba(255,255,255,0.55)'; g.lineWidth = 4; for (let i = 0; i < 40; i++) { const y = rnd(i) * h, x = rnd(i * 3) * w; g.beginPath(); g.moveTo(x, y); g.quadraticCurveTo(x + 18, y - 8, x + 36, y); g.stroke(); } }, [30, 30]), roughness: 0.2, metalness: 0.1 })); sea.rotation.x = -Math.PI / 2; sea.position.set(-170, -0.35, -len / 2); scene.add(sea);
   const foam = new THREE.Mesh(new THREE.PlaneGeometry(2.2, len + 40), mat({ color: '#FFFFFF', transparent: true, opacity: 0.85 })); foam.rotation.x = -Math.PI / 2; foam.position.set(-43.5, -0.3, -len / 2 + 10); scene.add(foam);
@@ -396,11 +401,11 @@ export function coast(E, { len = 70, sunset = false, shops } = {}) {
   box(2.2, 0.16, len + 20, mat({ color: '#EFE6D2' }), 5.1, 0.08, -len / 2 + 5, scene);
   for (let zz = 6, i = 0; zz > -len; zz -= 5.5, i++) { const p = palm(1.1 + rnd(i) * 0.4, 0.08 + rnd(i * 2) * 0.1); p.position.set(4.5, 0.16, zz); p.rotation.y = rnd(i) * 6; scene.add(p); }
   for (let zz = 2, i = 0; zz > -len; zz -= 7, i++) { const p = palm(1.2 + rnd(i * 5) * 0.4, 0.12 + rnd(i) * 0.1); p.position.set(-6 - rnd(i * 3) * 4, 0, zz); p.rotation.y = rnd(i + 4) * 6; scene.add(p); }
-  [[-11, -6, '#FF5E8A'], [-13, -14, '#FFE600'], [-10, -22, '#2EC4FF'], [-14, -30, '#FF8A00'], [-12, -40, '#7B4DFF']].forEach(([x, zz, c]) => { const u = umbrella(c); u.position.set(x, 0, zz); u.rotation.z = 0.12; scene.add(u); });
-  [[-13, -4, '#FFE600'], [-14, -10, '#FF3FA4'], [-13.5, -18, '#2EC4FF']].forEach(([x, zz, c]) => { const s = surfboard(c); s.position.set(x, 0, zz); scene.add(s); });
+  if (!old) [[-11, -6, '#FF5E8A'], [-13, -14, '#FFE600'], [-10, -22, '#2EC4FF'], [-14, -30, '#FF8A00'], [-12, -40, '#7B4DFF']].forEach(([x, zz, c]) => { const u = umbrella(c); u.position.set(x, 0, zz); u.rotation.z = 0.12; scene.add(u); });
+  if (!old) [[-13, -4, '#FFE600'], [-14, -10, '#FF3FA4'], [-13.5, -18, '#2EC4FF']].forEach(([x, zz, c]) => { const s = surfboard(c); s.position.set(x, 0, zz); scene.add(s); });
   for (let zz = -2; zz > -len; zz -= 14) { const l = lamp(); l.position.set(4.3, 0.16, zz); scene.add(l); }
-  const bb = signBoard('GRAND OPENING', { w: 4, h: 1.2, bg: '#FF3FA4', fg: '#FFFFFF', font: 'Inter' }); bb.position.set(-5.2, 3.6, -16); bb.rotation.y = 0.5; scene.add(bb); [-1.6, 1.6].forEach((dx) => cyl(0.06, 0.06, 3, mat({ color: '#444' }), -5.2 + dx * Math.cos(0.5), 1.5, -16 - dx * Math.sin(0.5), scene, 6));
-  const carsList = [[2, -14, '#FF5E9A'], [-2, -32, '#2EC4FF']].map(([x, zz, c]) => { const v = convertible(c); v.position.set(x, 0, zz); if (x < 0) v.rotation.y = Math.PI; scene.add(v); return v; });
+  if (!old) { const bb = signBoard('GRAND OPENING', { w: 4, h: 1.2, bg: '#FF3FA4', fg: '#FFFFFF', font: 'Inter' }); bb.position.set(-5.2, 3.6, -16); bb.rotation.y = 0.5; scene.add(bb); [-1.6, 1.6].forEach((dx) => cyl(0.06, 0.06, 3, mat({ color: '#444' }), -5.2 + dx * Math.cos(0.5), 1.5, -16 - dx * Math.sin(0.5), scene, 6)); }
+  const carsList = (old ? [] : [[2, -14, '#FF5E9A'], [-2, -32, '#2EC4FF']]).map(([x, zz, c]) => { const v = convertible(c); v.position.set(x, 0, zz); if (x < 0) v.rotation.y = Math.PI; scene.add(v); return v; });
   const crowd = extras(scene, [[5.6, -7, 1], [-4.6, -9, 3, 'happy'], [5.4, -16, 5], [-5.0, -24, 2], [5.5, -30, 6], [-5.2, -36, 7, 'laugh']]);
   return { scene, sun, people: crowd, cars: carsList, buildings, faceAll(cam) { crowd.forEach((p) => p.face(cam)); } };
 }

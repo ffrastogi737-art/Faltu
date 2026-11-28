@@ -18,6 +18,7 @@ import { camera, LIGHT_RIGS, applyRig } from './core/engine.js';
 import * as WD from './core/world.js';
 import * as PR from './core/props.js';
 import { Toon } from './core/toon.js';
+import { MODELS, model, MODEL_ANIMS } from './core/models.js';
 import { CREW } from './cast.js';
 
 const W = 1080, H = 1920, PERSON = 1.75;
@@ -37,7 +38,7 @@ const ACTIONS = new Set(['stand', 'walk', 'run', 'sit', 'jump', 'clap', 'point',
   'recoil', 'triumph', 'accuse', 'facepalm', 'cower', 'slump', 'smug-stand']);   // the last seven are dramatic reaction stances (poseOf)
 const MOODS = new Set(['neutral', 'smug', 'smirk', 'happy', 'laugh', 'shock', 'wide', 'worried', 'angry', 'sad', 'sly', 'proud', 'tired', 'dizzy']);
 const FX = new Set(['steam', 'sweat', 'sweat-fly']);   // cast[].fx: angry steam off the head, a sweat drop, sweat flying off the face
-const PROP_KINDS = new Set(['solid', 'poster', 'lockers', 'barbell', 'desk', 'calendar', 'sign', 'breaker', 'clock', 'phone', 'marker', 'papers']);
+const PROP_KINDS = new Set(['model', 'solid', 'poster', 'lockers', 'barbell', 'desk', 'calendar', 'sign', 'breaker', 'clock', 'phone', 'marker', 'papers']);
 const DIEGETIC = new Set(['calendar', 'sign', 'breaker', 'clock', 'phone', 'marker', 'papers']);   // story details that live inside the 3D set (STYLE.md section 6)
 const WALL_Y = { calendar: 1.75, sign: 2.0, breaker: 1.45, clock: 2.55, phone: 1.5 };   // default hanging / floating height (m); marker + papers stand on the floor
 const LECTURE = new Set(['diagram', 'whiteboard', 'board', 'easel', 'chart', 'slide', 'blackboard']);   // banned: no character explains in front of a board
@@ -76,6 +77,11 @@ export const THEMES = {
 const talk = (t) => 0.25 + 0.75 * Math.abs(Math.sin(t * 13)) * (0.6 + 0.4 * Math.sin(t * 5.3));
 const blink = (t, off = 0) => (((t + off) % 3.3) < 0.12 ? 1 : 0);
 const toRad = (d) => (d * Math.PI) / 180;
+// screen rectangles (px) for the model checks: a card w wide at (x, z) from height y0 to y1
+const rectPx = (toPx, x, z, w, y0, y1) => { const ps = [[-w / 2, y0], [w / 2, y0], [-w / 2, y1], [w / 2, y1]].map(([dx, y]) => toPx(new THREE.Vector3(x + dx, y, z))); return { l: Math.min(...ps.map((p) => p.x)), r: Math.max(...ps.map((p) => p.x)), t: Math.min(...ps.map((p) => p.y)), b: Math.max(...ps.map((p) => p.y)) }; };
+const area = (r) => Math.max(0, r.r - r.l) * Math.max(0, r.b - r.t);
+const overlap = (a, b) => Math.max(0, Math.min(a.r, b.r) - Math.max(a.l, b.l)) * Math.max(0, Math.min(a.b, b.b) - Math.max(a.t, b.t));
+const clipArea = (r) => overlap(r, { l: 0, r: W, t: 0, b: H });
 
 /** a readable error at build time (plan problems stop the build, they never render a bad shot) */
 export function validatePlan(plan) {
@@ -101,10 +107,15 @@ export function validatePlan(plan) {
   if (shifts < 2) throw new Error(`shot_plan.json: the whole video stays in one look. Change the set ("theme") or the lighting ("light": ${Object.keys(LIGHTS).join(', ')}) at least 2 times`);
   const posterShots = plan.shots.filter((sp) => (sp.props || []).some((p) => p.kind === 'poster')).length;
   if (posterShots > Math.floor(n * POSTER_SHARE)) throw new Error(`shot_plan.json: ${posterShots} shots carry a poster (max ${Math.floor(n * POSTER_SHARE)}). Text charts are not the story: show it with 3D objects`);
-  const solids = plan.shots.map((sp) => (sp.props || []).filter((p) => p.kind === 'solid'));
-  if (solids.filter((x) => x.length).length < Math.ceil(n / 3)) throw new Error(`shot_plan.json: only ${solids.filter((x) => x.length).length} shots have a 3D prop ("solid"); at least ${Math.ceil(n / 3)} need one`);
-  if (!solids.some((x) => x.length >= 2)) throw new Error('shot_plan.json: no visual comparison. One shot needs 2+ solids side by side (this vs that, real objects)');
-  if (solids.flat().filter((p) => p.motion).length < 2) throw new Error('shot_plan.json: the props never move. Give at least 2 solids a "motion" (slide, spin, grow, bob)');
+  // story objects (owner 28 Nov 2026: "the characters are 2D, everything else is 3D"; "the pig did not show, just a round egg"): the story's things are
+  // real 3D models ("model", core/models.js) or plain geometry ("solid"). An animal, a vehicle, a flag or a cannon is never assembled from loose spheres and boxes.
+  const STORY = (p) => p.kind === 'solid' || p.kind === 'model';
+  const solids = plan.shots.map((sp) => (sp.props || []).filter(STORY));
+  if (solids.filter((x) => x.length).length < Math.ceil(n / 3)) throw new Error(`shot_plan.json: only ${solids.filter((x) => x.length).length} shots show a story object ("model" or "solid"); at least ${Math.ceil(n / 3)} need one`);
+  const cutShots = plan.shots.filter((sp) => (sp.props || []).some((p) => p.kind === 'model')).length;
+  if (cutShots < 3) throw new Error(`shot_plan.json: only ${cutShots} shots show a 3D story object ("model": ${Object.keys(MODELS).join(', ')}). At least 3 shots must SHOW the thing the story is about`);
+  if (!solids.some((x) => x.length >= 2)) throw new Error('shot_plan.json: no visual comparison. One shot needs 2+ story objects side by side (this vs that)');
+  if (solids.flat().filter((p) => p.motion || (p.anim && p.anim !== 'none') || (p.kind === 'model' && ['flag', 'wave'].includes(p.model)) || (p.kind === 'model' && (p.fire || p.crack))).length < 2) throw new Error('shot_plan.json: the props never move. Give at least 2 story objects a "motion" (slide, spin, grow, bob) or an "anim" (bob, wobble, hop, shake, sway, roll)');
   let last = -1;
   const novel = plan.shots.map((sp, i) => !!((sp.props || []).length || (sp.cast || []).some((c) => c.soot || c.wear) || (i && looks[i] !== looks[i - 1])));
   plan.shots.forEach((sp, i) => {
@@ -135,6 +146,13 @@ export function validatePlan(plan) {
         if (p.kind === 'calendar' && (p.cross || []).some((d) => !Number.isInteger(d) || d < 1 || d > 30)) throw new Error(`${id}: calendar "cross" days are 1-30`);
       }
       if (p.kind === 'solid' && !(p.parts || []).length) throw new Error(`${id}: a solid needs "parts"`);
+      if (p.kind === 'model') {
+        if (!MODELS[p.model]) throw new Error(`${id}: "model": "${p.model}" is not in the 3D library (${Object.keys(MODELS).join(', ')}). Build a new model in core/models.js for a new object`);
+        if (p.anim !== undefined && !MODEL_ANIMS.has(p.anim)) throw new Error(`${id}: model "anim" is one of ${[...MODEL_ANIMS].join(', ')}`);
+        if (p.side === undefined && !Array.isArray(p.pos)) throw new Error(`${id}: a model needs "side": "left" | "right" | "front" (next to the focus character) or "pos": [x, z]`);
+        if (p.side !== undefined && !['left', 'right', 'front'].includes(p.side)) throw new Error(`${id}: model "side" is "left", "right" or "front"`);
+        if (p.label && String(p.label).length > 18) throw new Error(`${id}: model label "${p.label}" is longer than 18 characters`);
+      }
     });
     (sp.cues || []).forEach((c) => {
       if (!CUE_TYPES.has(c.type)) throw new Error(`${id}: unknown sound "${c.type}"`);
@@ -208,12 +226,13 @@ function propPos(S, kind, pos) {
   }
   throw new Error(`prop position "${pos}" is not known in this set (use [x, z] here)`);
 }
-function addProp(S, p, shot) {
+function addProp(S, p, shot, anchor = null) {
   const wall = typeof p.pos === 'string', h = p.h || (p.kind === 'diagram' ? 1.4 : 1.2);
   const y = p.kind === 'poster' ? (p.y ?? 2.3) : p.kind === 'diagram' ? (p.y ?? (wall ? 2.3 : 0.6 + h / 2)) : DIEGETIC.has(p.kind) ? (p.y ?? WALL_Y[p.kind] ?? 0) : 0;
   const g = p.kind === 'poster' ? PR.poster(p.lines || ['NOTICE'], { w: p.w || 2.0, h: p.h || 1.2, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', accent: p.accent || '#B5372E' })
     : p.kind === 'diagram' ? PR.diagram(p.ops || [], { w: p.w || 2.0, h, bg: p.bg || '#F4EBD6', fg: p.fg || '#1F1C33', title: p.title || '', legs: wall ? 0 : y })
     : p.kind === 'solid' ? PR.solid(p.parts || [])
+    : p.kind === 'model' ? model(p.model, p)
     : p.kind === 'calendar' ? PR.calendar({ month: p.month || 'NOV', mark: p.mark || 0, cross: p.cross || [], w: p.w, h: p.h })
     : p.kind === 'sign' ? PR.sign(p.lines || ['KEEP OUT'], { bg: p.bg, fg: p.fg, w: p.w, h: p.h })
     : p.kind === 'breaker' ? PR.breaker({ flip: !!p.flip, switches: p.switches, w: p.w, h: p.h })
@@ -222,12 +241,23 @@ function addProp(S, p, shot) {
     : p.kind === 'marker' ? PR.marker({ label: p.label || '39 FT', h: p.h2 })
     : p.kind === 'papers' ? PR.papers({ lines: p.lines, n: p.n })
     : p.kind === 'lockers' ? PR.lockers(p.n || 4, p.col) : p.kind === 'barbell' ? PR.barbell() : PR.desk(p.w || 2.2);
-  const q = propPos(S, p.kind, p.pos);
+  const q = p.kind === 'model' && p.side ? sidePos(g, p.side, anchor) : propPos(S, p.kind, p.pos);
   if (typeof p.pos === 'string' && DIEGETIC.has(p.kind) && p.kind !== 'phone') q.z += 0.06;   // flush against the wall
-  g.position.set(q.x, y, q.z); g.rotation.y = q.ry + toRad(p.ry || 0); S.scene.add(g);
+  g.position.set(q.x, y, q.z); g.rotation.y = q.ry + (p.kind === 'model' ? 0 : toRad(p.ry || 0)); S.scene.add(g);   // a model turns itself (ry / flip)
   g.visible = shot == null;                              // theme props stay visible; a shot's props only during that shot
   if (shot != null) S.shotProps.push({ g, shot, motion: p.motion || null, base: { x: q.x, y, z: q.z, ry: g.rotation.y } });
-  return { g, q, w: p.w || 2.0, h, y, kind: p.kind };
+  return { g, q, w: p.kind === 'model' ? g.size.w : p.w || 2.0, h: p.kind === 'model' ? g.size.h : h, y, kind: p.kind, art: p.model };
+}
+/** a model beside the focus character: a step in front and overlapping the legs a little (knee-up framing), so the camera keeps the person big
+ *  and the object never hides behind them. A tall model (over 1.3 m) stands clear of the shoulder instead. */
+function sidePos(g, side, a) {
+  if (!a) throw new Error('a model with "side" needs a character to stand next to');
+  if (side === 'front') {                               // a small thing (basket, coins, a dead pig) on the ground in front of the knees
+    if (g.size.h > 0.8) throw new Error(`"side": "front" is for small things (at most 0.8 m tall); this model is ${g.size.h.toFixed(2)} m: use "left" or "right"`);
+    return { x: a.midX + 0.12, z: a.z + 0.55, ry: 0 };
+  }
+  const s = side === 'left' ? -1 : 1, tall = g.size.h > 1.3;
+  return { x: (s < 0 ? a.minX : a.maxX) + s * (tall ? 0.36 + g.size.w / 2 : 0.16 + g.size.w * 0.42), z: a.z + (tall ? 0.15 : 0.4), ry: 0 };
 }
 function toonFor(S, chars, who, kid) {
   const key = who + (kid ? '|kid' : '');
@@ -275,6 +305,13 @@ export function buildPlanShots(E, plan) {
       if (prevEnd) h *= clamp(f(0), prevEnd / JUMP, prevEnd * JUMP) / f(0);
       return clamp(h, HEAD_MIN, HEAD_MAX);
     };
+    const anchor = (() => {                              // where "side" models stand: left of the leftmost person, right of the rightmost, "front" in the middle
+      const q = posAt(cast[fi], 1), xs = cast.filter((c) => !c.bg).map((c) => posAt(c, 1).x), t = tgt(1);
+      return { x: q.x, z: q.z, minX: Math.min(...xs), maxX: Math.max(...xs), midX: sp.cam === 'medium' || sp.cam === 'reaction-push' || sp.cam === 'payoff' ? q.x : t.x };
+    })();
+    const shotProps = (sp.props || []).map((p) => addProp(S, p, i, anchor));
+    const cuts = shotProps.filter((pr) => pr.kind === 'model');
+    cuts.forEach((pr, j) => { const p = (sp.props || []).filter((x) => x.kind === 'model')[j]; pr.framed = p.side !== undefined || pr.q.z > anchor.z - 1.2; });   // set dressing far behind the cast is not framed with it
     let fovV = P.fov, adj = 1;                           // the lens may widen (up to 70) when the room is too small; adj re-aims the requested head
     const state = (k, s, sx, sy) => {
       const T0 = tgt(k), h = headLim(k), a = toRad((sp.yaw || 0) + (mv === 'orbit-left' ? lerp(-7, 7, eio(k)) : mv === 'orbit-right' ? lerp(7, -7, eio(k)) : 0));
@@ -311,6 +348,9 @@ export function buildPlanShots(E, plan) {
           const { body, head } = parts(c, k);
           for (const v of body) { const q = toPx(v); if (q.z > 1 || q.z < 0) b.behind = true; b.l = Math.min(b.l, q.x); b.r = Math.max(b.r, q.x); if (S.kind === 'interior' && Math.abs(v.x) > S.w / 2 - 0.2) b.wall = true; }
           for (const v of head) { const q = toPx(v); b.t = Math.min(b.t, q.y); b.chin = Math.max(b.chin, q.y); }
+        }
+        for (const pr of cuts.filter((x) => x.framed)) for (const dx of [-pr.w / 2, pr.w / 2]) for (const y of [0, Math.min(pr.h, PERSON)]) {   // a 3D story object is framed with the cast
+          const q = toPx(new THREE.Vector3(pr.q.x + dx, y, pr.q.z)); if (q.z > 1 || q.z < 0) b.behind = true; b.l = Math.min(b.l, q.x); b.r = Math.max(b.r, q.x);
         }
       }
       return b;
@@ -351,10 +391,28 @@ export function buildPlanShots(E, plan) {
     let figMin = 1;
     cast.forEach((c) => {
       const m = Math.min(...KS.map((k) => figH(c, k))), need = c.bg ? FIG_BG : FIG_MIN; if (!c.bg) figMin = Math.min(figMin, m);
-      if (m < need) throw new Error(`${id} (line ${sp.line}): ${c.who} is too far away (${(m * 100).toFixed(0)} % of the frame height, min ${need * 100} %${c.bg ? ' for a background extra' : ''}). Waist-up / knee-up framing only: stand the people closer together (two-shot about 0.9 m apart), use fewer people or a closer cam`);
+      if (m < need) throw new Error(`${id} (line ${sp.line}): ${c.who} is too far away (${(m * 100).toFixed(0)} % of the frame height, min ${need * 100} %${c.bg ? ' for a background extra' : ''}). Waist-up / knee-up framing only: stand the people closer together (two-shot about 0.9 m apart), use fewer people or a closer cam${cuts.length ? '. The 3D models widen the frame too: one model beside the person ("side"), small things "front", a smaller "h", or a big model far back with "pos"' : ''}`);
     });
     // props of this shot + the 45 % poster rule
-    const shotProps = (sp.props || []).map((p) => addProp(S, p, i));
+    cuts.forEach((pr) => {                               // a 3D story object must read: on screen, big enough, not hidden behind a person, not covering a face
+      for (const k of [0.5, 1]) {
+        apply(state(k, s, sx, sy));
+        const r = rectPx(toPx, pr.q.x, pr.q.z, pr.w, 0, Math.min(pr.h, PERSON + 0.4)), vis = clipArea(r) / Math.max(1, area(r)), hPx = Math.min(r.b, H) - Math.max(r.t, 0);   // above head height a tall thing (a mast, a flag) may leave the top
+        const what = `${id} (line ${sp.line}): the ${pr.art} model`;
+        if (vis < 0.5) throw new Error(`${what} is ${(100 - vis * 100).toFixed(0)} % off screen. Use "side" (next to the focus character) or move it closer to the cast`);
+        if (hPx < 0.12 * H) throw new Error(`${what} is only ${(100 * hPx / H).toFixed(0)} % of the frame height (min 12 %): make it bigger ("h") or put it next to the cast`);
+        for (const c of cast) {
+          const q = posAt(c, k), hh = c.kid ? 1.4 : PERSON;
+          if (pr.q.z < q.z - 0.05) {
+            const body = rectPx(toPx, q.x, q.z, 0.6, 0, hh), ov = overlap(r, body) / Math.max(1, area(r));
+            if (ov > 0.4) throw new Error(`${what} is ${(ov * 100).toFixed(0)} % hidden behind ${c.who}. Put it beside them ("side": "left" | "right"), not behind`);
+          } else if (pr.q.z > q.z + 0.05) {
+            const face = rectPx(toPx, q.x, q.z, 0.56, hh * 0.62, hh + 0.12), ov = overlap(r, face) / Math.max(1, area(face));
+            if (ov > 0.25) throw new Error(`${what} covers ${(ov * 100).toFixed(0)} % of ${c.who}'s face. Put it beside them or lower ("h")`);
+          }
+        }
+      }
+    });
     shotProps.forEach((pr) => {                          // a solid is part of the story: it must be on screen (its centre inside the frame)
       if (pr.kind !== 'solid') return;
       apply(state(0.5, s, sx, sy)); S.scene.updateMatrixWorld(true);
@@ -377,7 +435,7 @@ export function buildPlanShots(E, plan) {
         const k = clamp(lt / d);
         S.shotProps.forEach((pr) => {
           pr.g.visible = pr.shot === i; if (pr.shot !== i) return;
-          if (pr.g.reveal) pr.g.reveal(k);
+          if (pr.g.reveal) pr.g.reveal(k, lt);
           const m = pr.motion; if (!m) return;             // active props: slide in, spin, grow, bob over the shot
           const e = eio(k), [dx, dz] = m.slide || [0, 0];
           pr.g.position.set(pr.base.x + dx * (e - 1), pr.base.y + (m.bob || 0) * Math.abs(Math.sin(lt * 4)), pr.base.z + dz * (e - 1));
@@ -393,6 +451,7 @@ export function buildPlanShots(E, plan) {
         if (i > 0 && lt < BLEND) { const pe = shots[i - 1].cam(1), a = eo(clamp(lt / BLEND)); st = { pos: pe.pos.clone().lerp(now.pos, a), tgt: pe.tgt.clone().lerp(now.tgt, a), fov: lerp(pe.fov, now.fov, a), sx: lerp(pe.sx, now.sx, a), sy: lerp(pe.sy, now.sy, a) }; }
         apply(st);
         cast.forEach((c) => c.toon.face(cam)); if (S.faceAll) S.faceAll(cam);
+        S.shotProps.forEach((pr) => { if (pr.shot === i && pr.g.face) pr.g.face(cam); });
         E.render(S.scene, cam, { ...LOOKS[S.kind], bloom: rig.bloom, vignette: rig.vignette, exposure: rig.exposure, tint: rig.tint, focus: st.pos.distanceTo(st.tgt) });
         blit();
       },

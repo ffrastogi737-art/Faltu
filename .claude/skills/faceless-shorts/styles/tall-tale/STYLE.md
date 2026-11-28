@@ -55,9 +55,27 @@ The cut-out is a card: it turns up to 32 deg toward the camera (a 3/4 view) and 
 ## 6. Sets, light and props: no lectures (enforced)
 - **Banned: characters explaining in front of whiteboards, easels, boards or charts.** The prop kinds `diagram`, `whiteboard`, `board`, `easel`, `chart`, `slide` are refused.
   Posters are only signs in the set: at most 2 short lines, at most 10 % of the frame, in at most 20 % of the shots.
-- **Real 3D objects tell the story**: `solid` props (box, cyl, cone, sphere parts with size, pos, rot, col, metal) in at least a third of the shots,
-  **one visual comparison** (2+ solids side by side: the riddled wing vs the clean engine), and at least 2 solids that move (`motion`: `slide` [dx, dz] in,
-  `spin` degrees, `grow` from a scale, `bob` metres). A solid whose centre is off screen fails the build: keep it within about 0.7 m of the people.
+- **Characters are 2D, everything else is 3D** (owner 28 Nov 2026). The story's THINGS are real 3D models from the library `core/models.js`
+  (`{ "kind": "model", "model": "pig", ... }`): shaped parts, lit by the set's light rig, with a dark ink outline so they sit next to the inked cast.
+  Library: **pig** (`col` '#3A3640' = black pig, `mood` angry / scared / happy / x, `pose` stand / dead (on its back, legs up) / side, `mud`),
+  **cannon** (`fire` = flash + smoke, `balls`), **flag** (`design` uk / us / stripes / tricolor with `cols` / plain with `col` / pirate; the cloth waves),
+  **ship** (sailing warship, `col`, `pennant`), **tank** (riveted storage tank, `label`, `crack` = cracks + oozing liquid, `drip` colour), **wave**
+  (a 3D wall of liquid, molasses by default, `col` for water), **potatoes** (`basket: false` = a heap), **barrel** (`label`), **crate** (`label`).
+  Common options: `h` (height in m, default = real size), `ry` (yaw in degrees; default -25 = 3/4 view toward the camera), `flip` (face left),
+  `anim` (bob wobble hop shake sway roll spin), plus `motion` like a solid. Preview every model: serve `example/` and open `sheet-models.html`
+  (`?v=[["pig",{"pose":"dead"}]]`). **A story about a thing that is not in the library: build its model in `core/models.js` first** (copy the pig:
+  capsules / lathes / extrusions / tubes, real proportions, `eyes()` for animals), check it on the sheet, then use it.
+  **Never assemble an animal, a vehicle, a weapon or a building from loose `solid` spheres and boxes** (the 29-pig-war pig read as "a round egg").
+  `solid` stays for plain geometry only (a table top, a slab, a pole).
+- **Placement**: `"side": "left" | "right"` stands the model next to the outermost person on that side, a step in front and overlapping the legs a
+  little (knee-up framing), so it is never hidden; `"side": "front"` puts a small thing (at most 0.8 m: a basket, a dead pig, coins) on the ground in
+  front of the knees; `"pos": [x, z]` places set dressing, usually far behind the cast (a ship at sea, flags over the shoulders).
+  Models placed with `side` (or within 1.2 m of the cast) are framed WITH the cast, so a wide model makes the people smaller: one model per side,
+  small things `front`, a smaller `h`, or a big model far back with `pos`. A model wider than about 0.8 m beside a person in a `medium` shot pushes
+  the person under 45 % and fails the build.
+- **Checks on every model** (the build names the shot): at least half of it (up to head height) on screen, at least 12 % of the frame height,
+  not more than 40 % hidden behind a person, not covering more than 25 % of a face. At least **3 shots show a model**, a third of the shots show a
+  story object (model or solid), one shot has 2+ side by side (the comparison), and 2+ of them move (`motion`, `anim`, or a waving flag / wave / fire / crack).
 - **3+ looks**: change the set (`theme`) or the light (`light`) at least 2 times, and never stay in one set + light for 30 s or more.
 - **Lighting is a real 3D rig per shot** (`engine.js` LIGHT_RIGS), not a tint: `day`, `warm` (low gold key), `dusk` (the key swings low and orange, blue rim), `night` (blue moon key, deep blue frame, warm lamps),
   `alarm` (red key and points that pulse, red frame), `spot` (one hard top light, the rest dark). A rig swings the key light around its target, recolours rim / sky / ground bounce / point lights, drifts the key a few degrees across the shot,
@@ -69,6 +87,8 @@ The cut-out is a card: it turns up to 32 deg toward the camera (a 3/4 view) and 
 - **Depth layers** (`world.depthLayers`, automatic in every set): rooms get ceiling beams, wall pilasters, a runner rug to the back wall, furniture, plants and standing lamps flanking the window; outdoor sets get tree / lamp / palm rows on
   both sides at several depths and foreground bushes, so every camera move shows parallax.
   Themes: `room` (paint it: `{ "name": "room", "o": { "wall", "motif", "floor", "ceiling", "signText" } }`), `meadow` (`{ "sunset": true, "fenceOn": false }`), `street`, `coast`, `office`, `gym`, `school`, `friends`.
+  **Period stories** (before about 1900): `street` and `coast` take `"o": { "era": "old" }` (no cars, no power poles or wires, a dirt road; the coast becomes a
+  harbour without beach umbrellas, surfboards or a billboard). A modern asphalt road with cars in an 1859 story is a wrong fact on screen.
 - Something new at least every 3rd shot (a prop, a set or light change, a costume or soot change).
 
 ## 7. Captions
@@ -87,7 +107,9 @@ The cut-out is a card: it turns up to 32 deg toward the camera (a 3/4 view) and 
 `pos`: `[x, z]` metres (camera on +z; rooms: people near z -5, back wall z -9; outdoors: people near z -3). Cue `word` must be in the line.
 
 Keys added 22 Nov 2026 (all validated at build time): shot `light` = one of day warm dusk night alarm spot; shot `move` = one of push pull orbit-left orbit-right dolly-in dolly-out track-left track-right crane-up crane-down tilt-up; cast `mood`, `action`, `fx` as in section 4;
-props `kind` = solid poster lockers barbell desk calendar sign breaker clock phone marker papers (section 6). Example: `{ "kind": "breaker", "pos": [-2.0, -8.82], "y": 1.55, "flip": true, "w": 0.55, "h": 0.78 }`,
+props `kind` = model solid poster lockers barbell desk calendar sign breaker clock phone marker papers (section 6).
+Example model props: `{ "kind": "model", "model": "pig", "col": "#3A3640", "mood": "angry", "side": "right", "anim": "wobble" }`,
+`{ "kind": "model", "model": "pig", "pose": "dead", "mood": "x", "side": "front", "h": 0.5 }`, `{ "kind": "model", "model": "flag", "design": "uk", "pos": [-0.75, -5.5], "h": 3.0, "flip": true }`. Example: `{ "kind": "breaker", "pos": [-2.0, -8.82], "y": 1.55, "flip": true, "w": 0.55, "h": 0.78 }`,
 `{ "kind": "phone", "pos": [-0.72, -4.6], "ry": 14, "lines": ["HQ", "Bolt armor NOW"] }`, cast `{ "who": "general", "action": "accuse", "fx": ["steam"], "talk": true }`.
 
 ## 9. Pipeline (project = `~/faceless-shorts/<name>`, made by `scripts/new_video.sh tall-tale <name>`)
@@ -99,7 +121,7 @@ props `kind` = solid poster lockers barbell desk calendar sign breaker clock pho
 6. `SOFTWARE_GL=1 QS='&res=0.8&aa=0&shadow=1024' FPS=24 node tools/capture.mjs video renders/out.mp4` (about 1-1.5 s per frame on 4 CPU cores).
 
 ## 10. Engine map and pitfalls
-`plan.js` (plan -> shots, all checks, themes, lights, cameras) · `core/toon.js` · `core/world.js` · `core/props.js` (`solid`, `poster`, ...) · `core/captions.js` ·
+`plan.js` (plan -> shots, all checks, themes, lights, cameras) · `core/toon.js` · `core/world.js` · `core/models.js` (the 3D story models) · `core/props.js` (`solid`, `poster`, ...) · `core/captions.js` ·
 `tools/voice.py` · `tools/mix.py` · `tools/loudness.py` · `cast.js` (old recurring crew: legacy).
 - Cut-outs always turn toward the camera (3/4 view, never edge-on); a fall leans up to 55 deg, a slip 30 deg; `lie` is a slumped sit. Big leans widen the group and can push a two-shot out of the safe zone: keep stances in two-shots calm (accuse, cower lean only 2 deg).
 - Camera moves are checked: dolly is 1.22x and tracking 0.22 m on purpose (more pushes the story solids or the second person out of frame). A `solid` that leaves the frame during a move fails the build: put it within 0.7 m of the people.

@@ -1,0 +1,33 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Tall Tale models</title>
+<style>
+@font-face { font-family: 'Inter'; font-weight: 900; src: url('fonts/Inter-Black.otf'); }
+body { margin: 0; background: #1E2230; font: 900 22px Inter, sans-serif; color: #F4EFE4; }
+#grid { display: grid; grid-template-columns: repeat(4, 420px); gap: 10px; padding: 10px; }
+.cell { position: relative; } .cell span { position: absolute; left: 10px; top: 8px; text-shadow: 0 2px 4px #000; }
+</style></head>
+<body><div id="grid"></div>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
+<script type="module">
+// every 3D story model of core/models.js in a small sunny set next to a 1.75 m person-sized post (scale check). ?v= JSON list of [name, options]
+import * as THREE from 'three';
+import { MODELS, model } from './src/core/models.js';
+await document.fonts.load('900 40px Inter');
+const q = new URLSearchParams(location.search).get('v');
+const list = q ? JSON.parse(q) : Object.keys(MODELS).map((n) => [n, {}]);
+const R = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true }); R.setSize(420, 520); R.shadowMap.enabled = true; R.toneMapping = THREE.NeutralToneMapping; R.outputColorSpace = THREE.SRGBColorSpace;
+for (const [name, o] of list) {
+  const sc = new THREE.Scene(); sc.background = new THREE.Color('#9CD3F2');
+  sc.add(new THREE.HemisphereLight('#FFF4E6', '#8C6E55', 1.1));
+  const sun = new THREE.DirectionalLight('#FFE2C2', 2.8); sun.position.set(3, 6, 5); sun.castShadow = true; sun.shadow.mapSize.set(1024, 1024); Object.assign(sun.shadow.camera, { left: -4, right: 4, top: 4, bottom: -4 }); sc.add(sun);
+  const gr = new THREE.Mesh(new THREE.PlaneGeometry(40, 40), new THREE.MeshStandardMaterial({ color: '#86C267', roughness: 1 })); gr.rotation.x = -Math.PI / 2; gr.receiveShadow = true; sc.add(gr);
+  const m = model(name, o); m.reveal(0.6, 0.6); sc.add(m);
+  const post = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 1.75, 8), new THREE.MeshStandardMaterial({ color: '#C8372D' })); post.position.set(-m.size.w / 2 - 0.35, 0.875, 0); sc.add(post);
+  const H = Math.max(m.size.h, 1.75), cam = new THREE.PerspectiveCamera(35, 420 / 520, 0.05, 200);
+  const d = Math.max(H, (m.size.w + 0.8) * 1.0) * 1.9; cam.position.set(0, H * 0.55 + 0.4, d); cam.lookAt(0, H * 0.45, 0);
+  R.render(sc, cam);
+  const cell = document.createElement('div'); cell.className = 'cell'; const img = new Image(); img.src = R.domElement.toDataURL(); cell.appendChild(img);
+  const l = document.createElement('span'); l.textContent = name + (Object.keys(o).length ? ' ' + JSON.stringify(o) : ''); cell.appendChild(l); document.getElementById('grid').appendChild(cell);
+}
+window.READY = true;
+</script></body></html>
