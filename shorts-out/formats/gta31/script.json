@@ -1,0 +1,92 @@
+{
+ "title": "GTA 6 Ultimate Edition Sticker Mocks Buyers? (Reported)",
+ "lead": 0.15,
+ "gap": 0.12,
+ "outro": 1.0,
+ "music": "hype",
+ "sources": [
+  "mein-mmo: GTA 6 fans discover a secret message in the expensive edition (sticker in promo screenshot)",
+  "OpenCritic news 33881: GTA 6 Screenshot Mocks Ultimate Edition Buyers, Fans Believe",
+  "GamesRadar: exclusive single-player shops and side missions locked to the $100 Ultimate Edition (reported); Rockstar has not confirmed any intent"
+ ],
+ "lines": [
+  {
+   "text": "Did Rockstar hide an insult for fans who paid a hundred dollars?",
+   "vis": {
+    "k": "Q",
+    "icon": "eye",
+    "head": "A SECRET JAB?"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "Fans found a sticker in a promo screenshot of the GTA 6 Ultimate Edition.",
+   "vis": {
+    "k": "I",
+    "icon": "note",
+    "head": "THE STICKER",
+    "sub": "ULTIMATE EDITION PROMO",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "It reportedly says: buy more useless stuff. Only ruder.",
+   "vis": {
+    "k": "I",
+    "icon": "eye",
+    "head": "BUY MORE USELESS...",
+    "sub": "AS REPORTED",
+    "fx": "boom"
+   },
+   "emo": 0.9
+  },
+  {
+   "text": "The Ultimate Edition costs ninety nine ninety nine. Standard costs seventy nine ninety nine.",
+   "vis": {
+    "k": "S",
+    "big": "$99.99",
+    "label": "ULTIMATE (STANDARD $79.99)"
+   }
+  },
+  {
+   "text": "And some single player shops and side missions are reportedly locked behind it.",
+   "vis": {
+    "k": "I",
+    "icon": "hand",
+    "head": "LOCKED BEHIND IT?",
+    "sub": "REPORTED",
+    "fx": "hit"
+   }
+  },
+  {
+   "text": "So some fans are furious, and call the sticker a wink at the buyers.",
+   "vis": {
+    "k": "I",
+    "icon": "person",
+    "head": "FANS ARE ANGRY",
+    "fx": "boom"
+   }
+  },
+  {
+   "text": "But some outlets say it may just be decoration, and nobody confirmed it was on purpose.",
+   "vis": {
+    "k": "I",
+    "icon": "brain",
+    "head": "ON PURPOSE?",
+    "sub": "NOBODY CONFIRMED",
+    "fx": "hit"
+   },
+   "emo": 0.88
+  },
+  {
+   "text": "So is it a secret jab, or just a sticker? Comment A for jab, B for sticker.",
+   "vis": {
+    "k": "A",
+    "head": "JAB OR STICKER?",
+    "a": "SECRET JAB",
+    "b": "JUST A STICKER"
+   },
+   "emo": 0.88
+  }
+ ]
+}

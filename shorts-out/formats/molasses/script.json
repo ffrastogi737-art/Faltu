@@ -1,0 +1,72 @@
+{
+ "title": "The Wave That Drowned A City Street In Molasses",
+ "tempo": 1.03,
+ "exaggeration": 0.75,
+ "speed": 1.0,
+ "lead": 0.15,
+ "outro": 0.15,
+ "gap": 0.3,
+ "music": "suspense",
+ "sources": [
+  "NBC News, 'Great Boston Molasses Flood of 1919 killed 21' (2.3M gallons, 25 ft wave, 35 mph, 21 dead)",
+  "History.com, 'The Great Molasses Flood of 1919' (leaks painted brown, anarchist claim, court ruling)",
+  "Britannica, 'Great Molasses Flood' (Jan 15 1919, 21 dead, ~150 injured)",
+  "Dramatized dialogue; facts only as sourced"
+ ],
+ "lines": [
+  {
+   "text": "a rumble like a train. Then a wall of molasses.",
+   "emo": 0.9
+  },
+  {
+   "text": "January 15, 1919. Boston's North End. A giant tank holds two point three million gallons of molasses."
+  },
+  {
+   "text": "It is suddenly warm after a freezing week, and the tank groans like a ship."
+  },
+  {
+   "text": "\"That tank is leaking!\" a worker warns. \"Paint it brown,\" the boss says.",
+   "emo": 0.95
+  },
+  {
+   "text": "Then the steel snaps.",
+   "emo": 0.9,
+   "pause": 0.5
+  },
+  {
+   "text": "A wave of molasses, twenty-five feet high, charges down the street at thirty-five miles an hour.",
+   "emo": 0.9
+  },
+  {
+   "text": "\"Run!\" a man screams. Nobody can run that fast.",
+   "emo": 0.95
+  },
+  {
+   "text": "It bends the steel of the elevated train tracks and shoves buildings off their foundations."
+  },
+  {
+   "text": "Picture trying to swim through a pool of glue.",
+   "pause": 0.4
+  },
+  {
+   "text": "Rescuers wade in. \"Over here, I hear someone!\" Every step sticks, and the cold makes it thicker.",
+   "emo": 0.9
+  },
+  {
+   "text": "Twenty-one people die. About one hundred fifty are hurt.",
+   "pause": 0.6
+  },
+  {
+   "text": "The company blames anarchists. The court blames the company.",
+   "emo": 0.9
+  },
+  {
+   "text": "After this, building plans need an engineer's signature."
+  },
+  {
+   "text": "So when a boss says just paint over it, remember Boston, and listen for",
+   "emo": 0.85,
+   "pause": 0.4
+  }
+ ]
+}

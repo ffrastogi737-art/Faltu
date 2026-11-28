@@ -352,3 +352,16 @@ Sources: Smithsonian Magazine; Scientific American; NPR; PBS NewsHour.
 **Hook:** Your fingers wrinkle in water, and it is not swelling. (second-person + conflict word)
 **Experiment:** night bin explore 21:00 IST; contested-science ending question; 34 s, 133 words, Chatterbox.
 **Status:** PUBLIC 27 Nov 2026 21:00 IST (https://youtu.be/EJZeAJVsoVg), read-back public
+
+## 31 · `31-molasses-flood.mp4` · tall-tale (TALL-TALE turn; history kind; 3D mini-movie, characters: tank worker, top-hat boss, firefighter)
+**Title:** The Wave That Drowned A City Street In Molasses
+**Description:**
+```
+On 15 January 1919 a tank holding about 2.3 million gallons of molasses burst in Boston's North End. A wave around 25 feet high rushed down the street at roughly 35 mph. 21 people died and about 150 were hurt. A court blamed the company, and later rules required engineers to sign off building plans. (Dramatized scenes, real history.)
+Sources: NBC News; History.com; Britannica.
+#shorts #history #molassesflood #boston #weirdhistory #truestory #didyouknow
+```
+**Tags:** great molasses flood, boston molasses flood, 1919 boston, weird history, true story, history shorts, did you know, disaster history
+**Hook:** a rumble like a train. Then a wall of molasses. (loop: last words "and listen for" -> line 1)
+**Experiment:** new topic kind (disaster history, never used); 48 s, 165 words; exploit morning slot.
+**Status:** QUEUED (private until slot)

@@ -1,0 +1,1308 @@
+{
+ "setting": {
+  "name": "street"
+ },
+ "track": "TALL-TALE",
+ "music": "suspense",
+ "characters": {
+  "worker": {
+   "role": "1919 molasses tank worker",
+   "look": {
+    "body": "#3C6FB6",
+    "pattern": "overalls",
+    "patCol": "#2F5588",
+    "hat": "cap",
+    "hatCol": "#6B4A2B",
+    "extra": [
+     "mustache"
+    ]
+   }
+  },
+  "boss": {
+   "role": "1919 company boss",
+   "look": {
+    "body": "#5A3A5A",
+    "pattern": "vest",
+    "patCol": "#C9A13B",
+    "hat": "tophat",
+    "hatCol": "#1E1E1E",
+    "neck": "bowtie",
+    "neckCol": "#8A2E2E",
+    "extra": [
+     "monocle"
+    ]
+   }
+  },
+  "rescuer": {
+   "role": "Boston firefighter 1919",
+   "look": {
+    "body": "#8A2E2E",
+    "pattern": "coat",
+    "patCol": "#3A1010",
+    "hat": "helmet",
+    "hatCol": "#C9A13B",
+    "neck": "scarf",
+    "neckCol": "#E0E0E0",
+    "extra": [
+     "goggles"
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "line": 0,
+   "theme": {
+    "name": "street"
+   },
+   "light": "alarm",
+   "cam": "medium",
+   "move": "push",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.9,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#4A2A12"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.3
+       ],
+       "pos": [
+        0.1,
+        1.0,
+        0
+       ],
+       "col": "#6B3A18"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.28
+       ],
+       "pos": [
+        -0.35,
+        0.95,
+        0
+       ],
+       "col": "#5A2E12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "grow": 0.4
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "rumble",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "street"
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "crane-down",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "smug",
+     "action": "smug-stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.45,
+        1.6
+       ],
+       "pos": [
+        0,
+        0.8,
+        0
+       ],
+       "col": "#8C949C",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.47,
+        0.08
+       ],
+       "pos": [
+        0,
+        1.62,
+        0
+       ],
+       "col": "#6A727A",
+       "metal": true
+      }
+     ],
+     "ry": 0
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "coast"
+   },
+   "light": "warm",
+   "cam": "two-shot",
+   "move": "orbit-left",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry",
+     "talk": true
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.45,
+        1.6
+       ],
+       "pos": [
+        0,
+        0.8,
+        0
+       ],
+       "col": "#8C949C",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.47,
+        0.08
+       ],
+       "pos": [
+        0,
+        1.62,
+        0
+       ],
+       "col": "#6A727A",
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.05,
+        1.0,
+        0.05
+       ],
+       "pos": [
+        0.3,
+        0.8,
+        0.0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "bob": 0.04
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": {
+    "name": "office"
+   },
+   "light": "night",
+   "cam": "two-shot",
+   "move": "push",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -5.0
+     ],
+     "mood": "worried",
+     "action": "accuse",
+     "talk": false
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.4,
+      -5.0
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "pos": [
+      0.0,
+      -8.7
+     ],
+     "y": 1.7,
+     "lines": [
+      "NO LEAKS",
+      "PAINT IT"
+     ],
+     "w": 0.9,
+     "h": 0.5
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "brown",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "street"
+   },
+   "light": "spot",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "recoil",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.45,
+        1.6
+       ],
+       "pos": [
+        0,
+        0.8,
+        0
+       ],
+       "col": "#8C949C",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.47,
+        0.08
+       ],
+       "pos": [
+        0,
+        1.62,
+        0
+       ],
+       "col": "#6A727A",
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.05,
+        1.0,
+        0.05
+       ],
+       "pos": [
+        0.3,
+        0.8,
+        0.0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "grow": 0.5
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "snaps",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 5,
+   "theme": {
+    "name": "street"
+   },
+   "light": "alarm",
+   "cam": "wide",
+   "move": "track-right",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.2,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "cower",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.9,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#4A2A12"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.3
+       ],
+       "pos": [
+        0.1,
+        1.0,
+        0
+       ],
+       "col": "#6B3A18"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.28
+       ],
+       "pos": [
+        -0.35,
+        0.95,
+        0
+       ],
+       "col": "#5A2E12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "slide": [
+       -0.6,
+       0.4
+      ]
+     }
+    },
+    {
+     "kind": "sign",
+     "pos": [
+      -0.9,
+      -4.6
+     ],
+     "lines": [
+      "35 MPH"
+     ],
+     "y": 1.5
+    }
+   ],
+   "cues": [
+    {
+     "word": "charges",
+     "type": "riser"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "street"
+   },
+   "light": "alarm",
+   "cam": "two-shot",
+   "move": "crane-up",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "run",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    },
+    {
+     "who": "rescuer",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "run",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.9,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#4A2A12"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.3
+       ],
+       "pos": [
+        0.1,
+        1.0,
+        0
+       ],
+       "col": "#6B3A18"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.28
+       ],
+       "pos": [
+        -0.35,
+        0.95,
+        0
+       ],
+       "col": "#5A2E12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "slide": [
+       0.0,
+       0.6
+      ]
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "fast",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": {
+    "name": "street"
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "dolly-out",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        0.12,
+        1.6,
+        0.12
+       ],
+       "pos": [
+        0,
+        0.8,
+        0
+       ],
+       "col": "#5A5F66",
+       "rot": [
+        0,
+        0,
+        25
+       ]
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.12,
+        1.6,
+        0.12
+       ],
+       "pos": [
+        0.5,
+        0.8,
+        0
+       ],
+       "col": "#5A5F66",
+       "rot": [
+        0,
+        0,
+        -20
+       ]
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "spin": 15
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "shoves",
+     "type": "slam"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": {
+    "name": "coast"
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "push",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "tired",
+     "action": "worry",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.7,
+        0.7
+       ],
+       "pos": [
+        0,
+        0.35,
+        0
+       ],
+       "col": "#2E7AB0"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.6,
+        0.08
+       ],
+       "pos": [
+        0,
+        0.72,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "bob": 0.04
+     }
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.45,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#D9D9C9"
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.4,
+        0.08
+       ],
+       "pos": [
+        0,
+        0.52,
+        0
+       ],
+       "col": "#F2F2E6"
+      }
+     ],
+     "ry": 0
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": {
+    "name": "street"
+   },
+   "light": "night",
+   "cam": "medium",
+   "move": "orbit-right",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "box",
+       "size": [
+        1.0,
+        0.9,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.45,
+        0
+       ],
+       "col": "#4A2A12"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.3
+       ],
+       "pos": [
+        0.1,
+        1.0,
+        0
+       ],
+       "col": "#6B3A18"
+      },
+      {
+       "shape": "sphere",
+       "size": [
+        0.28
+       ],
+       "pos": [
+        -0.35,
+        0.95,
+        0
+       ],
+       "col": "#5A2E12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "bob": 0.05
+     }
+    },
+    {
+     "kind": "phone",
+     "pos": [
+      0.9,
+      -4.2
+     ],
+     "ry": -14,
+     "lines": [
+      "HELP",
+      "over here"
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "sticks",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 10,
+   "theme": {
+    "name": "street"
+   },
+   "light": "night",
+   "cam": "medium",
+   "move": "tilt-up",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "sad",
+     "action": "slump",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "calendar",
+     "pos": [
+      0.9,
+      -4.3
+     ],
+     "month": "JAN",
+     "mark": 15,
+     "w": 0.7,
+     "h": 0.8
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.22,
+        0.5
+       ],
+       "pos": [
+        0,
+        0.25,
+        0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "die",
+     "type": "heartbeat"
+    }
+   ]
+  },
+  {
+   "line": 11,
+   "theme": {
+    "name": "office"
+   },
+   "light": "spot",
+   "cam": "two-shot",
+   "move": "push",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.4,
+      -5.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    },
+    {
+     "who": "rescuer",
+     "pos": [
+      0.4,
+      -5.0
+     ],
+     "mood": "smirk",
+     "action": "smug-stand",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "papers",
+     "pos": [
+      0.0,
+      -4.2
+     ],
+     "lines": [
+      "COURT",
+      "GUILTY"
+     ]
+    },
+    {
+     "kind": "solid",
+     "pos": [
+      -0.2,
+      -4.2
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.2,
+        0.8
+       ],
+       "pos": [
+        0,
+        0.4,
+        0
+       ],
+       "col": "#8A6A44"
+      }
+     ],
+     "ry": 0
+    }
+   ],
+   "cues": [
+    {
+     "word": "company",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 12,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "signText": "ENGINEERS \u00b7 1919"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.2,
+      -5.0
+     ],
+     "mood": "proud",
+     "action": "triumph",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "papers",
+     "pos": [
+      0.9,
+      -4.2
+     ],
+     "lines": [
+      "PLANS",
+      "SIGNED"
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "signature",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 13,
+   "theme": {
+    "name": "street"
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "pull",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "solid",
+     "pos": [
+      0.5,
+      -4
+     ],
+     "parts": [
+      {
+       "shape": "cyl",
+       "size": [
+        0.45,
+        1.6
+       ],
+       "pos": [
+        0,
+        0.8,
+        0
+       ],
+       "col": "#8C949C",
+       "metal": true
+      },
+      {
+       "shape": "cyl",
+       "size": [
+        0.47,
+        0.08
+       ],
+       "pos": [
+        0,
+        1.62,
+        0
+       ],
+       "col": "#6A727A",
+       "metal": true
+      },
+      {
+       "shape": "box",
+       "size": [
+        0.05,
+        1.0,
+        0.05
+       ],
+       "pos": [
+        0.3,
+        0.8,
+        0.0
+       ],
+       "col": "#4A2A12"
+      }
+     ],
+     "ry": 0,
+     "motion": {
+      "bob": 0.04
+     }
+    }
+   ],
+   "cues": [
+    {
+     "word": "listen",
+     "type": "riser"
+    }
+   ]
+  }
+ ]
+}

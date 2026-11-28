@@ -346,3 +346,12 @@ Sources: Daily Dot; OpenCritic; GamePro.de (RDR2 player finds possible GTA 6 eas
 **Hook:** GTA 6's first patch fixed seven bugs and the one everyone asked about is not on the list. (number + conflict). New angle on patch topic (entry 22 was the weather fix).
 **Experiment:** 20.6 s, 81 words, myth-or-fact; Top-3 (match): top-5-countdown 8 | myth-or-fact 7 | versus-split 6.8 (chose myth-or-fact: script is a check, not a countdown).
 **Status:** SCHEDULED 28 Nov 2026 09:00 IST (https://youtu.be/bTISBBruc5o)
+
+## 31 · `31-gta6-ultimate-sticker.mp4` · quiz-countdown (NEW STYLE: library id ported on comic-pop, new A/B quiz card kind; STANDARD)
+**Title:** GTA 6 Ultimate Edition Sticker Mocks Buyers? 👀 (Reported) #shorts
+**Description:** Fans say a sticker in a GTA 6 Ultimate Edition promo screenshot reads a ruder version of "buy more useless stuff". Some outlets say it may just be decoration; Rockstar has not confirmed any intent. Ultimate Edition $99.99 vs Standard $79.99. Sources: mein-mmo; OpenCritic news; GamesRadar.
+**Tags:** gta 6, gta 6 ultimate edition, gta 6 easter egg, gta 6 secrets, rockstar games, gta vi, gta 6 news, gta 6 price
+**Hook:** Did Rockstar hide an insult for fans who paid a hundred dollars? (question + conflict)
+**Top-3 (match):** quiz-countdown 5.8 | top-5-countdown 5 | breaking-desk 3.8
+**Experiment:** first use of quiz-countdown; 27 s, 109 words, kind gaming-news/controversy; A/B poll end.
+**Status:** QUEUED (private until slot)
