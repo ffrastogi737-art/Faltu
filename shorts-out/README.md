@@ -366,6 +366,20 @@ Sources: NBC News; History.com; Britannica.
 **Experiment:** new topic kind (disaster history, never used); 48 s, 165 words; exploit morning slot.
 **Status:** QUEUED: goes public 29 Nov 2026 10:00 IST (https://youtu.be/-FBeVvqaTF8)
 
+## 31b · `31b-molasses-3d.mp4` · tall-tale (TALL-TALE turn; history kind; REBUILD with the new 3D models (tank, wave, barrels, crates; old era set), characters: tank worker, top-hat boss, firefighter)
+**Title:** The Wave That Drowned A City Street In Molasses
+**Description:**
+```
+On 15 January 1919 a tank holding about 2.3 million gallons of molasses burst in Boston's North End. A wave around 25 feet high rushed down the street at roughly 35 mph. 21 people died and about 150 were hurt. A court blamed the company, and later rules required engineers to sign off building plans. (Dramatized scenes, real history.)
+Sources: NBC News; History.com; Britannica.
+#shorts #history #molassesflood #boston #weirdhistory #truestory #didyouknow
+```
+**Tags:** great molasses flood, boston molasses flood, 1919 boston, weird history, true story, history shorts, did you know, disaster history
+**Hook:** a rumble like a train. Then a wall of molasses. (loop: last words "and listen for" -> line 1)
+**Experiment:** rebuild of 31 (old look held private); new 3D story models; explore midday slot 11:00 IST.
+**Status:** UPLOADING
+
+
 ## 32 · `32-yawn-contagious.mp4` · myth-or-fact (STANDARD turn; body-science kind; Top-3 match: deep-dive 5.3 | inside-out 5 | myth-or-fact 3.3; inside-out hand-built, comic-pop on cooldown)
 **Title:** Why You Yawn When Others Yawn
 **Description:**

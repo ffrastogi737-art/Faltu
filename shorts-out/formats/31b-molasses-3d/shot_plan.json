@@ -1,0 +1,801 @@
+{
+ "setting": {
+  "name": "street",
+  "o": {
+   "era": "old"
+  }
+ },
+ "track": "TALL-TALE",
+ "music": "suspense",
+ "characters": {
+  "worker": {
+   "role": "1919 molasses tank worker",
+   "look": {
+    "body": "#3C6FB6",
+    "pattern": "overalls",
+    "patCol": "#2F5588",
+    "hat": "cap",
+    "hatCol": "#6B4A2B",
+    "extra": [
+     "mustache"
+    ]
+   }
+  },
+  "boss": {
+   "role": "1919 company boss",
+   "look": {
+    "body": "#5A3A5A",
+    "pattern": "vest",
+    "patCol": "#C9A13B",
+    "hat": "tophat",
+    "hatCol": "#1E1E1E",
+    "neck": "bowtie",
+    "neckCol": "#8A2E2E",
+    "extra": [
+     "monocle"
+    ]
+   }
+  },
+  "rescuer": {
+   "role": "Boston firefighter 1919",
+   "look": {
+    "body": "#8A2E2E",
+    "pattern": "coat",
+    "patCol": "#3A1010",
+    "hat": "helmet",
+    "hatCol": "#C9A13B",
+    "neck": "scarf",
+    "neckCol": "#E0E0E0",
+    "extra": [
+     "goggles"
+    ]
+   }
+  }
+ },
+ "shots": [
+  {
+   "line": 0,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "alarm",
+   "cam": "medium",
+   "move": "push",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "wave",
+     "anim": "roll",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "h": 1.9
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "left",
+     "h": 0.8
+    }
+   ],
+   "cues": [
+    {
+     "word": "rumble",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 1,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "crane-down",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "smug",
+     "action": "smug-stand",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "tank",
+     "label": "MOLASSES",
+     "pos": [
+      0.45,
+      -5.4
+     ],
+     "h": 2.2
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "left",
+     "h": 0.8
+    }
+   ]
+  },
+  {
+   "line": 2,
+   "theme": {
+    "name": "coast",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "warm",
+   "cam": "two-shot",
+   "move": "orbit-left",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry",
+     "talk": true
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "neutral",
+     "action": "stand",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "tank",
+     "label": "MOLASSES",
+     "pos": [
+      0.45,
+      -5.4
+     ],
+     "h": 2.2,
+     "crack": true,
+     "anim": "shake"
+    }
+   ]
+  },
+  {
+   "line": 3,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "night",
+   "cam": "two-shot",
+   "move": "push",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "accuse",
+     "talk": false
+    },
+    {
+     "who": "boss",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "angry",
+     "action": "point",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "pos": [
+      -0.9,
+      -4.4
+     ],
+     "y": 1.7,
+     "lines": [
+      "NO LEAKS",
+      "PAINT IT"
+     ],
+     "w": 0.9,
+     "h": 0.5
+    },
+    {
+     "kind": "model",
+     "model": "tank",
+     "label": "MOLASSES",
+     "pos": [
+      0.45,
+      -5.4
+     ],
+     "h": 2.2,
+     "crack": true
+    }
+   ],
+   "cues": [
+    {
+     "word": "brown",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 4,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "spot",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "recoil",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "tank",
+     "label": "MOLASSES",
+     "pos": [
+      0.45,
+      -5.4
+     ],
+     "h": 2.2,
+     "crack": true,
+     "anim": "shake"
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "left",
+     "h": 0.8
+    }
+   ],
+   "cues": [
+    {
+     "word": "snaps",
+     "type": "boom"
+    }
+   ]
+  },
+  {
+   "line": 5,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "alarm",
+   "cam": "wide",
+   "move": "track-right",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.2,
+      -3.0
+     ],
+     "mood": "wide",
+     "action": "cower",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    }
+   ],
+   "props": [
+    {
+     "kind": "sign",
+     "pos": [
+      -0.9,
+      -4.6
+     ],
+     "lines": [
+      "35 MPH"
+     ],
+     "y": 1.5
+    },
+    {
+     "kind": "model",
+     "model": "wave",
+     "anim": "roll",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "h": 1.9
+    },
+    {
+     "kind": "model",
+     "model": "crate",
+     "side": "left",
+     "h": 0.7
+    }
+   ],
+   "cues": [
+    {
+     "word": "charges",
+     "type": "riser"
+    }
+   ]
+  },
+  {
+   "line": 6,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "alarm",
+   "cam": "two-shot",
+   "move": "crane-up",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.4,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "run",
+     "talk": true,
+     "fx": [
+      "sweat-fly"
+     ]
+    },
+    {
+     "who": "rescuer",
+     "pos": [
+      0.4,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "run",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "wave",
+     "anim": "roll",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "h": 1.9
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "front",
+     "h": 0.5
+    }
+   ],
+   "cues": [
+    {
+     "word": "fast",
+     "type": "hit"
+    }
+   ]
+  },
+  {
+   "line": 7,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "dolly-out",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "shock",
+     "action": "shock",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "wave",
+     "anim": "roll",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "h": 1.9
+    },
+    {
+     "kind": "model",
+     "model": "crate",
+     "side": "front",
+     "h": 0.5
+    }
+   ],
+   "cues": [
+    {
+     "word": "shoves",
+     "type": "slam"
+    }
+   ]
+  },
+  {
+   "line": 8,
+   "theme": {
+    "name": "coast",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "day",
+   "cam": "medium",
+   "move": "push",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "tired",
+     "action": "worry",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "right",
+     "h": 0.45
+    },
+    {
+     "kind": "model",
+     "model": "crate",
+     "side": "left",
+     "h": 0.45
+    }
+   ]
+  },
+  {
+   "line": 9,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
+   "move": "orbit-right",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "point",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "phone",
+     "pos": [
+      0.9,
+      -4.2
+     ],
+     "ry": -14,
+     "lines": [
+      "HELP",
+      "over here"
+     ]
+    },
+    {
+     "kind": "model",
+     "model": "wave",
+     "anim": "roll",
+     "pos": [
+      0.3,
+      -5.6
+     ],
+     "h": 1.9
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "left",
+     "h": 0.8
+    }
+   ],
+   "cues": [
+    {
+     "word": "sticks",
+     "type": "thud"
+    }
+   ]
+  },
+  {
+   "line": 10,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "night",
+   "cam": "medium",
+   "move": "push",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "sad",
+     "action": "slump",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "calendar",
+     "pos": [
+      0.9,
+      -4.3
+     ],
+     "month": "JAN",
+     "mark": 15,
+     "w": 0.7,
+     "h": 0.8
+    },
+    {
+     "kind": "model",
+     "model": "crate",
+     "side": "right",
+     "h": 0.45
+    }
+   ],
+   "cues": [
+    {
+     "word": "die",
+     "type": "heartbeat"
+    }
+   ]
+  },
+  {
+   "line": 11,
+   "theme": {
+    "name": "office"
+   },
+   "light": "spot",
+   "cam": "two-shot",
+   "move": "push",
+   "focus": "boss",
+   "cast": [
+    {
+     "who": "boss",
+     "pos": [
+      -0.4,
+      -5.0
+     ],
+     "mood": "angry",
+     "action": "accuse",
+     "talk": true,
+     "fx": [
+      "steam"
+     ]
+    },
+    {
+     "who": "rescuer",
+     "pos": [
+      0.4,
+      -5.0
+     ],
+     "mood": "smirk",
+     "action": "smug-stand",
+     "talk": false
+    }
+   ],
+   "props": [
+    {
+     "kind": "papers",
+     "pos": [
+      0.0,
+      -4.2
+     ],
+     "lines": [
+      "COURT",
+      "GUILTY"
+     ]
+    }
+   ],
+   "cues": [
+    {
+     "word": "company",
+     "type": "scratch"
+    }
+   ]
+  },
+  {
+   "line": 12,
+   "theme": {
+    "name": "room",
+    "o": {
+     "wall": "#8A8F6A",
+     "signText": "ENGINEERS \u00b7 1919"
+    }
+   },
+   "light": "warm",
+   "cam": "medium",
+   "move": "dolly-in",
+   "focus": "rescuer",
+   "cast": [
+    {
+     "who": "rescuer",
+     "pos": [
+      -0.2,
+      -5.0
+     ],
+     "mood": "proud",
+     "action": "triumph",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "papers",
+     "pos": [
+      0.9,
+      -4.2
+     ],
+     "lines": [
+      "PLANS",
+      "SIGNED"
+     ]
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "front",
+     "h": 0.5
+    }
+   ],
+   "cues": [
+    {
+     "word": "signature",
+     "type": "ding"
+    }
+   ]
+  },
+  {
+   "line": 13,
+   "theme": {
+    "name": "street",
+    "o": {
+     "era": "old"
+    }
+   },
+   "light": "dusk",
+   "cam": "medium",
+   "move": "pull",
+   "focus": "worker",
+   "cast": [
+    {
+     "who": "worker",
+     "pos": [
+      -0.1,
+      -3.0
+     ],
+     "mood": "worried",
+     "action": "worry",
+     "talk": true
+    }
+   ],
+   "props": [
+    {
+     "kind": "model",
+     "model": "tank",
+     "label": "MOLASSES",
+     "pos": [
+      0.45,
+      -5.4
+     ],
+     "h": 2.2
+    },
+    {
+     "kind": "model",
+     "model": "barrel",
+     "side": "left",
+     "h": 0.8
+    }
+   ],
+   "cues": [
+    {
+     "word": "listen",
+     "type": "riser"
+    }
+   ]
+  }
+ ]
+}
